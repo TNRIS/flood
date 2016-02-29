@@ -6,8 +6,8 @@
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --hot --inline --config webpack.config.js",
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.js",
-    "dist": "NODE_ENV=production npm run clean && npm run webpack",
-    "clean": "rm -rf ./dist/assets/"
+    "dist": "NODE_ENV=production bash -c 'npm run clean && npm run webpack'",
+    "clean": "rm -rf ./dist/*"
   },
   "engines": {
     "node": ">=0.12.0",
@@ -51,6 +51,7 @@
     "redux-devtools": "^3.1.1",
     "sass-loader": "^2.0.1",
     "style-loader": "^0.12.4",
+    "swig": "^1.4.2",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.14.1"
   }

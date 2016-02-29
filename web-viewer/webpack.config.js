@@ -1,8 +1,19 @@
+var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var swig = require('swig');
 
 var isProd = process.env.NODE_ENV === 'production';
+
+var folders = {
+  dist: path.join(__dirname, 'dist/'),
+  src: path.join(__dirname, 'src/')
+};
+
+//compile index.swig
+var indexTpl = swig.compileFile(folders.src + 'index.swig');
+fs.writeFileSync(folders.dist + 'index.html', indexTpl({isProd: isProd}));
 
 var uglify = new webpack.optimize.UglifyJsPlugin();
 
@@ -13,12 +24,10 @@ if (isProd) {
   plugins.push(uglify);
 }
 
-//TODO: load /assets/styles.css in index.html when isProd
-
 module.exports = {
-  entry: path.join(__dirname, 'src/entry.jsx'),
+  entry: folders.src + 'entry.jsx',
   output: {
-    path: path.join(__dirname, 'dist/assets/'),
+    path: folders.dist + 'assets/',
     filename: 'scripts.js'
   },
   devServer: {
