@@ -6,7 +6,7 @@ const Map = React.createClass({
   getInitialState: () => {
     return {};
   },
-  componentDidMount: () => {
+  componentDidMount: function componentDidMount() {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
