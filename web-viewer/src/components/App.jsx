@@ -7,8 +7,8 @@ import { colors } from '../constants';
 
 const App = () => (
   <div>
-    <Layout style={{background: 'white'}}>
-      <Header transparent title="Texas Flood Information Viewer" style={{backgroundColor: colors.twdbBlue}}>
+    <Layout fixedHeader style={{background: 'white'}}>
+      <Header title="Texas Flood Information Viewer" style={{backgroundColor: colors.twdbBlue}}>
         <Navigation>
           <a href="">Flood Preparation</a>
           <a href="">About this Site</a>
