@@ -1,9 +1,9 @@
-import React from 'react';
-import { Content, Layout, Header, Navigation } from 'react-mdl';
+import React from 'react'
+import { Content, Layout, Header, Navigation } from 'react-mdl'
 
-import Map from './Map';
+import Map from './Map'
 
-import { colors } from '../constants';
+import { colors } from '../constants'
 
 const App = () => (
   <div>
@@ -19,6 +19,6 @@ const App = () => (
       </Content>
     </Layout>
   </div>
-);
+)
 
-export default App;
+export default App
