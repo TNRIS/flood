@@ -5,7 +5,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import App from './components/App';
-import app from './reducers';
+import rootReducer from './reducers';
 
 import './sass/main.scss';
 
@@ -13,8 +13,9 @@ import './sass/main.scss';
 import './vendor/material.css';
 import './vendor/material.js';
 
-
-const store = createStore(app);
+const store = (window.devToolsExtension ?
+  window.devToolsExtension()(createStore)
+  : createStore)(rootReducer);
 
 render((
   <Provider store={store}>
