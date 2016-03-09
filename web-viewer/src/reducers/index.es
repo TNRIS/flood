@@ -1,10 +1,10 @@
 
 import { combineReducers } from 'redux';
 
-// import layers from './layers';
+import map from './map';
 
 const app = combineReducers({
-  // layers,
+  map: map,
 });
 
 export default app;

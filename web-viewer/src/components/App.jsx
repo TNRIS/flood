@@ -1,5 +1,7 @@
 import React from 'react';
-import { Layout, Header, Navigation } from 'react-mdl';
+import { Content, Layout, Header, Navigation } from 'react-mdl';
+
+import Map from './Map';
 
 import { colors } from '../constants';
 
@@ -12,6 +14,9 @@ const App = () => (
           <a href="">About this Site</a>
         </Navigation>
       </Header>
+      <Content>
+        <Map />
+      </Content>
     </Layout>
   </div>
 );
