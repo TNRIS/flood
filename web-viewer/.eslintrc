@@ -16,6 +16,7 @@
     "consistent-return": [0],
     "no-console": [0],
     "quotes": [0],
-    "spaced-comment": [0]
+    "spaced-comment": [0],
+    "eol-last": 0,
   }
 }
