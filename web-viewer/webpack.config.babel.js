@@ -1,33 +1,33 @@
-var fs = require('fs');
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var swig = require('swig');
+import fs from 'fs';
+import path from 'path';
+import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import swig from 'swig';
 
-var isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production';
 
-var folders = {
+const folders = {
   dist: path.join(__dirname, 'dist/'),
-  src: path.join(__dirname, 'src/')
+  src: path.join(__dirname, 'src/'),
 };
 
 //compile index.swig
-var indexTpl = swig.compileFile(folders.src + 'index.swig');
-fs.writeFileSync(folders.dist + 'index.html', indexTpl({isProd: isProd}));
+const indexTpl = swig.compileFile(`${folders.src}index.swig`);
+fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}));
 
-var uglify = new webpack.optimize.UglifyJsPlugin();
+const uglify = new webpack.optimize.UglifyJsPlugin();
 
-var plugins = [];
+const plugins = [];
 
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'));
   plugins.push(uglify);
 }
 
-module.exports = {
-  entry: folders.src + 'entry.jsx',
+export default {
+  entry: `${folders.src}entry.jsx`,
   output: {
-    path: folders.dist + 'assets/',
+    path: `${folders.dist}assets/`,
     filename: 'scripts.js'
   },
   devServer: {
@@ -47,6 +47,11 @@ module.exports = {
           : 'style!css?sourceMap!sass?sourceMap'
       },
       {
+        test: /\.css$/,
+        loader: isProd ? ExtractTextPlugin.extract('css')
+          : 'style!css'
+      },
+      {
         test: /\.(es|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
@@ -57,5 +62,5 @@ module.exports = {
     // allows extension-less require/import statements for files with these extensions
     extensions: ['', '.es', '.js', '.jsx']
   },
-  plugins: plugins
+  plugins
 };
