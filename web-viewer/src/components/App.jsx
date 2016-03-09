@@ -2,6 +2,7 @@ import React from 'react'
 import { Content, Layout, Header, Navigation } from 'react-mdl'
 
 import Map from './Map'
+import LayerChooser from '../containers/LayerChooser'
 
 import { colors } from '../constants'
 
@@ -14,6 +15,7 @@ const App = () => (
           <a href="">About this Site</a>
         </Navigation>
       </Header>
+      <LayerChooser />
       <Content>
         <Map />
       </Content>

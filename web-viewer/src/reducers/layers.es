@@ -1,8 +1,23 @@
-export default function layers(state = [], action) {
+const initialState = {
+  layers: [
+    {
+      'id': 'osm',
+      'text': 'OpenStreetMap',
+    },
+    {
+      'id': 'bing',
+      'text': 'Bing',
+    },
+  ],
+  active: 'osm'
+}
+
+export default function layers(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_LAYER':
-      return state.concat([ action.text ]);
+    case 'SET_LAYER':
+      // TODO
+      return state
     default:
-      return state;
+      return state
   }
 }
