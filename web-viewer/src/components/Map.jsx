@@ -3,10 +3,10 @@
 import React from 'react';
 
 const Map = React.createClass({
-  getInitialState: () => {
+  getInitialState() {
     return {};
   },
-  componentDidMount: function componentDidMount() {
+  componentDidMount() {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
@@ -18,7 +18,7 @@ const Map = React.createClass({
       }).addTo(this.map);
     }, 0);
   },
-  render: () => {
+  render() {
     return (
       <div className="map">
         <div ref="map" className="map--full">
