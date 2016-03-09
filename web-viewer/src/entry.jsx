@@ -9,10 +9,6 @@ import './sass/main.scss';
 import './vendor/material.css';
 import './vendor/material.js';
 
-console.log("in entry.jsx");
-
-//TODO: eslint config
-
 ReactDOM.render((
   <Layout style={{background: 'white'}}>
     <Header transparent title="Title" style={{background: 'black'}}>
