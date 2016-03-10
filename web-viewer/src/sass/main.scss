@@ -20,3 +20,8 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.mdl-menu__item.active {
+  color: black;
+  font-weight: bold;
+}

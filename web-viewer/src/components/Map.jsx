@@ -1,9 +1,17 @@
 /*global L*/
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import R from 'ramda'
 
+import CustomPropTypes from '../CustomPropTypes'
+
 const Map = React.createClass({
+  propTypes: {
+    baseLayers: PropTypes.shape({
+      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
+      active: PropTypes.string
+    })
+  },
   getInitialState() {
     return {}
   },

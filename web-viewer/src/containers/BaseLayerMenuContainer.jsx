@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
 
 import { setBaseLayer } from '../actions'
-import BaseLayerDrawer from '../components/BaseLayerDrawer'
-
+import BaseLayerMenu from '../components/BaseLayerMenu'
 
 const mapStateToProps = (state) => {
   return {
-    layers: state.baseLayers.layers,
-    active: state.baseLayers.active
+    baseLayers: state.baseLayers.layers,
+    activeBaseId: state.baseLayers.active
   }
 }
 
@@ -19,9 +18,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const BaseLayerChooser = connect(
+const BaseLayerMenuContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BaseLayerDrawer)
+)(BaseLayerMenu)
 
-export default BaseLayerChooser
+export default BaseLayerMenuContainer
