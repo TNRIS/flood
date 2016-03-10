@@ -14,6 +14,9 @@ const App = () => (
           <a href="">About this Site</a>
         </Navigation>
       </Header>
+      <div className="site-warning">
+        <strong>Warning:</strong> This site is in development and should not be relied upon for any real information.
+      </div>
       <Content>
         <Map />
       </Content>
