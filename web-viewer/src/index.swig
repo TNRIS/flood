@@ -12,9 +12,6 @@
   {% endif %}
 </head>
 <body>
-  <div class="site-warning">
-    <strong>Warning:</strong> This site is in development and should not be relied upon for any real information.
-  </div>
   <div id="reactApp"></div>
 
   <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
