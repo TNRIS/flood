@@ -1,7 +1,7 @@
 import React from 'react'
 import { Content, Layout, Header, Navigation } from 'react-mdl'
 
-import Map from './Map'
+import MapContainer from '../containers/MapContainer'
 import LayerChooser from '../containers/LayerChooser'
 
 import { colors } from '../constants'
@@ -17,7 +17,7 @@ const App = () => (
       </Header>
       <LayerChooser />
       <Content>
-        <Map />
+        <MapContainer />
       </Content>
     </Layout>
   </div>
