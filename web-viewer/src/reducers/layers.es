@@ -15,8 +15,9 @@ const initialState = {
 export default function layers(state = initialState, action) {
   switch (action.type) {
     case 'SET_LAYER':
-      // TODO
-      return state
+      return Object.assign({}, state, {
+        active: action.id
+      })
     default:
       return state
   }

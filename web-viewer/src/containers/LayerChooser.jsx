@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import setLayer from '../actions'
+import { setLayer } from '../actions'
 import LayerDrawer from '../components/LayerDrawer'
 
 

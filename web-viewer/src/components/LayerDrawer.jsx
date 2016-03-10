@@ -3,11 +3,11 @@ import { Drawer, Navigation } from 'react-mdl'
 
 import Layer from './Layer'
 
-const LayerDrawer = (layers, onLayerClick) => {
+const LayerDrawer = ({ layers, onLayerClick }) => {
   return (
     <Drawer title="Layers">
       <Navigation>
-        {layers.layers.map(layer =>
+        {layers.map(layer =>
           <Layer
             key={layer.id}
             onClick={() => onLayerClick(layer.id)}
