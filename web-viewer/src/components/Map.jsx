@@ -20,17 +20,16 @@ const Map = React.createClass({
   componentWillUpdate(nextProps) {
     this.setActiveBaseLayer(nextProps)
   },
-  getActiveBaseLayer(props) {
-    const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
-    return L.tileLayer(activeBaseLayer.tileUrl, {
-      attribution: activeBaseLayer.attribution
-    })
-  },
   setActiveBaseLayer(props) {
     if (this.baseLayer) {
       this.map.removeLayer(this.baseLayer)
     }
-    this.baseLayer = this.getActiveBaseLayer(props)
+
+    const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
+    this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, {
+      attribution: activeBaseLayer.attribution
+    })
+
     this.baseLayer.addTo(this.map)
   },
   render() {
