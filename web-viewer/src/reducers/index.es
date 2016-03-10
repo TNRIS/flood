@@ -1,10 +1,10 @@
 
 import { combineReducers } from 'redux'
 
-import layers from './layers'
+import baseLayers from './baseLayers'
 
 const app = combineReducers({
-  layers: layers,
+  baseLayers: baseLayers,
 })
 
 export default app

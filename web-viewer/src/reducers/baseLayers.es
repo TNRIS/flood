@@ -22,9 +22,9 @@ const initialState = {
   active: 'osm'
 }
 
-export default function layers(state = initialState, action) {
+export default function baseLayers(state = initialState, action) {
   switch (action.type) {
-    case 'SET_LAYER':
+    case 'SET_BASELAYER':
       return Object.assign({}, state, {
         active: action.id
       })

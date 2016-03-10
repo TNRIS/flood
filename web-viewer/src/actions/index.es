@@ -1,6 +1,6 @@
-export const setLayer = (id) => {
+export const setBaseLayer = (id) => {
   return {
-    type: 'SET_LAYER',
+    type: 'SET_BASELAYER',
     id
   }
 }

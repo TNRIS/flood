@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react'
 import { Drawer, Navigation } from 'react-mdl'
 
-import Layer from './Layer'
+import BaseLayer from './BaseLayer'
 
-const LayerDrawer = ({ layers, onLayerClick }) => {
+const BaseLayerDrawer = ({ layers, onLayerClick }) => {
   return (
     <Drawer title="Layers">
       <Navigation>
         {layers.map(layer =>
-          <Layer
+          <BaseLayer
             key={layer.id}
             onClick={() => onLayerClick(layer.id)}
             {...layer}
@@ -19,7 +19,7 @@ const LayerDrawer = ({ layers, onLayerClick }) => {
   )
 }
 
-LayerDrawer.propTypes = {
+BaseLayerDrawer.propTypes = {
   layers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
@@ -28,4 +28,4 @@ LayerDrawer.propTypes = {
   onLayerClick: PropTypes.func.isRequired
 }
 
-export default LayerDrawer
+export default BaseLayerDrawer
