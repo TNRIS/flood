@@ -18,7 +18,9 @@ const Map = React.createClass({
     }, 0)
   },
   componentWillUpdate(nextProps) {
-    this.setActiveBaseLayer(nextProps)
+    if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
+      this.setActiveBaseLayer(nextProps)
+    }
   },
   setActiveBaseLayer(props) {
     if (this.baseLayer) {
