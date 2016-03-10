@@ -1,6 +1,7 @@
 /*global L*/
 
 import React from 'react'
+import R from 'ramda'
 
 const Map = React.createClass({
   getInitialState() {
@@ -13,10 +14,25 @@ const Map = React.createClass({
         zoom: 7
       })
 
-      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(this.map)
+      this.setActiveBaseLayer(this.props)
     }, 0)
+  },
+  componentWillUpdate(nextProps) {
+    if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
+      this.setActiveBaseLayer(nextProps)
+    }
+  },
+  setActiveBaseLayer(props) {
+    if (this.baseLayer) {
+      this.map.removeLayer(this.baseLayer)
+    }
+
+    const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
+    this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, {
+      attribution: activeBaseLayer.attribution
+    })
+
+    this.baseLayer.addTo(this.map)
   },
   render() {
     return (
@@ -25,8 +41,7 @@ const Map = React.createClass({
         </div>
       </div>
     )
-  }
+  },
 })
-
 
 export default Map

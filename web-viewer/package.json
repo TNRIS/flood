@@ -44,6 +44,7 @@
     "history": "1.13.1",
     "node-sass": "^3.3.3",
     "nodemon": "^1.4.1",
+    "ramda": "^0.19.1",
     "react": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.7",
