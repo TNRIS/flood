@@ -3,6 +3,7 @@ import { Content, Layout, Header } from 'react-mdl'
 
 import NavigationBar from './NavigationBar'
 import MapContainer from '../containers/MapContainer'
+import FeatureLayerChooser from '../containers/FeatureLayerChooser'
 
 import { colors } from '../constants'
 
@@ -15,6 +16,7 @@ const App = () => (
       <div className="site-warning">
         <strong>Warning:</strong> This site is in development and should not be relied upon for any real information.
       </div>
+      <FeatureLayerChooser />
       <Content>
         <MapContainer />
       </Content>
