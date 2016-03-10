@@ -2,7 +2,7 @@ import React from 'react'
 
 const Layer = ({ onClick, text }) => {
   return (
-    <div onClick={onClick} className="mdl-navigation__link" href="">{ text }</div>
+    <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">{ text }</a>
   )
 }
 
