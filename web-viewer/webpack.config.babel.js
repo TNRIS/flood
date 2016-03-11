@@ -8,20 +8,18 @@ const isProd = process.env.NODE_ENV === 'production'
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
-  src: path.join(__dirname, 'src/'),
+  src: path.join(__dirname, 'src/')
 }
 
 //compile index.swig
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
-const uglify = new webpack.optimize.UglifyJsPlugin()
-
+//setup webpack plugins
 const plugins = []
-
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'))
-  plugins.push(uglify)
+  plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
 export default {
