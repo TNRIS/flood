@@ -5,7 +5,8 @@ import Map from '../components/Map'
 
 const mapStateToProps = (state) => {
   return {
-    baseLayers: state.baseLayers
+    baseLayers: state.baseLayers,
+    featureLayers: state.featureLayers,
   }
 }
 

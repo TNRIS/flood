@@ -5,6 +5,8 @@ import R from 'ramda'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
+import LayerCache from '../util/LayerCache'
+
 
 const Map = React.createClass({
   propTypes: {
@@ -14,9 +16,13 @@ const Map = React.createClass({
     })
   },
   getInitialState() {
+    this.layerCache = new LayerCache()
+
     return {}
   },
   componentDidMount() {
+    this.initializeLayerCache(this.props)
+
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
@@ -30,6 +36,30 @@ const Map = React.createClass({
     if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
       this.setActiveBaseLayer(nextProps)
     }
+
+    const activeFeatureLayerBools = (props) => {
+      return props.featureLayers.layers.map((l) => l.active === true)
+    }
+    if (activeFeatureLayerBools(this.props) !== activeFeatureLayerBools(nextProps)) {
+      this.setActiveFeatureLayers(nextProps)
+    }
+  },
+  setActiveFeatureLayers(props) {
+    const leafletMap = this.map
+    const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
+
+    R.toPairs(this.layerCache.all()).forEach(([cacheId, layer]) => {
+      const tileLayer = layer.tileLayer
+      const status = layer.status
+      const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
+
+      if (isActive && !leafletMap.hasLayer(tileLayer) && status === 'ready') {
+        leafletMap.addLayer(tileLayer)
+      }
+      else if (!isActive && leafletMap.hasLayer(tileLayer)) {
+        leafletMap.removeLayer(tileLayer)
+      }
+    })
   },
   setActiveBaseLayer(props) {
     if (this.baseLayer) {
@@ -49,6 +79,12 @@ const Map = React.createClass({
     }
 
     this.baseLayer.addTo(this.map).bringToBack()
+  },
+  initializeLayerCache(props) {
+    const layerCache = this.layerCache
+    props.featureLayers.layers.forEach((layer) => {
+      layerCache.add(layer.id, layer.layerInfo)
+    })
   },
   render() {
     return (

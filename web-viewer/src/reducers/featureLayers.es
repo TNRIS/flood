@@ -3,29 +3,34 @@ const initialState = {
     {
       'id': 'ahps-flood',
       'text': 'Flood Gages',
-      'layer': {
+      'layerInfo': {
         'type': 'cartodb',
-        'viz_json': 'https://tnris-twdb.cartodb.com/u/tnris/api/v2/viz/2b0f91b4-d67b-11e5-8a74-0ea31932ec1d/viz.json',
+        'name': 'ahps-flood',
       },
       'active': true,
     },
     {
-      'id': 'lake-conditions',
+      'id': 'reservoir-conditions',
       'text': 'Reservoir Conditions',
-      'layer': {
+      'layerInfo': {
         'type': 'cartodb',
-        'viz_json': 'https://tnris-twdb.cartodb.com/u/tnris/api/v2/viz/e863ba1a-c14a-11e5-b328-0e31c9be1b51/viz.json',
+        'name': 'wdft-reservoirs',
       },
-      'active': true,
+      'active': false,
     },
   ],
 }
 
-export default function baseLayers(state = initialState, action) {
+export default function featureLayers(state = initialState, action) {
   switch (action.type) {
     case 'SET_FEATURE_LAYER':
+      const updatedLayers = state.layers.map((layer) => {
+        return Object.assign({}, layer, {
+          active: layer.id === action.id
+        })
+      })
       return Object.assign({}, state, {
-        active: action.id
+        layers: updatedLayers
       })
     default:
       return state
