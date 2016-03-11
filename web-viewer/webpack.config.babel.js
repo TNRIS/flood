@@ -1,3 +1,4 @@
+import R from 'ramda'
 import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
@@ -9,11 +10,16 @@ const isProd = process.env.NODE_ENV === 'production'
 const folders = {
   dist: path.join(__dirname, 'dist/'),
   src: path.join(__dirname, 'src/'),
+  secrets: path.join(__dirname, 'secrets/')
 }
 
 //compile index.swig
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
-fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
+const secrets = JSON.parse(fs.readFileSync(`${folders.secrets}secrets.json`, {encoding: 'utf-8'}))
+const context = R.merge({isProd}, secrets)
+console.log(context)
+fs.writeFileSync(`${folders.dist}index.html`, indexTpl(context))
+
 
 const uglify = new webpack.optimize.UglifyJsPlugin()
 
