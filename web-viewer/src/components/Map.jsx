@@ -36,11 +36,18 @@ const Map = React.createClass({
     }
 
     const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
-    this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, {
-      attribution: activeBaseLayer.attribution
-    })
+    switch (activeBaseLayer.type) {
+      case 'tile':
+        this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, activeBaseLayer.options)
+        break
+      case 'bing':
+        this.baseLayer = L.bingLayer(window.BING_API_KEY, activeBaseLayer.options)
+        break
+      default:
+        throw new Error('unrecognized base layer type')
+    }
 
-    this.baseLayer.addTo(this.map)
+    this.baseLayer.addTo(this.map).bringToBack()
   },
   render() {
     return (
