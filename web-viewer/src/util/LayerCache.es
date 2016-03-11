@@ -1,3 +1,5 @@
+import R from 'ramda'
+
 import { getLayer } from './cartodb'
 
 export default class LayerCache {
@@ -18,10 +20,20 @@ export default class LayerCache {
       case 'cartodb':
         getLayer(layerInfo.name)
           .then((data) => {
-            const tileLayer = L.tileLayer(data.tilesUrl)
             this.cache[id] = {
-              tileLayer,
+              tileLayer: L.tileLayer(data.tilesUrl),
               status: 'ready'
+            }
+            if (data.gridsUrl && layerInfo.utfGridEvents) {
+              const utfGridLayer = L.utfGrid(data.gridsUrl, {
+                useJsonP: false
+              })
+
+              R.toPairs(layerInfo.utfGridEvents).forEach(([eventType, handler]) => {
+                utfGridLayer.on(eventType, handler)
+              })
+
+              this.cache[id].utfGridLayer = utfGridLayer
             }
           })
         break

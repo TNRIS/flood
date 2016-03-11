@@ -1,5 +1,6 @@
 /*global L*/
 
+import objectAssign from 'object-assign'
 import React, { PropTypes } from 'react'
 import R from 'ramda'
 
@@ -49,15 +50,23 @@ const Map = React.createClass({
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
     R.toPairs(this.layerCache.all()).forEach(([cacheId, layer]) => {
-      const tileLayer = layer.tileLayer
-      const status = layer.status
       const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
 
-      if (isActive && !leafletMap.hasLayer(tileLayer) && status === 'ready') {
-        leafletMap.addLayer(tileLayer)
+      if (isActive && layer.status === 'ready') {
+        if (layer.tileLayer && !leafletMap.hasLayer(layer.tileLayer)) {
+          leafletMap.addLayer(layer.tileLayer)
+        }
+        if (layer.utfGridLayer && !leafletMap.hasLayer(layer.utfGridLayer)) {
+          leafletMap.addLayer(layer.utfGridLayer)
+        }
       }
-      else if (!isActive && leafletMap.hasLayer(tileLayer)) {
-        leafletMap.removeLayer(tileLayer)
+      else if (!isActive) {
+        if (layer.tileLayer && leafletMap.hasLayer(layer.tileLayer)) {
+          leafletMap.removeLayer(layer.tileLayer)
+        }
+        if (layer.utfGridLayer && leafletMap.hasLayer(layer.utfGridLayer)) {
+          leafletMap.removeLayer(layer.utfGridLayer)
+        }
       }
     })
   },

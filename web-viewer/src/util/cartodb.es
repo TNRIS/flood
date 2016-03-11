@@ -62,7 +62,7 @@ const layerConfigs = {
       'name',
       'reservoir_page',
       'recent_graph',
-      'precent_full_copy',
+      'percent_full_copy',
     ],
     cartocss: `
       @color0: #990000;
@@ -193,23 +193,21 @@ function getLayerFromConfig(opts) {
   return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid
-      const tilesUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
-      if (opts.interactivity) {
-        return {
-          tilesUrl,
-          gridUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
-        }
+      const urls = {
+        tilesUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
       }
-      return {tilesUrl}
+      if (opts.interactivity) {
+        urls.gridsUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
+      }
+      return urls
     })
 }
 
 export function getLayer(name) {
   const config = layerConfigs[name]
-  const mapOptions = {
+  const mapOptions = objectAssign({}, config, {
     sql: condenseWhitespace(config.sql),
-    cartocss: config.cartocss,
-  }
+  })
 
   return getLayerFromConfig(mapOptions)
 }
