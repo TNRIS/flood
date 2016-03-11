@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react'
 import R from 'ramda'
 
+import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 
 const Map = React.createClass({
@@ -41,7 +42,7 @@ const Map = React.createClass({
         this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, activeBaseLayer.options)
         break
       case 'bing':
-        this.baseLayer = L.bingLayer(window.BING_API_KEY, activeBaseLayer.options)
+        this.baseLayer = L.bingLayer(keys.bingApiKey, activeBaseLayer.options)
         break
       default:
         throw new Error('unrecognized base layer type')

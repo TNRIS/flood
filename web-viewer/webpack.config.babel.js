@@ -1,4 +1,3 @@
-import R from 'ramda'
 import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
@@ -9,15 +8,12 @@ const isProd = process.env.NODE_ENV === 'production'
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
-  src: path.join(__dirname, 'src/'),
-  secrets: path.join(__dirname, 'secrets/')
+  src: path.join(__dirname, 'src/')
 }
 
 //compile index.swig
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
-const secrets = JSON.parse(fs.readFileSync(`${folders.secrets}secrets.json`, {encoding: 'utf-8'}))
-const context = R.merge({isProd}, secrets)
-fs.writeFileSync(`${folders.dist}index.html`, indexTpl(context))
+fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
 //setup webpack plugins
 const plugins = []
