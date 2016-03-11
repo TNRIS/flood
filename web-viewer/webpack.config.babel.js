@@ -17,17 +17,13 @@ const folders = {
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 const secrets = JSON.parse(fs.readFileSync(`${folders.secrets}secrets.json`, {encoding: 'utf-8'}))
 const context = R.merge({isProd}, secrets)
-console.log(context)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl(context))
 
-
-const uglify = new webpack.optimize.UglifyJsPlugin()
-
+//setup webpack plugins
 const plugins = []
-
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'))
-  plugins.push(uglify)
+  plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
 export default {
