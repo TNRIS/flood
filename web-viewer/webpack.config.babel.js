@@ -1,27 +1,27 @@
-import fs from 'fs';
-import path from 'path';
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import swig from 'swig';
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import swig from 'swig'
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production'
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
   src: path.join(__dirname, 'src/'),
-};
+}
 
 //compile index.swig
-const indexTpl = swig.compileFile(`${folders.src}index.swig`);
-fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}));
+const indexTpl = swig.compileFile(`${folders.src}index.swig`)
+fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
-const uglify = new webpack.optimize.UglifyJsPlugin();
+const uglify = new webpack.optimize.UglifyJsPlugin()
 
-const plugins = [];
+const plugins = []
 
 if (isProd) {
-  plugins.push(new ExtractTextPlugin('styles.css'));
-  plugins.push(uglify);
+  plugins.push(new ExtractTextPlugin('styles.css'))
+  plugins.push(uglify)
 }
 
 export default {
@@ -63,4 +63,4 @@ export default {
     extensions: ['', '.es', '.js', '.jsx']
   },
   plugins
-};
+}
