@@ -1,6 +1,6 @@
 import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
-import extend from 'extend'
+import objectAssign from 'object-assign'
 
 
 const layerConfigs = {
@@ -8,6 +8,12 @@ const layerConfigs = {
     sql: `
       SELECT * FROM nws_ahps_gauges_texas_copy
     `,
+    interactivity: [
+      'lid',
+      'name',
+      'hydrograph_image',
+      'hydrograph_link',
+    ],
     cartocss: `
       Map {
         buffer-size: 128;
@@ -52,6 +58,12 @@ const layerConfigs = {
     sql: `
       SELECT * from wdft_reservoirs_combined_copy
     `,
+    interactivity: [
+      'name',
+      'reservoir_page',
+      'recent_graph',
+      'precent_full_copy',
+    ],
     cartocss: `
       @color0: #990000;
       @color10: #D73027;
@@ -174,7 +186,7 @@ function getLayerFromConfig(opts) {
     version: "1.0.1",
     layers: [{
       type: 'mapnik',
-      options: extend({cartocss_version: "2.3.0"}, opts)
+      options: objectAssign({}, {cartocss_version: "2.3.0"}, opts)
     }]
   }
 
@@ -198,5 +210,6 @@ export function getLayer(name) {
     sql: condenseWhitespace(config.sql),
     cartocss: config.cartocss,
   }
+
   return getLayerFromConfig(mapOptions)
 }
