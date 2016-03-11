@@ -4,3 +4,11 @@ export const setBaseLayer = (id) => {
     id
   }
 }
+
+export const setFeatureLayer = (id) => {
+  return {
+    type: 'SET_FEATURE_LAYER',
+    id
+  }
+}
+

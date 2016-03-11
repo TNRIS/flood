@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {render} from 'react-dom'
 import {createStore} from 'redux'
@@ -13,6 +12,7 @@ import './sass/main.scss'
 import './vendor/material.css'
 import './vendor/material.js'
 import './vendor/Leaflet.BingLayer.js'
+import './vendor/leaflet.utfgrid.js'
 
 const store = (window.devToolsExtension ?
   window.devToolsExtension()(createStore)

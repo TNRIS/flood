@@ -6,6 +6,7 @@ import BaseLayerMenu from '../components/BaseLayerMenu'
 const mapStateToProps = (state) => {
   return {
     baseLayers: state.baseLayers.layers,
+    featureLayers: state.featureLayers.layers,
     activeBaseId: state.baseLayers.active
   }
 }
