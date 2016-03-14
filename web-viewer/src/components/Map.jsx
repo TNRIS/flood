@@ -27,7 +27,8 @@ const Map = React.createClass({
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
-        zoom: 7
+        zoom: 7,
+        minZoom: 5
       })
 
       this.setActiveBaseLayer(this.props)
