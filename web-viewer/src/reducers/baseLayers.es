@@ -56,7 +56,7 @@ const initialState = {
         'version': '1.0.0',
         'serviceMode': 'KVP',
         'bounds': L.latLngBounds([[25.601902, -107.050781], [36.633162, -93.208007]]),
-        'attribution': '<a href="https://tnris.org/texas-google-imagery/">Texas Google Imagery Project</a>'
+        'attribution': 'Imagery &copy; 2016 Google'
       }
     }
   ],
