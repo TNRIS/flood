@@ -1,6 +1,4 @@
 /*global L*/
-
-import objectAssign from 'object-assign'
 import React, { PropTypes } from 'react'
 import R from 'ramda'
 
