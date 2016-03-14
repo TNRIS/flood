@@ -78,10 +78,13 @@ const Map = React.createClass({
     const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
     switch (activeBaseLayer.type) {
       case 'tile':
-        this.baseLayer = L.tileLayer(activeBaseLayer.tileUrl, activeBaseLayer.options)
+        this.baseLayer = L.tileLayer(activeBaseLayer.url, activeBaseLayer.options)
         break
       case 'bing':
         this.baseLayer = L.bingLayer(keys.bingApiKey, activeBaseLayer.options)
+        break
+      case 'wmts':
+        this.baseLayer = L.tileLayer.wmts(activeBaseLayer.url, activeBaseLayer.options)
         break
       default:
         throw new Error('unrecognized base layer type')

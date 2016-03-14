@@ -4,7 +4,7 @@ const initialState = {
       'id': 'osm',
       'text': 'OpenStreetMap',
       'type': 'tile',
-      'tileUrl': 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      'url': 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }
@@ -13,7 +13,7 @@ const initialState = {
       'id': 'positron',
       'text': 'Positron',
       'type': 'tile',
-      'tileUrl': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      'url': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       }
@@ -22,7 +22,7 @@ const initialState = {
       'id': 'dark-matter',
       'text': 'Dark Matter',
       'type': 'tile',
-      'tileUrl': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+      'url': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       }
@@ -42,9 +42,25 @@ const initialState = {
       'options': {
         'type': 'Aerial'
       }
+    },
+    {
+      'id': 'tx-goog',
+      'text': 'Texas Google Imagery',
+      'type': 'wmts',
+      'url': 'https://txgi.tnris.org/login/path/spoon-java-neuron-nebula/wmts/',
+      'options': {
+        'layer': 'texas',
+        'style': 'default',
+        'tilematrixSet': '0to20',
+        'format': 'image/png',
+        'version': '1.0.0',
+        'serviceMode': 'KVP',
+        'bounds': L.latLngBounds([[25.601902, -107.050781], [36.633162, -93.208007]]),
+        'attribution': '<a href="https://tnris.org/texas-google-imagery/">Texas Google Imagery Project</a>'
+      }
     }
   ],
-  active: 'osm'
+  active: 'tx-goog'
 }
 
 export default function baseLayers(state = initialState, action) {
