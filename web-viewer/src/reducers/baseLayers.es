@@ -60,7 +60,7 @@ const initialState = {
       }
     }
   ],
-  active: 'tx-goog'
+  active: 'osm'
 }
 
 export default function baseLayers(state = initialState, action) {
