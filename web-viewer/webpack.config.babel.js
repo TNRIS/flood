@@ -26,11 +26,11 @@ export default {
   entry: `${folders.src}entry.jsx`,
   output: {
     path: `${folders.dist}assets/`,
+    publicPath: '/assets/',
     filename: 'scripts.js'
   },
   devServer: {
     contentBase: './dist',
-    publicPath: '/assets/',
     colors: true,
     progress: true,
     watch: true,
