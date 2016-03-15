@@ -1,6 +1,6 @@
 import R from 'ramda'
 
-import { getLayer } from './cartodb'
+import * as cartodb from './cartodb'
 
 export default class LayerCache {
   constructor() {
@@ -18,7 +18,7 @@ export default class LayerCache {
 
     switch (type) {
       case 'cartodb':
-        getLayer(options.name)
+        cartodb.getLayer(options.name)
           .then((data) => {
             this.cache[id] = {
               tileLayer: L.tileLayer(data.tilesUrl),
