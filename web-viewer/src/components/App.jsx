@@ -1,7 +1,7 @@
 import React from 'react'
 import { Content, Layout, Header } from 'react-mdl'
 
-import NavigationBar from './NavigationBar'
+import NavigationContainer from '../containers/NavigationContainer'
 import MapContainer from '../containers/MapContainer'
 import FeatureLayerChooser from '../containers/FeatureLayerChooser'
 
@@ -11,7 +11,7 @@ const App = () => (
   <div>
     <Layout fixedHeader style={{background: 'white'}}>
       <Header title="Texas Flood Information Viewer" style={{backgroundColor: colors.twdbBlue}}>
-        <NavigationBar />
+        <NavigationContainer />
       </Header>
       <div className="site-warning">
         <strong>Warning:</strong> This site is in development and should not be relied upon for any real information.

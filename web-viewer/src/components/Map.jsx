@@ -12,7 +12,8 @@ const Map = React.createClass({
     baseLayers: PropTypes.shape({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
       active: PropTypes.string
-    })
+    }),
+    activeWeatherLayerId: PropTypes.string
   },
   getInitialState() {
     this.layerCache = new LayerCache()
@@ -30,6 +31,7 @@ const Map = React.createClass({
       })
 
       this.setActiveBaseLayer(this.props)
+      this.toggleWeatherLayer(this.props)
     }, 0)
   },
   componentWillUpdate(nextProps) {
@@ -42,6 +44,10 @@ const Map = React.createClass({
     }
     if (activeFeatureLayerBools(this.props) !== activeFeatureLayerBools(nextProps)) {
       this.setActiveFeatureLayers(nextProps)
+    }
+
+    if (nextProps.activeWeatherLayerId !== this.props.activeWeatherLayerId) {
+      this.toggleWeatherLayer(nextProps)
     }
   },
   setActiveFeatureLayers(props) {
@@ -90,6 +96,28 @@ const Map = React.createClass({
     }
 
     this.baseLayer.addTo(this.map).bringToBack()
+  },
+  toggleWeatherLayer(props) {
+    if (this.weatherLayer) {
+      this.map.removeLayer(this.weatherLayer)
+    }
+
+    if (props.activeWeatherLayerId) {
+      switch (props.activeWeatherLayerId) {
+        case 'radar':
+          //Ref: http://www.aerisweather.com/support/docs/aeris-maps/map-access/map-tiles/
+          const url = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/0.png`
+          //TODO: Put layer url in constants? or put in reducers/weatherLayer ?
+          this.weatherLayer = L.tileLayer(url, {
+            'subdomains': '1234',
+            'attribution': 'AERIS'
+          })
+          this.weatherLayer.addTo(this.map).bringToFront()
+          break
+        default:
+          throw new Error('unrecognized weather layer id')
+      }
+    }
   },
   initializeLayerCache(props) {
     const layerCache = this.layerCache

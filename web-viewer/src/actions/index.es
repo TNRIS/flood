@@ -12,3 +12,9 @@ export const setFeatureLayer = (id) => {
   }
 }
 
+export const setWeatherLayer = (id) => {
+  return {
+    type: 'SET_WEATHER_LAYER',
+    id
+  }
+}
