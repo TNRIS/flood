@@ -1,7 +1,6 @@
 /*global L*/
 import React, { PropTypes } from 'react'
 import R from 'ramda'
-import axios from 'axios'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -14,7 +13,6 @@ const Map = React.createClass({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
       active: PropTypes.string
     }),
-    activeWeatherLayerId: PropTypes.string
   },
   getInitialState() {
     this.layerCache = new LayerCache()
@@ -32,7 +30,6 @@ const Map = React.createClass({
       })
 
       this.setActiveBaseLayer(this.props)
-      this.toggleWeatherLayer(this.props)
     }, 0)
   },
   componentWillUpdate(nextProps) {
@@ -45,10 +42,6 @@ const Map = React.createClass({
     }
     if (activeFeatureLayerBools(this.props) !== activeFeatureLayerBools(nextProps)) {
       this.setActiveFeatureLayers(nextProps)
-    }
-
-    if (nextProps.activeWeatherLayerId !== this.props.activeWeatherLayerId) {
-      this.toggleWeatherLayer(nextProps)
     }
   },
   setActiveFeatureLayers(props) {
@@ -87,53 +80,6 @@ const Map = React.createClass({
     }
 
     this.baseLayer.addTo(this.map).bringToBack()
-  },
-  toggleWeatherLayer(props) {
-    if (this.weatherLayerTimeout) {
-      clearTimeout(this.weatherLayerTimeout)
-      this.weatherLayerTimeout = null
-    }
-
-    if (this.weatherLayers) {
-      this.weatherLayers.forEach((layer) => this.map.removeLayer(layer))
-      this.weatherLayers = null
-    }
-
-    if (props.activeWeatherLayerId === 'radar') {
-      //Ref: http://www.aerisweather.com/support/docs/aeris-maps/map-access/map-tiles/
-      //NOTE: This call is very slow over https (it is faster on http)
-
-      axios.get(`http://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
-        .then(({ data }) => {
-          const limit = 20
-          const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
-          this.weatherLayers = R.take(limit, data.files).map((file) => {
-            return L.tileLayer(`${baseUrl}${file.time}.png`, {
-              subdomains: '1234',
-              opacity: 0,
-              attribution: 'Aeris Weather'  //TODO: proper attribution
-            })
-          })
-
-          this.weatherLayers.forEach((layer) => {
-            layer.addTo(this.map).bringToFront()
-          })
-
-          let i = 0
-          const showWeatherLayer = () => {
-            const layer = this.weatherLayers[i]
-            this.weatherLayers.forEach((lyr) => lyr.setOpacity(0))
-            layer.setOpacity(0.8)
-            i++
-            if (i >= limit) {
-              i = 0
-            }
-            this.weatherLayerTimeout = setTimeout(showWeatherLayer, data.validTimeInterval)
-          }
-
-          showWeatherLayer()
-        })
-    }
   },
   initializeLayerCache(props) {
     const layerCache = this.layerCache

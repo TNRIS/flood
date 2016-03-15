@@ -6,7 +6,6 @@ const mapStateToProps = (state) => {
   return {
     baseLayers: state.baseLayers,
     featureLayers: state.featureLayers,
-    activeWeatherLayerId: state.weatherLayer.active
   }
 }
 
