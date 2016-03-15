@@ -116,8 +116,10 @@ const Map = React.createClass({
         .then(({ data }) => {
           const limit = 20
           const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
-          this.weatherLayers = R.take(limit, data.files).map((file) => {
-            return L.tileLayer(`${baseUrl}${file.time}.png`, {
+
+          const recentTimestamps = R.pluck('time', R.take(limit, data.files)).reverse()
+          this.weatherLayers = recentTimestamps.map((time) => {
+            return L.tileLayer(`${baseUrl}${time}.png`, {
               subdomains: '1234',
               opacity: 0,
               attribution: 'Aeris Weather'  //TODO: proper attribution
