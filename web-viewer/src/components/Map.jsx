@@ -102,6 +102,7 @@ const Map = React.createClass({
     if (props.activeWeatherLayerId === 'radar') {
       //Ref: http://www.aerisweather.com/support/docs/aeris-maps/map-access/map-tiles/
       //NOTE: This call is very slow over https (it is faster on http)
+
       axios.get(`http://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
         .then(({ data }) => {
           const limit = 20
