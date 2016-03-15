@@ -2,6 +2,8 @@ import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import objectAssign from 'object-assign'
 
+import Layer from './Layer'
+
 
 const layerConfigs = {
   'ahps-flood': {
@@ -210,4 +212,56 @@ export function getLayer(name) {
   })
 
   return getLayerFromConfig(mapOptions)
+}
+
+
+export class CartoDBLayer extends Layer {
+  constructor({name, utfGridEvents}) {
+    super()
+    this.name = name
+    this.utfGridEvents = utfGridEvents
+    this.utfGridLayer
+
+    this.init()
+  }
+
+  update() {
+    getLayer(this.name)
+      .then((data) => {
+        this.tileLayer = L.tileLayer(data.tilesUrl)
+        this.status = 'ready'
+
+        if (data.gridsUrl && this.utfGridEvents) {
+          const utfGridLayer = L.utfGrid(data.gridsUrl, {
+            useJsonP: false
+          })
+
+          R.toPairs(this.utfGridEvents).forEach(([eventType, handler]) => {
+            utfGridLayer.on(eventType, handler)
+          })
+
+          this.utfGridLayer = utfGridLayer
+        }
+      })
+  }
+
+  addTo(map) {
+    if (this.status === 'ready') {
+      if (this.tileLayer && !map.hasLayer(this.tileLayer)) {
+        map.addLayer(this.tileLayer)
+      }
+      if (this.utfGridLayer && !map.hasLayer(this.utfGridLayer)) {
+        leafletMap.addLayer(this.utfGridLayer)
+      }
+    }
+  }
+
+  removeFrom(map) {
+    if (this.tileLayer && map.hasLayer(this.tileLayer)) {
+      map.removeLayer(this.tileLayer)
+    }
+    if (this.utfGridLayer && map.hasLayer(this.utfGridLayer)) {
+      map.removeLayer(this.utfGridLayer)
+    }
+  }
 }
