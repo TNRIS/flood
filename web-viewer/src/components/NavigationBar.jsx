@@ -21,7 +21,7 @@ const NavigationBar = React.createClass({
   render() {
     return (
       <Navigation>
-        <a href="" onClick={this.onWeatherButtonClick} title="Toggle Radar">
+        <a href="" onClick={this.onWeatherButtonClick} title="Toggle Weather Radar">
           {!this.props.activeWeatherLayerId && <Icon name="cloud_queue" />}
           {this.props.activeWeatherLayerId && <Icon name="cloud" />}
         </a>
