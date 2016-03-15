@@ -218,11 +218,12 @@ export function getLayer(name) {
 export class CartoDBLayer extends Layer {
   constructor({name, utfGridEvents}) {
     super()
+
     this.name = name
     this.utfGridEvents = utfGridEvents
     this.utfGridLayer
 
-    this.init()
+    this.update()
   }
 
   update() {
