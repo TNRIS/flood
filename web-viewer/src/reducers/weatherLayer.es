@@ -1,5 +1,5 @@
 const initialState = {
-  active: null
+  active: 'radar'
 }
 
 export default function weatherLayer(state = initialState, action) {

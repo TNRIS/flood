@@ -1,6 +1,7 @@
 /*global L*/
 import React, { PropTypes } from 'react'
 import R from 'ramda'
+import axios from 'axios'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -98,25 +99,49 @@ const Map = React.createClass({
     this.baseLayer.addTo(this.map).bringToBack()
   },
   toggleWeatherLayer(props) {
-    if (this.weatherLayer) {
-      this.map.removeLayer(this.weatherLayer)
+    if (this.weatherLayerTimeout) {
+      clearTimeout(this.weatherLayerTimeout)
+      this.weatherLayerTimeout = null
     }
 
-    if (props.activeWeatherLayerId) {
-      switch (props.activeWeatherLayerId) {
-        case 'radar':
-          //Ref: http://www.aerisweather.com/support/docs/aeris-maps/map-access/map-tiles/
-          const url = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/0.png`
-          //TODO: Put layer url in constants? or put in reducers/weatherLayer ?
-          this.weatherLayer = L.tileLayer(url, {
-            'subdomains': '1234',
-            'attribution': 'AERIS'
+    if (this.weatherLayers) {
+      this.weatherLayers.forEach((layer) => this.map.removeLayer(layer))
+      this.weatherLayers = null
+    }
+
+    if (props.activeWeatherLayerId === 'radar') {
+      //Ref: http://www.aerisweather.com/support/docs/aeris-maps/map-access/map-tiles/
+      //NOTE: This call is very slow over https (it is faster on http)
+      axios.get(`http://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
+        .then(({ data }) => {
+          const limit = 20
+          const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
+          this.weatherLayers = R.take(limit, data.files).map((file) => {
+            return L.tileLayer(`${baseUrl}${file.time}.png`, {
+              subdomains: '1234',
+              opacity: 0,
+              attribution: 'Aeris Weather'  //TODO: proper attribution
+            })
           })
-          this.weatherLayer.addTo(this.map).bringToFront()
-          break
-        default:
-          throw new Error('unrecognized weather layer id')
-      }
+
+          this.weatherLayers.forEach((layer) => {
+            layer.addTo(this.map).bringToFront()
+          })
+
+          let i = 0
+          const showWeatherLayer = () => {
+            const layer = this.weatherLayers[i]
+            this.weatherLayers.forEach((lyr) => lyr.setOpacity(0))
+            layer.setOpacity(1)
+            i++
+            if (i >= limit) {
+              i = 0
+            }
+            this.weatherLayerTimeout = setTimeout(showWeatherLayer, data.validTimeInterval)
+          }
+
+          showWeatherLayer()
+        })
     }
   },
   initializeLayerCache(props) {
