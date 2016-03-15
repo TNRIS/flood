@@ -5,7 +5,7 @@ import FeatureLayer from './FeatureLayer'
 
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
   return (
-    <Drawer title="Layers">
+    <Drawer>
       <Navigation>
         {layers.map(layer =>
           <FeatureLayer
