@@ -132,7 +132,7 @@ const Map = React.createClass({
           const showWeatherLayer = () => {
             const layer = this.weatherLayers[i]
             this.weatherLayers.forEach((lyr) => lyr.setOpacity(0))
-            layer.setOpacity(1)
+            layer.setOpacity(0.8)
             i++
             if (i >= limit) {
               i = 0
