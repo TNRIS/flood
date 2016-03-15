@@ -9,7 +9,7 @@ import { colors } from '../constants'
 
 const App = () => (
   <div>
-    <Layout fixedHeader style={{background: 'white'}}>
+    <Layout fixedHeader fixedDrawer style={{background: 'white'}}>
       <Header title="Texas Flood Information Viewer" style={{backgroundColor: colors.twdbBlue}}>
         <NavigationContainer />
       </Header>
