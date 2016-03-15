@@ -3,8 +3,8 @@ const initialState = {
     {
       'id': 'ahps-flood',
       'text': 'Flood Gages',
-      'layerInfo': {
-        'type': 'cartodb',
+      'type': 'cartodb',
+      'options': {
         'name': 'ahps-flood',
       },
       'active': true,
@@ -12,8 +12,8 @@ const initialState = {
     {
       'id': 'reservoir-conditions',
       'text': 'Reservoir Conditions',
-      'layerInfo': {
-        'type': 'cartodb',
+      'type': 'cartodb',
+      'options': {
         'name': 'wdft-reservoirs',
       },
       'active': false,

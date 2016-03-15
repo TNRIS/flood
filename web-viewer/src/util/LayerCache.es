@@ -7,7 +7,7 @@ export default class LayerCache {
     this.cache = {}
   }
 
-  add(id, layerInfo) {
+  add(id, type, options) {
     if (this.cache[id]) {
       return
     }
@@ -16,20 +16,20 @@ export default class LayerCache {
       status: 'pending'
     }
 
-    switch (layerInfo.type) {
+    switch (type) {
       case 'cartodb':
-        getLayer(layerInfo.name)
+        getLayer(options.name)
           .then((data) => {
             this.cache[id] = {
               tileLayer: L.tileLayer(data.tilesUrl),
               status: 'ready'
             }
-            if (data.gridsUrl && layerInfo.utfGridEvents) {
+            if (data.gridsUrl && options.utfGridEvents) {
               const utfGridLayer = L.utfGrid(data.gridsUrl, {
                 useJsonP: false
               })
 
-              R.toPairs(layerInfo.utfGridEvents).forEach(([eventType, handler]) => {
+              R.toPairs(options.utfGridEvents).forEach(([eventType, handler]) => {
                 utfGridLayer.on(eventType, handler)
               })
 

@@ -149,7 +149,7 @@ const Map = React.createClass({
   initializeLayerCache(props) {
     const layerCache = this.layerCache
     props.featureLayers.layers.forEach((layer) => {
-      layerCache.add(layer.id, layer.layerInfo)
+      layerCache.add(layer.id, layer.type, layer.options)
     })
   },
   render() {
