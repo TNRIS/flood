@@ -22,8 +22,9 @@ export class AnimatedWeatherLayer extends Layer {
         this.validTimeInterval = data.validTimeInterval
 
         const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
-        this.layers = R.take(this.limit, data.files).map((file) => {
-          return L.tileLayer(`${baseUrl}${file.time}.png`, {
+        const recentTimestamps = R.pluck('time', R.take(this.limit, data.files)).reverse()
+        this.layers = recentTimestamps.map((time) => {
+          return L.tileLayer(`${baseUrl}${time}.png`, {
             subdomains: '1234',
             opacity: 0,
             attribution: 'Aeris Weather'  //TODO: proper attribution

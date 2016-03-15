@@ -1,20 +1,13 @@
 import { connect } from 'react-redux'
 
-import { setWeatherLayer } from '../actions'
 import NavigationBar from '../components/NavigationBar'
 
 const mapStateToProps = (state) => {
-  return {
-    activeWeatherLayerId: state.weatherLayer.active
-  }
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onWeatherButtonClick: (id) => {
-      dispatch(setWeatherLayer(id))
-    }
-  }
+  return {}
 }
 
 const NavigationContainer = connect(
