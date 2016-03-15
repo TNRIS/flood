@@ -18,6 +18,12 @@ const initialState = {
       },
       'active': false,
     },
+    {
+      'id': 'weather-radar',
+      'text': 'Weather Radar',
+      'type': 'aeris-radar',
+      'active': false,
+    },
   ],
 }
 
