@@ -58,21 +58,11 @@ const Map = React.createClass({
     R.toPairs(this.layerCache.all()).forEach(([cacheId, layer]) => {
       const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
 
-      if (isActive && layer.status === 'ready') {
-        if (layer.tileLayer && !leafletMap.hasLayer(layer.tileLayer)) {
-          leafletMap.addLayer(layer.tileLayer)
-        }
-        if (layer.utfGridLayer && !leafletMap.hasLayer(layer.utfGridLayer)) {
-          leafletMap.addLayer(layer.utfGridLayer)
-        }
+      if (isActive) {
+        layer.addTo(leafletMap)
       }
       else if (!isActive) {
-        if (layer.tileLayer && leafletMap.hasLayer(layer.tileLayer)) {
-          leafletMap.removeLayer(layer.tileLayer)
-        }
-        if (layer.utfGridLayer && leafletMap.hasLayer(layer.utfGridLayer)) {
-          leafletMap.removeLayer(layer.utfGridLayer)
-        }
+        layer.removeFrom(leafletMap)
       }
     })
   },

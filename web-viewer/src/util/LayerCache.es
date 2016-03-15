@@ -18,24 +18,7 @@ export default class LayerCache {
 
     switch (type) {
       case 'cartodb':
-        cartodb.getLayer(options.name)
-          .then((data) => {
-            this.cache[id] = {
-              tileLayer: L.tileLayer(data.tilesUrl),
-              status: 'ready'
-            }
-            if (data.gridsUrl && options.utfGridEvents) {
-              const utfGridLayer = L.utfGrid(data.gridsUrl, {
-                useJsonP: false
-              })
-
-              R.toPairs(options.utfGridEvents).forEach(([eventType, handler]) => {
-                utfGridLayer.on(eventType, handler)
-              })
-
-              this.cache[id].utfGridLayer = utfGridLayer
-            }
-          })
+        this.cache[id] = new cartodb.CartoDBLayer(options)
         break
       default:
         null
