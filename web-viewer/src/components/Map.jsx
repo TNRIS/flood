@@ -15,8 +15,6 @@ const Map = React.createClass({
     }),
   },
   getInitialState() {
-    this.layerCache = new LayerCache()
-
     return {}
   },
   componentDidMount() {
@@ -82,9 +80,9 @@ const Map = React.createClass({
     this.baseLayer.addTo(this.map).bringToBack()
   },
   initializeLayerCache(props) {
-    const layerCache = this.layerCache
+    this.layerCache = new LayerCache()
     props.featureLayers.layers.forEach((layer) => {
-      layerCache.add(layer.id, layer.type, layer.options)
+      this.layerCache.add(layer.id, layer.type, layer.options)
     })
   },
   render() {
