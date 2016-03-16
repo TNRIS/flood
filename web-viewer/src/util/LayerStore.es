@@ -1,28 +1,27 @@
-import R from 'ramda'
-
 import * as cartodb from './cartodb'
 import * as aeris from './aeris'
 
-export default class LayerCache {
+
+export default class LayerStore {
   constructor() {
-    this.cache = {}
+    this.store = {}
   }
 
   add(id, type, options) {
-    if (this.cache[id]) {
+    if (this.store[id]) {
       return
     }
 
-    this.cache[id] = {
+    this.store[id] = {
       status: 'pending'
     }
 
     switch (type) {
       case 'cartodb':
-        this.cache[id] = new cartodb.CartoDBLayer(options)
+        this.store[id] = new cartodb.CartoDBLayer(options)
         break
       case 'aeris-radar':
-        this.cache[id] = new aeris.AnimatedWeatherLayer(options)
+        this.store[id] = new aeris.AnimatedWeatherLayer(options)
         break
       default:
         null
@@ -30,10 +29,10 @@ export default class LayerCache {
   }
 
   all() {
-    return this.cache
+    return this.store
   }
 
   get(id) {
-    return this.cache[id]
+    return this.store[id]
   }
 }

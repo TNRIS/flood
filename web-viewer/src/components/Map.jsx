@@ -4,7 +4,7 @@ import R from 'ramda'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
-import LayerCache from '../util/LayerCache'
+import LayerStore from '../util/LayerStore'
 
 
 const Map = React.createClass({
@@ -18,7 +18,7 @@ const Map = React.createClass({
     return {}
   },
   componentDidMount() {
-    this.initializeLayerCache(this.props)
+    this.initializeLayerStore(this.props)
 
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
@@ -46,7 +46,7 @@ const Map = React.createClass({
     const leafletMap = this.map
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
-    R.toPairs(this.layerCache.all()).forEach(([cacheId, layer]) => {
+    R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {
       const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
 
       if (isActive) {
@@ -79,10 +79,10 @@ const Map = React.createClass({
 
     this.baseLayer.addTo(this.map).bringToBack()
   },
-  initializeLayerCache(props) {
-    this.layerCache = new LayerCache()
+  initializeLayerStore(props) {
+    this.layerStore = new LayerStore()
     props.featureLayers.layers.forEach((layer) => {
-      this.layerCache.add(layer.id, layer.type, layer.options)
+      this.layerStore.add(layer.id, layer.type, layer.options)
     })
   },
   render() {
