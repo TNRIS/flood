@@ -10,4 +10,8 @@ export default class Layer {
   removeFrom() {
     throw new Error('removeFrom is undefined')
   }
+
+  setStatus(status) {
+    this.status = status
+  }
 }
