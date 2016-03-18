@@ -1,3 +1,5 @@
+import objectAssign from 'object-assign'
+
 const initialState = {
   layers: [
     {
@@ -31,11 +33,11 @@ export default function featureLayers(state = initialState, action) {
   switch (action.type) {
     case 'SET_FEATURE_LAYER':
       const updatedLayers = state.layers.map((layer) => {
-        return Object.assign({}, layer, {
+        return objectAssign({}, layer, {
           active: layer.id === action.id
         })
       })
-      return Object.assign({}, state, {
+      return objectAssign({}, state, {
         layers: updatedLayers
       })
     default:
