@@ -4,7 +4,7 @@ import R from 'ramda'
 import keys from '../keys'
 import Layer from './Layer'
 
-export class AnimatedWeatherLayer extends Layer {
+export default class AnimatedWeatherLayer extends Layer {
   constructor() {
     super()
 
