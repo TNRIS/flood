@@ -8,12 +8,15 @@ import rootReducer from './reducers'
 
 import './sass/main.scss'
 
+
 // vendor css and js
 import './vendor/material.css'
 import './vendor/material.js'
 import './vendor/Leaflet.BingLayer.js'
 import './vendor/leaflet.TileLayer.WMTS.js'
 import './vendor/leaflet.utfgrid.js'
+import './vendor/leaflet.easy-button.js'
+import './vendor/leaflet.easy-button.css'
 
 const store = (window.devToolsExtension ?
   window.devToolsExtension()(createStore)
