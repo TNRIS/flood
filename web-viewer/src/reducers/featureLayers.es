@@ -21,11 +21,19 @@ const initialState = {
       'active': false,
     },
     {
-      'id': 'weather-radar',
+      'id': 'animated-weather',
       'text': 'Weather Radar',
-      'type': 'aeris-radar',
+      'type': 'animated-weather',
       'active': false,
     },
+    //TODO: Removed until Aeris subscription has been purchased
+    // since their advisory layers don't work under the dev plan
+    // {
+    //   'id': 'flood-alerts',
+    //   'text': 'Flood Alerts',
+    //   'type': 'flood-alerts',
+    //   'active': false,
+    // },
   ],
 }
 

@@ -1,5 +1,6 @@
 import * as cartodb from './cartodb'
-import * as aeris from './aeris'
+import AnimatedWeatherLayer from './AnimatedWeatherLayer'
+import FloodAlertsLayer from './FloodAlertsLayer'
 
 
 export default class LayerStore {
@@ -20,8 +21,11 @@ export default class LayerStore {
       case 'cartodb':
         this.store[id] = new cartodb.CartoDBLayer(options)
         break
-      case 'aeris-radar':
-        this.store[id] = new aeris.AnimatedWeatherLayer(options)
+      case 'animated-weather':
+        this.store[id] = new AnimatedWeatherLayer(options)
+        break
+      case 'flood-alerts':
+        this.store[id] = new FloodAlertsLayer(options)
         break
       default:
         null
