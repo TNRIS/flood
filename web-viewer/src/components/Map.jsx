@@ -30,6 +30,10 @@ const Map = React.createClass({
 
       this.initializeFullscreenButton()
 
+      L.Control.geocoder({
+        geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
+      }).addTo(this.map)
+
       this.setActiveBaseLayer(this.props)
     }, 0)
   },
