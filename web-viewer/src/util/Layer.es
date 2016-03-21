@@ -1,6 +1,7 @@
 export default class Layer {
-  constructor() {
+  constructor(map) {
     this.status = 'pending'
+    this.map = map
   }
 
   addTo() {
