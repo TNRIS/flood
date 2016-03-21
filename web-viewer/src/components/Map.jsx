@@ -19,15 +19,13 @@ const Map = React.createClass({
     return {}
   },
   componentDidMount() {
-    this.initializeLayerStore(this.props)
-
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
         zoom: 7,
         minZoom: 5
       })
-
+      this.initializeLayerStore(this.props, this.map)
       this.initializeFullscreenButton()
       this.initializeGeocoderControl()
 
@@ -86,8 +84,9 @@ const Map = React.createClass({
 
     this.baseLayer.addTo(this.map).bringToBack()
   },
-  initializeLayerStore(props) {
-    this.layerStore = new LayerStore()
+  initializeLayerStore(props, map) {
+    this.layerStore = new LayerStore(map)
+
     props.featureLayers.layers.forEach((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })

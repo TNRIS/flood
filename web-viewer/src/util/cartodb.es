@@ -216,8 +216,8 @@ export function getLayer(name) {
 
 
 export class CartoDBLayer extends Layer {
-  constructor({name, utfGridEvents}) {
-    super()
+  constructor(map, {name, utfGridEvents}) {
+    super(map)
 
     this.name = name
     this.utfGridEvents = utfGridEvents
@@ -252,7 +252,7 @@ export class CartoDBLayer extends Layer {
         map.addLayer(this.tileLayer)
       }
       if (this.utfGridLayer && !map.hasLayer(this.utfGridLayer)) {
-        leafletMap.addLayer(this.utfGridLayer)
+        map.addLayer(this.utfGridLayer)
       }
     }
   }

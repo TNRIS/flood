@@ -5,8 +5,8 @@ import keys from '../keys'
 import Layer from './Layer'
 
 export default class AnimatedWeatherLayer extends Layer {
-  constructor() {
-    super()
+  constructor(map, options) {
+    super(map)
 
     this.layers = {}
     this.validTimeInterval
@@ -37,9 +37,10 @@ export default class AnimatedWeatherLayer extends Layer {
         const dropTimestamps = R.difference(allTimestamps, recentTimestamps)
         dropTimestamps.forEach((dropTimestamp) => {
           const dropLayer = this.layers[dropTimestamp]
-          dropLayer.setOpacity(0)
+          if (map.hasLayer(dropLayer)) {
+            this.map.removeLayer(dropLayer)
+          }
           delete this.layers[dropTimestamp]
-          // TODO: remove from map
         })
 
         this.setStatus('ready')
