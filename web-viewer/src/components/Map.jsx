@@ -29,10 +29,7 @@ const Map = React.createClass({
       })
 
       this.initializeFullscreenButton()
-
-      L.Control.geocoder({
-        geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
-      }).addTo(this.map)
+      this.initializeGeocoderControl()
 
       this.setActiveBaseLayer(this.props)
     }, 0)
@@ -132,6 +129,19 @@ const Map = React.createClass({
     })
 
     this.fullscreenButton.addTo(this.map)
+  },
+  initializeGeocoderControl() {
+    const control = L.Control.geocoder({
+      geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
+    })
+
+    //override the default markGeocode method
+    // so that a marker is not added to the map
+    control.markGeocode = (result) => {
+      this.map.fitBounds(result.bbox)
+    }
+
+    control.addTo(this.map)
   },
   render() {
     return (
