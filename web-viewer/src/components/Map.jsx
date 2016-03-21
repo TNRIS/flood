@@ -1,6 +1,7 @@
 /*global L*/
 import React, { PropTypes } from 'react'
 import R from 'ramda'
+import fullscreen from 'fullscreen'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -27,6 +28,8 @@ const Map = React.createClass({
         minZoom: 5
       })
 
+      this.initializeFullscreenButton()
+
       this.setActiveBaseLayer(this.props)
     }, 0)
   },
@@ -41,6 +44,9 @@ const Map = React.createClass({
     if (activeFeatureLayerBools(this.props) !== activeFeatureLayerBools(nextProps)) {
       this.setActiveFeatureLayers(nextProps)
     }
+  },
+  componentWillUnmount() {
+    this.fs.dispose()
   },
   setActiveFeatureLayers(props) {
     const leafletMap = this.map
@@ -84,6 +90,44 @@ const Map = React.createClass({
     props.featureLayers.layers.forEach((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
+  },
+  initializeFullscreenButton() {
+    if (!fullscreen.available()) {
+      return
+    }
+    //else, setup fullscreen emitter
+    this.fs = fullscreen(document.body)
+
+    this.fullscreenButton = L.easyButton({
+      states: [{
+        stateName: 'make-fullscreen',
+        icon: '<i class="material-icons md-24">fullscreen</i>',
+        title: 'Make fullscreen',
+        onClick: () => {
+          this.fs.request()
+        }
+      }, {
+        stateName: 'exit-fullscreen',
+        icon: '<i class="material-icons md-24">fullscreen_exit</i>',
+        title: 'Exit fullscren',
+        onClick: () => {
+          this.fs.release()
+        }
+      }],
+      position: 'topright'
+    })
+
+    this.fs.on('attain', () => {
+      this.map.invalidateSize('false')
+      this.fullscreenButton.state('exit-fullscreen')
+    })
+
+    this.fs.on('release', () => {
+      this.map.invalidateSize('false')
+      this.fullscreenButton.state('make-fullscreen')
+    })
+
+    this.fullscreenButton.addTo(this.map)
   },
   render() {
     return (
