@@ -50,6 +50,10 @@ export default {
           : 'style!css'
       },
       {
+        test: /\.(jpg|png|gif)$/,
+        loader: "file-loader"
+      },
+      {
         test: /\.(es|jsx)$/,
         exclude: /node_modules/,
         loaders: ['react-hot', 'babel-loader']

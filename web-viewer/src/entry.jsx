@@ -17,6 +17,8 @@ import './vendor/leaflet.TileLayer.WMTS.js'
 import './vendor/leaflet.utfgrid.js'
 import './vendor/leaflet.easy-button.js'
 import './vendor/leaflet.easy-button.css'
+import './vendor/Control.Geocoder.js'
+import './vendor/Control.Geocoder.css'
 
 const store = (window.devToolsExtension ?
   window.devToolsExtension()(createStore)
