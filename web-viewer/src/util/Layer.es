@@ -4,12 +4,12 @@ export default class Layer {
     this.map = map
   }
 
-  addTo() {
-    throw new Error('addTo is undefined')
+  show() {
+    throw new Error('show is undefined')
   }
 
-  removeFrom() {
-    throw new Error('removeFrom is undefined')
+  hide() {
+    throw new Error('hide is undefined')
   }
 
   setStatus(status) {

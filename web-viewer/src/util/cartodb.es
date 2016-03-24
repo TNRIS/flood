@@ -246,23 +246,23 @@ export class CartoDBLayer extends Layer {
       })
   }
 
-  addTo(map) {
+  show() {
     if (this.status === 'ready') {
-      if (this.tileLayer && !map.hasLayer(this.tileLayer)) {
-        map.addLayer(this.tileLayer)
+      if (this.tileLayer && !this.map.hasLayer(this.tileLayer)) {
+        this.map.addLayer(this.tileLayer)
       }
-      if (this.utfGridLayer && !map.hasLayer(this.utfGridLayer)) {
-        map.addLayer(this.utfGridLayer)
+      if (this.utfGridLayer && !this.map.hasLayer(this.utfGridLayer)) {
+        this.map.addLayer(this.utfGridLayer)
       }
     }
   }
 
-  removeFrom(map) {
-    if (this.tileLayer && map.hasLayer(this.tileLayer)) {
-      map.removeLayer(this.tileLayer)
+  hide() {
+    if (this.tileLayer && this.map.hasLayer(this.tileLayer)) {
+      this.map.removeLayer(this.tileLayer)
     }
-    if (this.utfGridLayer && map.hasLayer(this.utfGridLayer)) {
-      map.removeLayer(this.utfGridLayer)
+    if (this.utfGridLayer && this.map.hasLayer(this.utfGridLayer)) {
+      this.map.removeLayer(this.utfGridLayer)
     }
   }
 }

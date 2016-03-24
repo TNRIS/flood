@@ -51,10 +51,10 @@ export default class AnimatedWeatherLayer extends Layer {
       })
   }
 
-  addTo(map) {
+  show() {
     if (this.status === 'ready' && !this.weatherLayerTimeout) {
       R.values(this.layers).forEach((layer) => {
-        layer.addTo(map).bringToFront()
+        layer.addTo(this.map).bringToFront()
         layer.setOpacity(0)
       })
 
@@ -73,7 +73,7 @@ export default class AnimatedWeatherLayer extends Layer {
 
         const nextLayer = this.layers[this.visibleTimestamp]
         if (!this.map.hasLayer(nextLayer)) {
-          nextLayer.addTo(map).bringToFront()
+          nextLayer.addTo(this.map).bringToFront()
         }
         nextLayer.setOpacity(0.8)
 
@@ -84,15 +84,15 @@ export default class AnimatedWeatherLayer extends Layer {
     }
   }
 
-  removeFrom(map) {
+  hide() {
     if (this.weatherLayerTimeout) {
       clearTimeout(this.weatherLayerTimeout)
       this.weatherLayerTimeout = null
     }
 
     R.values(this.layers).forEach((layer) => {
-      if (map.hasLayer(layer)) {
-        map.removeLayer(layer)
+      if (this.map.hasLayer(layer)) {
+        this.map.removeLayer(layer)
       }
     })
   }

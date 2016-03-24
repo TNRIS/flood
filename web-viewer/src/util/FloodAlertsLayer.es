@@ -17,19 +17,19 @@ export default class FloodAlertsLayer extends Layer {
     })
   }
 
-  addTo(map) {
-    this.layer.addTo(map)
+  show() {
+    this.layer.addTo(this.map)
     this.refreshIntervalId = setInterval(() => this.layer.redraw(), this.refreshTimeMs)
   }
 
-  removeFrom(map) {
+  hide() {
     if (this.refreshIntervalId) {
       clearInterval(this.refreshIntervalId)
       this.refreshIntervalId = null
     }
 
-    if (map.hasLayer(this.layer)) {
-      map.removeLayer(this.layer)
+    if (this.map.hasLayer(this.layer)) {
+      this.map.removeLayer(this.layer)
     }
   }
 }

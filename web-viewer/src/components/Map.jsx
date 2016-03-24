@@ -55,10 +55,10 @@ const Map = React.createClass({
       const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
 
       if (isActive) {
-        layer.addTo(leafletMap)
+        layer.show()
       }
       else if (!isActive) {
-        layer.removeFrom(leafletMap)
+        layer.hide()
       }
     })
   },
