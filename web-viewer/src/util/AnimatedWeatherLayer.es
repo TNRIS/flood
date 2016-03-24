@@ -37,7 +37,7 @@ export default class AnimatedWeatherLayer extends Layer {
         const dropTimestamps = R.difference(allTimestamps, recentTimestamps)
         dropTimestamps.forEach((dropTimestamp) => {
           const dropLayer = this.layers[dropTimestamp]
-          if (map.hasLayer(dropLayer)) {
+          if (this.map.hasLayer(dropLayer)) {
             this.map.removeLayer(dropLayer)
           }
           delete this.layers[dropTimestamp]
@@ -59,7 +59,6 @@ export default class AnimatedWeatherLayer extends Layer {
       })
 
       this.visibleTimestamp = R.keys(this.layers)[0]
-      this.layers[this.visibleTimestamp].setOpacity(0.8)
 
       const cycleWeatherLayer = () => {
         this.layers[this.visibleTimestamp].setOpacity(0)
@@ -69,8 +68,14 @@ export default class AnimatedWeatherLayer extends Layer {
         if (++i >= this.limit) {
           i = 0
         }
+
         this.visibleTimestamp = timestamps[i]
-        this.layers[this.visibleTimestamp].setOpacity(0.8)
+
+        const nextLayer = this.layers[this.visibleTimestamp]
+        if (!this.map.hasLayer(nextLayer)) {
+          nextLayer.addTo(map).bringToFront()
+        }
+        nextLayer.setOpacity(0.8)
 
         this.weatherLayerTimeout = setTimeout(cycleWeatherLayer, this.validTimeInterval)
       }
