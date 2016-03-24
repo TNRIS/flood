@@ -3,8 +3,8 @@ import Layer from './Layer'
 
 //TODO: advisory map layers requires an Aeris subscription - they are not available under the development plan
 export default class FloodAlertsLayer extends Layer {
-  constructor() {
-    super()
+  constructor(map) {
+    super(map)
     this.refreshIntervalId = null
     // this.refreshTimeMs = 360000 //6 minutes
     this.refreshTimeMs = 3000 //6 minutes
@@ -17,19 +17,19 @@ export default class FloodAlertsLayer extends Layer {
     })
   }
 
-  addTo(map) {
-    this.layer.addTo(map)
+  show() {
+    this.layer.addTo(this.map)
     this.refreshIntervalId = setInterval(() => this.layer.redraw(), this.refreshTimeMs)
   }
 
-  removeFrom(map) {
+  hide() {
     if (this.refreshIntervalId) {
       clearInterval(this.refreshIntervalId)
       this.refreshIntervalId = null
     }
 
-    if (map.hasLayer(this.layer)) {
-      map.removeLayer(this.layer)
+    if (this.map.hasLayer(this.layer)) {
+      this.map.removeLayer(this.layer)
     }
   }
 }
