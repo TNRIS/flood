@@ -12,18 +12,18 @@ const initialState = {
       'active': true,
     },
     {
+      'id': 'animated-weather',
+      'text': 'Weather Radar',
+      'type': 'animated-weather',
+      'active': false,
+    },
+    {
       'id': 'reservoir-conditions',
-      'text': 'Reservoir Conditions',
+      'text': 'Lake Conditions',
       'type': 'cartodb',
       'options': {
         'name': 'wdft-reservoirs',
       },
-      'active': false,
-    },
-    {
-      'id': 'animated-weather',
-      'text': 'Weather Radar',
-      'type': 'animated-weather',
       'active': false,
     },
     //TODO: Removed until Aeris subscription has been purchased
