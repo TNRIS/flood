@@ -20,7 +20,6 @@ export default class LayerStore {
 
     switch (type) {
       case 'cartodb':
-        debugger;
         this.store[id] = new cartodb.CartoDBLayer(this.map, options)
         break
       case 'animated-weather':
