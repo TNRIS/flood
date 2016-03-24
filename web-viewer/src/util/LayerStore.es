@@ -1,5 +1,5 @@
-import * as cartodb from './cartodb'
 import AnimatedWeatherLayer from './AnimatedWeatherLayer'
+import CartoDBLayer from './CartoDBLayer'
 import FloodAlertsLayer from './FloodAlertsLayer'
 
 
@@ -19,11 +19,11 @@ export default class LayerStore {
     }
 
     switch (type) {
-      case 'cartodb':
-        this.store[id] = new cartodb.CartoDBLayer(this.map, options)
-        break
       case 'animated-weather':
         this.store[id] = new AnimatedWeatherLayer(this.map, options)
+        break
+      case 'cartodb':
+        this.store[id] = new CartoDBLayer(this.map, options)
         break
       case 'flood-alerts':
         this.store[id] = new FloodAlertsLayer(this.map, options)

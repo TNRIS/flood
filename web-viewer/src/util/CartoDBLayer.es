@@ -205,7 +205,7 @@ function getLayerFromConfig(opts) {
     })
 }
 
-export function getLayer(name) {
+function getLayer(name) {
   const config = layerConfigs[name]
   const mapOptions = objectAssign({}, config, {
     sql: condenseWhitespace(config.sql),
@@ -215,7 +215,7 @@ export function getLayer(name) {
 }
 
 
-export class CartoDBLayer extends Layer {
+export default class CartoDBLayer extends Layer {
   constructor(map, {name, utfGridEvents}) {
     super(map)
 
