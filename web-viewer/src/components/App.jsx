@@ -1,5 +1,5 @@
 import React from 'react'
-import { Content, Layout, Header } from 'react-mdl'
+import { Content, Layout, Header, HeaderRow } from 'react-mdl'
 
 import NavigationContainer from '../containers/NavigationContainer'
 import MapContainer from '../containers/MapContainer'
@@ -11,11 +11,13 @@ const App = () => (
   <div>
     <Layout fixedHeader fixedDrawer style={{background: 'white'}}>
       <Header title="Texas Flood Information Viewer" style={{backgroundColor: colors.twdbBlue}}>
-        <NavigationContainer />
+        <HeaderRow title="Texas Flood Information Viewer">
+          <NavigationContainer />
+        </HeaderRow>
+        <HeaderRow className="site-warning">
+          <strong>Warning:</strong> This site is currently in development and should not be relied upon for any real information.
+        </HeaderRow>
       </Header>
-      <div className="site-warning">
-        <strong>Warning:</strong> This site is in development and should not be relied upon for any real information.
-      </div>
       <FeatureLayerChooser />
       <Content>
         <MapContainer />
