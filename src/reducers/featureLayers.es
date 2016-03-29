@@ -1,5 +1,7 @@
 import objectAssign from 'object-assign'
 
+import { SET_FEATURE_LAYER_TYPE, LAYER_STATUS_CHANGE_TYPE } from '../actions'
+
 const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
@@ -46,10 +48,12 @@ const initialState = {
 
 export default function featureLayers(state = initialState, action) {
   switch (action.type) {
-    case 'SET_FEATURE_LAYER':
-      const updatedLayers = state.layers.map((layer) => {
-        return objectAssign({}, layer, {
-          active: layer.id === action.id
+    case SET_FEATURE_LAYER_TYPE:
+      return objectAssign({}, state, {
+        layers: state.layers.map((layer) => {
+          return objectAssign({}, layer, {
+            active: layer.id === action.id
+          })
         })
       })
       return objectAssign({}, state, {
