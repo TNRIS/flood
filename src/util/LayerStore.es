@@ -20,13 +20,13 @@ export default class LayerStore {
 
     switch (type) {
       case 'animated-weather':
-        this.store[id] = new AnimatedWeatherLayer(this.map, options)
+        this.store[id] = new AnimatedWeatherLayer(id, this.map, options)
         break
       case 'cartodb':
-        this.store[id] = new CartoDBLayer(this.map, options)
+        this.store[id] = new CartoDBLayer(id, this.map, options)
         break
       case 'flood-alerts':
-        this.store[id] = new FloodAlertsLayer(this.map, options)
+        this.store[id] = new FloodAlertsLayer(id, this.map, options)
         break
       default:
         null

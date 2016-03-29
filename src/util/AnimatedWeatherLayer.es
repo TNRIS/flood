@@ -5,8 +5,8 @@ import keys from '../keys'
 import Layer from './Layer'
 
 export default class AnimatedWeatherLayer extends Layer {
-  constructor(map, options) {
-    super(map)
+  constructor(id, map, options) {
+    super(id, map)
 
     this.layers = {}
     this.validTimeInterval

@@ -3,8 +3,8 @@ import Layer from './Layer'
 
 //TODO: advisory map layers requires an Aeris subscription - they are not available under the development plan
 export default class FloodAlertsLayer extends Layer {
-  constructor(map) {
-    super(map)
+  constructor(id, map) {
+    super(id, map)
     this.refreshIntervalId = null
     // this.refreshTimeMs = 360000 //6 minutes
     this.refreshTimeMs = 3000 //6 minutes

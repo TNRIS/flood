@@ -67,8 +67,8 @@ function getLayer(name) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor(map, {name, utfGridEvents}) {
-    super(map)
+  constructor(id, map, {name, utfGridEvents}) {
+    super(id, map)
 
     this.name = name
     this.utfGridEvents = utfGridEvents
@@ -81,7 +81,7 @@ export default class CartoDBLayer extends Layer {
     getLayer(this.name)
       .then((data) => {
         this.tileLayer = L.tileLayer(data.tilesUrl)
-        this.status = 'ready'
+        this.setStatus('ready')
 
         if (data.gridsUrl && this.utfGridEvents) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {

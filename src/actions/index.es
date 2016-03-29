@@ -13,3 +13,12 @@ export const setFeatureLayer = (id) => {
     id
   }
 }
+
+export const LAYER_STATUS_CHANGE_TYPE = 'LAYER_STATUS_CHANGE'
+export const layerStatusChange = (id, status) => {
+  return {
+    type: LAYER_STATUS_CHANGE_TYPE,
+    id,
+    status
+  }
+}

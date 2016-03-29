@@ -1,7 +1,11 @@
+import { layerStatusChange } from '../actions'
+
+
 export default class Layer {
-  constructor(map) {
-    this.status = 'pending'
+  constructor(id, map) {
+    this.id = id
     this.map = map
+    this.setStatus('pending')
   }
 
   show() {
@@ -14,5 +18,6 @@ export default class Layer {
 
   setStatus(status) {
     this.status = status
+    layerStatusChange(this.id, status)
   }
 }
