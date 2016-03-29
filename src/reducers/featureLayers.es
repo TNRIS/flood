@@ -1,11 +1,14 @@
 import objectAssign from 'object-assign'
 
+const flood_gauge_icon = require('../images/flood_gauge_icon.png')
+
 const initialState = {
   layers: [
     {
       'id': 'ahps-flood',
       'text': 'Flood Gauges',
       'type': 'cartodb',
+      'icon': flood_gauge_icon,
       'options': {
         'name': 'ahps-flood',
       },
@@ -14,12 +17,14 @@ const initialState = {
     {
       'id': 'animated-weather',
       'text': 'Weather Radar',
+      'icon': '',
       'type': 'animated-weather',
       'active': false,
     },
     {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
+      'icon': '',
       'type': 'cartodb',
       'options': {
         'name': 'wdft-reservoirs',

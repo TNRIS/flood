@@ -10,6 +10,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
         {layers.map(layer =>
           <FeatureLayer
             key={layer.id}
+            icon={layer.icon}
             onClick={() => onLayerClick(layer.id)}
             {...layer}
           />

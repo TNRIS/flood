@@ -54,7 +54,7 @@ export default {
       },
       {
         test: /\.(jpg|png|gif)$/,
-        loader: "file-loader"
+        loader: 'url-loader?limit=8192'
       },
       {
         test: /\.(es|jsx)$/,
