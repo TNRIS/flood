@@ -5,13 +5,12 @@ import objectAssign from 'object-assign'
 import Layer from './Layer'
 
 const floodCartoCSS = require('./cartodb/nws-ahps-gauges-texas.mss')
+const floodSQL = require('./cartodb/nws-ahps-gauges-texas.sql')
 const reservoirCartoCSS = require('./cartodb/reservoir-conditions.mss')
 
 const layerConfigs = {
   'ahps-flood': {
-    sql: `
-      SELECT * FROM nws_ahps_gauges_texas_copy
-    `,
+    sql: floodSQL,
     interactivity: [
       'lid',
       'name',

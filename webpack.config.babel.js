@@ -62,7 +62,7 @@ export default {
         loaders: ['react-hot', 'babel-loader']
       },
       {
-        test: /\.(mss)$/,
+        test: /\.(mss|sql)$/,
         loader: 'raw-loader'
       },
     ]
