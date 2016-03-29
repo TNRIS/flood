@@ -21,8 +21,8 @@ body {
   width: 100%;
 }
 
-
 .mdl-navigation__link {
+  padding-left: 10px;
   border-bottom: 2px solid #48A2C3;
 
   &:first-child {
@@ -30,11 +30,19 @@ body {
   }
 }
 
-
-.feature-layer__icon {
-  max-height: 40px;
+.feature-layer__icon-wrapper {
+  width: 60px;
+  float: left;
 }
 
+.feature-layer__icon {
+  max-height: 30px;
+  max-width: 40px;
+
+  display: block;
+  margin: 0 auto;
+
+}
 
 .mdl-menu__item.active {
   color: black;
