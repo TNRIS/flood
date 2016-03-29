@@ -60,7 +60,11 @@ export default {
         test: /\.(es|jsx)$/,
         exclude: /node_modules/,
         loaders: ['react-hot', 'babel-loader']
-      }
+      },
+      {
+        test: /\.(mss)$/,
+        loader: 'raw-loader'
+      },
     ]
   },
   resolve: {
