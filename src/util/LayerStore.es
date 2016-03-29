@@ -4,7 +4,7 @@ import FloodAlertsLayer from './FloodAlertsLayer'
 
 
 export default class LayerStore {
-  constructor(map) {
+  constructor({map}) {
     this.store = {}
     this.map = map
   }
@@ -14,19 +14,17 @@ export default class LayerStore {
       return
     }
 
-    this.store[id] = {
-      status: 'pending'
-    }
+    const layerOptions = objectAssign({}, {id, map: this.map}, options)
 
     switch (type) {
       case 'animated-weather':
-        this.store[id] = new AnimatedWeatherLayer(id, this.map, options)
+        this.store[id] = new AnimatedWeatherLayer(layerOptions)
         break
       case 'cartodb':
-        this.store[id] = new CartoDBLayer(id, this.map, options)
+        this.store[id] = new CartoDBLayer(layerOptions)
         break
       case 'flood-alerts':
-        this.store[id] = new FloodAlertsLayer(id, this.map, options)
+        this.store[id] = new FloodAlertsLayer(layerOptions)
         break
       default:
         null

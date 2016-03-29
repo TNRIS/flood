@@ -2,7 +2,7 @@ import { layerStatusChange } from '../actions'
 
 
 export default class Layer {
-  constructor(id, map) {
+  constructor({id, map}) {
     this.id = id
     this.map = map
     this.setStatus('pending')
