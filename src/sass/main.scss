@@ -21,6 +21,16 @@ body {
   width: 100%;
 }
 
+
+.mdl-navigation__link {
+  border-bottom: 2px solid #48A2C3;
+
+  &:first-child {
+    border-top: 2px solid #48A2C3;
+  }
+}
+
+
 .mdl-menu__item.active {
   color: black;
   font-weight: bold;
