@@ -17,6 +17,7 @@ const initialState = {
         'name': 'ahps-flood',
       },
       'active': true,
+      'status': null,
     },
     {
       'id': 'animated-weather',
@@ -24,6 +25,7 @@ const initialState = {
       'icon': weatherIcon,
       'type': 'animated-weather',
       'active': false,
+      'status': null,
     },
     {
       'id': 'reservoir-conditions',
@@ -34,6 +36,7 @@ const initialState = {
         'name': 'wdft-reservoirs',
       },
       'active': false,
+      'status': null,
     },
     //TODO: Removed until Aeris subscription has been purchased
     // since their advisory layers don't work under the dev plan
@@ -56,8 +59,20 @@ export default function featureLayers(state = initialState, action) {
           })
         })
       })
+    case LAYER_STATUS_CHANGE_TYPE:
       return objectAssign({}, state, {
-        layers: updatedLayers
+        layers: state.layers.map((layer) => {
+          let newLayer
+          if (layer.id === action.id) {
+            newLayer = objectAssign({}, layer, {
+              status: action.status
+            })
+          }
+          else {
+            newLayer = layer
+          }
+          return newLayer
+        })
       })
     default:
       return state
