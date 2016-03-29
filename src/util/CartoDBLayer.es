@@ -67,8 +67,8 @@ function getLayer(name) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor(id, map, {name, utfGridEvents}) {
-    super(id, map)
+  constructor({id, map, handlers, utfGridEvents}) {
+    super({id, map, handlers})
 
     this.name = name
     this.utfGridEvents = utfGridEvents
