@@ -10,7 +10,7 @@ const FeatureLayer = ({ onClick, text, icon, active }) => {
         </span>
         { text }
         <span className="feature-layer__checkbox">
-          <Checkbox checked={active} />
+          <Checkbox checked={active} readOnly />
         </span>
       </div>
     </a>
