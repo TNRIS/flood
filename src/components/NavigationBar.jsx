@@ -12,8 +12,6 @@ const NavigationBar = React.createClass({
           Basemap<Icon name="arrow_drop_down" />
         </a>
         <BaseLayerMenuContainer target="baselayer-menu" />
-        <a href="">Flood Preparation</a>
-        <a href="">About</a>
       </Navigation>
     )
   }
