@@ -19,7 +19,7 @@ const layerConfigs = {
     ],
     cartocss: floodCartoCSS,
   },
-  'wdft-reservoirs': {
+  'reservoir-conditions': {
     sql: `
       SELECT * from wdft_reservoirs_combined_copy
     `,
@@ -56,8 +56,8 @@ function getLayerFromConfig(opts) {
     })
 }
 
-function getLayer(name) {
-  const config = layerConfigs[name]
+function getLayer(id) {
+  const config = layerConfigs[id]
   const mapOptions = objectAssign({}, config, {
     sql: condenseWhitespace(config.sql),
   })
@@ -70,7 +70,6 @@ export default class CartoDBLayer extends Layer {
   constructor({id, map, handlers, utfGridEvents}) {
     super({id, map, handlers})
 
-    this.name = name
     this.utfGridEvents = utfGridEvents
     this.utfGridLayer
 
@@ -78,7 +77,7 @@ export default class CartoDBLayer extends Layer {
   }
 
   update() {
-    getLayer(this.name)
+    getLayer(this.id)
       .then((data) => {
         this.tileLayer = L.tileLayer(data.tilesUrl)
         this.setStatus('ready')
