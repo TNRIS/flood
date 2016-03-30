@@ -1,6 +1,6 @@
 import objectAssign from 'object-assign'
 
-import { SET_FEATURE_LAYER_ACTION, LAYER_STATUS_CHANGE_ACTION } from '../actions'
+import { CHANGE_LAYER_STATUS_ACTION, SET_FEATURE_LAYER_ACTION } from '../actions'
 
 const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
@@ -51,15 +51,7 @@ const initialState = {
 
 export default function featureLayers(state = initialState, action) {
   switch (action.type) {
-    case SET_FEATURE_LAYER_ACTION:
-      return objectAssign({}, state, {
-        layers: state.layers.map((layer) => {
-          return objectAssign({}, layer, {
-            active: layer.id === action.id
-          })
-        })
-      })
-    case LAYER_STATUS_CHANGE_ACTION:
+    case CHANGE_LAYER_STATUS_ACTION:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
           let newLayer
@@ -72,6 +64,14 @@ export default function featureLayers(state = initialState, action) {
             newLayer = layer
           }
           return newLayer
+        })
+      })
+    case SET_FEATURE_LAYER_ACTION:
+      return objectAssign({}, state, {
+        layers: state.layers.map((layer) => {
+          return objectAssign({}, layer, {
+            active: layer.id === action.id
+          })
         })
       })
     default:
