@@ -1,6 +1,6 @@
 import objectAssign from 'object-assign'
 
-import { SET_BASE_LAYER_TYPE } from '../actions'
+import { SET_BASE_LAYER_ACTION } from '../actions'
 
 const initialState = {
   layers: [
@@ -69,7 +69,7 @@ const initialState = {
 
 export default function baseLayers(state = initialState, action) {
   switch (action.type) {
-    case SET_BASE_LAYER_TYPE:
+    case SET_BASE_LAYER_ACTION:
       return objectAssign({}, state, {
         active: action.id
       })
