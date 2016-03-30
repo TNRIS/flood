@@ -1,6 +1,7 @@
 import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import objectAssign from 'object-assign'
+import R from 'ramda'
 
 import Layer from './Layer'
 
@@ -67,10 +68,8 @@ function getLayer(id) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor({id, map, handlers, utfGridEvents}) {
+  constructor({id, map, handlers}) {
     super({id, map, handlers})
-
-    this.utfGridEvents = utfGridEvents
     this.utfGridLayer
 
     this.update()
@@ -82,14 +81,13 @@ export default class CartoDBLayer extends Layer {
         this.tileLayer = L.tileLayer(data.tilesUrl)
         this.setStatus('ready')
 
-        if (data.gridsUrl && this.utfGridEvents) {
+        if (data.gridsUrl) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {
             useJsonP: false
           })
 
-          R.toPairs(this.utfGridEvents).forEach(([eventType, handler]) => {
-            utfGridLayer.on(eventType, handler)
-          })
+          utfGridLayer.on('mouseover', this.handlers.onMouseoverUTFGrid)
+          utfGridLayer.on('mouseout', this.handlers.onMouseoutUTFGrid)
 
           this.utfGridLayer = utfGridLayer
         }

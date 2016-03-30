@@ -89,7 +89,9 @@ const Map = React.createClass({
     this.layerStore = new LayerStore({
       map,
       handlers: {
-        layerStatusChange: this.props.onLayerStatusChange
+        layerStatusChange: this.props.onLayerStatusChange,
+        onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
+        onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
       }
     })
 
