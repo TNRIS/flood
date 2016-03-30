@@ -14,7 +14,9 @@ const Map = React.createClass({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
       active: PropTypes.string
     }),
-    onLayerStatusChange: PropTypes.func.isRequired
+    onLayerStatusChange: PropTypes.func.isRequired,
+    onMouseoutUTFGrid: PropTypes.func.isRequired,
+    onMouseoverUTFGrid: PropTypes.func.isRequired,
   },
   getInitialState() {
     return {}
