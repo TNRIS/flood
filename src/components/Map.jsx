@@ -26,6 +26,8 @@ const Map = React.createClass({
         zoom: 7,
         minZoom: 5
       })
+
+      this.map.fitBounds([[25.8371, -106.6460], [36.5007, -93.5083]])
       this.initializeLayerStore(this.props, this.map)
       this.initializeFullscreenButton()
       this.initializeGeocoderControl()
