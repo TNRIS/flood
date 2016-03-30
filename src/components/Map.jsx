@@ -14,6 +14,7 @@ const Map = React.createClass({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
       active: PropTypes.string
     }),
+    onLayerStatusChange: PropTypes.func.isRequired
   },
   getInitialState() {
     return {}
@@ -85,7 +86,12 @@ const Map = React.createClass({
     this.baseLayer.addTo(this.map).bringToBack()
   },
   initializeLayerStore(props, map) {
-    this.layerStore = new LayerStore(map)
+    this.layerStore = new LayerStore({
+      map,
+      handlers: {
+        layerStatusChange: this.props.onLayerStatusChange
+      }
+    })
 
     props.featureLayers.layers.forEach((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)

@@ -1,12 +1,15 @@
+import objectAssign from 'object-assign'
+
 import AnimatedWeatherLayer from './AnimatedWeatherLayer'
 import CartoDBLayer from './CartoDBLayer'
 import FloodAlertsLayer from './FloodAlertsLayer'
 
 
 export default class LayerStore {
-  constructor(map) {
+  constructor({ map, handlers }) {
     this.store = {}
     this.map = map
+    this.handlers = handlers
   }
 
   add(id, type, options) {
@@ -14,19 +17,17 @@ export default class LayerStore {
       return
     }
 
-    this.store[id] = {
-      status: 'pending'
-    }
+    const layerOptions = objectAssign({}, {id, handlers: this.handlers, map: this.map}, options)
 
     switch (type) {
       case 'animated-weather':
-        this.store[id] = new AnimatedWeatherLayer(this.map, options)
+        this.store[id] = new AnimatedWeatherLayer(layerOptions)
         break
       case 'cartodb':
-        this.store[id] = new CartoDBLayer(this.map, options)
+        this.store[id] = new CartoDBLayer(layerOptions)
         break
       case 'flood-alerts':
-        this.store[id] = new FloodAlertsLayer(this.map, options)
+        this.store[id] = new FloodAlertsLayer(layerOptions)
         break
       default:
         null

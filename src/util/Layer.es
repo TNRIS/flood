@@ -1,7 +1,9 @@
 export default class Layer {
-  constructor(map) {
-    this.status = 'pending'
+  constructor({ id, map, handlers }) {
+    this.id = id
     this.map = map
+    this.handlers = handlers
+    this.setStatus('pending')
   }
 
   show() {
@@ -14,5 +16,6 @@ export default class Layer {
 
   setStatus(status) {
     this.status = status
+    this.handlers.layerStatusChange(this.id, status)
   }
 }

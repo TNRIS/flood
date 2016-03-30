@@ -1,7 +1,15 @@
 import React from 'react'
-import { Checkbox } from 'react-mdl'
+import { Checkbox, Spinner } from 'react-mdl'
 
-const FeatureLayer = ({ onClick, text, icon, active }) => {
+const FeatureLayer = ({ onClick, text, icon, active, status }) => {
+  let statusIndicator
+  if (active && status !== 'ready') {
+    statusIndicator = <Spinner />
+  }
+  else {
+    statusIndicator = <Checkbox checked={active} readOnly />
+  }
+
   return (
     <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" style={{paddingLeft: '10px'}} href="">
       <div className="feature-layer__wrapper">
@@ -10,7 +18,7 @@ const FeatureLayer = ({ onClick, text, icon, active }) => {
         </span>
         { text }
         <span className="feature-layer__checkbox">
-          <Checkbox checked={active} readOnly />
+          { statusIndicator }
         </span>
       </div>
     </a>
