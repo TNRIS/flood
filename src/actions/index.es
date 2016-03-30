@@ -22,3 +22,11 @@ export const layerStatusChange = (id, status) => {
     status
   }
 }
+
+export const HOVER_OVER_MAP_CLICKABLE_TYPE = 'HOVER_OVER_MAP_CLICKABLE'
+export const hoverOverMapClickable = (data) => {
+  return {
+    type: HOVER_OVER_MAP_CLICKABLE_TYPE,
+    data,
+  }
+}
