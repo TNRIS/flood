@@ -1,7 +1,6 @@
 import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import objectAssign from 'object-assign'
-import R from 'ramda'
 
 import Layer from './Layer'
 
@@ -79,7 +78,6 @@ export default class CartoDBLayer extends Layer {
     getLayer(this.id)
       .then((data) => {
         this.tileLayer = L.tileLayer(data.tilesUrl)
-        this.setStatus('ready')
 
         if (data.gridsUrl) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {
@@ -91,6 +89,8 @@ export default class CartoDBLayer extends Layer {
 
           this.utfGridLayer = utfGridLayer
         }
+
+        this.setStatus('ready')
       })
   }
 
