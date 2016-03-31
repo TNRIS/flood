@@ -27,7 +27,7 @@ const initialState = {
           'hydrograph_link',
         ],
         'cartocss': floodCartoCSS,
-
+        'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
       },
       'active': true,
       'status': null,
@@ -55,6 +55,7 @@ const initialState = {
           'top_of_dam_elevation',
         ],
         'cartocss': reservoirCartoCSS,
+        'attribution': '<a href="http://waterdatafortexas.org/">WaterDataForTexas.org</a>',
       },
       'active': false,
       'status': null,

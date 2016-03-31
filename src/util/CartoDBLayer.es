@@ -34,12 +34,13 @@ function getLayer(options) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor({id, map, handlers, sql, interactivity, cartocss}) {
+  constructor({id, map, handlers, sql, interactivity, cartocss, attribution}) {
     super({id, map, handlers})
 
     this.cartocss = cartocss
     this.interactivity = interactivity
     this.sql = sql
+    this.attribution = attribution
 
     this.utfGridLayer
     this.update()
@@ -48,7 +49,7 @@ export default class CartoDBLayer extends Layer {
   update() {
     getLayer({cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {
-        this.tileLayer = L.tileLayer(data.tilesUrl)
+        this.tileLayer = L.tileLayer(data.tilesUrl, {attribution: this.attribution})
 
         if (data.gridsUrl) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {
