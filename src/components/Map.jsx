@@ -57,7 +57,6 @@ const Map = React.createClass({
     this.fs.dispose()
   },
   setActiveFeatureLayers(props) {
-    const leafletMap = this.map
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
     R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {
