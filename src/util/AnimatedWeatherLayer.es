@@ -28,7 +28,7 @@ export default class AnimatedWeatherLayer extends Layer {
             this.layers[time] = L.tileLayer(`${baseUrl}${time}.png`, {
               subdomains: '1234',
               opacity: 0,
-              attribution: 'Aeris Weather'  //TODO: proper attribution
+              attribution: '<a href="http://www.aerisweather.com">AerisWeather</a>'
             })
           }
         })
