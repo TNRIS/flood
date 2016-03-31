@@ -1,6 +1,3 @@
-/*
-  SQL query that joins full reservoir polygons to WaterDataForTexas flood conditions point data.
- */
 SELECT polys.cartodb_id AS cartodb_id,
   polys.the_geom_webmercator AS the_geom_webmercator,
   conditions.lake_full_name AS full_name,

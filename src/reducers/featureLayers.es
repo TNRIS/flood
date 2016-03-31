@@ -2,6 +2,11 @@ import objectAssign from 'object-assign'
 
 import { CHANGE_LAYER_STATUS_ACTION, SET_FEATURE_LAYER_ACTION } from '../actions'
 
+const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
+const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
+const reservoirCartoCSS = require('../cartodb/reservoir-conditions.mss')
+const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
+
 const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
@@ -14,7 +19,15 @@ const initialState = {
       'type': 'cartodb',
       'icon': floodGaugeIcon,
       'options': {
-        'name': 'ahps-flood',
+        'sql': floodSQL,
+        'interactivity': [
+          'lid',
+          'name',
+          'hydrograph_image',
+          'hydrograph_link',
+        ],
+        'cartocss': floodCartoCSS,
+
       },
       'active': true,
       'status': null,
@@ -33,7 +46,15 @@ const initialState = {
       'icon': boatIcon,
       'type': 'cartodb',
       'options': {
-        'name': 'wdft-reservoirs',
+        'sql': reservoirSQL,
+        'interactivity': [
+          'full_name',
+          'lake_condensed_name',
+          'flood_height_percent',
+          'conservation_pool_elevation',
+          'top_of_dam_elevation',
+        ],
+        'cartocss': reservoirCartoCSS,
       },
       'active': false,
       'status': null,

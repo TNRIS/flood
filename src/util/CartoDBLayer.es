@@ -4,42 +4,18 @@ import objectAssign from 'object-assign'
 
 import Layer from './Layer'
 
-const floodCartoCSS = require('./cartodb/nws-ahps-gauges-texas.mss')
-const floodSQL = require('./cartodb/nws-ahps-gauges-texas.sql')
-const reservoirCartoCSS = require('./cartodb/reservoir-conditions.mss')
-const reservoirSQL = require('./cartodb/reservoir-conditions.sql')
-
-const layerConfigs = {
-  'ahps-flood': {
-    sql: floodSQL,
-    interactivity: [
-      'lid',
-      'name',
-      'hydrograph_image',
-      'hydrograph_link',
-    ],
-    cartocss: floodCartoCSS,
-  },
-  'reservoir-conditions': {
-    sql: reservoirSQL,
-    interactivity: [
-      'full_name',
-      'lake_condensed_name',
-      'flood_height_percent',
-      'conservation_pool_elevation',
-      'top_of_dam_elevation',
-    ],
-    cartocss: reservoirCartoCSS,
-  }
-}
-
-
-function getLayerFromConfig(opts) {
+function getLayer(options) {
   const mapConfig = {
     version: "1.0.1",
     layers: [{
       type: 'mapnik',
-      options: objectAssign({}, {cartocss_version: "2.3.0"}, opts)
+      options: objectAssign(
+        {
+          sql: condenseWhitespace(options.sql),
+          cartocss_version: "2.3.0",
+        },
+        options
+      )
     }]
   }
 
@@ -49,33 +25,28 @@ function getLayerFromConfig(opts) {
       const urls = {
         tilesUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
       }
-      if (opts.interactivity) {
+      if (options.interactivity) {
         urls.gridsUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
       }
       return urls
     })
 }
 
-function getLayer(id) {
-  const config = layerConfigs[id]
-  const mapOptions = objectAssign({}, config, {
-    sql: condenseWhitespace(config.sql),
-  })
-
-  return getLayerFromConfig(mapOptions)
-}
-
 
 export default class CartoDBLayer extends Layer {
-  constructor({id, map, handlers}) {
+  constructor({id, map, handlers, sql, interactivity, cartocss}) {
     super({id, map, handlers})
-    this.utfGridLayer
 
+    this.cartocss = cartocss
+    this.interactivity = interactivity
+    this.sql = sql
+
+    this.utfGridLayer
     this.update()
   }
 
   update() {
-    getLayer(this.id)
+    getLayer({cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {
         this.tileLayer = L.tileLayer(data.tilesUrl)
 
