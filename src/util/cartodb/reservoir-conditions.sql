@@ -1,19 +1,14 @@
 /*
-  SQL query that joins full reservoir polygons to WaterDataForTexas reservoir conditions point data.
+  SQL query that joins full reservoir polygons to WaterDataForTexas flood conditions point data.
  */
-SELECT polys.cartodb_id as cartodb_id,
-  polys.the_geom_webmercator as the_geom_webmercator,
-  points.name as name,
-  date,
-  percent_full,
-  water_surface_elevation,
-  surface_area,
-  conservation_capacity,
-  conservation_storage,
+SELECT polys.cartodb_id AS cartodb_id,
+  polys.the_geom_webmercator AS the_geom_webmercator,
+  conditions.lake_full_name AS full_name,
+  conditions.lake_condensed_name,
+  round(flood_height_percent) AS flood_height_percent,
+  water_level,
   conservation_pool_elevation,
-  reservoir_page,
-  recent_graph,
-  historical_graph,
-  statistics_graph
-FROM wdft_reservoirs as polys
-  JOIN points on (polys.full_name = points.name)
+  top_of_dam_elevation
+FROM tnris.wdft_reservoirs AS polys
+  JOIN tnris.table_3745698116 AS conditions ON polys.condensed_ = conditions.lake_condensed_name
+WHERE flood_height_percent IS NOT NULL

@@ -7,6 +7,7 @@ import Layer from './Layer'
 const floodCartoCSS = require('./cartodb/nws-ahps-gauges-texas.mss')
 const floodSQL = require('./cartodb/nws-ahps-gauges-texas.sql')
 const reservoirCartoCSS = require('./cartodb/reservoir-conditions.mss')
+const reservoirSQL = require('./cartodb/reservoir-conditions.sql')
 
 const layerConfigs = {
   'ahps-flood': {
@@ -20,14 +21,13 @@ const layerConfigs = {
     cartocss: floodCartoCSS,
   },
   'reservoir-conditions': {
-    sql: `
-      SELECT * from wdft_reservoirs_combined_copy
-    `,
+    sql: reservoirSQL,
     interactivity: [
-      'name',
-      'reservoir_page',
-      'recent_graph',
-      'percent_full_copy',
+      'full_name',
+      'lake_condensed_name',
+      'flood_height_percent',
+      'conservation_pool_elevation',
+      'top_of_dam_elevation',
     ],
     cartocss: reservoirCartoCSS,
   }
