@@ -103,7 +103,7 @@ export default class AnimatedWeatherLayer extends Layer {
           const nextTimestampLayer = this.timestampLayers[this.visibleTimestamp]
           setVisible(nextTimestampLayer.layer)
 
-          const interval = (nextTimestampLayer.status === 'ready') ? this.validTimeInterval : 2000
+          const interval = (nextTimestampLayer.status === 'ready') ? this.validTimeInterval : this.validTimeInterval * 3
           this.animationTimeout = setTimeout(cycleWeatherLayer, interval)
         }
 
