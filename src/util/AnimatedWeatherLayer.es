@@ -118,10 +118,7 @@ export default class AnimatedWeatherLayer extends Layer {
 
     const allTimestamps = R.keys(this.timestampLayers)
     this.clearTimestamps(allTimestamps)
-
-    if (allTimestamps.length > 0) {
-      this.setStatus('not ready')
-    }
+    this.setStatus('not ready')
   }
 
   clearTimestamps(dropTimestamps) {
