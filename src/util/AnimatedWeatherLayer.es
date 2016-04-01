@@ -36,8 +36,16 @@ export default class AnimatedWeatherLayer extends Layer {
               timestamp: timestamp,
               status: 'new',
             }
+            layer.once('loading', () => {
+              this.setStatus('loading')
+              this.timestampLayers[timestamp].status = 'loading'
+            })
             layer.once('load', () => {
               this.timestampLayers[timestamp].status = 'loaded'
+              const stati = R.pluck('status')(R.values(this.timestampLayers)).filter((status) => status !== 'loaded')
+              if (stati.length === 0) {
+                this.setStatus('ready')
+              }
             })
           }
         })
@@ -91,7 +99,7 @@ export default class AnimatedWeatherLayer extends Layer {
         const nextTimestampLayer = this.timestampLayers[this.visibleTimestamp]
         setVisible(nextTimestampLayer.layer)
 
-        const interval = (nextTimestampLayer.status === 'loaded') ? this.validTimeInterval : this.validTimeInterval * 3
+        const interval = (nextTimestampLayer.status === 'loaded') ? this.validTimeInterval : 2000
         this.animationTimeout = setTimeout(cycleWeatherLayer, interval)
       }
 
