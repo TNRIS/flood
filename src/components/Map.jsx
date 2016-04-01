@@ -46,10 +46,19 @@ const Map = React.createClass({
       this.setActiveBaseLayer(nextProps)
     }
 
+    // only trigger show() and hide() on feature layers when the set of active
+    // layers has changed, or an active layer has had a status change
     const activeFeatureLayerBools = (props) => {
       return props.featureLayers.layers.map((l) => l.active === true)
     }
-    if (activeFeatureLayerBools(this.props) !== activeFeatureLayerBools(nextProps)) {
+    const activeFeaturesChanged = !R.equals(activeFeatureLayerBools(this.props), activeFeatureLayerBools(nextProps))
+
+    const activeFeatureStatuses = (props) => {
+      return props.featureLayers.layers.map((l) => l.active ? l.status : null)
+    }
+    const activeFeatureStatusesChanged = !R.equals(activeFeatureStatuses(this.props), activeFeatureStatuses(nextProps))
+
+    if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
     }
   },
