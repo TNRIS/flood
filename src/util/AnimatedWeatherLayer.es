@@ -8,9 +8,10 @@ export default class AnimatedWeatherLayer extends Layer {
   constructor(options) {
     super(options)
 
-    this.layers = {}
+    this.timestampLayers = {}
     this.validTimeInterval
-    this.weatherLayerTimeout
+    this.visibleTimestamp
+    this.animationTimeout
     this.limit = 20
 
     this.update()
@@ -23,24 +24,32 @@ export default class AnimatedWeatherLayer extends Layer {
 
         const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
         const recentTimestamps = R.compose(R.reverse, R.pluck('time'), R.take(this.limit))(data.files)
-        recentTimestamps.forEach((time) => {
-          if (!this.layers[time]) {
-            this.layers[time] = L.tileLayer(`${baseUrl}${time}.png`, {
+        recentTimestamps.forEach((timestamp) => {
+          if (!this.timestampLayers[timestamp]) {
+            const layer = L.tileLayer(`${baseUrl}${timestamp}.png`, {
               subdomains: '1234',
               opacity: 0,
               attribution: '<a href="http://www.aerisweather.com">AerisWeather</a>'
             })
+            this.timestampLayers[timestamp] = {
+              layer: layer,
+              timestamp: timestamp,
+              status: 'new',
+            }
+            layer.once('load', () => {
+              this.timestampLayers[timestamp].status = 'loaded'
+            })
           }
         })
 
-        const allTimestamps = R.keys(this.layers)
+        const allTimestamps = R.keys(this.timestampLayers)
         const dropTimestamps = R.difference(allTimestamps, recentTimestamps)
         dropTimestamps.forEach((dropTimestamp) => {
-          const dropLayer = this.layers[dropTimestamp]
+          const dropLayer = this.timestampLayers[dropTimestamp].layer
           if (this.map.hasLayer(dropLayer)) {
             this.map.removeLayer(dropLayer)
           }
-          delete this.layers[dropTimestamp]
+          delete this.timestampLayers[dropTimestamp]
         })
 
         this.setStatus('ready')
@@ -52,32 +61,38 @@ export default class AnimatedWeatherLayer extends Layer {
   }
 
   show() {
-    if (this.status === 'ready' && !this.weatherLayerTimeout) {
-      R.values(this.layers).forEach((layer) => {
+    const setVisible = (layer) => {
+      if (!this.map.hasLayer(layer)) {
+        layer.addTo(this.map).bringToFront()
+      }
+      layer.setOpacity(0.8)
+    }
+
+    if (this.status === 'ready' && !this.animationTimeout) {
+      R.values(this.timestampLayers).forEach(({layer}) => {
         layer.addTo(this.map).bringToFront()
         layer.setOpacity(0)
       })
 
-      this.visibleTimestamp = R.keys(this.layers)[0]
+      this.visibleTimestamp = R.keys(this.timestampLayers)[0]
+      const firstLayer = this.timestampLayers[this.visibleTimestamp].layer
+      setVisible(firstLayer)
 
       const cycleWeatherLayer = () => {
-        this.layers[this.visibleTimestamp].setOpacity(0)
+        const previousTimestampLayer = this.timestampLayers[this.visibleTimestamp]
+        previousTimestampLayer.layer.setOpacity(0)
 
-        const timestamps = R.keys(this.layers).sort()
+        const timestamps = R.keys(this.timestampLayers).sort()
         let i = R.indexOf(this.visibleTimestamp, timestamps)
         if (++i >= this.limit) {
           i = 0
         }
-
         this.visibleTimestamp = timestamps[i]
+        const nextTimestampLayer = this.timestampLayers[this.visibleTimestamp]
+        setVisible(nextTimestampLayer.layer)
 
-        const nextLayer = this.layers[this.visibleTimestamp]
-        if (!this.map.hasLayer(nextLayer)) {
-          nextLayer.addTo(this.map).bringToFront()
-        }
-        nextLayer.setOpacity(0.8)
-
-        this.weatherLayerTimeout = setTimeout(cycleWeatherLayer, this.validTimeInterval)
+        const interval = (nextTimestampLayer.status === 'loaded') ? this.validTimeInterval : this.validTimeInterval * 3
+        this.animationTimeout = setTimeout(cycleWeatherLayer, interval)
       }
 
       cycleWeatherLayer()
@@ -85,12 +100,11 @@ export default class AnimatedWeatherLayer extends Layer {
   }
 
   hide() {
-    if (this.weatherLayerTimeout) {
-      clearTimeout(this.weatherLayerTimeout)
-      this.weatherLayerTimeout = null
-    }
+    clearTimeout(this.animationTimeout)
+    this.animationTimeout = null
 
-    R.values(this.layers).forEach((layer) => {
+    R.values(this.timestampLayers).forEach((timestampLayer) => {
+      const layer = timestampLayer.layer
       if (this.map.hasLayer(layer)) {
         this.map.removeLayer(layer)
       }
