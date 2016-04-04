@@ -23,8 +23,11 @@
     polygon-opacity: 1;
   }
   ::outline {
-   line-width: .5;
-   line-opacity: 1;
+    [zoom <= 7] {
+      line-width: .2;
+    }
+    line-width: .5;
+    line-opacity: 1;
   }
 
 
