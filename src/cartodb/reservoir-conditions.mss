@@ -18,6 +18,12 @@
     line-join: round;
     line-cap: round;
   }
+  ::outline-glow-two {
+    line-opacity: .6;
+    line-width: 0;
+    line-join: round;
+    line-cap: round;
+  }
   ::fill {
     line-width: 0;
     polygon-opacity: 1;
@@ -37,15 +43,18 @@
       polygon-fill: @colorNope;
     }
     ::outline {
-      line-width: .3;
       line-color: darken(@colorNope, 25);
     }
     ::outline-glow {
-      line-width: 6;
-      line-opacity: .7;
-      line-color: darken(@colorNope, 5);
+      line-opacity: 1;
+      line-width: 7;
+      line-color: lighten(@colorNope, 20);
     }
-
+    ::outline-glow-two {
+      line-opacity: .9;
+      line-width: 5;
+      line-color: darken(@colorNope, 10);
+    }
   }
   [flood_height_percent > 0][flood_height_percent <= 20] {
     ::fill {
