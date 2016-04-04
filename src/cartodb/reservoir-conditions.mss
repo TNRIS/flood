@@ -1,5 +1,6 @@
+@colorNope: #ecf2f9;
 @color00: #3399FF;
-@color20: #CCFFFF;
+@color20: #4deaea;
 @color40: #FFFF99;
 @color60: #FFCC33;
 @color80: #D73027;
@@ -28,7 +29,22 @@
 
 
   // set colors for each reservoir
-  [flood_height_percent <= 20] {
+  [flood_height_percent <= 0] {
+    ::fill {
+      polygon-fill: @colorNope;
+    }
+    ::outline {
+      line-width: .3;
+      line-color: darken(@colorNope, 25);
+    }
+    ::outline-glow {
+      line-width: 6;
+      line-opacity: .7;
+      line-color: darken(@colorNope, 5);
+    }
+
+  }
+  [flood_height_percent > 0][flood_height_percent <= 20] {
     ::fill {
       polygon-fill: @color00;
     }
@@ -36,7 +52,7 @@
       line-color: darken(@color00, 20);
     }
     ::outline-glow {
-      line-color: lighten(@color00, 20);
+      line-color: lighten(@color00, 24);
     }
 
   }
@@ -45,10 +61,10 @@
       polygon-fill: @color20;
     }
     ::outline {
-      line-color: darken(@color20, 60);
+      line-color: darken(@color20, 40);
     }
     ::outline-glow {
-      line-color: lighten(@color20, 10);
+      line-color: lighten(@color20, 28);
     }
   }
   [flood_height_percent > 40][flood_height_percent <= 60] {
@@ -86,3 +102,4 @@
     }
   }
 }
+
