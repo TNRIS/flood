@@ -7,6 +7,8 @@ import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
+import PopupContainer from '../containers/PopupContainer'
+
 
 const Map = React.createClass({
   propTypes: {
@@ -170,6 +172,7 @@ const Map = React.createClass({
     return (
       <div className="map">
         <div ref="map" className="map--full">
+          <PopupContainer />
         </div>
       </div>
     )
