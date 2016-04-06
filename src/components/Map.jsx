@@ -108,6 +108,7 @@ const Map = React.createClass({
       map,
       handlers: {
         layerStatusChange: this.props.onLayerStatusChange,
+        onClickUTFGrid: this.props.onClickUTFGrid,
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
       }

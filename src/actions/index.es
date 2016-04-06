@@ -7,6 +7,14 @@ export const layerStatusChange = (id, status) => {
   }
 }
 
+export const DISPLAY_MAP_ITEM_INFO_ACTION = 'DISPLAY_MAP_ITEM_INFO'
+export const displayMapItemInfo = (data) => {
+  return {
+    type: DISPLAY_MAP_ITEM_INFO_ACTION,
+    data,
+  }
+}
+
 export const HOVER_OVER_MAP_CLICKABLE_ACTION = 'HOVER_OVER_MAP_CLICKABLE'
 export const hoverOverMapClickable = (data) => {
   return {
