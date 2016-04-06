@@ -1,3 +1,5 @@
+import L from 'leaflet'
+
 import keys from '../keys'
 import Layer from './Layer'
 

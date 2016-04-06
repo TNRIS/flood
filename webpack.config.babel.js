@@ -50,7 +50,7 @@ export default {
       {
         test: /\.css$/,
         loader: isProd ? ExtractTextPlugin.extract('css')
-          : 'style!css'
+          : 'style!css',
       },
       {
         test: /\.(jpg|png|gif)$/,
@@ -69,7 +69,13 @@ export default {
   },
   resolve: {
     // allows extension-less require/import statements for files with these extensions
-    extensions: ['', '.es', '.js', '.jsx']
+    extensions: ['', '.es', '.js', '.jsx'],
+    alias: {
+      leaflet_css: __dirname + '/node_modules/leaflet/dist/leaflet.css',
+      leaflet_marker: __dirname + '/node_modules/leaflet/dist/images/marker-icon.png',
+      leaflet_marker_2x: __dirname + '/node_modules/leaflet/dist/images/marker-icon-2x.png',
+      leaflet_marker_shadow: __dirname + '/node_modules/leaflet/dist/images/marker-shadow.png'
+    }
   },
   plugins
 }

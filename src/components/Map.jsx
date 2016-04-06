@@ -1,4 +1,4 @@
-/*global L*/
+import L from 'leaflet'
 import React, { PropTypes } from 'react'
 import R from 'ramda'
 import fullscreen from 'fullscreen'

@@ -1,3 +1,4 @@
+import L from 'leaflet'
 import objectAssign from 'object-assign'
 
 import { SET_BASE_LAYER_ACTION } from '../actions'

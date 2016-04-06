@@ -1,5 +1,6 @@
 import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
+import L from 'leaflet'
 import objectAssign from 'object-assign'
 
 import Layer from './Layer'

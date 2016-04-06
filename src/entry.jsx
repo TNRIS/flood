@@ -8,6 +8,11 @@ import rootReducer from './reducers'
 
 import './sass/main.scss'
 
+// leaflet css and assets
+import 'leaflet_css'
+import 'leaflet_marker'
+import 'leaflet_marker_2x'
+import 'leaflet_marker_shadow'
 
 // vendor css and js
 import './vendor/material.css'

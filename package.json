@@ -45,6 +45,7 @@
     "file-loader": "^0.8.5",
     "fullscreen": "^1.0.2",
     "history": "1.13.1",
+    "leaflet": "^0.7.7",
     "node-sass": "^3.3.3",
     "nodemon": "^1.4.1",
     "object-assign": "^4.0.1",
