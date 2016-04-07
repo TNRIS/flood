@@ -1,12 +1,20 @@
 import objectAssign from 'object-assign'
 
-import { HOVER_OVER_MAP_CLICKABLE_TYPE } from '../actions'
+import * as actions from '../actions'
 
 const initialState = {}
 
-export default function featureLayers(state = initialState, action) {
+export default function map(state = initialState, action) {
   switch (action.type) {
-    case HOVER_OVER_MAP_CLICKABLE_TYPE:
+    case actions.OPEN_POPUP_ACTION:
+      return objectAssign({}, state, {
+        popup: action.data
+      })
+    case actions.CLOSE_POPUP_ACTION:
+      return objectAssign({}, state, {
+        popup: action.data
+      })
+    case actions.HOVER_OVER_MAP_CLICKABLE_ACTION:
       return objectAssign({}, state, {
         hoveringOver: action.data
       })
@@ -14,5 +22,3 @@ export default function featureLayers(state = initialState, action) {
       return state
   }
 }
-
-
