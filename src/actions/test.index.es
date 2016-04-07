@@ -44,4 +44,24 @@ describe('actions', () => {
     }
     expect(actions.setFeatureLayer(id)).toEqual(expectedAction)
   })
+
+  it('should create an action for opening a popup', () => {
+    const data = {'test': 'foo'}
+
+    const expectedAction = {
+      type: actions.OPEN_POPUP_ACTION,
+      data
+    }
+    expect(actions.openPopup(data)).toEqual(expectedAction)
+  })
+
+  it('should create an action for closeing a popup', () => {
+    const data = {'test': 'foo'}
+
+    const expectedAction = {
+      type: actions.CLOSE_POPUP_ACTION,
+      data
+    }
+    expect(actions.closePopup(data)).toEqual(expectedAction)
+  })
 })

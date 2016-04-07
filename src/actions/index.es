@@ -7,18 +7,26 @@ export const layerStatusChange = (id, status) => {
   }
 }
 
-export const DISPLAY_MAP_ITEM_INFO_ACTION = 'DISPLAY_MAP_ITEM_INFO'
-export const displayMapItemInfo = (data) => {
-  return {
-    type: DISPLAY_MAP_ITEM_INFO_ACTION,
-    data,
-  }
-}
-
 export const HOVER_OVER_MAP_CLICKABLE_ACTION = 'HOVER_OVER_MAP_CLICKABLE'
 export const hoverOverMapClickable = (data) => {
   return {
     type: HOVER_OVER_MAP_CLICKABLE_ACTION,
+    data,
+  }
+}
+
+export const CLOSE_POPUP_ACTION = 'CLOSE_POPUP'
+export const closePopup = (data) => {
+  return {
+    type: CLOSE_POPUP_ACTION,
+    data,
+  }
+}
+
+export const OPEN_POPUP_ACTION = 'OPEN_POPUP'
+export const openPopup = (data) => {
+  return {
+    type: OPEN_POPUP_ACTION,
     data,
   }
 }
