@@ -1,5 +1,6 @@
 import expect from 'expect'
 
+import * as types from './types'
 import * as actions from './'
 
 describe('actions', () => {
@@ -8,7 +9,7 @@ describe('actions', () => {
     const status = 'ready'
 
     const expectedAction = {
-      type: actions.CHANGE_LAYER_STATUS_ACTION,
+      type: types.CHANGE_LAYER_STATUS,
       id,
       status
     }
@@ -19,7 +20,7 @@ describe('actions', () => {
     const data = {'test': 'foo'}
 
     const expectedAction = {
-      type: actions.HOVER_OVER_MAP_CLICKABLE_ACTION,
+      type: types.HOVER_OVER_MAP_CLICKABLE,
       data
     }
     expect(actions.hoverOverMapClickable(data)).toEqual(expectedAction)
@@ -29,7 +30,7 @@ describe('actions', () => {
     const id = 'testbaselayer'
 
     const expectedAction = {
-      type: actions.SET_BASE_LAYER_ACTION,
+      type: types.SET_BASE_LAYER,
       id
     }
     expect(actions.setBaseLayer(id)).toEqual(expectedAction)
@@ -39,7 +40,7 @@ describe('actions', () => {
     const id = 'testbaselayer'
 
     const expectedAction = {
-      type: actions.SET_FEATURE_LAYER_ACTION,
+      type: types.SET_FEATURE_LAYER,
       id
     }
     expect(actions.setFeatureLayer(id)).toEqual(expectedAction)
@@ -49,7 +50,7 @@ describe('actions', () => {
     const data = {'test': 'foo'}
 
     const expectedAction = {
-      type: actions.OPEN_POPUP_ACTION,
+      type: types.OPEN_POPUP,
       data
     }
     expect(actions.openPopup(data)).toEqual(expectedAction)
@@ -59,7 +60,7 @@ describe('actions', () => {
     const data = {'test': 'foo'}
 
     const expectedAction = {
-      type: actions.CLOSE_POPUP_ACTION,
+      type: types.CLOSE_POPUP,
       data
     }
     expect(actions.closePopup(data)).toEqual(expectedAction)
