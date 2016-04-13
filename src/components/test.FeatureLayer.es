@@ -26,13 +26,29 @@ function setup(overrides) {
 }
 
 describe('component: FeatureLayer', () => {
+  it('should render correctly', () => {
+    const { output } = setup({
+      text: 'hullo test',
+      icon: '/tarst.png',
+    })
+
+    expect(output.type).toBe('a')
+
+    let wrapperDiv = output.props.children
+    let [ icon, text, statusWrapper ] = wrapperDiv.props.children
+
+    expect(text).toBe('hullo test')
+
+    let image = icon.props.children
+    expect(image.type).toBe('img')
+    expect(image.props.src).toBe('/tarst.png')
+  })
+
   it('should render with Spinner when active and not ready', () => {
     const { output } = setup({
       status: 'pending',
       active: true,
     })
-
-    expect(output.type).toBe('a')
 
     let wrapperDiv = output.props.children
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
@@ -47,8 +63,6 @@ describe('component: FeatureLayer', () => {
       active: true,
     })
 
-    expect(output.type).toBe('a')
-
     let wrapperDiv = output.props.children
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
     let statusIndicator = statusWrapper.props.children
@@ -61,8 +75,6 @@ describe('component: FeatureLayer', () => {
       status: 'pending',
       active: false,
     })
-
-    expect(output.type).toBe('a')
 
     let wrapperDiv = output.props.children
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
