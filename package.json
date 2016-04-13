@@ -8,7 +8,7 @@
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.babel.js",
     "dist": "NODE_ENV=production bash -c 'npm run clean && npm run webpack'",
     "clean": "rm -rf ./dist/*",
-    "test": "NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.es\" --compilers js:babel-register"
+    "test": "NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.es\" --compilers js:babel-register,null:test/null-compiler"
   },
   "engines": {
     "node": ">=0.12.0",
