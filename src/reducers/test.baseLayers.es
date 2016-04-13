@@ -22,7 +22,7 @@ const extractImportant = state => {
 }
 
 
-describe('baseLayers reducer', () => {
+describe('reducer: baseLayers', () => {
   it('should return the initial state', () => {
     expect(
       extractImportant(reducer(undefined, {}))

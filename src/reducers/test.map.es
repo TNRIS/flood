@@ -7,7 +7,7 @@ import * as types from '../actions/types'
 
 
 
-describe('map reducer', () => {
+describe('reducer: map', () => {
   it('should return the initial state', () => {
     expect(
       reducer(undefined, {})

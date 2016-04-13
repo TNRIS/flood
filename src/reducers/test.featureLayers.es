@@ -24,7 +24,7 @@ const extractImportant = state => {
 }
 
 
-describe('featureLayers reducer', () => {
+describe('reducer: featureLayers', () => {
   it('should return the initial state', () => {
     expect(
       extractImportant(reducer(undefined, {}))
