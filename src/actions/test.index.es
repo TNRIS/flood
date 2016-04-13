@@ -56,7 +56,7 @@ describe('actions', () => {
     expect(actions.openPopup(data)).toEqual(expectedAction)
   })
 
-  it('should create an action for closeing a popup', () => {
+  it('should create an action for closing a popup', () => {
     const data = {'test': 'foo'}
 
     const expectedAction = {
