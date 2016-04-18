@@ -24,8 +24,6 @@ export const closePopup = (data) => {
   }
 }
 
-export const setPopup = createAction(types.SET_POPUP, data => data)
-
 export const setBaseLayer = (id) => {
   return {
     type: types.SET_BASE_LAYER,
