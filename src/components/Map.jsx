@@ -173,7 +173,7 @@ const Map = React.createClass({
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <PopupContainer />
+          <PopupContainer leafletMap={this.map} />
         </div>
       </div>
     )
