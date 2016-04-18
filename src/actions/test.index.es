@@ -46,23 +46,21 @@ describe('actions', () => {
     expect(actions.setFeatureLayer(id)).toEqual(expectedAction)
   })
 
-  it('should create an action for opening a popup', () => {
+  it('should create an action for setting a popup when defined', () => {
     const data = {'test': 'foo'}
 
     const expectedAction = {
-      type: types.OPEN_POPUP,
-      data
+      type: types.SET_POPUP,
+      payload: data
     }
-    expect(actions.openPopup(data)).toEqual(expectedAction)
+    expect(actions.setPopup(data)).toEqual(expectedAction)
   })
 
-  it('should create an action for closing a popup', () => {
-    const data = {'test': 'foo'}
-
+  it('should create an action for setting a popup when undefined', () => {
     const expectedAction = {
-      type: types.CLOSE_POPUP,
-      data
+      type: types.SET_POPUP,
+      payload: undefined
     }
-    expect(actions.closePopup(data)).toEqual(expectedAction)
+    expect(actions.setPopup()).toEqual(expectedAction)
   })
 })
