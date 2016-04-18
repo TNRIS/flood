@@ -1,4 +1,4 @@
-SELECT * FROM nws_ahps_gauges_texas_copy
+SELECT * FROM nws_ahps_gauges_texas
   LEFT JOIN
     (VALUES
       ('cc33ff', 1),
@@ -11,5 +11,5 @@ SELECT * FROM nws_ahps_gauges_texas_copy
       ('bdc2bb', 8),
       ('666666', 9)
     ) as render_order(r_obs_status, render_z)
-  ON render_order.r_obs_status = nws_ahps_gauges_texas_copy.obs_status
+  ON render_order.r_obs_status = nws_ahps_gauges_texas.obs_status
 ORDER BY render_z desc
