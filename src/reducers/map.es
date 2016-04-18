@@ -7,12 +7,15 @@ const initialState = {}
 
 export default function map(state = initialState, action) {
   switch (action.type) {
-    case types.OPEN_POPUP:
-      return objectAssign({}, state, {
-        popup: action.data
-      })
-    case types.CLOSE_POPUP:
-      return objectAssign({}, R.omit(['popup'], state))
+    case types.SET_POPUP:
+      if (action.payload) {
+        return objectAssign({}, state, {
+          popup: action.payload
+        })
+      }
+      else {
+        return objectAssign({}, R.omit(['popup'], state))
+      }
     case types.HOVER_OVER_MAP_CLICKABLE:
       return objectAssign({}, state, {
         hoveringOver: action.data

@@ -1,3 +1,5 @@
+import { createAction } from 'redux-actions'
+
 import * as types from './types'
 
 export const layerStatusChange = (id, status) => {
@@ -22,13 +24,6 @@ export const closePopup = (data) => {
   }
 }
 
-export const openPopup = (data) => {
-  return {
-    type: types.OPEN_POPUP,
-    data,
-  }
-}
-
 export const setBaseLayer = (id) => {
   return {
     type: types.SET_BASE_LAYER,
@@ -42,3 +37,5 @@ export const setFeatureLayer = (id) => {
     id
   }
 }
+
+export const setPopup = createAction(types.SET_POPUP, data => data)

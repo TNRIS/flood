@@ -17,7 +17,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.layerStatusChange(id, status))
     },
     onClickUTFGrid: (data) => {
-      dispatch(actions.openPopup(data))
+      const payload = data.data ? data : undefined
+      dispatch(actions.setPopup(payload))
     },
     onMouseoutUTFGrid: () => {
       dispatch(actions.hoverOverMapClickable())

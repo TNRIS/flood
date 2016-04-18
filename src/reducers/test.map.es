@@ -14,36 +14,37 @@ describe('reducer: map', () => {
     ).toEqual({})
   })
 
-  it('should handle OPEN_POPUP when one is not set', () => {
+  it('should handle SET_POPUP when one is not set', () => {
     expect(
       reducer({}, {
-        type: types.OPEN_POPUP,
-        data: 'hi there'
+        type: types.SET_POPUP,
+        payload: 'hi there'
       })
     ).toEqual({
       popup: 'hi there'
     })
   })
 
-  it('should handle OPEN_POPUP when one already exists', () => {
+  it('should handle SET_POPUP when one already exists', () => {
     expect(
       reducer({
         popup: 'hi there'
       }, {
-        type: types.OPEN_POPUP,
-        data: 'bye there'
+        type: types.SET_POPUP,
+        payload: 'bye there'
       })
     ).toEqual({
       popup: 'bye there'
     })
   })
 
-  it('should handle CLOSE_POPUP when popup exists', () => {
+  it('should handle SET_POPUP when popup exists and payload is undefined', () => {
     expect(
       reducer({
         popup: 'hi there'
       }, {
-        type: types.CLOSE_POPUP
+        type: types.SET_POPUP,
+        payload: undefined
       })
     ).toEqual({
     })
