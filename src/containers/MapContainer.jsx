@@ -16,8 +16,12 @@ const mapDispatchToProps = (dispatch) => {
     onLayerStatusChange: (id, status) => {
       dispatch(actions.layerStatusChange(id, status))
     },
-    onClickUTFGrid: (data) => {
-      const payload = data.data ? data : undefined
+    onClickUTFGrid: (id, data) => {
+      let payload = {}
+      if (data.data) {
+        payload.id = id
+        payload.data = data
+      }
       dispatch(actions.setPopup(payload))
     },
     onMouseoutUTFGrid: () => {
@@ -35,4 +39,3 @@ const MapContainer = connect(
 )(Map)
 
 export default MapContainer
-
