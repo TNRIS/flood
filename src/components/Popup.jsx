@@ -40,9 +40,7 @@ export default class Popup extends Component {
         this.leafletPopup._contentNode
       );
 
-      this.leafletPopup._updateLayout()
-      this.leafletPopup._updatePosition()
-      this.leafletPopup._adjustPan()
+      this.leafletPopup.update()
     }
     else {
       this.removePopupContent()
