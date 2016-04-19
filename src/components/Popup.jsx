@@ -12,19 +12,32 @@ export default class Popup extends Component {
     data: PropTypes.object,
   }
 
+  constructor () {
+    super()
+    this.maxWidth = 600
+  }
+
   componentDidMount() {
-    this.leafletPopup = L.popup()
+    this.leafletPopup = L.popup({
+      maxWidth: this.maxWidth
+    })
   }
 
   componentDidUpdate(prevProps) {
-    const { position, data } = this.props;
+    const { position, data, leafletMap } = this.props
+
+    // should only happen the first time map after map has initialized
+    if ( !prevProps.leafletMap && leafletMap ) {
+      this.updatePopupSize()
+      leafletMap.on('resize', () => this.updatePopupSize())
+    }
 
     if (position !== prevProps.position) {
-      this.leafletPopup.setLatLng(position);
+      this.leafletPopup.setLatLng(position)
     }
 
     if (data) {
-      this.leafletPopup.openOn(this.props.leafletMap)
+      this.leafletPopup.openOn(leafletMap)
     }
 
     if (this.leafletPopup._isOpen) {
@@ -38,7 +51,7 @@ export default class Popup extends Component {
       ReactDOM.render(
         rendered,
         this.leafletPopup._contentNode
-      );
+      )
 
       this.leafletPopup.update()
     }
@@ -53,11 +66,23 @@ export default class Popup extends Component {
     }
   }
 
+  updatePopupSize() {
+    const { leafletMap } = this.props
+    const size = leafletMap.getSize()
+    const newMaxWidth = size.x * 0.9
+    if (newMaxWidth != this.maxWidth) {
+      this.leafletPopup.options.maxWidth = newMaxWidth
+    }
+  }
+
   render() {
-    switch (this.props.layerId) {
+    const style = {fontSize: '2em'}
+    const { layerId } = this.props
+
+    switch (layerId) {
       case 'ahps-flood':
         return (
-          <div>
+          <div style={style}>
             flood gauge!
           </div>
       )
