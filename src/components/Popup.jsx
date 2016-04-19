@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
-
-
+import { Grid, Cell, Layout, Header, Content } from 'react-mdl'
 
 
 export default class Popup extends Component {
@@ -19,7 +18,9 @@ export default class Popup extends Component {
 
   componentDidMount() {
     this.leafletPopup = L.popup({
-      maxWidth: this.maxWidth
+      className: 'popup',
+      closeButton: false,
+      maxWidth: this.maxWidth,
     })
   }
 
@@ -82,16 +83,21 @@ export default class Popup extends Component {
     switch (layerId) {
       case 'ahps-flood':
         return (
-          <div style={style}>
-            flood gauge!
+          <div>
+            <div className="popup__title">
+              title
+            </div>
+            <div>
+              content
+            </div>
           </div>
-      )
+        )
       case 'reservoir-conditions':
         return (
           <div>
             lake!
           </div>
-      )
+        )
       default:
         return null
     }
