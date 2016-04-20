@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import Popup from '../components/Popup'
 
 const mapStateToProps = (state) => {
-  let props = {
-    popupInfo: state.map.popup
+  const props = {
+    popupInfo: state.map.popup,
+    browser: state.browser,
   }
 
   if (state.map.popup && state.map.popup.data) {
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
   return props
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {}
 }
 
