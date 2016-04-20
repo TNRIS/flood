@@ -1,10 +1,10 @@
 import React from 'react'
 import {render} from 'react-dom'
-import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 
 import App from './components/App'
-import rootReducer from './reducers'
+
+import { store } from './store'
 
 import './sass/main.scss'
 
@@ -24,10 +24,6 @@ import './vendor/leaflet.easy-button.js'
 import './vendor/leaflet.easy-button.css'
 import './vendor/Control.Geocoder.js'
 import './vendor/Control.Geocoder.css'
-
-const store = (window.devToolsExtension ?
-  window.devToolsExtension()(createStore)
-  : createStore)(rootReducer)
 
 render((
   <Provider store={store}>
