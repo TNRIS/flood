@@ -75,17 +75,22 @@ export default class Popup extends Component {
   }
 
   getPopupContent() {
-    const { layerId } = this.props
+    const { data, layerId } = this.props
 
     switch (layerId) {
       case 'ahps-flood':
         return (
           <div>
             <div className="popup__title">
-              title
+              Flood Gauge Information
             </div>
-            <div>
-              content
+            <div className="popup__content">
+              <div className="info__name">
+                { data.lid.toUpperCase() }: { data.name }
+              </div>
+              <div className="info__image">
+                <img src={ data.hydrograph_image } />
+              </div>
             </div>
           </div>
         )
