@@ -75,7 +75,6 @@ export default class Popup extends Component {
   }
 
   getPopupContent() {
-    const style = {fontSize: '2em'}
     const { layerId } = this.props
 
     switch (layerId) {
