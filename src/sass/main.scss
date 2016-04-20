@@ -36,6 +36,18 @@ body {
   }
 }
 
+.info__name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.info__img {
+  img {
+    padding: 0 30 0 30;
+  }
+}
+
+
 .mdl-navigation__link {
   padding-left: 10px;
   border-bottom: 2px solid #48A2C3;
