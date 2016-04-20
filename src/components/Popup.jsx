@@ -89,7 +89,7 @@ export default class Popup extends Component {
                 { data.lid.toUpperCase() }: { data.name }
               </div>
               <div className="info__image">
-                <img src={ data.hydrograph_image } />
+                <img onLoad={() => {this.leafletPopup.update()}} src={ data.hydrograph_image } />
               </div>
             </div>
           </div>
