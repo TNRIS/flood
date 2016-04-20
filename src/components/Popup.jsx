@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
 
+import { FloodGaugePopup } from './FloodGaugePopup'
+
+
 export default class Popup extends Component {
   static propTypes = {
     leafletMap: PropTypes.object,
@@ -70,7 +73,7 @@ export default class Popup extends Component {
     const size = leafletMap.getSize()
     const newMaxWidth = size.x * 0.9
     if (newMaxWidth != this.maxWidth) {
-      this.leafletPopup.options.maxWidth = newMaxWidth
+      this.maxWidth = this.leafletPopup.options.maxWidth = newMaxWidth
     }
   }
 
@@ -80,19 +83,7 @@ export default class Popup extends Component {
     switch (layerId) {
       case 'ahps-flood':
         return (
-          <div>
-            <div className="popup__title">
-              Flood Gauge Information
-            </div>
-            <div className="popup__content">
-              <div className="info__name">
-                { data.lid.toUpperCase() }: { data.name }
-              </div>
-              <div className="info__image">
-                <img onLoad={() => {this.leafletPopup.update()}} src={ data.hydrograph_image } />
-              </div>
-            </div>
-          </div>
+          <FloodGaugePopup {...data} maxWidth={this.maxWidth} onImageLoad={() => {this.leafletPopup.update()}} />
         )
       case 'reservoir-conditions':
         return (
