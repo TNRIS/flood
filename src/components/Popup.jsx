@@ -1,7 +1,5 @@
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
-import { Grid, Cell, Layout, Header, Content } from 'react-mdl'
-
 
 export default class Popup extends Component {
   static propTypes = {
@@ -47,10 +45,10 @@ export default class Popup extends Component {
   }
 
   renderPopupContent() {
-    const rendered = this.render()
-    if (rendered) {
+    const content = this.getPopupContent()
+    if (content) {
       ReactDOM.render(
-        rendered,
+        content,
         this.leafletPopup._contentNode
       )
 
@@ -76,7 +74,7 @@ export default class Popup extends Component {
     }
   }
 
-  render() {
+  getPopupContent() {
     const style = {fontSize: '2em'}
     const { layerId } = this.props
 
@@ -101,5 +99,9 @@ export default class Popup extends Component {
       default:
         return null
     }
+  }
+
+  render() {
+    return null
   }
 }
