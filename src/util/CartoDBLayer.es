@@ -1,5 +1,6 @@
 import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
+import L from 'leaflet'
 import objectAssign from 'object-assign'
 
 import Layer from './Layer'
@@ -56,6 +57,9 @@ export default class CartoDBLayer extends Layer {
             useJsonP: false
           })
 
+          utfGridLayer.on('click', (data) => {
+            this.handlers.onClickUTFGrid(this.id, data)
+          })
           utfGridLayer.on('mouseover', this.handlers.onMouseoverUTFGrid)
           utfGridLayer.on('mouseout', this.handlers.onMouseoutUTFGrid)
 

@@ -1,5 +1,5 @@
-/*global L*/
-import React, { PropTypes } from 'react'
+import L from 'leaflet'
+import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import fullscreen from 'fullscreen'
 
@@ -7,20 +7,26 @@ import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
+import PopupContainer from '../containers/PopupContainer'
 
-const Map = React.createClass({
-  propTypes: {
+
+export default class Map extends Component {
+  static propTypes = {
     baseLayers: PropTypes.shape({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
       active: PropTypes.string
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
+    onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
     onMouseoverUTFGrid: PropTypes.func.isRequired,
-  },
-  getInitialState() {
-    return {}
-  },
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
@@ -40,7 +46,8 @@ const Map = React.createClass({
 
       this.setActiveBaseLayer(this.props)
     }, 0)
-  },
+  }
+
   componentWillUpdate(nextProps) {
     if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
       this.setActiveBaseLayer(nextProps)
@@ -61,10 +68,12 @@ const Map = React.createClass({
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
     }
-  },
+  }
+
   componentWillUnmount() {
     this.fs.dispose()
-  },
+  }
+
   setActiveFeatureLayers(props) {
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
@@ -78,7 +87,8 @@ const Map = React.createClass({
         layer.hide()
       }
     })
-  },
+  }
+
   setActiveBaseLayer(props) {
     if (this.baseLayer) {
       this.map.removeLayer(this.baseLayer)
@@ -100,12 +110,14 @@ const Map = React.createClass({
     }
 
     this.baseLayer.addTo(this.map).bringToBack()
-  },
+  }
+
   initializeLayerStore(props, map) {
     this.layerStore = new LayerStore({
       map,
       handlers: {
         layerStatusChange: this.props.onLayerStatusChange,
+        onClickUTFGrid: this.props.onClickUTFGrid,
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
       }
@@ -114,7 +126,8 @@ const Map = React.createClass({
     props.featureLayers.layers.forEach((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
-  },
+  }
+
   initializeFullscreenButton() {
     if (!fullscreen.available()) {
       return
@@ -152,7 +165,8 @@ const Map = React.createClass({
     })
 
     this.fullscreenButton.addTo(this.map)
-  },
+  }
+
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
@@ -165,15 +179,15 @@ const Map = React.createClass({
     }
 
     control.addTo(this.map)
-  },
+  }
+
   render() {
     return (
       <div className="map">
         <div ref="map" className="map--full">
+          <PopupContainer leafletMap={this.map} />
         </div>
       </div>
     )
-  },
-})
-
-export default Map
+  }
+}

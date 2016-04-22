@@ -1,12 +1,22 @@
 import objectAssign from 'object-assign'
+import R from 'ramda'
 
-import { HOVER_OVER_MAP_CLICKABLE_TYPE } from '../actions'
+import * as types from '../actions/types'
 
 const initialState = {}
 
-export default function featureLayers(state = initialState, action) {
+export default function map(state = initialState, action) {
   switch (action.type) {
-    case HOVER_OVER_MAP_CLICKABLE_TYPE:
+    case types.SET_POPUP:
+      if (action.payload) {
+        return objectAssign({}, state, {
+          popup: action.payload
+        })
+      }
+      else {
+        return objectAssign({}, R.omit(['popup'], state))
+      }
+    case types.HOVER_OVER_MAP_CLICKABLE:
       return objectAssign({}, state, {
         hoveringOver: action.data
       })
@@ -14,5 +24,3 @@ export default function featureLayers(state = initialState, action) {
       return state
   }
 }
-
-

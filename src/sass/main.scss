@@ -1,3 +1,15 @@
+.flood-viewer {
+  font-family: 'Open Sans', sans-serif;
+
+  .leaflet-container {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  // override mdl default for padding
+  .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+    padding-right: 20px;
+  }
+}
 
 body {
   width: 100%;
@@ -21,6 +33,46 @@ body {
   width: 100%;
 }
 
+.popup {
+  .leaflet-popup-content-wrapper {
+    padding: 0 0 1px 0;
+    border-radius: 0px;
+
+    .leaflet-popup-content {
+      margin: 0 0 0 0;
+    }
+  }
+
+  .popup__title {
+    background-color: red;
+  }
+
+  .popup__title-text {
+    color: white;
+    vertical-align: middle;
+    font-size: 1.4em;
+  }
+
+  .popup__icon {
+    max-height: 30px;
+    // note: !important is to override leaflet popup img rule
+    max-width: 60px !important;
+    margin: 6px 14px 6px 14px;
+  }
+}
+
+.info__name {
+  font-weight: 600;
+  font-size: 1.5em;
+  margin: 4px 0 4px 18px;
+}
+
+.info__img {
+  img {
+    padding: 0 30 0 30;
+  }
+}
+
 .mdl-navigation__link {
   padding-left: 10px;
   border-bottom: 2px solid #48A2C3;
@@ -36,12 +88,14 @@ body {
 }
 
 .feature-layer__icon {
-  max-height: 30px;
-  max-width: 40px;
-
   display: block;
   margin: 0 auto;
+  max-height: 30px;
+  max-width: 40px;
+}
 
+.feature-layer__name {
+  margin-right: 10px;
 }
 
 .feature-layer__checkbox {

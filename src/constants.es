@@ -1,5 +1,3 @@
-export default {
-  colors: {
-    twdbBlue: '#3f556d'
-  }
+export const colors = {
+  twdbBlue: '#3f556d'
 }
