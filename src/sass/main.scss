@@ -54,7 +54,9 @@ body {
   }
 
   .popup__icon {
-    max-height: 20px;
+    max-height: 30px;
+    // note: !important is to override leaflet popup img rule
+    max-width: 60px !important;
     margin: 6px 14px 6px 14px;
   }
 }
