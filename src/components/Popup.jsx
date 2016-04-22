@@ -1,7 +1,8 @@
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
 
-import { FloodGaugePopup } from './FloodGaugePopup'
+import FloodGaugePopup from './FloodGaugePopup'
+import LakeConditionsPopup from './LakeConditionsPopup'
 
 
 export default class Popup extends Component {
@@ -66,9 +67,7 @@ export default class Popup extends Component {
         )
       case 'reservoir-conditions':
         return (
-          <div>
-            lake!
-          </div>
+          <LakeConditionsPopup {...data} popupWidth={popupWidth} updatePopup={() => {this.leafletPopup.update()}} />
         )
       default:
         return null

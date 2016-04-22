@@ -50,7 +50,7 @@ const initialState = {
         'sql': reservoirSQL,
         'interactivity': [
           'full_name',
-          'lake_condensed_name',
+          'lake_url_name',
           'flood_height_percent',
           'conservation_pool_elevation',
           'top_of_dam_elevation',

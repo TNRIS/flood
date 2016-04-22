@@ -7,7 +7,7 @@ import PopupImage from './PopupImage'
 
 const icon = require('../images/flood_gauge_white.png')
 
-export class FloodGaugePopup extends Component {
+export default class FloodGaugePopup extends Component {
   static propTypes = {
     lid: PropTypes.string,
     name: PropTypes.string,
