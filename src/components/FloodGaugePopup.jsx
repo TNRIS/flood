@@ -24,7 +24,7 @@ export default class FloodGaugePopup extends Component {
         <PopupTitle icon={icon} title="Flood Gauge Information" />
         <PopupContent>
           <PopupHeader>
-            { lid.toUpperCase() }: { name }
+            { name } ({ lid.toUpperCase() })
           </PopupHeader>
           <PopupImage src={hydrograph_image} updatePopup={updatePopup} popupWidth={popupWidth} />
         </PopupContent>
