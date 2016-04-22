@@ -17,13 +17,6 @@ export const hoverOverMapClickable = (data) => {
   }
 }
 
-export const closePopup = (data) => {
-  return {
-    type: types.CLOSE_POPUP,
-    data,
-  }
-}
-
 export const setBaseLayer = (id) => {
   return {
     type: types.SET_BASE_LAYER,
@@ -32,9 +25,13 @@ export const setBaseLayer = (id) => {
 }
 
 export const setFeatureLayer = (id) => {
-  return {
-    type: types.SET_FEATURE_LAYER,
-    id
+  return (dispatch) => {
+    dispatch(setPopup())
+
+    dispatch({
+      type: types.SET_FEATURE_LAYER,
+      id
+    })
   }
 }
 

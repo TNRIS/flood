@@ -29,6 +29,10 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const { position, data, leafletMap } = this.props
 
+    if ( (!position || !data) && leafletMap) {
+      leafletMap.closePopup(this.leafletPopup)
+    }
+
     // should only happen the first time map after map has initialized
     if ( !prevProps.leafletMap && leafletMap ) {
       this.updatePopupSize()
