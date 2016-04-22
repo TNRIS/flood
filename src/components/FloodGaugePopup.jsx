@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+const icon = require('../images/flood_gauge_white.png')
+
 export class FloodGaugePopup extends Component {
   static propTypes = {
     lid: PropTypes.string,
@@ -30,7 +32,10 @@ export class FloodGaugePopup extends Component {
     return (
       <div ref="popup">
         <div className="popup__title">
-          Flood Gauge Information!!
+          <img src={icon} className="popup__icon" />
+          <span className="popup__title-text">
+            Flood Gauge Information
+          </span>
         </div>
         <div className="popup__content">
           <div className="info__name">

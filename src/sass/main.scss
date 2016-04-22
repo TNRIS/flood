@@ -34,6 +34,18 @@ body {
   .popup__title {
     background-color: red;
   }
+
+  .popup__title-text {
+    color: white;
+    vertical-align: middle;
+    font-size: 1.4em;
+  }
+
+  .popup__icon {
+    max-height: 30px;
+    max-width: 40px;
+    margin: 4px 14px 4px 14px;
+  }
 }
 
 .info__name {
@@ -46,7 +58,6 @@ body {
     padding: 0 30 0 30;
   }
 }
-
 
 .mdl-navigation__link {
   padding-left: 10px;
@@ -63,12 +74,10 @@ body {
 }
 
 .feature-layer__icon {
-  max-height: 30px;
-  max-width: 40px;
-
   display: block;
   margin: 0 auto;
-
+  max-height: 30px;
+  max-width: 40px;
 }
 
 .feature-layer__checkbox {
