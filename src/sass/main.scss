@@ -4,6 +4,11 @@
   .leaflet-container {
     font-family: 'Open Sans', sans-serif;
   }
+
+  // override mdl default for padding
+  .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+    padding-right: 20px;
+  }
 }
 
 body {
@@ -84,6 +89,10 @@ body {
   margin: 0 auto;
   max-height: 30px;
   max-width: 40px;
+}
+
+.feature-layer__name {
+  margin-right: 10px;
 }
 
 .feature-layer__checkbox {
