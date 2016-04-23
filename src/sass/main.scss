@@ -64,20 +64,21 @@ body {
   // customize popup tip - give it a more narrow angle
   .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background: white;
-    box-shadow: 0 3px 7px rgba(0,0,0,0.4);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
   }
 
   .leaflet-popup-tip-container {
-    width: 42px;
-    height: 42px;
+    width: 70px;
+    height: 70px;
   }
 
   .leaflet-popup-tip {
-    width: 50px;
-    height: 50px;
-    margin: -39px 0px 0px -5px;
+    width: 55px;
+    height: 55px;
+    margin: -30px 0px 0px 6px;
+    padding: 1px;
 
-    $popup-tip-transform: rotate(45deg) skew(15deg, 15deg);
+    $popup-tip-transform: rotate(45deg) skew(20deg, 20deg);
     -webkit-transform: $popup-tip-transform;
     -moz-transform: $popup-tip-transform;
     -ms-transform: $popup-tip-transform;

@@ -24,6 +24,7 @@ export default class Popup extends Component {
       className: 'popup',
       closeButton: false,
       maxWidth: this.calculatePopupWidth(),
+      offset: [0, 15],
     })
   }
 
