@@ -1,3 +1,4 @@
+
 .flood-viewer {
   font-family: 'Open Sans', sans-serif;
 
@@ -58,6 +59,30 @@ body {
     // note: !important is to override leaflet popup img rule
     max-width: 60px !important;
     margin: 6px 14px 6px 14px;
+  }
+
+  // customize popup tip - give it a more narrow angle
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: white;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.4);
+  }
+
+  .leaflet-popup-tip-container {
+    width: 42px;
+    height: 42px;
+  }
+
+  .leaflet-popup-tip {
+    width: 50px;
+    height: 50px;
+    margin: -39px 0px 0px -5px;
+
+    $popup-tip-transform: rotate(45deg) skew(15deg, 15deg);
+    -webkit-transform: $popup-tip-transform;
+    -moz-transform: $popup-tip-transform;
+    -ms-transform: $popup-tip-transform;
+    -o-transform: $popup-tip-transform;
+    transform: $popup-tip-transform;
   }
 }
 
