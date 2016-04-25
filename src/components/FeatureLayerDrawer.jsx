@@ -5,7 +5,15 @@ import FeatureLayer from './FeatureLayer'
 
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
   return (
-    <Drawer>
+    <Drawer className="nav">
+      <div className="nav__head">
+        <div className="nav__title">
+          TexasFlood.org
+        </div>
+        <div className="nav__subtitle">
+          Tools for Texans to track flood conditions in their area, in real-time.
+        </div>
+      </div>
       <Navigation>
         {layers.map(layer =>
           <FeatureLayer
