@@ -87,6 +87,12 @@ body {
   font-weight: 300;
   font-size: 0.9em;
   letter-spacing: 1px;
+
+  a {
+    color: white;
+    font-weight: inherit;
+    text-decoration: inherit;
+  }
 }
 
 // override mdl drawer top padding

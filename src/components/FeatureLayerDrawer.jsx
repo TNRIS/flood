@@ -40,7 +40,9 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
       <div className="footer">
         <div className="footer__developed-by">
           Made by the <br/>
-          Texas Water Development Board
+          <a href="http://www.twdb.texas.gov">
+            Texas Water Development Board
+          </a>
         </div>
       </div>
     </Drawer>
