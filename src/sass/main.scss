@@ -295,3 +295,26 @@ body {
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+// cribbed with 💖 from https://css-tricks.com/centering-in-the-unknown/
+//  ...as a workaround for buggy IE flexbox
+//
+/* This parent can be any width and height */
+.vertically-centered__wrapper {
+  /* May want to do this if there is risk the container may be narrower than the element inside */
+  white-space: nowrap;
+}
+/* The ghost, nudged to maintain perfect centering */
+.vertically-centered__wrapper:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+/* The element to be centered, can also be of any width and height */ 
+.vertically-centered__element {
+  display: inline-block;
+  vertical-align: middle;
+}

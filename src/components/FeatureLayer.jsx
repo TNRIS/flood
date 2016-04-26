@@ -16,8 +16,10 @@ const FeatureLayer = ({ onClick, text, icon, active, status }) => {
         <div className="feature-layer__icon-wrapper">
           <img src={icon} className="feature-layer__icon" />
         </div>
-        <div className="feature-layer__name">
-          { text }
+        <div className="feature-layer__name vertically-centered__wrapper">
+          <div className="vertically-centered__element">
+            { text }
+          </div>
         </div>
         <div className="feature-layer__checkbox">
           { statusIndicator }
