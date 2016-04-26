@@ -25,6 +25,9 @@ import './vendor/leaflet.easy-button.css'
 import './vendor/Control.Geocoder.js'
 import './vendor/Control.Geocoder.css'
 
+// Promise polyfill
+require('es6-promise').polyfill()
+
 render((
   <Provider store={store}>
     <App />
