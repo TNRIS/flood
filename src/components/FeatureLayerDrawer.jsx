@@ -8,7 +8,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
     <Drawer className="nav">
       <div className="nav__head">
         <div className="nav__title">
-          TexasFlood.org
+          Texa<span className="nav__title-kernfix">s</span>Flood.org
         </div>
         <div className="nav__subtitle">
           Tools for Texans to track flood conditions in their area, in real-time.

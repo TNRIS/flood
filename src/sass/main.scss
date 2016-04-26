@@ -27,12 +27,18 @@ body {
   background-image: url(../images/flood_bg.jpg);
   background-size: 100% auto;
   color: white;
+  font-weight: 300;
+  padding-left: 4px;
 }
 
 .nav__title {
-  font-weight: bold;
+  margin: 6px auto 12px;
   font-size: 1.6em;
-  margin-bottom: 5px;
+  letter-spacing: 2px;
+}
+
+.nav__title-kernfix {
+  letter-spacing: 5px;
 }
 
 .map {
