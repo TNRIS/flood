@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Drawer, Navigation } from 'react-mdl'
 
 import FeatureLayer from './FeatureLayer'
+import ResourceLink from './ResourceLink'
 
 
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
@@ -35,6 +36,13 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
             More Resources
           </div>
         </div>
+
+        <Navigation className="resources__links">
+          <ResourceLink text="Preparing for a Flood" href="#" />
+          <ResourceLink text="Basic Safety Tips" href="#" />
+          <ResourceLink text="Watches vs Warnings" href="#" />
+          <ResourceLink text="Helpful Phone Numbers" href="#" />
+        </Navigation>
       </div>
 
       <div className="footer">

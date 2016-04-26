@@ -1,5 +1,7 @@
 $lighter-blue: #4CA1C3;
+$darker-blue: #368AAC;
 $nav-spacing-from-left: 16px;
+
 
 .flood-viewer {
   font-family: 'Open Sans', sans-serif;
@@ -48,6 +50,31 @@ body {
 .resources {
   flex: 1;
   background-color: $lighter-blue;
+
+  color: white;
+
+  a {
+    color: white;
+    font-weight: inherit;
+    text-decoration: none;
+  }
+
+  .resources__links.mdl-navigation {
+    padding-top: 8px;
+
+    a.resources__link.mdl-navigation__link {
+      padding-left: $nav-spacing-from-left + 8;
+
+      color: white;
+      font-weight: 300;
+      font-size: 1.3em;
+      letter-spacing: 1.2px;
+
+      &:hover {
+        background-color: lighten($lighter-blue, 12%);
+      }
+    }
+  }
 }
 
 .resources__title {
@@ -65,15 +92,15 @@ body {
   bottom: 0;
   left: $nav-spacing-from-left;
 
-  color: white;
   text-transform: uppercase;
   font-size: 0.9em;
   letter-spacing: 1px;
 }
 
+
 .footer {
   min-height: 50px;
-  background-color: #368AAC;
+  background-color: $darker-blue;
   color: white;
 
   position: relative;
@@ -91,7 +118,7 @@ body {
   a {
     color: white;
     font-weight: inherit;
-    text-decoration: inherit;
+    text-decoration: none;
   }
 }
 
@@ -183,10 +210,10 @@ body {
 
 .mdl-navigation__link {
   padding-left: 10px;
-  border-bottom: 2px solid #48A2C3;
+  border-bottom: 2px solid $lighter-blue;
 
   &:first-child {
-    border-top: 2px solid #48A2C3;
+    border-top: 2px solid $lighter-blue;
   }
 }
 
