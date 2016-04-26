@@ -14,7 +14,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
           Tools for Texans to track flood conditions in their area, in real-time.
         </div>
       </div>
-      <Navigation>
+      <Navigation className="nav__layers">
         {layers.map(layer =>
           <FeatureLayer
             key={layer.id}

@@ -41,6 +41,11 @@ body {
   letter-spacing: 5px;
 }
 
+// override mdl drawer top padding
+.mdl-layout__drawer .mdl-navigation.nav__layers {
+  padding-top: 0px;
+}
+
 .map {
   height: 100%;
   width: 100%;
