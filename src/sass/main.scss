@@ -16,8 +16,10 @@ body {
   }
 
   .mdl-layout__drawer {
+    box-shadow: 0 0px 8px rgba(0,0,0,0.65);
+
     // override mdl white border
-    border-right: 1px solid $lighter-blue;
+    border-right: none;
 
     // override mdl default for padding
     .mdl-navigation .mdl-navigation__link {
