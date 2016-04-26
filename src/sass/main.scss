@@ -10,9 +10,14 @@ $nav-spacing-from-left: 16px;
     font-family: 'Open Sans', sans-serif;
   }
 
-  // override mdl default for padding
-  .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
-    padding-right: 20px;
+  .mdl-layout__drawer {
+    // override mdl white border
+    border-right: 1px solid $lighter-blue;
+
+    // override mdl default for padding
+    .mdl-navigation .mdl-navigation__link {
+      padding-right: 20px;
+    }
   }
 }
 
