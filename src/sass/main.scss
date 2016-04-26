@@ -47,6 +47,10 @@ body {
   letter-spacing: 5px;
 }
 
+.nav__subtitle {
+  padding-bottom: 5px;
+}
+
 .resources {
   flex: 1;
   background-color: $lighter-blue;
@@ -208,13 +212,10 @@ body {
   max-width: 100% !important;
 }
 
-.mdl-navigation__link {
-  padding-left: 10px;
-  border-bottom: 2px solid $lighter-blue;
 
-  &:first-child {
-    border-top: 2px solid $lighter-blue;
-  }
+.feature-layer__link.mdl-navigation__link {
+  padding-left: 10px;
+  border-bottom: 1px solid $darker-blue;
 }
 
 .feature-layer__icon-wrapper {
