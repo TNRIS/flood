@@ -219,15 +219,34 @@ body {
   max-width: 100% !important;
 }
 
+// override mdl display so we can set to flexbox
+.flood-viewer .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  display: inherit;
+}
+
+.feature-layer__link {
+  min-height: 40px;
+}
 
 .feature-layer__link.mdl-navigation__link {
+  display: flex;
+  flex-direction: column;
+
   padding-left: 10px;
   border-bottom: 1px solid $darker-blue;
 }
 
+.feature-layer__wrapper {
+  display: flex;
+  flex-direction: row;
+
+  flex: 1;
+}
+
 .feature-layer__icon-wrapper {
   width: 60px;
-  float: left;
+  align-self: flex-start;
+  margin: auto;
 }
 
 .feature-layer__icon {
@@ -238,11 +257,13 @@ body {
 }
 
 .feature-layer__name {
-  margin-right: 10px;
+  flex: 1;
+  margin: auto auto auto 6px;
 }
 
 .feature-layer__checkbox {
-  float: right;
+  align-self: flex-end;
+  margin: auto;
 }
 
 .mdl-menu__item.active {

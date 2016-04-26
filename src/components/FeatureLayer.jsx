@@ -13,15 +13,15 @@ const FeatureLayer = ({ onClick, text, icon, active, status }) => {
   return (
     <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer__link mdl-navigation__link" style={{paddingLeft: '10px'}} href="">
       <div className="feature-layer__wrapper">
-        <span className="feature-layer__icon-wrapper">
+        <div className="feature-layer__icon-wrapper">
           <img src={icon} className="feature-layer__icon" />
-        </span>
-        <span className="feature-layer__name">
+        </div>
+        <div className="feature-layer__name">
           { text }
-        </span>
-        <span className="feature-layer__checkbox">
+        </div>
+        <div className="feature-layer__checkbox">
           { statusIndicator }
-        </span>
+        </div>
       </div>
     </a>
   )
