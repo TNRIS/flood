@@ -3,6 +3,7 @@ import { Drawer, Navigation } from 'react-mdl'
 
 import FeatureLayer from './FeatureLayer'
 
+
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
   return (
     <Drawer className="nav">
@@ -14,6 +15,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
           Tools for Texans to track flood conditions in their area, in real-time.
         </div>
       </div>
+
       <Navigation className="nav__layers">
         {layers.map(layer =>
           <FeatureLayer
@@ -26,6 +28,21 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
           />
         )}
       </Navigation>
+
+      <div className="resources">
+        <div className="resources__title">
+          <div className="resources__title-text">
+            More Resources
+          </div>
+        </div>
+      </div>
+
+      <div className="footer">
+        <div className="footer__developed-by">
+          Made by the <br/>
+          Texas Water Development Board
+        </div>
+      </div>
     </Drawer>
   )
 }

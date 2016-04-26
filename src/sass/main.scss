@@ -1,3 +1,5 @@
+$lighter-blue: #4CA1C3;
+$nav-spacing-from-left: 16px;
 
 .flood-viewer {
   font-family: 'Open Sans', sans-serif;
@@ -25,10 +27,12 @@ body {
 
 .nav__head {
   background-image: url(../images/flood_bg.jpg);
+  background-repeat: no-repeat;
   background-size: 100% auto;
+  background-color: #3C7E9B;
   color: white;
   font-weight: 300;
-  padding-left: 4px;
+  padding-left: $nav-spacing-from-left;
 }
 
 .nav__title {
@@ -39,6 +43,50 @@ body {
 
 .nav__title-kernfix {
   letter-spacing: 5px;
+}
+
+.resources {
+  flex: 1;
+  background-color: $lighter-blue;
+}
+
+.resources__title {
+  position: relative;
+
+  background-image: url(../images/planning_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-color: #225B6F;
+  min-height: 124px;
+}
+
+.resources__title-text {
+  position: absolute;
+  bottom: 0;
+  left: $nav-spacing-from-left;
+
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.footer {
+  min-height: 50px;
+  background-color: #368AAC;
+  color: white;
+
+  position: relative;
+}
+
+.footer__developed-by {
+  position: absolute;
+  bottom: 4px;
+  left: $nav-spacing-from-left;
+
+  font-weight: 300;
+  font-size: 0.9em;
+  letter-spacing: 1px;
 }
 
 // override mdl drawer top padding
