@@ -230,8 +230,15 @@ componentHandler = (function() {
           'Unable to find a registered component for the given class.');
       }
 
-      var ev = document.createEvent('Events');
-      ev.initEvent('mdl-componentupgraded', true, true);
+      var ev;
+      if ('CustomEvent' in window && typeof window.CustomEvent === 'function') {
+        ev = new Event('mdl-componentupgraded', {
+          'bubbles': true, 'cancelable': false
+        });
+      } else {
+        ev = document.createEvent('Events');
+        ev.initEvent('mdl-componentupgraded', true, true);
+      }
       element.dispatchEvent(ev);
     }
   }
@@ -244,10 +251,10 @@ componentHandler = (function() {
    */
   function upgradeElementsInternal(elements) {
     if (!Array.isArray(elements)) {
-      if (typeof elements.item === 'function') {
-        elements = Array.prototype.slice.call(/** @type {Array} */ (elements));
-      } else {
+      if (elements instanceof Element) {
         elements = [elements];
+      } else {
+        elements = Array.prototype.slice.call(elements);
       }
     }
     for (var i = 0, n = elements.length, element; i < n; i++) {
@@ -354,8 +361,15 @@ componentHandler = (function() {
       upgrades.splice(componentPlace, 1);
       component.element_.setAttribute('data-upgraded', upgrades.join(','));
 
-      var ev = document.createEvent('Events');
-      ev.initEvent('mdl-componentdowngraded', true, true);
+      var ev;
+      if ('CustomEvent' in window && typeof window.CustomEvent === 'function') {
+        ev = new Event('mdl-componentdowngraded', {
+          'bubbles': true, 'cancelable': false
+        });
+      } else {
+        ev = document.createEvent('Events');
+        ev.initEvent('mdl-componentdowngraded', true, true);
+      }
       component.element_.dispatchEvent(ev);
     }
   }
@@ -3176,7 +3190,7 @@ MaterialLayout.prototype.Mode_ = {
    * @private
    */
 MaterialLayout.prototype.CssClasses_ = {
-    INNER_CONTAINER: 'mdl-layout__inner-container',
+    CONTAINER: 'mdl-layout__container',
     HEADER: 'mdl-layout__header',
     DRAWER: 'mdl-layout__drawer',
     CONTENT: 'mdl-layout__content',
@@ -3345,7 +3359,12 @@ MaterialLayout.prototype['toggleDrawer'] = MaterialLayout.prototype.toggleDrawer
    */
 MaterialLayout.prototype.init = function () {
     if (this.element_) {
+        var container = document.createElement('div');
+        container.classList.add(this.CssClasses_.CONTAINER);
         var focusedElement = this.element_.querySelector(':focus');
+        this.element_.parentElement.insertBefore(container, this.element_);
+        this.element_.parentElement.removeChild(this.element_);
+        container.appendChild(this.element_);
         if (focusedElement) {
             focusedElement.focus();
         }
@@ -3386,7 +3405,7 @@ MaterialLayout.prototype.init = function () {
                 this.header_.addEventListener('click', this.headerClickHandler_.bind(this));
             } else if (this.header_.classList.contains(this.CssClasses_.HEADER_SCROLL)) {
                 mode = this.Mode_.SCROLL;
-                this.element_.classList.add(this.CssClasses_.HAS_SCROLLING_HEADER);
+                container.classList.add(this.CssClasses_.HAS_SCROLLING_HEADER);
             }
             if (mode === this.Mode_.STANDARD) {
                 this.header_.classList.add(this.CssClasses_.CASTING_SHADOW);
@@ -3522,12 +3541,6 @@ MaterialLayout.prototype.init = function () {
                 new MaterialLayoutTab(tabs[i], tabs, panels, this);
             }
         }
-        var innerContainer = document.createElement('div');
-        innerContainer.classList.add(this.CssClasses_.INNER_CONTAINER);
-        while (this.element_.firstChild) {
-            innerContainer.appendChild(this.element_.firstChild);
-        }
-        this.element_.appendChild(innerContainer);
         this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
     }
 };
@@ -3568,15 +3581,6 @@ function MaterialLayoutTab(tab, tabs, panels, layout) {
         }
     });
     tab.show = selectTab;
-    tab.addEventListener('click', function (e) {
-        e.preventDefault();
-        var href = tab.href.split('#')[1];
-        var panel = layout.content_.querySelector('#' + href);
-        layout.resetTabState_(tabs);
-        layout.resetPanelState_(panels);
-        tab.classList.add(layout.CssClasses_.IS_ACTIVE);
-        panel.classList.add(layout.CssClasses_.IS_ACTIVE);
-    });
 }
 window['MaterialLayoutTab'] = MaterialLayoutTab;
 // The component registers itself. It can assume componentHandler is available
