@@ -259,6 +259,12 @@ body {
 .feature-layer__name {
   flex: 1;
   margin: auto auto auto 6px;
+
+  color: black;
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: .4px;
+  word-spacing: 2px;
 }
 
 .feature-layer__checkbox {
