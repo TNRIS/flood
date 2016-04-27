@@ -26,6 +26,10 @@ body {
       padding-right: 20px;
     }
   }
+
+  .popup .leaflet-popup-content-wrapper {
+    padding-bottom: 0px;
+  }
 }
 
 .site-warning {
