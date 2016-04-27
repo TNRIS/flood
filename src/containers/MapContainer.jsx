@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.layerStatusChange(id, status))
     },
     onClickUTFGrid: (id, data) => {
-      let payload = {}
+      const payload = {}
       if (data.data) {
         payload.id = id
         payload.data = data
