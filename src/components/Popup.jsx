@@ -1,3 +1,4 @@
+import objectAssign from 'object-assign'
 import ReactDOM from 'react-dom'
 import React, { Component, PropTypes } from 'react'
 
@@ -20,11 +21,13 @@ export default class Popup extends Component {
   }
 
   componentDidMount() {
+    const widths = this.calculatePopupWidth()
+
     this.leafletPopup = L.popup({
       className: 'popup',
       closeButton: false,
-      maxWidth: this.calculatePopupWidth(),
       offset: [0, 15],
+      ...widths
     })
   }
 
@@ -77,8 +80,10 @@ export default class Popup extends Component {
 
   calculatePopupWidth() {
     const { leafletMap } = this.props
-    const width = leafletMap ? leafletMap.getSize().x * 0.9 : 500
-    return width
+    return {
+      maxWidth: leafletMap ? leafletMap.getSize().x * 0.9 : 500,
+      minWidth: leafletMap ? Math.min(leafletMap.getSize().x * 0.5, 599) : 270,
+    }
   }
 
   removePopupContent() {
@@ -88,7 +93,8 @@ export default class Popup extends Component {
   }
 
   updatePopupSize() {
-    this.leafletPopup.options.maxWidth = this.calculatePopupWidth()
+    const updates = this.calculatePopupWidth()
+    objectAssign(this.leafletPopup.options, updates)
 
     if (this.leafletPopup._isOpen) {
       this.leafletPopup.update()

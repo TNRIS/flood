@@ -13,12 +13,11 @@ export default class FloodGaugePopup extends Component {
     name: PropTypes.string,
     hydrograph_image: PropTypes.string,
     updatePopup: PropTypes.func,
-    popupWidth: PropTypes.number,
     browser: PropTypes.object,
   }
 
   render() {
-    const { lid, name, hydrograph_image, updatePopup, popupWidth } = this.props
+    const { lid, name, hydrograph_image, updatePopup } = this.props
     return (
       <div>
         <PopupTitle icon={icon} title="Flood Gauge Information" />
@@ -26,7 +25,7 @@ export default class FloodGaugePopup extends Component {
           <PopupHeader>
             { name } ({ lid.toUpperCase() })
           </PopupHeader>
-          <PopupImage src={hydrograph_image} updatePopup={updatePopup} popupWidth={popupWidth} />
+          <PopupImage src={hydrograph_image} updatePopup={updatePopup} />
         </PopupContent>
       </div>
     )
