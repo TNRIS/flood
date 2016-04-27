@@ -10,6 +10,8 @@
     {% if isProd %}
       <link rel="stylesheet" type="text/css" href="/assets/styles.css">
     {% endif %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body class="flood-viewer">
     <div id="reactApp"></div>
