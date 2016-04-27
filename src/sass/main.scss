@@ -122,19 +122,31 @@ body {
   position: relative;
 }
 
-.footer__developed-by {
+.footer__wrapper {
+  position: relative;
+  margin: auto;
+
+  width: 235px;
+  height: 47px;
+}
+
+.footer__made-by {
   position: absolute;
-  bottom: 4px;
-  left: $nav-spacing-from-left;
+  bottom: 0px;
+  left: 0px;
 
   font-weight: 300;
   font-size: 0.9em;
   letter-spacing: 1px;
+}
 
-  a {
-    color: white;
-    font-weight: inherit;
-    text-decoration: none;
+.footer__twdb-logo {
+  position: absolute;
+  right: 0px;
+  bottom: 1px;
+
+  img {
+    width: 145px;
   }
 }
 
