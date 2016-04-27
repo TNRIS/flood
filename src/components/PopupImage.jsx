@@ -11,9 +11,10 @@ export default class PopupImage extends Component {
 
     return (
       <div className="info__image">
-        <img ref="image" src={src} onLoad={() => {updatePopup()}}  />
+        <a href={src}>
+          <img ref="image" src={src} onLoad={() => {updatePopup()}}  />
+        </a>
       </div>
     )
   }
 }
-
