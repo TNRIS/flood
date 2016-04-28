@@ -1,5 +1,6 @@
 import objectAssign from 'object-assign'
 import ReactDOM from 'react-dom'
+import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
 
 import FloodGaugePopup from './FloodGaugePopup'
@@ -34,7 +35,7 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const { position, data, leafletMap } = this.props
 
-    if ( (!position || !data) && leafletMap) {
+    if ( leafletMap && ((!position || !data) || !R.equals(data, prevProps.data)) ) {
       leafletMap.closePopup(this.leafletPopup)
     }
 
