@@ -6,6 +6,7 @@ import objectAssign from 'object-assign'
 import Layer from './Layer'
 
 function getLayer(options) {
+  const account = options.account
   const mapConfig = {
     version: "1.0.1",
     layers: [{
@@ -20,14 +21,14 @@ function getLayer(options) {
     }]
   }
 
-  return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
+  return axios.post(`https://${account}.cartodb.com/api/v1/map/`, mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid
       const urls = {
-        tilesUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
+        tilesUrl: `https://${account}.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
       }
       if (options.interactivity) {
-        urls.gridsUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
+        urls.gridsUrl = `https://${account}.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
       }
       return urls
     })
@@ -35,9 +36,10 @@ function getLayer(options) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor({id, map, handlers, sql, interactivity, cartocss, attribution}) {
+  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution}) {
     super({id, map, handlers})
 
+    this.account = account
     this.cartocss = cartocss
     this.interactivity = interactivity
     this.sql = sql
@@ -48,7 +50,7 @@ export default class CartoDBLayer extends Layer {
   }
 
   update() {
-    getLayer({cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
+    getLayer({account: this.account, cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {
         this.tileLayer = L.tileLayer(data.tilesUrl, {attribution: this.attribution})
 
@@ -57,8 +59,8 @@ export default class CartoDBLayer extends Layer {
             useJsonP: false
           })
 
-          utfGridLayer.on('click', (data) => {
-            this.handlers.onClickUTFGrid(this.id, data)
+          utfGridLayer.on('click', (gridData) => {
+            this.handlers.onClickUTFGrid(this.id, gridData)
           })
           utfGridLayer.on('mouseover', this.handlers.onMouseoverUTFGrid)
           utfGridLayer.on('mouseout', this.handlers.onMouseoutUTFGrid)

@@ -20,6 +20,7 @@ const initialState = {
       'type': 'cartodb',
       'icon': floodGaugeIcon,
       'options': {
+        'account': 'tnris',
         'sql': floodSQL,
         'interactivity': [
           'lid',
@@ -47,6 +48,7 @@ const initialState = {
       'icon': boatIcon,
       'type': 'cartodb',
       'options': {
+        'account': 'tnris',
         'sql': reservoirSQL,
         'interactivity': [
           'full_name',
