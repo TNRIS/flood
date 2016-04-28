@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 export default class PopupImage extends Component {
   static propTypes = {
     src: PropTypes.string,
+    updatePopup: PropTypes.func,
   }
 
   render() {
