@@ -10,8 +10,8 @@ export default class AnimatedWeatherLayer extends Layer {
     super(options)
 
     this.timestampLayers = {}
-    this.validTimeInterval
     this.visibleTimestamp
+    this.animationInterval = 200
     this.animationTimeout
     this.limit = 20
 
@@ -23,8 +23,6 @@ export default class AnimatedWeatherLayer extends Layer {
 
     return axios.get(`http://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
       .then(({ data }) => {
-        this.validTimeInterval = data.validTimeInterval
-
         const baseUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
         const recentTimestamps = R.compose(R.reverse, R.pluck('time'), R.take(this.limit))(data.files)
         recentTimestamps.forEach((timestamp) => {
@@ -104,7 +102,7 @@ export default class AnimatedWeatherLayer extends Layer {
           const nextTimestampLayer = this.timestampLayers[this.visibleTimestamp]
           setVisible(nextTimestampLayer.layer)
 
-          const interval = (nextTimestampLayer.status === 'ready') ? this.validTimeInterval : this.validTimeInterval * 3
+          const interval = (nextTimestampLayer.status === 'ready') ? this.animationInterval : 1000
           this.animationTimeout = setTimeout(cycleWeatherLayer, interval)
         }
 
