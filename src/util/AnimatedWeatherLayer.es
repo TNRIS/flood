@@ -91,7 +91,9 @@ export default class AnimatedWeatherLayer extends Layer {
 
         const cycleWeatherLayer = () => {
           const previousTimestampLayer = this.timestampLayers[this.visibleTimestamp]
-          previousTimestampLayer.layer.setOpacity(0)
+          if (previousTimestampLayer) {
+            previousTimestampLayer.layer.setOpacity(0)
+          }
 
           const timestamps = R.keys(this.timestampLayers).sort()
           let i = R.indexOf(this.visibleTimestamp, timestamps)
