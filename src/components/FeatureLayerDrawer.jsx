@@ -41,6 +41,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
         <Navigation className="resources__links">
           <ResourceLink text="Preparing for a Flood" href="http://www.twdb.texas.gov/flood/flood-prep-before.asp" />
           <ResourceLink text="What to do during a Flood" href="http://www.twdb.texas.gov/flood/flood-prep-during.asp" />
+          <ResourceLink text="What to do after a Flood" href="http://www.twdb.texas.gov/flood/flood-prep-after.asp" />
           <ResourceLink text="USGS Water Dashboard" href="http://txpub.usgs.gov/txwaterdashboard/" />
         </Navigation>
       </div>
