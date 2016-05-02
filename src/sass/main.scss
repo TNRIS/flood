@@ -1,7 +1,9 @@
 $lighter-blue: #4CA1C3;
 $darker-blue: #368AAC;
-$nav-spacing-from-left: 16px;
 
+$layout-drawer-width-threshold: 400px !default;
+$nav-spacing-from-left-narrow: 6px;
+$nav-spacing-from-left-wide: 16px;
 
 body {
   width: 100%;
@@ -23,7 +25,13 @@ body {
 
     // override mdl default for padding
     .mdl-navigation .mdl-navigation__link {
-      padding-right: 20px;
+      padding-right: $nav-spacing-from-left-wide;
+      padding-left: $nav-spacing-from-left-wide - 6;
+
+      @media screen and (max-width: $layout-drawer-width-threshold) {
+        padding-right: $nav-spacing-from-left-narrow;
+        padding-left: $nav-spacing-from-left-narrow - 2;
+      }
     }
   }
 
@@ -45,8 +53,13 @@ body {
   background-color: #3C7E9B;
   color: white;
   font-weight: 300;
-  padding-left: $nav-spacing-from-left;
-  padding-right: $nav-spacing-from-left;
+  padding-left: $nav-spacing-from-left-wide;
+  padding-right: $nav-spacing-from-left-wide;
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    padding-left: $nav-spacing-from-left-narrow;
+    padding-right: $nav-spacing-from-left-narrow;
+  }
 }
 
 .nav__title {
@@ -79,12 +92,16 @@ body {
     padding-top: 8px;
 
     a.resources__link.mdl-navigation__link {
-      padding-left: $nav-spacing-from-left + 8;
+      padding-left: $nav-spacing-from-left-wide + 4;
 
       color: white;
       font-weight: 300;
       font-size: 1.3em;
       letter-spacing: 1.2px;
+
+      @media screen and (max-width: $layout-drawer-width-threshold) {
+        padding-left: $nav-spacing-from-left-narrow + 2;
+      }
 
       &:hover {
         background-color: lighten($lighter-blue, 12%);
@@ -106,13 +123,16 @@ body {
 .resources__title-text {
   position: absolute;
   bottom: 0;
-  left: $nav-spacing-from-left;
+  left: $nav-spacing-from-left-wide;
 
   text-transform: uppercase;
   font-size: 0.9em;
   letter-spacing: 1px;
-}
 
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    left: $nav-spacing-from-left-narrow;
+  }
+}
 
 .footer {
   min-height: 50px;
@@ -249,8 +269,12 @@ body {
   display: flex;
   flex-direction: column;
 
-  padding-left: 10px;
+  padding-left: $nav-spacing-from-left-wide - 6;
   border-bottom: 1px solid $darker-blue;
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    padding-left: $nav-spacing-from-left-narrow - 2;
+  }
 }
 
 .feature-layer__wrapper {
@@ -261,7 +285,7 @@ body {
 }
 
 .feature-layer__icon-wrapper {
-  width: 60px;
+  width: 50px;
   align-self: flex-start;
   margin: auto;
 }
