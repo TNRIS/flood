@@ -11,7 +11,7 @@ export default class AnimatedWeatherLayer extends Layer {
 
     this.timestampLayers = {}
     this.visibleTimestamp
-    this.animationInterval = 200
+    this.defaultAnimationInterval = 200
     this.animationTimeout
     this.limit = 20
 
@@ -97,14 +97,19 @@ export default class AnimatedWeatherLayer extends Layer {
 
           const timestamps = R.keys(this.timestampLayers).sort()
           let i = R.indexOf(this.visibleTimestamp, timestamps)
-          if (++i >= this.limit) {
-            i = 0
-          }
+          i = ++i % this.limit
+
           this.visibleTimestamp = timestamps[i]
           const nextTimestampLayer = this.timestampLayers[this.visibleTimestamp]
           setVisible(nextTimestampLayer.layer)
 
-          const interval = (nextTimestampLayer.status === 'ready') ? this.animationInterval : 1000
+          let interval = this.defaultAnimationInterval
+          if (nextTimestampLayer.status !== 'ready') {
+            interval = 1000
+          }
+          else if (i === (this.limit - 1)) {
+            interval = 1500
+          }
           this.animationTimeout = setTimeout(cycleWeatherLayer, interval)
         }
 
