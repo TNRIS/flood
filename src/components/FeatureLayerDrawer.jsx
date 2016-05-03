@@ -5,13 +5,16 @@ import FeatureLayer from './FeatureLayer'
 import ResourceLink from './ResourceLink'
 
 import TWDBLogoImage from '../images/twdb_white.png'
+import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
   return (
     <Drawer className="nav">
       <div className="nav__head">
         <div className="nav__title">
-          Texa<span className="nav__title-kernfix">s</span>Flood.org
+          <a href="http://texasflood.org">
+            <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo" />
+          </a>
         </div>
         <div className="nav__subtitle">
           Tools for Texans to track flood conditions in their area, in real-time.
