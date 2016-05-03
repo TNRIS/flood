@@ -64,6 +64,9 @@ body {
 
 .nav__title {
   margin: 13px auto 10px;
+  img {
+    max-width: 100%;
+  }
 }
 
 .nav__subtitle {
