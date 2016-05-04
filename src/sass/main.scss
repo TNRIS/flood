@@ -49,8 +49,8 @@ body {
 .nav__head {
   background-image: url(../images/flood_bg.jpg);
   background-repeat: no-repeat;
-  background-size: auto 100%;
-  background-color: #3C7E9B;
+  background-size: 100% auto;
+  background-color: #123469;
   color: white;
   font-weight: 300;
   padding-left: $nav-spacing-from-left-wide;
@@ -67,11 +67,19 @@ body {
   img {
     max-width: 100%;
   }
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    margin: 8px auto 10px;
+  }
 }
 
 .nav__subtitle {
-  margin: 22px auto 10px auto;
+  margin: 30px auto 10px auto;
   text-shadow: 1px 1px 5px black, 1px 1px 2px black;
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    margin: 20px auto 10px auto;
+  }
 }
 
 .resources {
@@ -352,7 +360,7 @@ body {
   vertical-align: middle;
 }
 
-/* The element to be centered, can also be of any width and height */ 
+/* The element to be centered, can also be of any width and height */
 .vertically-centered__element {
   display: inline-block;
   vertical-align: middle;
