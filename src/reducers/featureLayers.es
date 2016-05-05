@@ -10,6 +10,7 @@ const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
 
 const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
+const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
 
 const initialState = {
@@ -39,6 +40,17 @@ const initialState = {
       'text': 'Weather Radar',
       'icon': weatherIcon,
       'type': 'animated-weather',
+      'active': false,
+      'status': null,
+    },
+    {
+      'id': 'future-rain',
+      'text': 'Rain Forecast',
+      'icon': rainIcon,
+      'type': 'aeris-tile',
+      'options': {
+        'code': 'fqpf-nam4k'
+      },
       'active': false,
       'status': null,
     },
