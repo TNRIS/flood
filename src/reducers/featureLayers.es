@@ -2,7 +2,6 @@ import objectAssign from 'object-assign'
 
 import * as types from '../actions/types'
 
-
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const reservoirCartoCSS = require('../cartodb/reservoir-conditions.mss')

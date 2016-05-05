@@ -13,12 +13,12 @@ export default class TileLayer extends Layer {
     this.initLayer()
   }
 
-  initLayer() {
+  initLayer(options) {
     if (this.layerUrl) {
       this.layer = L.tileLayer(this.layerUrl, {
         subdomains: '1234',
         opacity: 0.6,
-        attribution: 'Aeris Weather'
+        ...options
       })
 
       this.setStatus('ready')
