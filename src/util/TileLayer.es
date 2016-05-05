@@ -5,11 +5,12 @@ import Layer from './Layer'
 
 //TODO: advisory map layers requires an Aeris subscription - they are not available under the development plan
 export default class TileLayer extends Layer {
-  constructor(options) {
+  constructor({ refreshTimeMs, layerUrl, ...options }) {
     super(options)
     this.refreshIntervalId = null
-    this.refreshTimeMs = 3600000 // 1 hour
-    this.layerUrl
+    this.refreshTimeMs = refreshTimeMs ? refreshTimeMs : 3600000 // default to 1 hour
+    this.layerUrl = layerUrl
+    this.initLayer()
   }
 
   initLayer() {
@@ -21,6 +22,8 @@ export default class TileLayer extends Layer {
       })
 
       this.setStatus('ready')
+    } else {
+      this.setStatus('not ready')
     }
   }
 

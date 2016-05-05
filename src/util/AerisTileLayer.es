@@ -7,9 +7,6 @@ import TileLayer from './TileLayer'
 export default class AerisTileLayer extends TileLayer {
   constructor(options) {
     super(options)
-    this.refreshIntervalId = null
-    this.refreshTimeMs = 300000 // 5 minutes
-
     this.layerUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/${options.code}/{z}/{x}/{y}/0.png`
     this.initLayer()
   }

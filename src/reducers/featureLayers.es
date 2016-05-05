@@ -49,7 +49,8 @@ const initialState = {
       'icon': rainIcon,
       'type': 'aeris-tile',
       'options': {
-        'code': 'fqpf-nam4k'
+        'code': 'fqpf-nam4k',
+        'refreshTimeMs': 300000 // 5 minutes
       },
       'active': false,
       'status': null,
