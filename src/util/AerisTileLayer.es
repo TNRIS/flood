@@ -9,7 +9,8 @@ export default class AerisTileLayer extends TileLayer {
     super(options)
     this.layerUrl = `https://tile{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/${options.code}/{z}/{x}/{y}/0.png`
     this.initLayer({
-      attribution: '<a href="http://www.aerisweather.com">AerisWeather</a>'
+      attribution: '<a href="http://www.aerisweather.com">AerisWeather</a>',
+      ...options
     })
   }
 }

@@ -49,7 +49,8 @@ const initialState = {
       'type': 'aeris-tile',
       'options': {
         'code': 'fqpf-nam4k',
-        'refreshTimeMs': 300000 // 5 minutes
+        'refreshTimeMs': 300000, // 5 minutes
+        'opacity': 0.7
       },
       'active': false,
       'status': null,

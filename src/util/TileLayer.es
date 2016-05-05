@@ -17,7 +17,6 @@ export default class TileLayer extends Layer {
     if (this.layerUrl) {
       this.layer = L.tileLayer(this.layerUrl, {
         subdomains: '1234',
-        opacity: 0.6,
         ...options
       })
 
