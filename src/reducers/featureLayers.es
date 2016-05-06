@@ -56,6 +56,19 @@ const initialState = {
       'status': null,
     },
     {
+      'id': 'flood-alerts',
+      'text': 'Flood Alerts',
+      'icon': '',
+      'type': 'aeris-alerts',
+      'options': {
+        'code': 'alerts-flood',
+        'refreshTimeMs': 300000, // 5 minutes
+        'opacity': 0.7
+      },
+      'active': false,
+      'status': null,
+    },
+    {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
       'icon': boatIcon,

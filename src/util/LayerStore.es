@@ -1,9 +1,9 @@
 import objectAssign from 'object-assign'
 
+import AerisAlertsLayer from './AerisAlertsLayer'
 import AerisTileLayer from './AerisTileLayer'
 import AnimatedWeatherLayer from './AnimatedWeatherLayer'
 import CartoDBLayer from './CartoDBLayer'
-import FloodAlertsLayer from './FloodAlertsLayer'
 
 
 export default class LayerStore {
@@ -24,14 +24,14 @@ export default class LayerStore {
       case 'aeris-tile':
         this.store[id] = new AerisTileLayer(layerOptions)
         break
+      case 'aeris-alerts':
+        this.store[id] = new AerisAlertsLayer(layerOptions)
+        break
       case 'animated-weather':
         this.store[id] = new AnimatedWeatherLayer(layerOptions)
         break
       case 'cartodb':
         this.store[id] = new CartoDBLayer(layerOptions)
-        break
-      case 'flood-alerts':
-        this.store[id] = new FloodAlertsLayer(layerOptions)
         break
       default:
         null
