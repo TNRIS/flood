@@ -17,7 +17,7 @@ const initialState = {
   layers: [
     {
       'id': 'ahps-flood',
-      'text': 'Flood Gauges',
+      'text': 'Flood Gages',
       'type': 'cartodb',
       'icon': floodGaugeIcon,
       'options': {
