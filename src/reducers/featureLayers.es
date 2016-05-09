@@ -9,6 +9,7 @@ const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
 
 const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
+const floodAlertIcon = require('../images/flood_alert_red.png')
 const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
 
@@ -58,7 +59,7 @@ const initialState = {
     {
       'id': 'flood-alerts',
       'text': 'Flood Alerts',
-      'icon': '',
+      'icon': floodAlertIcon,
       'type': 'aeris-alerts',
       'options': {
         'code': 'alerts-flood',
