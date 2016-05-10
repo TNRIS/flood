@@ -17,7 +17,8 @@ export default class FloodGaugePopup extends Component {
   }
 
   render() {
-    const { lid, name, hydrograph_image, updatePopup } = this.props
+    const { lid, name, updatePopup } = this.props
+    const hydrographImage = `http://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
     return (
       <div>
         <PopupTitle icon={icon} title="Flood Gage Information" />
@@ -25,7 +26,7 @@ export default class FloodGaugePopup extends Component {
           <PopupHeader>
             { name } ({ lid.toUpperCase() })
           </PopupHeader>
-          <PopupImage src={hydrograph_image} updatePopup={updatePopup} />
+          <PopupImage src={hydrographImage} updatePopup={updatePopup} />
         </PopupContent>
       </div>
     )
