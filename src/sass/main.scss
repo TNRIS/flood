@@ -35,10 +35,6 @@ body {
     }
   }
 
-  .mdl-mega-footer {
-    background-color: $darker-blue;
-  }
-
   .popup .leaflet-popup-content-wrapper {
     padding-bottom: 0px;
   }
@@ -87,8 +83,8 @@ body {
 }
 
 .resources {
+  flex-grow: 1;
   background-color: $lighter-blue;
-
   color: white;
 
   a {
@@ -144,12 +140,11 @@ body {
 }
 
 .footer {
-  height: 50px;
+  min-height: 50px;
   background-color: $darker-blue;
+  color: white;
 
-  position: absolute;
-  display: block;
-  width: 100%;
+  position: relative;
 }
 
 .footer__wrapper {
@@ -161,7 +156,6 @@ body {
 }
 
 .footer__made-by {
-  color: white;
   position: absolute;
   bottom: 0px;
   left: 0px;

@@ -10,44 +10,42 @@ import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
   return (
     <Drawer className="nav">
-      <div class="page-wrap">
-        <div className="nav__head">
-          <div className="nav__title">
-            <a href="http://texasflood.org">
-              <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo" />
-            </a>
-          </div>
-          <div className="nav__subtitle">
-            Tools for Texans to track flood conditions in their area, in real-time.
+      <div className="nav__head">
+        <div className="nav__title">
+          <a href="http://texasflood.org">
+            <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo" />
+          </a>
+        </div>
+        <div className="nav__subtitle">
+          Tools for Texans to track flood conditions in their area, in real-time.
+        </div>
+      </div>
+
+      <Navigation className="nav__layers">
+        {layers.map(layer =>
+          <FeatureLayer
+            key={layer.id}
+            icon={layer.icon}
+            active={layer.active}
+            status={layer.status}
+            onClick={() => onLayerClick(layer.id)}
+            {...layer}
+          />
+        )}
+      </Navigation>
+
+      <div className="resources">
+        <div className="resources__title">
+          <div className="resources__title-text">
+            More Resources
           </div>
         </div>
 
-        <Navigation className="nav__layers">
-          {layers.map(layer =>
-            <FeatureLayer
-              key={layer.id}
-              icon={layer.icon}
-              active={layer.active}
-              status={layer.status}
-              onClick={() => onLayerClick(layer.id)}
-              {...layer}
-            />
-          )}
+        <Navigation className="resources__links">
+          <ResourceLink text="Preparing Before Flood" href="http://www.twdb.texas.gov/flood/prep/before.asp" />
+          <ResourceLink text="Being Safe During Flood" href="http://www.twdb.texas.gov/flood/prep/during.asp" />
+          <ResourceLink text="Recovering After Flood" href="http://www.twdb.texas.gov/flood/prep/after.asp" />
         </Navigation>
-
-        <div className="resources">
-          <div className="resources__title">
-            <div className="resources__title-text">
-              More Resources
-            </div>
-          </div>
-
-          <Navigation className="resources__links">
-            <ResourceLink text="Preparing Before Flood" href="http://www.twdb.texas.gov/flood/prep/before.asp" />
-            <ResourceLink text="Being Safe During Flood" href="http://www.twdb.texas.gov/flood/prep/during.asp" />
-            <ResourceLink text="Recovering After Flood" href="http://www.twdb.texas.gov/flood/prep/after.asp" />
-          </Navigation>
-        </div>
       </div>
 
       <div className="footer">
