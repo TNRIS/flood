@@ -18,42 +18,42 @@
     marker-width: 10;
     marker-line-opacity: 0.6;
     marker-line-width: 1;
-    marker-line-color: #000;   
+    marker-line-color: #000;
     marker-fill-opacity: 0.9;
 
-    [obs_status = 'cc33ff'] {
+    [sigstage = 'major'] {
       marker-fill: #cc33ff;
     }
 
-    [obs_status = 'ff0000'] {
+    [sigstage = 'moderate'] {
       marker-fill: #ff0000;
     }
 
-    [obs_status = 'ff9900'] {
+    [sigstage = 'flood'] {
       marker-fill: #ff9900;
     }
 
-    [obs_status = 'ffff00'] {
+    [sigstage = 'action'] {
       marker-fill: #ffff00;
     }
 
-    [obs_status = '00ff00'] {
+    [sigstage = 'no flooding'] {
       marker-fill: #00ff00;
     }
 
-    [obs_status = '72afe9'] {
+    [sigstage = 'not defined'] {
       marker-fill: #72afe9;
     }
 
-    [obs_status = '906320'] {
+    [sigstage = 'low'] {
       marker-fill: #906320;
     }
 
-    [obs_status = 'bdc2bb'] {
+    [status = 'observations not current'] {
       marker-fill: #bdc2bb;
     }
 
-    [obs_status = '666666'] {
+    [status = 'out of service'] {
       marker-fill: #666666;
     }
   }

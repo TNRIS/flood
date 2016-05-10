@@ -21,7 +21,7 @@ const initialState = {
       'type': 'cartodb',
       'icon': floodGaugeIcon,
       'options': {
-        'account': 'tnris',
+        'account': 'tnris-flood',
         'sql': floodSQL,
         'interactivity': [
           'lid',
