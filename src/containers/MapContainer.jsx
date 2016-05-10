@@ -16,6 +16,14 @@ const mapDispatchToProps = (dispatch) => {
     onLayerStatusChange: (id, status) => {
       dispatch(actions.layerStatusChange(id, status))
     },
+    onClickAlerts: (id, data) => {
+      const payload = {}
+      if (data.data) {
+        payload.id = id
+        payload.data = data
+      }
+      dispatch(actions.setPopup(payload))
+    },
     onClickUTFGrid: (id, data) => {
       const payload = {}
       if (data.data) {
