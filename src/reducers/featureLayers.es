@@ -26,8 +26,7 @@ const initialState = {
         'interactivity': [
           'lid',
           'name',
-          'hydrograph_image',
-          'hydrograph_link',
+          'wfo',
         ],
         'cartocss': floodCartoCSS,
         'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
