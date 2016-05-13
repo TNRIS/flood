@@ -191,6 +191,14 @@ body {
   width: 100%;
 }
 
+.map__cursor--pointer {
+  cursor: pointer;
+
+  &.leaflet-container {
+    cursor: pointer;
+  }
+}
+
 .popup {
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;

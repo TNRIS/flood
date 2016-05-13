@@ -76,6 +76,10 @@ export default class Map extends Component {
   }
 
   setActiveFeatureLayers(props) {
+    // TODO: this should be cleaned up - this way of setting the cursor is
+    // really not the right way to do things
+    this.map._container.classList.toggle('map__cursor--pointer', false)
+
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
     R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {
@@ -83,6 +87,10 @@ export default class Map extends Component {
 
       if (isActive) {
         layer.show()
+
+        if (layer.id === 'flood-alerts') {
+          this.map._container.classList.toggle('map__cursor--pointer', true)
+        }
       }
       else if (!isActive) {
         layer.hide()
