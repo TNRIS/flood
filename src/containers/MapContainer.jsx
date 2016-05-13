@@ -12,26 +12,21 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+  function clickHandler(id, data) {
+    const payload = {}
+    if (data.data) {
+      payload.id = id
+      payload.data = data
+    }
+    dispatch(actions.setPopup(payload))
+  }
+
   return {
     onLayerStatusChange: (id, status) => {
       dispatch(actions.layerStatusChange(id, status))
     },
-    onClickAlerts: (id, data) => {
-      const payload = {}
-      if (data.data) {
-        payload.id = id
-        payload.data = data
-      }
-      dispatch(actions.setPopup(payload))
-    },
-    onClickUTFGrid: (id, data) => {
-      const payload = {}
-      if (data.data) {
-        payload.id = id
-        payload.data = data
-      }
-      dispatch(actions.setPopup(payload))
-    },
+    onClickAlerts: clickHandler,
+    onClickUTFGrid: clickHandler,
     onMouseoutUTFGrid: () => {
       dispatch(actions.hoverOverMapClickable())
     },
