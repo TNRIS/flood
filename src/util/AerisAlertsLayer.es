@@ -11,8 +11,10 @@ function getAdvisoryInfo({latitude, longitude}) {
     client_id: keys.aerisApiId,
     client_secret: keys.aerisApiSecret,
     p: `${latitude},${longitude}`,
+    radius: '20mi',
     limit: 100,
     active: 1,
+    sort: 'sigp',
   }
 
   return axios.get(queryURL, { params: queryParams })
