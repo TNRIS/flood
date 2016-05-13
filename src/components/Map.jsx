@@ -17,6 +17,7 @@ export default class Map extends Component {
       active: PropTypes.string
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
+    onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
     onMouseoverUTFGrid: PropTypes.func.isRequired,
@@ -117,6 +118,7 @@ export default class Map extends Component {
       map,
       handlers: {
         layerStatusChange: this.props.onLayerStatusChange,
+        onClickAlerts: this.props.onClickAlerts,
         onClickUTFGrid: this.props.onClickUTFGrid,
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 
-export default class PopupContent extends Component {
+export default class PopupText extends Component {
   render() {
     return (
-      <div className="popup__content">
+      <div className="info__text">
         { this.props.children }
       </div>
     )

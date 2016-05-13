@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
 
+import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
@@ -44,7 +45,7 @@ export default class Popup extends Component {
       this.updatePopupSize()
     }
 
-    if (prevProps.browser.width !== this.props.browser.width) {
+    if (prevProps.browser.width !== this.props.browser.width || prevProps.browser.height !== this.props.browser.height) {
       this.updatePopupSize()
     }
 
@@ -74,6 +75,10 @@ export default class Popup extends Component {
         return (
           <LakeConditionsPopup {...data} popupWidth={popupWidth} updatePopup={() => {this.leafletPopup.update()}} />
         )
+      case 'flood-alerts':
+        return (
+          <FloodAlertsPopup {...data} popupWidth={popupWidth} updatePopup={() => {this.updatePopupSize()}} />
+        )
       default:
         return null
     }
@@ -84,6 +89,7 @@ export default class Popup extends Component {
     return {
       maxWidth: leafletMap ? leafletMap.getSize().x * 0.9 : 500,
       minWidth: leafletMap ? Math.min(leafletMap.getSize().x * 0.5, 599) : 270,
+      maxHeight: leafletMap ? leafletMap.getSize().y * 0.9 : 500,
     }
   }
 
