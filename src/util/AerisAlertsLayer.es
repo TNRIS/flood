@@ -1,5 +1,5 @@
 import axios from 'axios'
-import L from 'leaflet'
+import R from 'ramda'
 
 import keys from '../keys'
 import AerisTileLayer from './AerisTileLayer'
@@ -11,14 +11,16 @@ function getAdvisoryInfo({latitude, longitude}) {
     client_id: keys.aerisApiId,
     client_secret: keys.aerisApiSecret,
     p: `${latitude},${longitude}`,
-    radius: '25mi',
-    filter: 'flood',
-    query: 'sigp:1:3:5:9:7:11',
-    active: '1',
+    limit: 100,
+    active: 1,
   }
 
   return axios.get(queryURL, { params: queryParams })
     .then(({ data }) => {
+      const uniqueResponses = R.uniqBy((response) => {
+        return R.pick(['name', 'body'], response.details)
+      }, data.response)
+      data.response = uniqueResponses
       return data
     })
 }
