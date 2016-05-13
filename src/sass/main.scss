@@ -210,6 +210,8 @@ body {
   }
 
   .popup__title {
+    position: absolute;
+    width: 100%;
     background-color: red;
   }
 
@@ -218,6 +220,10 @@ body {
     vertical-align: middle;
     font-size: 1.4em;
     margin-right: 18px;
+  }
+
+  .popup__content {
+    padding-top: 50px;
   }
 
   .popup__icon {
