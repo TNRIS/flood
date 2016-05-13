@@ -23,7 +23,7 @@ export default class FloodAlertsPopup extends Component {
     const { response } = this.props
     return (
       <div>
-        <PopupTitle icon={icon} title="Flood Alert Information" />
+        <PopupTitle icon={icon} title="Weather Alert Information" />
         <PopupContent>
           {response.map(({ details }) => {
             const id = hash(details, { algorithm: 'md5', encoding: 'base64' })

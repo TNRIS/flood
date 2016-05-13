@@ -58,7 +58,7 @@ const initialState = {
     },
     {
       'id': 'flood-alerts',
-      'text': 'Flood Alerts',
+      'text': 'Weather Alerts',
       'icon': floodAlertIcon,
       'type': 'aeris-alerts',
       'options': {
