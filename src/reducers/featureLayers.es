@@ -62,7 +62,7 @@ const initialState = {
       'icon': floodAlertIcon,
       'type': 'aeris-alerts',
       'options': {
-        'code': 'alerts-flood',
+        'code': 'alerts',
         'refreshTimeMs': 300000, // 5 minutes
         'opacity': 0.7
       },
