@@ -347,7 +347,11 @@ body {
 
   img {
     max-width: 208px;
-    margin-left: 43px;
+    margin: 4px 0 0 56px;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-left: 16px;
+    }
   }
 }
 
