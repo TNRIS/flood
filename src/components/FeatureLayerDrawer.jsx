@@ -28,6 +28,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
             icon={layer.icon}
             active={layer.active}
             status={layer.status}
+            legend={layer.legend}
             onClick={() => onLayerClick(layer.id)}
             {...layer}
           />

@@ -7,11 +7,14 @@ const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const reservoirCartoCSS = require('../cartodb/reservoir-conditions.mss')
 const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
 
-const boatIcon = require('../images/boat_icon.png')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
+const floodGaugeLegend = require('../images/nws-ahps-gauges-texas-legend.png')
 const floodAlertIcon = require('../images/flood_alert_red.png')
+const lakeIcon = require('../images/boat_icon.png')
+const lakeLegend = require('../images/reservoir-conditions-legend.png')
 const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
+
 
 const initialState = {
   layers: [
@@ -20,6 +23,7 @@ const initialState = {
       'text': 'Flood Gages',
       'type': 'cartodb',
       'icon': floodGaugeIcon,
+      'legend': floodGaugeLegend,
       'options': {
         'account': 'tnris-flood',
         'sql': floodSQL,
@@ -71,7 +75,8 @@ const initialState = {
     {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
-      'icon': boatIcon,
+      'icon': lakeIcon,
+      'legend': lakeLegend,
       'type': 'cartodb',
       'options': {
         'account': 'tnris',

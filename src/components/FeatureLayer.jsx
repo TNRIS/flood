@@ -5,14 +5,16 @@ import { Checkbox, Spinner } from 'react-mdl'
 export default class FeatureLayer extends Component {
   static propTypes = {
     active: PropTypes.bool,
+    children: PropTypes.array,
     icon: PropTypes.string,
+    legend: PropTypes.string,
     onClick: PropTypes.func,
     status: PropTypes.string,
     text: PropTypes.string,
   }
 
   render() {
-    const { onClick, text, icon, active, status } = this.props
+    const { onClick, text, icon, legend, active, status } = this.props
 
     let statusIndicator
     if (active && status !== 'ready') {
@@ -20,6 +22,15 @@ export default class FeatureLayer extends Component {
     }
     else {
       statusIndicator = <Checkbox checked={active} readOnly />
+    }
+
+    let legendElement
+    if (active && legend) {
+      legendElement = (
+        <div className="feature-layer__legend">
+          <img src={legend} />
+        </div>
+      )
     }
 
     return (
@@ -37,6 +48,8 @@ export default class FeatureLayer extends Component {
             { statusIndicator }
           </div>
         </div>
+
+        { legendElement }
       </a>
     )
   }

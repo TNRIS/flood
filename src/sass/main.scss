@@ -341,6 +341,16 @@ body {
   margin: auto;
 }
 
+.feature-layer__legend {
+  margin: auto;
+  width: 100%;
+
+  img {
+    max-width: 208px;
+    margin-left: 43px;
+  }
+}
+
 .mdl-menu__item.active {
   color: black;
   font-weight: bold;
