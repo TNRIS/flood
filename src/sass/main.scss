@@ -229,7 +229,7 @@ body {
   .popup__icon {
     max-height: 30px;
     // note: !important is to override leaflet popup img rule
-    max-width: 60px !important;
+    max-width: 50px !important;
     margin: 6px 14px 6px 14px;
   }
 
@@ -265,6 +265,7 @@ body {
   margin: 4px 18px 0px 18px;
 }
 
+
 .info__text {
   font-family: monospace;
   font-weight: 400;
@@ -272,12 +273,6 @@ body {
   margin: 4px 18px 0px 18px;
   padding-bottom: 20px;
   max-width: 600px;
-}
-
-.info__img {
-  img {
-    padding: 4px 30px 0px 30px;
-  }
 }
 
 .leaflet-container .info__image img {

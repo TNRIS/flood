@@ -16,19 +16,18 @@ export default class LakeConditionsPopup extends Component {
 
   render() {
     const { full_name, lake_url_name, updatePopup } = this.props
-
     const image_src = `http://54.236.218.11/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
+
     return (
-      <div>
+      <div className="popup__container--lake" >
         <PopupTitle icon={icon} title="Lake Conditions Information" />
         <PopupContent>
           <PopupHeader>
             { full_name }
           </PopupHeader>
-          <PopupImage src={image_src} updatePopup={updatePopup} />
+          <PopupImage link={image_src} src={image_src} updatePopup={updatePopup} />
         </PopupContent>
       </div>
     )
   }
 }
-
