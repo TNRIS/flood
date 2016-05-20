@@ -47,19 +47,6 @@ const initialState = {
       'status': null,
     },
     {
-      'id': 'future-rain',
-      'text': 'Rain Forecast',
-      'icon': rainIcon,
-      'type': 'aeris-tile',
-      'options': {
-        'code': 'frad-hrrr',
-        'refreshTimeMs': 300000, // 5 minutes
-        'opacity': 0.7
-      },
-      'active': false,
-      'status': null,
-    },
-    {
       'id': 'flood-alerts',
       'text': 'Weather Alerts',
       'icon': floodAlertIcon,
