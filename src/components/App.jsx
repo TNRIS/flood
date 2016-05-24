@@ -9,9 +9,7 @@ import { colors } from '../constants'
 
 const App = () => (
   <div>
-    <Layout fixedHeader fixedDrawer style={{background: 'white'}}>
-      <Header style={{backgroundColor: colors.twdbBlue}}>
-      </Header>
+    <Layout fixedDrawer style={{background: 'white'}}>
       <FeatureLayerChooser />
       <Content>
         <MapContainer />

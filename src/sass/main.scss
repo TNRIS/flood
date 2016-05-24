@@ -1,5 +1,6 @@
 $lighter-blue: #4CA1C3;
 $darker-blue: #368AAC;
+$twdb-blue: #3f556d;
 
 $layout-drawer-width-threshold: 400px !default;
 $nav-spacing-from-left-narrow: 6px;
@@ -37,6 +38,16 @@ body {
 
   .popup .leaflet-popup-content-wrapper {
     padding-bottom: 0px;
+  }
+
+  .mdl-layout__drawer-button {
+    background-color: $darker-blue;
+    margin: 20px 0 0 0;
+
+    i {
+      margin: 7px 0 0 -2px;
+      font-size: 34px;
+    }
   }
 }
 
