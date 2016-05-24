@@ -51,9 +51,6 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
 
       <div className="footer">
         <div className="footer__wrapper">
-          <div className="footer__made-by">
-            Made by the
-          </div>
           <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
             <img src={TWDBLogoImage} alt="The Texas Water Development Board logo" />
           </a>
