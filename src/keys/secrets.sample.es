@@ -2,6 +2,7 @@
 // and enter key values
 export default {
   bingApiKey: "<BING MAPS API KEY>",
+  googleAnalyticsId: "<GOOGLE ANALYTICS ID",
   aerisApiId: "<AERIS API ID>",
   aerisApiSecret: "<AERIS API SECRET>"
 }
