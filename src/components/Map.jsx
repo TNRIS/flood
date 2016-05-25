@@ -10,11 +10,32 @@ import LayerStore from '../util/LayerStore'
 import PopupContainer from '../containers/PopupContainer'
 
 
+
+function leafletLayerForPropBaseLayer(propBaseLayer) {
+  let baseLayer
+
+  switch (propBaseLayer.type) {
+    case 'tile':
+      baseLayer = L.tileLayer(propBaseLayer.url, propBaseLayer.options)
+      break
+    case 'bing':
+      baseLayer = L.bingLayer(keys.bingApiKey, propBaseLayer.options)
+      break
+    case 'wmts':
+      baseLayer = L.tileLayer.wmts(propBaseLayer.url, propBaseLayer.options)
+      break
+    default:
+      throw new Error('unrecognized base layer type')
+  }
+
+  return baseLayer
+}
+
+
 export default class Map extends Component {
   static propTypes = {
     baseLayers: PropTypes.shape({
-      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
-      active: PropTypes.string
+      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer)
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
     onClickAlerts: PropTypes.func.isRequired,
@@ -43,18 +64,13 @@ export default class Map extends Component {
       this.map.attributionControl.setPrefix('Data Sourced From')
 
       this.initializeLayerStore(this.props, this.map)
+      this.initializeBasemapLayers()
       this.initializeFullscreenButton()
       this.initializeGeocoderControl()
-
-      this.setActiveBaseLayer(this.props)
     }, 0)
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
-      this.setActiveBaseLayer(nextProps)
-    }
-
     // only trigger show() and hide() on feature layers when the set of active
     // layers has changed, or an active layer has had a status change
     const activeFeatureLayerBools = (props) => {
@@ -99,29 +115,6 @@ export default class Map extends Component {
     })
   }
 
-  setActiveBaseLayer(props) {
-    if (this.baseLayer) {
-      this.map.removeLayer(this.baseLayer)
-    }
-
-    const activeBaseLayer = R.find(baseLayer => baseLayer.id === props.baseLayers.active, props.baseLayers.layers)
-    switch (activeBaseLayer.type) {
-      case 'tile':
-        this.baseLayer = L.tileLayer(activeBaseLayer.url, activeBaseLayer.options)
-        break
-      case 'bing':
-        this.baseLayer = L.bingLayer(keys.bingApiKey, activeBaseLayer.options)
-        break
-      case 'wmts':
-        this.baseLayer = L.tileLayer.wmts(activeBaseLayer.url, activeBaseLayer.options)
-        break
-      default:
-        throw new Error('unrecognized base layer type')
-    }
-
-    this.baseLayer.addTo(this.map).bringToBack()
-  }
-
   initializeLayerStore(props, map) {
     this.layerStore = new LayerStore({
       map,
@@ -137,6 +130,19 @@ export default class Map extends Component {
     props.featureLayers.layers.forEach((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
+  }
+
+  initializeBasemapLayers() {
+    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
+      [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
+    ))
+    const layerControl = L.control.layers(layers)
+    layerControl.setPosition('bottomright').addTo(this.map)
+    this.map.on('baselayerchange', ({ layer }) => {
+      layer.bringToBack()
+    })
+
+    layers['Positron'].addTo(this.map)
   }
 
   initializeFullscreenButton() {
