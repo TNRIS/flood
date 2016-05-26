@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Drawer, Navigation } from 'react-mdl'
 
 import FeatureLayer from './FeatureLayer'
+import FeatureLayerAnimated from './FeatureLayerAnimated'
 import ResourceLink from './ResourceLink'
 
 import TWDBLogoImage from '../images/twdb_white.png'
@@ -22,17 +23,37 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
       </div>
 
       <Navigation className="nav__layers">
-        {layers.map(layer =>
-          <FeatureLayer
-            key={layer.id}
-            icon={layer.icon}
-            active={layer.active}
-            status={layer.status}
-            legend={layer.legend}
-            onClick={() => onLayerClick(layer.id)}
-            {...layer}
-          />
-        )}
+        {
+          layers.map(layer => {
+            let layerComponent
+
+            if (layer.animated) {
+              layerComponent = (
+                <FeatureLayerAnimated
+                  key={layer.id}
+                  icon={layer.icon}
+                  active={layer.active}
+                  status={layer.status}
+                  onClick={() => onLayerClick(layer.id)}
+                  {...layer}
+                />
+              )
+            } else {
+              layerComponent = (
+                <FeatureLayer
+                  key={layer.id}
+                  icon={layer.icon}
+                  active={layer.active}
+                  status={layer.status}
+                  onClick={() => onLayerClick(layer.id)}
+                  {...layer}
+                />
+              )
+            }
+
+            return layerComponent
+          })
+        }
       </Navigation>
 
       <div className="resources">
@@ -51,6 +72,9 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
 
       <div className="footer">
         <div className="footer__wrapper">
+          <div className="footer__made-by">
+            Made by the
+          </div>
           <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
             <img src={TWDBLogoImage} alt="The Texas Water Development Board logo" />
           </a>

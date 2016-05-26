@@ -13,16 +13,21 @@ export default class FeatureLayer extends Component {
     text: PropTypes.string,
   }
 
-  render() {
-    const { onClick, text, icon, legend, active, status } = this.props
-
-    let statusIndicator
+  statusIndicatorFromProps({ active, status }) {
+    let indicator
     if (active && status !== 'ready') {
-      statusIndicator = <Spinner />
+      indicator = <Spinner />
     }
     else {
-      statusIndicator = <Checkbox checked={active} readOnly />
+      indicator = <Checkbox checked={active} readOnly />
     }
+    return indicator
+  }
+
+  render() {
+    const { onClick, text, icon, legend, active } = this.props
+
+    const statusIndicator = this.statusIndicatorFromProps(this.props)
 
     let legendElement
     if (active && legend) {

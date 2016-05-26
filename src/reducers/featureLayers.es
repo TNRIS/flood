@@ -43,6 +43,7 @@ const initialState = {
       'text': 'Weather Radar',
       'icon': weatherIcon,
       'type': 'animated-weather',
+      'animated': true,
       'active': false,
       'status': null,
     },
