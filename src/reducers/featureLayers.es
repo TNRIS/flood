@@ -54,7 +54,7 @@ const initialState = {
       'type': 'aeris-alerts',
       'options': {
         'code': 'alerts',
-        'refreshTimeMs': 300000, // 5 minutes
+        'refreshTimeMs': 60000, // 1 minute
         'opacity': 0.7
       },
       'active': false,
