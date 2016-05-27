@@ -97,9 +97,6 @@ export default class CartoDBLayer extends Layer {
 
   refresh() {
     this.update()
-      .then(() => {
-        console.log(`refresco ${this.id}`)
-      })
   }
 
   show() {
