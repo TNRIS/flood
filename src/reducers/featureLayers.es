@@ -25,6 +25,7 @@ const initialState = {
       'icon': floodGaugeIcon,
       'legend': floodGaugeLegend,
       'options': {
+        'refreshTimeMs': 300000, // 5 minutes
         'account': 'tnris-flood',
         'sql': floodSQL,
         'interactivity': [
@@ -66,6 +67,7 @@ const initialState = {
       'legend': lakeLegend,
       'type': 'cartodb',
       'options': {
+        'refreshTimeMs': 1800000, // 30 minutes
         'account': 'tnris',
         'sql': reservoirSQL,
         'interactivity': [

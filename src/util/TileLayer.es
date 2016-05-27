@@ -26,9 +26,13 @@ export default class TileLayer extends Layer {
     }
   }
 
+  refresh() {
+    this.layer.redraw()
+  }
+
   show() {
     this.layer.addTo(this.map)
-    this.refreshIntervalId = setInterval(() => this.layer.redraw(), this.refreshTimeMs)
+    this.refreshIntervalId = setInterval(() => this.refresh(), this.refreshTimeMs)
   }
 
   hide() {
