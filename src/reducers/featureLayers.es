@@ -25,6 +25,7 @@ const initialState = {
       'icon': floodGaugeIcon,
       'legend': floodGaugeLegend,
       'options': {
+        'refreshTimeMs': 300000, // 5 minutes
         'account': 'tnris-flood',
         'sql': floodSQL,
         'interactivity': [
@@ -53,7 +54,7 @@ const initialState = {
       'type': 'aeris-alerts',
       'options': {
         'code': 'alerts',
-        'refreshTimeMs': 300000, // 5 minutes
+        'refreshTimeMs': 60000, // 1 minute
         'opacity': 0.7
       },
       'active': false,
@@ -66,6 +67,7 @@ const initialState = {
       'legend': lakeLegend,
       'type': 'cartodb',
       'options': {
+        'refreshTimeMs': 1800000, // 30 minutes
         'account': 'tnris',
         'sql': reservoirSQL,
         'interactivity': [

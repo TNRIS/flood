@@ -36,7 +36,7 @@ function getLayer(options) {
 
 
 export default class CartoDBLayer extends Layer {
-  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution}) {
+  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs=7200000}) {
     super({id, map, handlers})
 
     this.account = account
@@ -44,14 +44,27 @@ export default class CartoDBLayer extends Layer {
     this.interactivity = interactivity
     this.sql = sql
     this.attribution = attribution
-
     this.utfGridLayer
+
+    this.refreshTimeMs = refreshTimeMs
     this.update()
+    this.refreshIntervalId = setInterval(() => this.refresh(), this.refreshTimeMs)
   }
 
   update() {
-    getLayer({account: this.account, cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
+    this.setStatus('updating')
+
+    return getLayer({account: this.account, cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {
+        let previousTileLayer
+        let previousUtfGridLayer
+
+        const currentlyVisible = (this.tileLayer && this.map.hasLayer(this.tileLayer))
+        if (currentlyVisible) {
+          previousTileLayer = this.tileLayer
+          previousUtfGridLayer = this.utfGridLayer
+        }
+
         this.tileLayer = L.tileLayer(data.tilesUrl, {attribution: this.attribution})
 
         if (data.gridsUrl) {
@@ -68,7 +81,24 @@ export default class CartoDBLayer extends Layer {
           this.utfGridLayer = utfGridLayer
         }
 
+        if (currentlyVisible && previousTileLayer) {
+          this.map.removeLayer(previousTileLayer)
+          this.map.addLayer(this.tileLayer)
+
+          if (previousUtfGridLayer) {
+            this.map.removeLayer(previousUtfGridLayer)
+            this.map.addLayer(this.utfGridLayer)
+          }
+        }
+
         this.setStatus('ready')
+      })
+  }
+
+  refresh() {
+    this.update()
+      .then(() => {
+        console.log(`refresco ${this.id}`)
       })
   }
 
