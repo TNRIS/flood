@@ -17,7 +17,7 @@ const FeatureLayerDrawer = ({ layers, onLayerClick }) => {
           </a>
         </div>
         <div className="nav__subtitle">
-          Tools for Texans to track flood conditions in their area, in real-time.
+          Tools for Texans to track flood conditions
         </div>
       </div>
 
