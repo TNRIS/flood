@@ -88,6 +88,6 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
-    "react-addons-test-utils": "^15.0.1"
+    "react-addons-test-utils": "^0.14.8"
   }
 }
