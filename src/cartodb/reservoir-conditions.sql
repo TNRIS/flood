@@ -8,5 +8,5 @@ SELECT polys.cartodb_id AS cartodb_id,
   top_of_dam_elevation,
   lake_url_name
 FROM tnris.wdft_reservoirs AS polys
-  JOIN tnris.table_3745698116 AS conditions ON polys.condensed_ = conditions.lake_condensed_name
+  JOIN tnris.table_9923988038 AS conditions ON polys.condensed_ = conditions.lake_condensed_name
 WHERE flood_height_percent IS NOT NULL
