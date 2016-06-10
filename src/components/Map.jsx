@@ -1,7 +1,6 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
-import fullscreen from 'fullscreen'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -65,7 +64,6 @@ export default class Map extends Component {
 
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
-      this.initializeFullscreenButton()
       this.initializeGeocoderControl()
     }, 0)
   }
@@ -89,7 +87,6 @@ export default class Map extends Component {
   }
 
   componentWillUnmount() {
-    this.fs.dispose()
   }
 
   setActiveFeatureLayers(props) {
@@ -143,45 +140,6 @@ export default class Map extends Component {
     })
 
     layers['Positron'].addTo(this.map)
-  }
-
-  initializeFullscreenButton() {
-    if (!fullscreen.available()) {
-      return
-    }
-    //else, setup fullscreen emitter
-    this.fs = fullscreen(document.body)
-
-    this.fullscreenButton = L.easyButton({
-      states: [{
-        stateName: 'make-fullscreen',
-        icon: '<i class="material-icons md-24">fullscreen</i>',
-        title: 'Make fullscreen',
-        onClick: () => {
-          this.fs.request()
-        }
-      }, {
-        stateName: 'exit-fullscreen',
-        icon: '<i class="material-icons md-24">fullscreen_exit</i>',
-        title: 'Exit fullscren',
-        onClick: () => {
-          this.fs.release()
-        }
-      }],
-      position: 'topright'
-    })
-
-    this.fs.on('attain', () => {
-      this.map.invalidateSize('false')
-      this.fullscreenButton.state('exit-fullscreen')
-    })
-
-    this.fs.on('release', () => {
-      this.map.invalidateSize('false')
-      this.fullscreenButton.state('make-fullscreen')
-    })
-
-    this.fullscreenButton.addTo(this.map)
   }
 
   initializeGeocoderControl() {
