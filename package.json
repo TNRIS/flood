@@ -54,7 +54,6 @@
     "expect": "^1.16.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "fullscreen": "^1.0.2",
     "history": "1.13.1",
     "jsdom": "^8.3.0",
     "leaflet": "^0.7.7",
