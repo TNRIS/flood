@@ -398,3 +398,25 @@ body {
   display: inline-block;
   vertical-align: middle;
 }
+
+.disclaimer {
+    /* Override default which is too narrow */
+    width: 85% !important;
+    /* Limit width for readability */
+    max-width: 35em;
+    /* Center vertically - also set left for Firefox */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    /* Scrollbar to allow text viewing and input access on small screens */
+    overflow-y: auto !important;
+    /* Allow the scrollbar to work without forcing it on */
+    max-height: 100%;
+    /* Ensure this isn't transparent on Firefox */
+    background-color: white;
+}
+
+dialog.disclaimer h4 {
+    /* Reduce size to avoid line break in title */
+    font-size: 2em;
+}
