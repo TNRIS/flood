@@ -14,7 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body class="flood-viewer">
-    <div id="reactApp"></div>
+    <div id="reactApp">
+        <noscript>
+            <p>
+            Sorry, the Flood Information Viewer requires Javascript to function.
+            </p>
+        </noscript>
+    </div>
 
     <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
     <script src="/assets/scripts.js" type="text/javascript"></script>
