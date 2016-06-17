@@ -3408,7 +3408,7 @@ MaterialLayout.prototype.init = function () {
                 drawerButton.classList.add(this.CssClasses_.DRAWER_BTN);
                 var drawerButtonIcon = document.createElement('i');
                 drawerButtonIcon.classList.add(this.CssClasses_.ICON);
-                drawerButtonIcon.innerHTML = this.Constant_.CHEVRON_LEFT;
+                drawerButtonIcon.innerHTML = this.Constant_.CHEVRON_RIGHT;
                 drawerButton.appendChild(drawerButtonIcon);
             }
             if (this.drawer_.classList.contains(this.CssClasses_.ON_LARGE_SCREEN)) {

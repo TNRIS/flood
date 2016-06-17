@@ -1,5 +1,5 @@
-$lighter-blue: #4CA1C3;
-$darker-blue: #368AAC;
+$lighter-blue: #39aad2;
+$darker-blue: #2c88a9;
 $twdb-blue: #3f556d;
 
 $layout-drawer-width-threshold: 400px !default;
@@ -45,8 +45,9 @@ body {
     margin: 20px 0 0 0;
 
     i {
-      margin: 7px 0 0 -2px;
+      color: #ffffff;
       font-size: 34px;
+      margin: 7px 0 0 -2px;
     }
   }
 }
@@ -132,7 +133,7 @@ body {
   background-image: url(../images/planning_bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-color: #225B6F;
+  background-color: $lighter-blue;
   min-height: 124px;
 }
 
@@ -168,7 +169,7 @@ body {
 
 .footer__twdb-logo {
   position: absolute;
-  right: 0px;
+  left: 0px;
   bottom: 1px;
 
   img {
