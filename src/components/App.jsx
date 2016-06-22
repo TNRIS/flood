@@ -5,6 +5,7 @@ import ga from '../util/GoogleAnalytics'
 import NavigationContainer from '../containers/NavigationContainer'
 import MapContainer from '../containers/MapContainer'
 import FeatureLayerChooser from '../containers/FeatureLayerChooser'
+import Disclaimer from '../components/Disclaimer'
 
 import { colors } from '../constants'
 
@@ -13,6 +14,7 @@ ga.pageview(window.location.pathname)
 
 const App = () => (
   <div>
+    <Disclaimer />
     <Layout fixedDrawer style={{background: 'white'}}>
       <FeatureLayerChooser />
       <Content>
