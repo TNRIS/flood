@@ -48,7 +48,7 @@ class Disclaimer extends React.Component {
             represents the best available information provided to the Texas
             Water Development Board (TWDB) by its data contributors. The
             information on this viewer may not be displayed in real-time and
-            should not be considered an “exact” representation of conditions in
+            should not be considered an "exact" representation of conditions in
             your area. Neither the State of Texas nor the TWDB assumes any
             legal liability or responsibility or makes any guarantees or
             warranties as to the accuracy, completeness or suitability of the
