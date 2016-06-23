@@ -1,6 +1,7 @@
 $lighter-blue: #39aad2;
 $darker-blue: #2c88a9;
 $twdb-blue: #3f556d;
+$dark-grey: #333333;
 
 $layout-drawer-width-threshold: 400px !default;
 $nav-spacing-from-left-narrow: 6px;
@@ -419,4 +420,9 @@ body {
 dialog.disclaimer h4 {
     /* Reduce size to avoid line break in title */
     font-size: 2em;
+}
+
+/* Material Design Button Override */
+.mdl-button--colored {
+  background: $dark-grey  ;
 }
