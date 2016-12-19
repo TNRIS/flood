@@ -224,6 +224,12 @@ body {
     margin-right: 18px;
   }
 
+  .popup__button > .mdl-button {
+    float: right;
+    vertical-align: middle;
+    font-size: 1em;
+  }
+
   .popup__content {
     padding-top: 50px;
   }
@@ -419,4 +425,11 @@ body {
 dialog.disclaimer h4 {
     /* Reduce size to avoid line break in title */
     font-size: 2em;
+}
+
+.subscribe-form {
+  .mdl-button {
+    margin: 10px 10px 0px 0px;
+    width: 90px;
+  }
 }

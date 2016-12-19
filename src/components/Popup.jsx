@@ -63,7 +63,10 @@ export default class Popup extends Component {
   }
 
   getPopupContent() {
+    // console.log(this.props);
     const { data, layerId } = this.props
+    // console.log(data);
+    // console.log(layerId);
     const popupWidth = this.calculatePopupWidth()
 
     switch (layerId) {
