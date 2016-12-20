@@ -4,5 +4,11 @@ export default {
   bingApiKey: "<BING MAPS API KEY>",
   googleAnalyticsId: "<GOOGLE ANALYTICS ID",
   aerisApiId: "<AERIS API ID>",
-  aerisApiSecret: "<AERIS API SECRET>"
+  aerisApiSecret: "<AERIS API SECRET>",
+  awsConfig: {
+  	accessKeyId: "<AWS ACCESS KEY ID>",
+  	secretAccessKey: "<AWS SECRET ACCESS KEY>",
+  	region: "<REGION>"
+  },
+  SNS_TOPIC_ARN: "<AWS TOPIC ARN>"
 }

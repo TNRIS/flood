@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import AWS from 'aws-sdk/dist/aws-sdk'
+import keys from '../keys'
 import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
@@ -15,7 +17,43 @@ class PopupTitle extends React.Component {
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+    this.subscribeAlerts = this.subscribeAlerts.bind(this);
+  }
+
+  subscribeAlerts(protocol, endpoint) {
+    const AWS = window.AWS;
+    AWS.config.update(keys.awsConfig);
+
+    var sns = new AWS.SNS();
+
+    var params = {
+      Protocol: protocol,
+      TopicArn: keys.SNS_TOPIC_ARN,
+      Endpoint: endpoint
+    };
+
+    sns.subscribe(params, function (err_subscribe, data) {
+      if (err_subscribe) {
+        console.log("error when subscribe", err_subscribe);
+        return;
+        alert("There was an error with your " + protocol + " submission, please try again.");
+      }
+      else {
+        console.log("subscribe data", data);
+        
+        if (protocol == "sms") {
+          sns.publish({PhoneNumber: endpoint, Message: 'You have subscribed to a flood guage. Reply "STOP" at any time to stop recieving messages from this guage.'}, function(err_publish, data) {
+            if (err_publish) {
+                console.log('Error sending a message', err_publish);
+            }
+            else {
+              console.log('Sent message:', data.MessageId);
+              console.log(data);
+            }
+          });
+        }
+      }
+    });
   }
 
   componentDidMount() {
@@ -56,8 +94,18 @@ class PopupTitle extends React.Component {
   }
 
   handleSubmit(event) {
+    if (this.state.email) {
+      this.subscribeAlerts('email', this.state.email);
+    }
+    if (this.state.phone) {
+      this.subscribeAlerts('sms', '+1' + this.state.phone);
+    }
     console.log(this.state);
-    alert('A name was submitted: ' + this.state.firstName + ' ' + this.state.lastName);
+    if (this.state.email||this.state.phone) {
+      alert("Your subscription has been submitted!");
+    }
+
+    this.handleCloseDialog();
     event.preventDefault();
   }
   
