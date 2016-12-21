@@ -23,6 +23,7 @@ function getLayer(options) {
 
   return axios.post(`https://${account}.cartodb.com/api/v1/map/`, mapConfig)
     .then(({data}) => {
+      console.log(data)
       const layerid = data.layergroupid
       const urls = {
         tilesUrl: `https://${account}.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
@@ -32,6 +33,12 @@ function getLayer(options) {
       }
       return urls
     })
+}
+
+function checkStage(account) {
+  const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas_demo WHERE sigstage IN ('flood')`;
+  return axios.get(`https://${account}.cartodb.com/api/v2/sql?q=${query}`)
+    .then(({data}) => {console.log(data)});
 }
 
 
@@ -96,7 +103,12 @@ export default class CartoDBLayer extends Layer {
   }
 
   refresh() {
+
     this.update()
+    if (this.id == "ahps-flood") {
+      checkStage(this.account).then((response) => {console.log(response)} )
+    }
+    
   }
 
   show() {

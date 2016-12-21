@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { setFeatureLayer } from '../actions'
+import { setGaugeSource } from '../actions'
 import FeatureLayerDrawer from '../components/FeatureLayerDrawer'
 
 
