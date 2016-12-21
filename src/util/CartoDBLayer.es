@@ -2,6 +2,7 @@ import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
+import FloodAlerts from './FloodAlerts'
 
 import Layer from './Layer'
 
@@ -34,13 +35,6 @@ function getLayer(options) {
       return urls
     })
 }
-
-function checkStage(account) {
-  const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas_demo WHERE sigstage IN ('flood')`;
-  return axios.get(`https://${account}.cartodb.com/api/v2/sql?q=${query}`)
-    .then(({data}) => {console.log(data)});
-}
-
 
 export default class CartoDBLayer extends Layer {
   constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs=7200000}) {
@@ -106,7 +100,7 @@ export default class CartoDBLayer extends Layer {
 
     this.update()
     if (this.id == "ahps-flood") {
-      checkStage(this.account).then((response) => {console.log(response)} )
+      FloodAlerts.checkStage(this.account)
     }
     
   }

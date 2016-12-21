@@ -138,7 +138,6 @@ export default class Map extends Component {
   }
 
   updateLayerStore() {
-    
     const newProps = objectAssign({}, this.props, {
           featureLayers: { layers:
             this.props.featureLayers.layers.map((layer) => {
@@ -165,17 +164,6 @@ export default class Map extends Component {
       });
     this.layerStore = null;
     this.initializeLayerStore(newProps, this.map);
-
-    // this.layerStore.store['ahps-flood'].__proto__.refresh({
-    //   account: 'tnris-flood', 
-    //   cartocss: floodCartoCSS, 
-    //   interactivity: [
-    //       'lid',
-    //       'name',
-    //       'wfo',
-    //     ], 
-    //   sql: demoSQL}
-    //   );
   }
 
   initializeBasemapLayers() {
