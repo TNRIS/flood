@@ -129,16 +129,6 @@ class PopupTitle extends React.Component {
             <DialogContent>
               <form className="subscribe-form"onSubmit={this.handleSubmit}>
                 <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input className="mdl-textfield__input" type="text" id="fname" name="firstName" value={this.state.firstName}
-                    onChange={this.handleChange} />
-                  <label className="mdl-textfield__label" htmlFor="fname">First name</label>
-                </div>
-                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input className="mdl-textfield__input" type="text" id="lname" name="lastName" value={this.state.lastName}
-                    onChange={this.handleChange} />
-                  <label className="mdl-textfield__label" htmlFor="lname">Last name</label>
-                </div>
-                <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input className="mdl-textfield__input" type="email" id="email" name="email" value={this.state.email}
                     onChange={this.handleChange} />
                   <label className="mdl-textfield__label" htmlFor="email">Email</label>
@@ -152,9 +142,9 @@ class PopupTitle extends React.Component {
                 
                 <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
                        type="submit" value="Submit" />
-                <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
                        type="reset" />
-                <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+                <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
                        type="button" value="Cancel" onClick={this.handleCloseDialog} />
               </form>
             </DialogContent>
