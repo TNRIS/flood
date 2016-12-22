@@ -40,6 +40,7 @@ export default {
     port: 3545
   },
   module: {
+    noParse: [/aws-sdk/],
     loaders: [
       {
         test: /\.scss$/,

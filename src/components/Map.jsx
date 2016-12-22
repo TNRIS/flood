@@ -7,6 +7,13 @@ import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
+import {
+    Button, Dialog, DialogTitle, DialogContent, DialogActions
+} from 'react-mdl'
+
+const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
+const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
+import objectAssign from 'object-assign'
 
 
 
@@ -46,6 +53,7 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
   componentDidMount() {
@@ -129,6 +137,35 @@ export default class Map extends Component {
     })
   }
 
+  updateLayerStore() {
+    const newProps = objectAssign({}, this.props, {
+          featureLayers: { layers:
+            this.props.featureLayers.layers.map((layer) => {
+              if (layer.id == 'ahps-flood') {
+                return objectAssign({}, layer, {
+                  options: {
+                    'refreshTimeMs': 300000, // 5 minutes
+                    'account': 'tnris-flood',
+                    'sql': demoSQL,
+                    'interactivity': [
+                      'lid',
+                      'name',
+                      'wfo',
+                    ],
+                    'cartocss': floodCartoCSS,
+                    'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+                  }
+                })
+              } else {
+                return objectAssign({}, layer)
+              }
+            })
+        }
+      });
+    this.layerStore = null;
+    this.initializeLayerStore(newProps, this.map);
+  }
+
   initializeBasemapLayers() {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
@@ -162,7 +199,9 @@ export default class Map extends Component {
         <div ref="map" className="map--full">
           <PopupContainer leafletMap={this.map} />
         </div>
+        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={this.updateLayerStore}>ahhhhh</button>
       </div>
+      
     )
   }
 }
