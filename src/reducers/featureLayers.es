@@ -24,7 +24,7 @@ const initialState = {
       'icon': floodGaugeIcon,
       'legend': floodGaugeLegend,
       'options': {
-        'refreshTimeMs': 20000, // 5 minutes
+        'refreshTimeMs': 300000, // 5 minutes
         'account': 'tnris-flood',
         'sql': floodSQL,
         'interactivity': [
