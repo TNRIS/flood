@@ -10,5 +10,5 @@ export default {
   	secretAccessKey: "<AWS SECRET ACCESS KEY>",
   	region: "<REGION>"
   },
-  SNS_TOPIC_ARN: "<AWS TOPIC ARN>"
+  SNS_TOPIC_ARN_BASE: "<AWS TOPIC ARN>"
 }

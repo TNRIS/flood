@@ -3,6 +3,7 @@ import { responsiveStateReducer } from 'redux-responsive'
 
 import baseLayers from './baseLayers'
 import featureLayers from './featureLayers'
+import floodStatus from './floodStatus'
 import map from './map'
 
 export const rootReducer = combineReducers({
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   featureLayers: featureLayers,
   map: map,
   browser: responsiveStateReducer,
+  floodStatus: floodStatus
 })

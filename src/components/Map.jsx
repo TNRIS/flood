@@ -47,7 +47,7 @@ export default class Map extends Component {
     onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired,
+    onMouseoverUTFGrid: PropTypes.func.isRequired
   }
 
   constructor(props) {
