@@ -96,9 +96,9 @@ export default class CartoDBLayer extends Layer {
 
   refresh() {
     this.update()
-    if (this.id == "ahps-flood") {
-      FloodAlerts.checkStage(this.account)
-    }
+    // if (this.id == "ahps-flood") {
+    //   FloodAlerts.checkStage(this.account)
+    // }
   }
 
   show() {

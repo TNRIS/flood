@@ -14,6 +14,7 @@ import {
 const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
+import * as FloodAlerts from '../util/FloodAlerts'
 
 
 
@@ -69,7 +70,6 @@ export default class Map extends Component {
 
       this.map.zoomControl.setPosition('topright')
       this.map.attributionControl.setPrefix('Data Sourced From')
-
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
@@ -163,7 +163,14 @@ export default class Map extends Component {
         }
       });
     this.layerStore = null;
+    this.map.eachLayer((layer)  => {
+      const binary = layer._url.includes('basemaps')
+      if (!binary) {
+        this.map.removeLayer(layer)
+      }
+    })
     this.initializeLayerStore(newProps, this.map);
+    FloodAlerts.checkStage('tnris-flood');
   }
 
   initializeBasemapLayers() {

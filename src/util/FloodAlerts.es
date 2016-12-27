@@ -9,8 +9,18 @@ import * as actions from '../actions'
 
 import {store} from '../store'
 
-function sendAlerts (params, sns) {
-	   sns.publish(params, function(err_publish, data) {
+function sendAlert (topicArn, stage, name) {
+	const AWS = window.AWS;
+    AWS.config.update(keys.awsConfig);
+    var sns = new AWS.SNS();
+    
+    const params = {
+    	TopicArn: topicArn,
+    	Subject: 'Flood Gauge Alert!',
+    	Message: `The ${name} flood gauge has entered a '${stage}' flood stage level`, 
+    };
+
+   	sns.publish(params, function(err_publish, data) {
 		if (err_publish) {
 		    console.log('Error sending a message', err_publish);
 		}
@@ -20,17 +30,24 @@ function sendAlerts (params, sns) {
 	});
 }
 
-function checkTopic (lid, stage, name) {
-	const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
-	// use the lid to connect with the topic for this flood gauge
-	// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+function compareStage(lid, stage, name, existingTopics) {
+	const theState = store.getState()
+	// if (theState.floodStatus[lid] != stage) {
+	if (theState.floodStatus[lid] != 'jesus') {
+		store.dispatch(actions.updateSigStage(lid, "jesus"))
+		// store.dispatch(actions.updateSigStage(lid, stage))
 
-    const params = {
-    	TopicArn: topicArn,
-    	Subject: 'Flood Gauge Alert!',
-    	Message: `The ${name} flood gauge has entered a '${stage}' flood stage level`, 
-    };
+		const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+		// use the lid to connect with the topic for this flood gauge
+		// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+		if (existingTopics.includes(topicArn)) {
+			console.log(`send alert for ${lid}`)
+			// sendAlert(topicArn, stage, name)
+		}
+	}
+}
 
+function checkTopic (gaugeData) {
 	const AWS = window.AWS;
     AWS.config.update(keys.awsConfig);
     var sns = new AWS.SNS();
@@ -40,24 +57,10 @@ function checkTopic (lid, stage, name) {
 			console.log(err, err.stack); // an error occurred
 		}
 		else {
-			const existingTopics = R.pluck('TopicArn')(data.Topics)
-			if (existingTopics.includes(topicArn)) {
-				console.log(`send alert for ${lid}`)
-				// sendAlerts(params, sns)
-			}
+			const existingTopics =  R.pluck('TopicArn')(data.Topics);
+			gaugeData.rows.map((gauge) => compareStage(gauge.lid, gauge.sigstage, gauge.title, existingTopics));
 		}
 	});
-}
-
-function compareStage(lid, stage, name) {
-	const theState = store.getState()
-	// if (theState.floodStatus[lid] != stage) {
-	if (theState.floodStatus[lid] != 'jesus') {
-		store.dispatch(actions.updateSigStage(lid, "jesus"))
-		// store.dispatch(actions.updateSigStage(lid, stage))
-		checkTopic(lid, stage, name)
-	}
-
 }
 
 export function checkStage(account) {
@@ -67,7 +70,7 @@ export function checkStage(account) {
     	if (R.isEmpty(data.rows.length)) {
     		return;
     	}
-    	data.rows.map((gauge) => compareStage(gauge.lid, gauge.sigstage, gauge.title));
+    	checkTopic(data);
     });
 }
 
