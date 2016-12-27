@@ -36,3 +36,22 @@ export const setFeatureLayer = (id) => {
     })
   }
 }
+
+export const setSigStage = (initState) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_SIGSTAGE,
+      initState
+    })
+  }
+}
+
+export const updateSigStage = (lid, stage) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.UPDATE_SIGSTAGE,
+      lid,
+      stage
+    })
+  }
+}

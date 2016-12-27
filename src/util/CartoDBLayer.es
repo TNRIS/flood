@@ -2,8 +2,7 @@ import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
-import FloodAlerts from './FloodAlerts'
-
+import * as FloodAlerts from '../util/FloodAlerts'
 import Layer from './Layer'
 
 function getLayer(options) {
@@ -24,7 +23,6 @@ function getLayer(options) {
 
   return axios.post(`https://${account}.cartodb.com/api/v1/map/`, mapConfig)
     .then(({data}) => {
-      console.log(data)
       const layerid = data.layergroupid
       const urls = {
         tilesUrl: `https://${account}.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`
@@ -97,12 +95,10 @@ export default class CartoDBLayer extends Layer {
   }
 
   refresh() {
-
     this.update()
-    if (this.id == "ahps-flood") {
-      FloodAlerts.checkStage(this.account)
-    }
-    
+    // if (this.id == "ahps-flood") {
+    //   FloodAlerts.checkStage(this.account)
+    // }
   }
 
   show() {
