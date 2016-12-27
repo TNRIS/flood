@@ -224,12 +224,6 @@ body {
     margin-right: 18px;
   }
 
-  .popup__button > .mdl-button {
-    float: right;
-    top: 4px;
-    font-size: 1em;
-  }
-
   .popup__content {
     padding-top: 50px;
   }
@@ -239,6 +233,10 @@ body {
     // note: !important is to override leaflet popup img rule
     max-width: 50px !important;
     margin: 6px 14px 6px 14px;
+  }
+
+  .subscribe-button {
+    font-size: 1em;
   }
 
   // customize popup tip - give it a more narrow angle
@@ -427,9 +425,38 @@ dialog.disclaimer h4 {
     font-size: 2em;
 }
 
+// .subscribe__wrapper {
+//   float: right;
+//   margin-top: 4px;
+// }
+
+.subscribeDialog {
+    /* Override default which is too narrow */
+    width: 25% !important;
+    /* Limit width for readability */
+    max-width: 35em;
+    /* Center vertically - also set left for Firefox */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    /* Scrollbar to allow text viewing and input access on small screens */
+    overflow-y: auto !important;
+    /* Allow the scrollbar to work without forcing it on */
+    max-height: 100%;
+    /* Ensure this isn't transparent on Firefox */
+    background-color: white;
+    position: fixed;
+}
+
+dialog.subscribeDialog h4 {
+    /* Reduce size to avoid line break in title */
+    font-size: 2em;
+}
+
 .subscribe-form {
   .mdl-button {
     margin: 10px 10px 0px 0px;
     width: 90px;
   }
 }
+

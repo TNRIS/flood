@@ -22,7 +22,7 @@ export default class FloodGaugePopup extends Component {
     const gaugeLink = `http://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
     return (
       <div>
-        <PopupTitle icon={icon} title="Flood Gage Information" button="Subscribe to This Gauge" />
+        <PopupTitle icon={icon} title="Flood Gage Information" />
         <PopupContent>
           <PopupHeader>
             { name } ({ lid.toUpperCase() })
