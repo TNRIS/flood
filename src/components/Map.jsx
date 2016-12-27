@@ -206,7 +206,7 @@ export default class Map extends Component {
         <div ref="map" className="map--full">
           <PopupContainer leafletMap={this.map} />
         </div>
-        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={this.updateLayerStore}>ahhhhh</button>
+        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={this.updateLayerStore}>Simulate Flood</button>
       </div>
       
     )
