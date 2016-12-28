@@ -4,7 +4,7 @@ import * as actions from '../actions'
 import PopupTitle from '../components/PopupTitle'
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  // console.log(state)
   return {}
 }
 

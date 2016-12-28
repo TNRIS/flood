@@ -9,15 +9,11 @@ import * as actions from '../actions'
 
 import {store} from '../store'
 
-function sendAlert (topicArn, stage, name) {
-	const AWS = window.AWS;
-    AWS.config.update(keys.awsConfig);
-    var sns = new AWS.SNS();
-    
+function sendAlert (topicArn, stage, name, sns) {
     const params = {
     	TopicArn: topicArn,
     	Subject: 'Flood Gauge Alert!',
-    	Message: `The ${name} flood gauge has entered a '${stage}' flood stage level`, 
+    	Message: `The ${name} flood gauge has entered a '${stage}' flood stage level`
     };
 
    	sns.publish(params, function(err_publish, data) {
@@ -30,7 +26,7 @@ function sendAlert (topicArn, stage, name) {
 	});
 }
 
-function compareStage(lid, stage, name, existingTopics) {
+function compareStage(lid, stage, name, existingTopics, sns) {
 	const theState = store.getState()
 	// if (theState.floodStatus[lid] != stage) {
 	if (theState.floodStatus[lid] != 'jesus') {
@@ -42,7 +38,7 @@ function compareStage(lid, stage, name, existingTopics) {
 		// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 		if (existingTopics.includes(topicArn)) {
 			console.log(`send alert for ${lid}`)
-			// sendAlert(topicArn, stage, name)
+			// sendAlert(topicArn, stage, name, sns)
 		}
 	}
 }
@@ -50,7 +46,7 @@ function compareStage(lid, stage, name, existingTopics) {
 function checkTopic (gaugeData) {
 	const AWS = window.AWS;
     AWS.config.update(keys.awsConfig);
-    var sns = new AWS.SNS();
+    const sns = new AWS.SNS();
 
     sns.listTopics({}, function(err, data) {
 		if (err) {
@@ -58,7 +54,7 @@ function checkTopic (gaugeData) {
 		}
 		else {
 			const existingTopics =  R.pluck('TopicArn')(data.Topics);
-			gaugeData.rows.map((gauge) => compareStage(gauge.lid, gauge.sigstage, gauge.title, existingTopics));
+			gaugeData.rows.map((gauge) => compareStage(gauge.lid, gauge.sigstage, gauge.title, existingTopics, sns));
         }
 	});
 }
@@ -72,6 +68,88 @@ export function checkStage(account) {
     	}
     	checkTopic(data);
     });
+}
+
+function subscribeAlerts (protocol, endpoint, topicArn, sns) {
+    const params = {
+      Protocol: protocol,
+      TopicArn: topicArn,
+      Endpoint: endpoint
+    };
+
+    sns.subscribe(params, function (err_subscribe, data) {
+      if (err_subscribe) {
+        console.log("error when subscribe", err_subscribe);
+        alert(`There was an error with your ${protocol} submission, please try again.`);
+        return;
+      }
+      else {
+        console.log("subscribe data", data);
+        if (protocol == "sms") {
+			sns.publish({PhoneNumber: endpoint, Message: 'You have subscribed to a flood gauge via "texasflood.org". Reply "STOP" at any time to stop recieving messages from this gauge.'}, function(err_publish, data) {
+				if (err_publish) {
+				    console.log('Error sending a message', err_publish);
+				}
+				else {
+					console.log('Sent message:', data.MessageId);
+				}
+			});
+        }
+      }
+    });
+}
+
+function createTopic (lid, phone, email, sns) {
+    const params = {
+		Name: lid
+	};
+
+	sns.createTopic(params, function(err, data) {
+	  	if (err) {
+	  		console.log(err, err.stack); 
+	  	}
+	  	else {
+	  		console.log(data);
+	  		const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+			// use the lid to connect with the topic for this flood gauge
+			// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+			if (email) {
+		      subscribeAlerts('email', email, topicArn, sns);
+		    }
+		    if (phone) {
+		      subscribeAlerts('sms', `+1${phone}`, topicArn, sns);
+		    }
+	  	}
+	});
+}
+
+export function subscribeGauge(lid, phone, email) {
+	const AWS = window.AWS;
+    AWS.config.update(keys.awsConfig);
+    const sns = new AWS.SNS();
+
+    sns.listTopics({}, function(err, data) {
+		if (err) {
+			console.log(err, err.stack); // an error occurred
+		}
+		else {
+			const existingTopics =  R.pluck('TopicArn')(data.Topics);
+			const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+			// use the lid to connect with the topic for this flood gauge
+			// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+			if (existingTopics.includes(topicArn)) {
+				if (email) {
+			      subscribeAlerts('email', email, topicArn, sns);
+			    }
+			    if (phone) {
+			      subscribeAlerts('sms', `+1${phone}`, topicArn, sns);
+			    }
+			}
+			else {
+				createTopic(lid, phone, email, sns);
+			}
+        }
+	});
 }
 
 export function initialStatus () {
