@@ -6,26 +6,13 @@ import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
 
+const floodGaugeIcon = require('../images/flood_gauge_white.png')
 
-class PopupTitle extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    showSubscribeDialog: PropTypes.func
-  }
-
+const PopupTitle = class PopupTitle extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      openDialog: false
-    };
-    this._handleOpenSubscribeDialog = this._handleOpenSubscribeDialog.bind(this);
-  }
-
-  _handleOpenSubscribeDialog() {
-    this.setState({
-      openDialog: true
-    })
-    console.log(this)
+    console.log(props);
+    this.state = {};
   }
 
   render() {
@@ -36,12 +23,17 @@ class PopupTitle extends Component {
           { this.props.title }
         </span>
           {this.props.title == "Flood Gage Information" &&
-            <Button className="subscribe-button mdl-button mdl-js-button mdl-color-text--white" onClick={ this._handleOpenSubscribeDialog }>
+            <Button className="subscribe-button mdl-button mdl-js-button mdl-color-text--white" onClick={this.props.showSubscribe}>
               Subscribe to this Gauge </Button>
           }
       </div>
     );
   }
+}
+
+PopupTitle.defaultProps = {
+  icon: floodGaugeIcon,
+  title: "Flood Gage Information"
 }
 
 export default PopupTitle

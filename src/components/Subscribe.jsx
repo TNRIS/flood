@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
@@ -9,7 +9,7 @@ import {
 import * as dialogPolyfill from 'dialog-polyfill'
 
 
-class Subscribe extends React.Component {
+class Subscribe extends Component {
   constructor(props) {
     super(props);
     this.state = {};
