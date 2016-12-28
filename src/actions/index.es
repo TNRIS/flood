@@ -55,3 +55,11 @@ export const updateSigStage = (lid, stage) => {
     })
   }
 }
+
+export const showSubscribeDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SHOW_SUBSCRIBE_DIALOG
+    })
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
@@ -6,14 +6,16 @@ import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
 
-import Subscribe from './Subscribe'
 
+class PopupTitle extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    showSubscribeDialog: PropTypes.func
+  }
 
-class PopupTitle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this._handleOpenDialog = this.openDialog.bind(this);
+    this.state = {};  
   }
 
   render() {

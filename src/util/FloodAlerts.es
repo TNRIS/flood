@@ -59,7 +59,7 @@ function checkTopic (gaugeData) {
 		else {
 			const existingTopics =  R.pluck('TopicArn')(data.Topics);
 			gaugeData.rows.map((gauge) => compareStage(gauge.lid, gauge.sigstage, gauge.title, existingTopics));
-		}
+        }
 	});
 }
 

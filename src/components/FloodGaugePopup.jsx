@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
+// import FloodGaugePopupTitleContainer from '../containers/FloodGaugePopupTitleContainer'
 import PopupTitle from './PopupTitle'
 import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
@@ -22,7 +23,7 @@ export default class FloodGaugePopup extends Component {
     const gaugeLink = `http://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
     return (
       <div>
-        <PopupTitle icon={icon} title="Flood Gage Information" />
+        <PopupTitle title={ "Flood Gage Information" } icon={ icon } />
         <PopupContent>
           <PopupHeader>
             { name } ({ lid.toUpperCase() })
