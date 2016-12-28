@@ -11,7 +11,7 @@ export const rootReducer = combineReducers({
   baseLayers: baseLayers,
   featureLayers: featureLayers,
   map: map,
-  browser: responsiveStateReducer,
   floodStatus: floodStatus,
-  subscribeDialog: subscribeDialog
+  subscribeDialog: subscribeDialog,
+  browser: responsiveStateReducer
 })
