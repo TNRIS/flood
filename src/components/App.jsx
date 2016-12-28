@@ -7,6 +7,7 @@ import MapContainer from '../containers/MapContainer'
 import FeatureLayerChooser from '../containers/FeatureLayerChooser'
 import Disclaimer from '../components/Disclaimer'
 import Subscribe from '../components/Subscribe'
+import PopupTitle from '../components/PopupTitle'
 
 import { colors } from '../constants'
 
@@ -16,7 +17,7 @@ ga.pageview(window.location.pathname)
 const App = () => (
   <div>
     <Disclaimer />
-    <Subscribe />
+    <Subscribe openDialog={ PopupTitle } />
     <Layout fixedDrawer style={{background: 'white'}}>
       <FeatureLayerChooser />
       <Content>

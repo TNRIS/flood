@@ -15,7 +15,17 @@ class PopupTitle extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};  
+    this.state = {
+      openDialog: false
+    };
+    this._handleOpenSubscribeDialog = this._handleOpenSubscribeDialog.bind(this);
+  }
+
+  _handleOpenSubscribeDialog() {
+    this.setState({
+      openDialog: true
+    })
+    console.log(this)
   }
 
   render() {
@@ -26,7 +36,7 @@ class PopupTitle extends Component {
           { this.props.title }
         </span>
           {this.props.title == "Flood Gage Information" &&
-            <Button className="subscribe-button mdl-button mdl-js-button mdl-color-text--white" onClick={console.log("click")}>
+            <Button className="subscribe-button mdl-button mdl-js-button mdl-color-text--white" onClick={ this._handleOpenSubscribeDialog }>
               Subscribe to this Gauge </Button>
           }
       </div>

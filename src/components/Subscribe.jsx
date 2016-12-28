@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
+import PopupTitle from './PopupTitle'
 import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
@@ -56,6 +57,7 @@ class Subscribe extends React.Component {
   }
 
   componentDidMount() {
+      console.log(this.props)
       this.setState({
         openDialog: true
       });
@@ -107,18 +109,18 @@ class Subscribe extends React.Component {
   render() {
     return (
       <div className='subscribe__wrapper'>
-        <Dialog ref="subscribeDialog" className="subscribeDialog" open={this.state.openDialog} >
+        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.state.openDialog } >
           <DialogTitle className="subscribe-title">Subscription Services!</DialogTitle>
           <DialogContent>
             <form className="subscribe-form" onSubmit={this.handleSubmit}>
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="email" id="email" name="email" value={this.state.email}
-                  onChange={this.handleChange} />
+                <input className="mdl-textfield__input" type="email" id="email" name="email" value={ this.state.email }
+                  onChange={ this.handleChange } />
                 <label className="mdl-textfield__label" htmlFor="email">Email</label>
               </div>
               <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="tel" pattern="[0-9]*" id="phone" name="phone" value={this.state.phone}
-                  onChange={this.handleChange} />
+                <input className="mdl-textfield__input" type="tel" pattern="[0-9]*" id="phone" name="phone" value={ this.state.phone }
+                  onChange={ this.handleChange } />
                 <label className="mdl-textfield__label" htmlFor="phone">Phone</label>
                 <span className="mdl-textfield__error">Digits only</span>
               </div>
@@ -127,7 +129,7 @@ class Subscribe extends React.Component {
               <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
                      type="reset" />
               <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
-                     type="button" value="Cancel" onClick={this.handleCloseDialog} />
+                     type="button" value="Cancel" onClick={ this.handleCloseDialog } />
             </form>
           </DialogContent>
         </Dialog>
