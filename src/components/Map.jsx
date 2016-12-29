@@ -94,9 +94,6 @@ export default class Map extends Component {
     }
   }
 
-  componentWillUnmount() {
-  }
-
   setActiveFeatureLayers(props) {
     // TODO: this should be cleaned up - this way of setting the cursor is
     // really not the right way to do things

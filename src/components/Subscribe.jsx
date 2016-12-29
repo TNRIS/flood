@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import AWS from 'aws-sdk/dist/aws-sdk'
-import keys from '../keys'
-import PopupTitle from './PopupTitle'
+import * as FloodAlerts from '../util/FloodAlerts'
 import {
     Textfield,  Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
@@ -16,43 +14,6 @@ class Subscribe extends Component {
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.subscribeAlerts = this.subscribeAlerts.bind(this);
-  }
-
-  subscribeAlerts(protocol, endpoint) {
-    const AWS = window.AWS;
-    AWS.config.update(keys.awsConfig);
-
-    var sns = new AWS.SNS();
-
-    var params = {
-      Protocol: protocol,
-      TopicArn: "arn:aws:sns:us-east-1:746466009731:flood-test",
-      Endpoint: endpoint
-    };
-
-    sns.subscribe(params, function (err_subscribe, data) {
-      if (err_subscribe) {
-        console.log("error when subscribe", err_subscribe);
-        return;
-        alert("There was an error with your " + protocol + " submission, please try again.");
-      }
-      else {
-        console.log("subscribe data", data);
-        
-        if (protocol == "sms") {
-          sns.publish({PhoneNumber: endpoint, Message: 'You have subscribed to a flood guage. Reply "STOP" at any time to stop recieving messages from this guage.'}, function(err_publish, data) {
-            if (err_publish) {
-                console.log('Error sending a message', err_publish);
-            }
-            else {
-              console.log('Sent message:', data.MessageId);
-              console.log(data);
-            }
-          });
-        }
-      }
-    });
   }
 
   componentDidMount() {
@@ -65,7 +26,8 @@ class Subscribe extends Component {
   componentWillReceiveProps(nextProps) {
     console.log(nextProps)
     this.setState({
-      lid: nextProps.lid
+      lid: nextProps.lid,
+      name: nextProps.name
     })
   }
 
@@ -88,26 +50,22 @@ class Subscribe extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.state)
-    // if (this.state.email) {
-    //   this.subscribeAlerts('email', this.state.email);
-    // }
-    // if (this.state.phone) {
-    //   this.subscribeAlerts('sms', '+1' + this.state.phone);
-    // }
-    this.handleCloseDialog();
-
     if (this.state.email||this.state.phone) {
-      alert("Your subscription has been submitted!");
+      FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
+      alert("Your subscription has been submitted!")
+      this.handleCloseDialog()
     }
+    
   }
   
   render() {
     return (
       <div className='subscribe__wrapper'>
         <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog } onCancel={ this.handleCloseDialog } >
-          <DialogTitle className="subscribe-title">{this.state.lid} , {this.props.name}!</DialogTitle>
+          <DialogTitle className="subscribe-title">{this.state.name} ({this.state.lid})</DialogTitle>
           <form className="subscribe-form" onSubmit={this.handleSubmit}>
             <DialogContent>
+              <p>Subscribe to recieve email and or text alerts when this gauge reaches a potentially dangerous flood stage.</p>
               <Textfield floatingLabel
                          onChange={ this.handleChange }
                          label="Email..."
@@ -120,7 +78,9 @@ class Subscribe extends Component {
                          floatingLabel
                          onChange={ this.handleChange }
                          pattern="[0-9]*"
-                         error="Digits only"
+                         minLength={9}
+                         maxLength={9}
+                         error="9igits only including US area code"
                          label="Phone..."
                          type="tel" 
                          id="phone"
