@@ -63,3 +63,21 @@ export const showSubscribeDialog = () => {
     })
   }
 }
+
+export const hideSubscribeDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.HIDE_SUBSCRIBE_DIALOG
+    })
+  }
+}
+
+export const setLidAndName = (lid, name) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_LID_AND_NAME,
+      lid,
+      name
+    })
+  }
+}

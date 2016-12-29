@@ -11,7 +11,6 @@ const floodGaugeIcon = require('../images/flood_gauge_white.png')
 const PopupTitle = class PopupTitle extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {};
   }
 
@@ -23,8 +22,7 @@ const PopupTitle = class PopupTitle extends Component {
           { this.props.title }
         </span>
           {this.props.title == "Flood Gage Information" &&
-            <Button className="subscribe-button mdl-button mdl-js-button mdl-color-text--white" onClick={this.props.showSubscribe}>
-              Subscribe to this Gauge </Button>
+            <Button className="subscribe-button mdl-color-text--white" onClick={this.props.showSubscribe}>Subscribe</Button>
           }
       </div>
     );

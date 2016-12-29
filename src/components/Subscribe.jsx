@@ -4,7 +4,7 @@ import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
 import PopupTitle from './PopupTitle'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
+    Textfield,  Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
@@ -13,7 +13,6 @@ class Subscribe extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,7 +27,7 @@ class Subscribe extends Component {
 
     var params = {
       Protocol: protocol,
-      TopicArn: keys.SNS_TOPIC_ARN,
+      TopicArn: "arn:aws:sns:us-east-1:746466009731:flood-test",
       Endpoint: endpoint
     };
 
@@ -57,29 +56,25 @@ class Subscribe extends Component {
   }
 
   componentDidMount() {
-      console.log(this.props)
-      this.setState({
-        openDialog: true
-      });
       const dialog = ReactDOM.findDOMNode(this.refs.subscribeDialog)
       if (!dialog.showModal) {
           dialogPolyfill.registerDialog(dialog)
       }
   }
 
-  handleOpenDialog() {
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
     this.setState({
-      openDialog: true
-    });
+      lid: nextProps.lid
+    })
   }
 
   handleCloseDialog() {
     this.setState({
-      openDialog: false,
       phone: null,
       email: null
     });
-    console.log(this.state);
+    this.props.hideSubscribe();
   }
 
   handleChange(event) {
@@ -88,17 +83,17 @@ class Subscribe extends Component {
     var nextState = {};
     nextState[name] = value;
     this.setState(nextState);
-    console.log(nextState);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.email) {
-      this.subscribeAlerts('email', this.state.email);
-    }
-    if (this.state.phone) {
-      this.subscribeAlerts('sms', '+1' + this.state.phone);
-    }
+    console.log(this.state)
+    // if (this.state.email) {
+    //   this.subscribeAlerts('email', this.state.email);
+    // }
+    // if (this.state.phone) {
+    //   this.subscribeAlerts('sms', '+1' + this.state.phone);
+    // }
     this.handleCloseDialog();
 
     if (this.state.email||this.state.phone) {
@@ -109,29 +104,35 @@ class Subscribe extends Component {
   render() {
     return (
       <div className='subscribe__wrapper'>
-        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.state.openDialog } >
-          <DialogTitle className="subscribe-title">Subscription Services!</DialogTitle>
-          <DialogContent>
-            <form className="subscribe-form" onSubmit={this.handleSubmit}>
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="email" id="email" name="email" value={ this.state.email }
-                  onChange={ this.handleChange } />
-                <label className="mdl-textfield__label" htmlFor="email">Email</label>
-              </div>
-              <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input className="mdl-textfield__input" type="tel" pattern="[0-9]*" id="phone" name="phone" value={ this.state.phone }
-                  onChange={ this.handleChange } />
-                <label className="mdl-textfield__label" htmlFor="phone">Phone</label>
-                <span className="mdl-textfield__error">Digits only</span>
-              </div>
-              <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
-                     type="submit" value="Submit" />
-              <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
-                     type="reset" />
-              <input className="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button mdl-js-button mdl-button--raised"
-                     type="button" value="Cancel" onClick={ this.handleCloseDialog } />
-            </form>
-          </DialogContent>
+        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog } onCancel={ this.handleCloseDialog } >
+          <DialogTitle className="subscribe-title">{this.state.lid} , {this.props.name}!</DialogTitle>
+          <form className="subscribe-form" onSubmit={this.handleSubmit}>
+            <DialogContent>
+              <Textfield floatingLabel
+                         onChange={ this.handleChange }
+                         label="Email..."
+                         type="email"
+                         id="email"
+                         name="email"
+                         value= {this.state.email }
+              />
+              <Textfield
+                         floatingLabel
+                         onChange={ this.handleChange }
+                         pattern="[0-9]*"
+                         error="Digits only"
+                         label="Phone..."
+                         type="tel" 
+                         id="phone"
+                         name="phone"
+                         value={ this.state.phone }
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button raised ripple type="submit" value="Submit">Submit</Button>
+              <Button raised ripple type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
+            </DialogActions>
+          </form>
         </Dialog>
       </div>
     );

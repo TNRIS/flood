@@ -237,6 +237,8 @@ body {
 
   .subscribe-button {
     font-size: 1em;
+    float: right;
+    top: 4px;
   }
 
   // customize popup tip - give it a more narrow angle
@@ -425,14 +427,9 @@ dialog.disclaimer h4 {
     font-size: 2em;
 }
 
-// .subscribe__wrapper {
-//   float: right;
-//   margin-top: 4px;
-// }
-
 .subscribeDialog {
     /* Override default which is too narrow */
-    width: 25% !important;
+    // width: 85% !important;
     /* Limit width for readability */
     max-width: 35em;
     /* Center vertically - also set left for Firefox */
@@ -452,11 +449,3 @@ dialog.subscribeDialog h4 {
     /* Reduce size to avoid line break in title */
     font-size: 2em;
 }
-
-.subscribe-form {
-  .mdl-button {
-    margin: 10px 10px 0px 0px;
-    width: 90px;
-  }
-}
-
