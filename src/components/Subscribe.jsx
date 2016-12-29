@@ -80,7 +80,7 @@ class Subscribe extends Component {
   handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
-    var nextState = {};
+    let nextState = {};
     nextState[name] = value;
     this.setState(nextState);
   }
