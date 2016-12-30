@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import AWS from 'aws-sdk/dist/aws-sdk'
-import keys from '../keys'
 import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
