@@ -30,19 +30,19 @@ function sendAlert (topicArn, stage, name, sns) {
 function compareStage(lid, stage, name, existingTopics, sns) {
 	const theState = store.getState()
 	//hard coded for the demo
-	// if (theState.floodStatus[lid] != stage) {
-	if (theState.floodStatus[lid] != 'jesus') {
+	if (theState.floodStatus[lid] != stage) {
+	// if (theState.floodStatus[lid] != 'jesus') {
 		//if the elevated stage isn't the same as what is in subscribeDialog reducer, update the reducer
-		store.dispatch(actions.updateSigStage(lid, "jesus"))
+		// store.dispatch(actions.updateSigStage(lid, "jesus"))
 		// store.dispatch(actions.updateSigStage(lid, stage))
 
-		const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+		// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
 		//hard coded for the demo
-		// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+		const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 		if (existingTopics.includes(topicArn)) {
 			//if we have a topic for this gauge then we have subscribers so lets send out the alert
 			console.log(`send alert for ${lid}`)
-			// sendAlert(topicArn, stage, name, sns)
+			sendAlert(topicArn, stage, name, sns)
 		}
 	}
 }
@@ -124,9 +124,9 @@ function createTopic (lid, phone, email, sns) {
 	  	}
 	  	else {
 	  		console.log(data);
-	  		const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+	  		// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
 			//use the lid to connect with the topic for this flood gauge
-			// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+			const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 			//topic created successfully! now lets subscribe to it
 			if (email) {
 		      subscribeAlerts('email', email, topicArn, sns);
@@ -151,9 +151,9 @@ export function subscribeGauge(lid, phone, email) {
 		}
 		else {
 			const existingTopics =  R.pluck('TopicArn')(data.Topics);
-			const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
+			// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
 			//use the lid to connect with the topic for this flood gauge
-			// const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
+			const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 			if (existingTopics.includes(topicArn)) {
 				//if the gauge being subscribed to already has a topic, move forward with subscribing
 				if (email) {
@@ -174,9 +174,9 @@ export function subscribeGauge(lid, phone, email) {
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
 export function initialStatus () {
-	const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas_demo`;
+	// const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas_demo`;
 	//currently hard coded for the demo. 
-	// const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas`;
+	const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas`;
 	return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
 		.then(({data}) => {
 			const formatState = data.rows.map((gauge) => {

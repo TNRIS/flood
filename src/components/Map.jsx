@@ -12,6 +12,7 @@ import {
 } from 'react-mdl'
 
 const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
+const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
@@ -74,6 +75,10 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
     }, 0)
+
+    this.setState({
+      flooded: true
+    })
   }
 
   componentWillUpdate(nextProps) {
@@ -135,39 +140,79 @@ export default class Map extends Component {
   }
 
   updateLayerStore() {
-    const newProps = objectAssign({}, this.props, {
-          featureLayers: { layers:
-            this.props.featureLayers.layers.map((layer) => {
-              if (layer.id == 'ahps-flood') {
-                return objectAssign({}, layer, {
-                  options: {
-                    'refreshTimeMs': 300000, // 5 minutes
-                    'account': 'tnris-flood',
-                    'sql': demoSQL,
-                    'interactivity': [
-                      'lid',
-                      'name',
-                      'wfo',
-                    ],
-                    'cartocss': floodCartoCSS,
-                    'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
-                  }
-                })
-              } else {
-                return objectAssign({}, layer)
-              }
-            })
-        }
-      });
-    this.layerStore = null;
-    this.map.eachLayer((layer)  => {
-      const binary = layer._url.includes('basemaps')
-      if (!binary) {
-        this.map.removeLayer(layer)
-      }
+    console.log(this.state)
+    this.setState({
+      flooded: !this.state.flooded
     })
-    this.initializeLayerStore(newProps, this.map);
-    FloodAlerts.checkStage('tnris-flood');
+    console.log(this.state)
+    if (this.state.flooded === true) {
+      const newProps = objectAssign({}, this.props, {
+            featureLayers: { layers:
+              this.props.featureLayers.layers.map((layer) => {
+                if (layer.id == 'ahps-flood') {
+                  return objectAssign({}, layer, {
+                    options: {
+                      'refreshTimeMs': 300000, // 5 minutes
+                      'account': 'tnris-flood',
+                      'sql': demoSQL,
+                      'interactivity': [
+                        'lid',
+                        'name',
+                        'wfo',
+                      ],
+                      'cartocss': floodCartoCSS,
+                      'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+                    }
+                  })
+                } else {
+                  return objectAssign({}, layer)
+                }
+              })
+          }
+        });
+      this.layerStore = null;
+      this.map.eachLayer((layer)  => {
+        const binary = layer._url.includes('basemaps')
+        if (!binary) {
+          this.map.removeLayer(layer)
+        }
+      })
+      this.initializeLayerStore(newProps, this.map);
+      FloodAlerts.checkStage('tnris-flood');
+    } else {
+      const newProps = objectAssign({}, this.props, {
+            featureLayers: { layers:
+              this.props.featureLayers.layers.map((layer) => {
+                if (layer.id == 'ahps-flood') {
+                  return objectAssign({}, layer, {
+                    options: {
+                      'refreshTimeMs': 300000, // 5 minutes
+                      'account': 'tnris-flood',
+                      'sql': SQL,
+                      'interactivity': [
+                        'lid',
+                        'name',
+                        'wfo',
+                      ],
+                      'cartocss': floodCartoCSS,
+                      'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+                    }
+                  })
+                } else {
+                  return objectAssign({}, layer)
+                }
+              })
+          }
+        });
+      this.layerStore = null;
+      this.map.eachLayer((layer)  => {
+        const binary = layer._url.includes('basemaps')
+        if (!binary) {
+          this.map.removeLayer(layer)
+        }
+      })
+      this.initializeLayerStore(newProps, this.map);
+    }
   }
 
   initializeBasemapLayers() {

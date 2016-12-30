@@ -59,7 +59,7 @@ class Subscribe extends Component {
     event.preventDefault();
 
     if (this.state.email||this.state.phone) {
-      // FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
+      FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
       this.setState({
         toast: "Your subscription has been submitted"
       })
@@ -94,9 +94,9 @@ class Subscribe extends Component {
                          floatingLabel
                          onChange={ this.handleChange }
                          pattern="[0-9]*"
-                         minLength={9}
-                         maxLength={9}
-                         error="9 digits only including US area code"
+                         minLength={10}
+                         maxLength={10}
+                         error="10 digits only including US area code"
                          label="Phone..."
                          type="tel" 
                          id="phone"
