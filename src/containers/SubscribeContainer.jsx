@@ -4,7 +4,6 @@ import * as actions from '../actions'
 import Subscribe from '../components/Subscribe'
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {openDialog: state.subscribeDialog.openDialog,
           lid: state.subscribeDialog.lid,
           name: state.subscribeDialog.name}

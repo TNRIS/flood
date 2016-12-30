@@ -24,7 +24,6 @@ class Subscribe extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.setState({
       lid: nextProps.lid,
       name: nextProps.name
@@ -49,7 +48,6 @@ class Subscribe extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state)
     if (this.state.email||this.state.phone) {
       FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
       alert("Your subscription has been submitted!")
@@ -65,7 +63,7 @@ class Subscribe extends Component {
           <DialogTitle className="subscribe-title">{this.state.name} ({this.state.lid})</DialogTitle>
           <form className="subscribe-form" onSubmit={this.handleSubmit}>
             <DialogContent>
-              <p>Subscribe to recieve email and or text alerts when this gauge reaches a potentially dangerous flood stage.</p>
+              <p>Subscribe to receive email and/or text alerts when this gauge reaches elevated flood stages.</p>
               <Textfield floatingLabel
                          onChange={ this.handleChange }
                          label="Email..."
@@ -80,13 +78,15 @@ class Subscribe extends Component {
                          pattern="[0-9]*"
                          minLength={9}
                          maxLength={9}
-                         error="9igits only including US area code"
+                         error="9 digits only including US area code"
                          label="Phone..."
                          type="tel" 
                          id="phone"
                          name="phone"
                          value={ this.state.phone }
               />
+              <sub><small>Disclaimer: Flood gauge alerts (or lack thereof) are in no way an indicator of safety or danger.
+              Always use all available information resources during weather events.</small></sub>
             </DialogContent>
             <DialogActions>
               <Button raised ripple type="submit" value="Submit">Submit</Button>
