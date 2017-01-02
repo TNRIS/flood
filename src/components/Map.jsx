@@ -225,7 +225,7 @@ export default class Map extends Component {
       layer.bringToBack()
     })
 
-    layers['Positron'].addTo(this.map)
+    layers['OpenStreetMap'].addTo(this.map)
   }
 
   initializeGeocoderControl() {
