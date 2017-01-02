@@ -95,11 +95,11 @@ function subscribeAlerts (protocol, endpoint, topicArn, sns) {
         const lid = topicArn.split(":")[5];
 		//successfully subscribed. amazon automatically sends a confimation email to email subscriptions
         //but sms subscriptions get no confirmation from amazon so we send our own
-        const confirm = {
-        	PhoneNumber: endpoint,
-        	Message: `You have subscribed to the ${lid} flood gauge via 'texasflood.org'. Reply "STOP" at any time to stop recieving messages from this gauge.`
-        };
         if (protocol == "sms") {
+        	const confirm = {
+	        	PhoneNumber: endpoint,
+	        	Message: `You have subscribed to the ${lid} flood gauge via 'texasflood.org'. Reply "STOP" at any time to stop recieving messages from this gauge.`
+	        };
 			sns.publish(confirm, function(err_publish, data) {
 				if (err_publish) {
 				    console.log('Error sending a message', err_publish);
