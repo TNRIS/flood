@@ -29,15 +29,11 @@ function sendAlert (topicArn, stage, name, sns) {
 
 function compareStage(lid, stage, name, existingTopics, sns) {
 	const theState = store.getState()
-	//hard coded for the demo
 	if (theState.floodStatus[lid] != stage) {
-	// if (theState.floodStatus[lid] != 'jesus') {
 		//if the elevated stage isn't the same as what is in subscribeDialog reducer, update the reducer
-		// store.dispatch(actions.updateSigStage(lid, "jesus"))
+		//currently commented out for demo
 		// store.dispatch(actions.updateSigStage(lid, stage))
 
-		// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
-		//hard coded for the demo
 		const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 		if (existingTopics.includes(topicArn)) {
 			//if we have a topic for this gauge then we have subscribers so lets send out the alert
@@ -96,13 +92,18 @@ function subscribeAlerts (protocol, endpoint, topicArn, sns) {
       }
       else {
         console.log("subscribe data", data);
-        //successfully subscribed. amazon automatically sends a confimation email to email subscriptions
+        const lid = topicArn.split(":")[5];
+		//successfully subscribed. amazon automatically sends a confimation email to email subscriptions
         //but sms subscriptions get no confirmation from amazon so we send our own
+        const confirm = {
+        	PhoneNumber: endpoint,
+        	Message: `You have subscribed to the ${lid} flood gauge via 'texasflood.org'. Reply "STOP" at any time to stop recieving messages from this gauge.`
+        };
         if (protocol == "sms") {
-			sns.publish({PhoneNumber: endpoint, Message: 'You have subscribed to a flood gauge via "texasflood.org". Reply "STOP" at any time to stop recieving messages from this gauge.'}, function(err_publish, data) {
+			sns.publish(confirm, function(err_publish, data) {
 				if (err_publish) {
 				    console.log('Error sending a message', err_publish);
-				    alert(`You were successfully subscribed but your confirmation text message failed. Please notify TNRIS.`);
+				    alert(`You were successfully subscribed but your confirmation text message failed.`);
 				}
 				else {
 					console.log('Sent message:', data.MessageId);
@@ -124,7 +125,6 @@ function createTopic (lid, phone, email, sns) {
 	  	}
 	  	else {
 	  		console.log(data);
-	  		// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
 			//use the lid to connect with the topic for this flood gauge
 			const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 			//topic created successfully! now lets subscribe to it
@@ -151,7 +151,6 @@ export function subscribeGauge(lid, phone, email) {
 		}
 		else {
 			const existingTopics =  R.pluck('TopicArn')(data.Topics);
-			// const topicArn = keys.SNS_TOPIC_ARN_BASE + 'flood-test'
 			//use the lid to connect with the topic for this flood gauge
 			const topicArn = keys.SNS_TOPIC_ARN_BASE + lid
 			if (existingTopics.includes(topicArn)) {
@@ -174,8 +173,6 @@ export function subscribeGauge(lid, phone, email) {
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
 export function initialStatus () {
-	// const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas_demo`;
-	//currently hard coded for the demo. 
 	const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas`;
 	return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
 		.then(({data}) => {
