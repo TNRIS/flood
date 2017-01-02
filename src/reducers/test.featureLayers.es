@@ -45,6 +45,13 @@ describe('reducer: featureLayers', () => {
           'status': null,
         },
         {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
           'id': 'reservoir-conditions',
           'text': 'Lake Conditions',
           'type': 'cartodb',
