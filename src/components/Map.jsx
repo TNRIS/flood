@@ -145,77 +145,52 @@ export default class Map extends Component {
       flooded: !this.state.flooded
     })
     console.log(this.state)
+    
+    let sqlRef = SQL
+    
     if (this.state.flooded === true) {
-      const newProps = objectAssign({}, this.props, {
-            featureLayers: { layers:
-              this.props.featureLayers.layers.map((layer) => {
-                if (layer.id == 'ahps-flood') {
-                  return objectAssign({}, layer, {
-                    options: {
-                      'refreshTimeMs': 300000, // 5 minutes
-                      'account': 'tnris-flood',
-                      'sql': demoSQL,
-                      'interactivity': [
-                        'lid',
-                        'name',
-                        'wfo',
-                      ],
-                      'cartocss': floodCartoCSS,
-                      'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
-                    }
-                  })
-                } else {
-                  return objectAssign({}, layer)
+        sqlRef = demoSQL
+    } 
+    
+    const newProps = objectAssign({}, this.props, {
+        featureLayers: { layers:
+          this.props.featureLayers.layers.map((layer) => {
+            if (layer.id == 'ahps-flood') {
+              return objectAssign({}, layer, {
+                options: {
+                  'refreshTimeMs': 300000, // 5 minutes
+                  'account': 'tnris-flood',
+                  'sql': sqlRef,
+                  'interactivity': [
+                    'lid',
+                    'name',
+                    'wfo',
+                  ],
+                  'cartocss': floodCartoCSS,
+                  'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
                 }
               })
-          }
-        });
-      this.layerStore = null;
-      this.map.eachLayer((layer)  => {
-        console.log(layer)
-        const binary = layer._url.includes('osm')
-        if (!binary) {
-          this.map.removeLayer(layer)
+            } else {
+              return objectAssign({}, layer)
+            }
+          })
         }
-      })
-      this.initializeLayerStore(newProps, this.map);
+    });
+    this.layerStore = null;
+    this.map.eachLayer((layer)  => {
+        const gageLayerExt = layer._url.includes('json')
+        if (gageLayerExt) {
+            this.map.removeLayer(layer)
+        }
+    })
+    this.initializeLayerStore(newProps, this.map);
+
+    if (this.state.flooded === true) {
       // FloodAlerts.checkStage('tnris-flood');
-    } else {
-      const newProps = objectAssign({}, this.props, {
-            featureLayers: { layers:
-              this.props.featureLayers.layers.map((layer) => {
-                if (layer.id == 'ahps-flood') {
-                  return objectAssign({}, layer, {
-                    options: {
-                      'refreshTimeMs': 300000, // 5 minutes
-                      'account': 'tnris-flood',
-                      'sql': SQL,
-                      'interactivity': [
-                        'lid',
-                        'name',
-                        'wfo',
-                      ],
-                      'cartocss': floodCartoCSS,
-                      'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
-                    }
-                  })
-                } else {
-                  return objectAssign({}, layer)
-                }
-              })
-          }
-        });
-      this.layerStore = null;
-      this.map.eachLayer((layer)  => {
-        console.log(layer)
-        const binary = layer._url.includes('osm')
-        if (!binary) {
-          this.map.removeLayer(layer)
-        }
-      })
-      this.initializeLayerStore(newProps, this.map);
     }
+    
   }
+    
 
   initializeBasemapLayers() {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
@@ -249,8 +224,9 @@ export default class Map extends Component {
       <div className="map">
         <div ref="map" className="map--full">
           <PopupContainer leafletMap={this.map} />
+          <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
         </div>
-        <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
+        // <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
       </div>
       
     )

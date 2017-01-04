@@ -449,3 +449,10 @@ dialog.subscribeDialog h4 {
     /* Reduce size to avoid line break in title */
     font-size: 1.5em;
 }
+
+.simulateFlood {
+    position: absolute;
+    left: 50%;
+    margin-top: 30px !important;
+    transform: translate(-50%, -50%);
+}
