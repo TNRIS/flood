@@ -98,7 +98,7 @@ function subscribeAlerts (protocol, endpoint, topicArn, sns) {
         if (protocol == "sms") {
         	const confirm = {
 	        	PhoneNumber: endpoint,
-	        	Message: `You have subscribed to the ${lid} flood gauge via 'texasflood.org'. Reply "STOP" at any time to stop recieving messages from this gauge.`
+	        	Message: `You have subscribed to the ${lid} flood gauge via map.texasflood.org. Reply "STOP" at any time to stop recieving messages from this gauge.`
 	        };
 			sns.publish(confirm, function(err_publish, data) {
 				if (err_publish) {

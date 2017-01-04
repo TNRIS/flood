@@ -172,13 +172,14 @@ export default class Map extends Component {
         });
       this.layerStore = null;
       this.map.eachLayer((layer)  => {
-        const binary = layer._url.includes('basemaps')
+        console.log(layer)
+        const binary = layer._url.includes('osm')
         if (!binary) {
           this.map.removeLayer(layer)
         }
       })
       this.initializeLayerStore(newProps, this.map);
-      FloodAlerts.checkStage('tnris-flood');
+      // FloodAlerts.checkStage('tnris-flood');
     } else {
       const newProps = objectAssign({}, this.props, {
             featureLayers: { layers:
@@ -206,7 +207,8 @@ export default class Map extends Component {
         });
       this.layerStore = null;
       this.map.eachLayer((layer)  => {
-        const binary = layer._url.includes('basemaps')
+        console.log(layer)
+        const binary = layer._url.includes('osm')
         if (!binary) {
           this.map.removeLayer(layer)
         }
@@ -248,7 +250,7 @@ export default class Map extends Component {
         <div ref="map" className="map--full">
           <PopupContainer leafletMap={this.map} />
         </div>
-        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={this.updateLayerStore}>Simulate Flood</button>
+        <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
       </div>
       
     )
