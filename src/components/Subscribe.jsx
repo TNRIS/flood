@@ -81,7 +81,7 @@ class Subscribe extends Component {
           <DialogTitle className="subscribe-title">{ this.state.name } ({ this.state.lid })</DialogTitle>
           <form className="subscribe-form" onSubmit={ this.handleSubmit }>
             <DialogContent>
-              <p>Subscribe to receive email and/or text alerts when this gauge reaches elevated flood stages.</p>
+              <p>Subscribe to receive email and/or text alerts when this gage reaches elevated flood stages.</p>
               <Textfield floatingLabel
                          onChange={ this.handleChange }
                          label="Email..."
@@ -103,7 +103,7 @@ class Subscribe extends Component {
                          name="phone"
                          value={ this.state.phone }
               />
-              <sub><small>Disclaimer: Flood gauge alerts (or lack thereof) are in no way an indicator of safety or danger.
+              <sub><small>Disclaimer: Flood gage alerts (or lack thereof) are in no way an indicator of safety or danger.
               Always use all available information resources during weather events.</small></sub>
             </DialogContent>
             <DialogActions>

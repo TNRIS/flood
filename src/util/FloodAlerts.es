@@ -12,8 +12,8 @@ import {store} from '../store'
 function sendAlert (topicArn, stage, name, sns) {
     const params = {
     	TopicArn: topicArn,
-    	Subject: 'Flood Gauge Alert!',
-    	Message: `The ${name} flood gauge has entered a '${stage}' flood stage level`
+    	Subject: 'Flood Gage Alert!',
+    	Message: `The ${name} flood gage has entered a '${stage}' flood stage level`
     };
     //send out the alert. success and failure logs are in aws. probably should code in here
     //to send dev's an email if there is a publishing failure
@@ -98,7 +98,7 @@ function subscribeAlerts (protocol, endpoint, topicArn, sns) {
         if (protocol == "sms") {
         	const confirm = {
 	        	PhoneNumber: endpoint,
-	        	Message: `You have subscribed to the ${lid} flood gauge via map.texasflood.org. Reply "STOP" at any time to stop recieving messages from this gauge.`
+	        	Message: `You have subscribed to the ${lid} flood gage via map.texasflood.org. Reply "STOP" at any time to stop recieving messages from this gage.`
 	        };
 			sns.publish(confirm, function(err_publish, data) {
 				if (err_publish) {
