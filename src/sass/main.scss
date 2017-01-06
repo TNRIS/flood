@@ -487,6 +487,11 @@ dialog.subscribeDialog h4 {
     color: white;
 }
 
-.terms-agree-button {
+div.dialog-button-div {
+  padding-left: 8px;
+    
+  .terms-agree-button {
     width: 100%;
+    font-size: 90%;
+  }
 }

@@ -57,7 +57,7 @@ class Disclaimer extends React.Component {
             <a href="https://tnris.org/contact/"> https://tnris.org/contact/</a>
             </p>
           </DialogContent>
-          <DialogActions>
+          <DialogActions className="dialog-button-div">
                 <Button raised colored className="terms-agree-button" type='button' onClick={this.handleCloseDialog}>
                 I have read and agree to these terms
                 </Button>
