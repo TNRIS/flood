@@ -177,7 +177,7 @@ export default class Map extends Component {
     });
     this.layerStore = null;
     this.map.eachLayer((layer)  => {
-        if (layer._url) {
+        if (layer.hasOwnProperty('_url')) {
             const gageLayerExt = layer._url.includes('json')
             if (gageLayerExt) {
                 this.map.removeLayer(layer)
