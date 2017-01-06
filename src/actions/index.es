@@ -36,3 +36,48 @@ export const setFeatureLayer = (id) => {
     })
   }
 }
+
+export const setSigStage = (initState) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_SIGSTAGE,
+      initState
+    })
+  }
+}
+
+export const updateSigStage = (lid, stage) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.UPDATE_SIGSTAGE,
+      lid,
+      stage
+    })
+  }
+}
+
+export const showSubscribeDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SHOW_SUBSCRIBE_DIALOG
+    })
+  }
+}
+
+export const hideSubscribeDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.HIDE_SUBSCRIBE_DIALOG
+    })
+  }
+}
+
+export const setLidAndName = (lid, name) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_LID_AND_NAME,
+      lid,
+      name
+    })
+  }
+}

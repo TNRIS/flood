@@ -15,7 +15,6 @@ const lakeLegend = require('../images/reservoir-conditions-legend.png')
 const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
 
-
 const initialState = {
   layers: [
     {
@@ -82,7 +81,7 @@ const initialState = {
       },
       'active': false,
       'status': null,
-    },
+    }
     //TODO: Removed until Aeris subscription has been purchased
     // since their advisory layers don't work under the dev plan
     // {

@@ -32,7 +32,7 @@ describe('reducer: featureLayers', () => {
       layers: [
         {
           'id': 'ahps-flood',
-          'text': 'Flood Gauges',
+          'text': 'Flood Gages',
           'type': 'cartodb',
           'active': true,
           'status': null,
@@ -41,6 +41,13 @@ describe('reducer: featureLayers', () => {
           'id': 'animated-weather',
           'text': 'Weather Radar',
           'type': 'animated-weather',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
           'active': false,
           'status': null,
         },

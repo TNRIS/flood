@@ -65,7 +65,7 @@ const initialState = {
       }
     }
   ],
-  active: 'positron'
+  active: 'osm'
 }
 
 export default function baseLayers(state = initialState, action) {

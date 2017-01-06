@@ -7,6 +7,15 @@ import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
+import {
+    Button, Dialog, DialogTitle, DialogContent, DialogActions
+} from 'react-mdl'
+
+const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
+const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
+const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
+import objectAssign from 'object-assign'
+import * as FloodAlerts from '../util/FloodAlerts'
 
 
 
@@ -40,15 +49,16 @@ export default class Map extends Component {
     onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired,
+    onMouseoverUTFGrid: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     this.state = {}
+    this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
@@ -61,11 +71,15 @@ export default class Map extends Component {
 
       this.map.zoomControl.setPosition('topright')
       this.map.attributionControl.setPrefix('Data Sourced From')
-
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
+      this.initializeSimulateFloodControl()
     }, 0)
+
+    this.setState({
+      flooded: false
+    })
   }
 
   componentWillUpdate(nextProps) {
@@ -84,9 +98,6 @@ export default class Map extends Component {
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
     }
-  }
-
-  componentWillUnmount() {
   }
 
   setActiveFeatureLayers(props) {
@@ -129,6 +140,57 @@ export default class Map extends Component {
     })
   }
 
+  updateLayerStore() {
+    this.setState({
+      flooded: !this.state.flooded
+    })
+    
+    let sqlRef = SQL
+    
+    if (this.state.flooded === true) {
+        sqlRef = demoSQL
+    } 
+    
+    const newProps = objectAssign({}, this.props, {
+        featureLayers: { layers:
+          this.props.featureLayers.layers.map((layer) => {
+            if (layer.id == 'ahps-flood') {
+              return objectAssign({}, layer, {
+                options: {
+                  'refreshTimeMs': 300000, // 5 minutes
+                  'account': 'tnris-flood',
+                  'sql': sqlRef,
+                  'interactivity': [
+                    'lid',
+                    'name',
+                    'wfo',
+                  ],
+                  'cartocss': floodCartoCSS,
+                  'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+                }
+              })
+            } else {
+              return objectAssign({}, layer)
+            }
+          })
+        }
+    });
+    this.layerStore = null;
+    this.map.eachLayer((layer)  => {
+        const gageLayerExt = layer._url.includes('json')
+        if (gageLayerExt) {
+            this.map.removeLayer(layer)
+        }
+    })
+    this.initializeLayerStore(newProps, this.map);
+
+    if (this.state.flooded === true) {
+      // FloodAlerts.checkStage('tnris-flood');
+    }
+    
+  }
+    
+
   initializeBasemapLayers() {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
@@ -139,7 +201,7 @@ export default class Map extends Component {
       layer.bringToBack()
     })
 
-    layers['Positron'].addTo(this.map)
+    layers['OpenStreetMap'].addTo(this.map)
   }
 
   initializeGeocoderControl() {
@@ -155,14 +217,53 @@ export default class Map extends Component {
 
     control.addTo(this.map)
   }
+  
+  initializeSimulateFloodControl() {
+      const toggleFloodAction = this.updateLayerStore;
+      const toggleFlood = L.easyButton({
+          type: 'animate',
+          position: 'topright',
+          states: [{
+              stateName: 'real-time-data',
+              icon: '&bcong; &backcong;&#x0224C;&#8780;',
+              title: 'Simulate Flood',
+              onClick: function(control){
+                  toggleFloodAction();
+                  control.state('simulate-flood');
+              }
+          }, {
+              stateName: 'simulate-flood',
+              icon: '&bcong; &backcong;&#x0224C;&#8780;',
+              title: 'Show Current Data',
+              onClick: function(control){
+                  toggleFloodAction();
+                  control.state('real-time-data');
+              }
+          }]
+      });
+      
+      toggleFlood.addTo(this.map);
+  }
+  
+  betaNotice() {
+      if (document.URL === 'http://map.texasflood.org/') {
+          return "hide-beta"
+      } else {
+          return "betanotice"
+      }
+  }
 
   render() {
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <PopupContainer leafletMap={this.map} />
+        <div id="betanotice" className={this.betaNotice()}>
+          <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
+        </div>
+        <PopupContainer leafletMap={this.map} />
         </div>
       </div>
+      
     )
   }
 }

@@ -4,5 +4,13 @@ export default {
   bingApiKey: "<BING MAPS API KEY>",
   googleAnalyticsId: "<GOOGLE ANALYTICS ID",
   aerisApiId: "<AERIS API ID>",
-  aerisApiSecret: "<AERIS API SECRET>"
+  aerisApiSecret: "<AERIS API SECRET>",
+  awsConfig: {
+  	accessKeyId: "<AWS ACCESS KEY ID>",
+  	secretAccessKey: "<AWS SECRET ACCESS KEY>",
+  	region: "<REGION>"
+  },
+  //topic base includes entire aws arn until the specific topic name. keep last colon.
+  //example: 'arn:aws:sns:us-east-1:999999999999:'
+  SNS_TOPIC_ARN_BASE: "<AWS TOPIC ARN>"
 }

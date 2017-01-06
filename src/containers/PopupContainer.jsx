@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import Popup from '../components/Popup'
+import * as actions from '../actions'
 
 const mapStateToProps = (state) => {
   const props = {
@@ -17,8 +18,12 @@ const mapStateToProps = (state) => {
   return props
 }
 
-const mapDispatchToProps = () => {
-  return {}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setLidAndName: (lid, name) => {
+      dispatch(actions.setLidAndName(lid, name))
+    }
+  }
 }
 
 const PopupContainer = connect(

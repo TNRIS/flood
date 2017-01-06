@@ -40,6 +40,7 @@ export default {
     port: 3545
   },
   module: {
+    noParse: [/aws-sdk/],
     loaders: [
       {
         test: /\.scss$/,
@@ -55,6 +56,10 @@ export default {
       {
         test: /\.(jpg|png|gif)$/,
         loader: 'url-loader?limit=65536'
+      },
+      {
+        test: /\.ico$/,
+        loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
       },
       {
         test: /\.(es|jsx)$/,

@@ -235,6 +235,12 @@ body {
     margin: 6px 14px 6px 14px;
   }
 
+  .subscribe-button {
+    font-size: 1em;
+    float: right;
+    top: 4px;
+  }
+
   // customize popup tip - give it a more narrow angle
   .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background: white;
@@ -419,4 +425,64 @@ body {
 dialog.disclaimer h4 {
     /* Reduce size to avoid line break in title */
     font-size: 2em;
+}
+
+.subscribeDialog {
+    /* Override default which is too narrow */
+    // width: 85% !important;
+    /* Limit width for readability */
+    max-width: 35em;
+    /* Center vertically - also set left for Firefox */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    /* Scrollbar to allow text viewing and input access on small screens */
+    overflow-y: auto !important;
+    /* Allow the scrollbar to work without forcing it on */
+    max-height: 100%;
+    /* Ensure this isn't transparent on Firefox */
+    background-color: white;
+    position: fixed;
+}
+
+dialog.subscribeDialog h4 {
+    /* Reduce size to avoid line break in title */
+    font-size: 1.5em;
+}
+
+.betanotice {
+    background-color: #FCF8E3;
+    bottom: -10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    left: 50%;
+    min-width: 230px;
+    opacity: 0.9;
+    padding: 10px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    p {
+        color: #DB9840;
+        font-size: 12px;
+        margin: 0;
+    }
+    .simulateFlood {
+        width: 100%;
+    }
+}
+
+.hide-beta {
+    display: none;
+}
+
+.easy-button-button.simulate-flood-active,  .easy-button-button.simulate-flood-active:hover{
+    background-color: #4094C1;
+    border: none;
+    color: white;
+}
+
+.easy-button-button.simulate-flood-active:hover{
+    background-color: #2C88A9;
+    border: none;
+    color: white;
 }

@@ -68,6 +68,7 @@ export default class Popup extends Component {
 
     switch (layerId) {
       case 'ahps-flood':
+        this.props.setLidAndName(this.props.data.lid, this.props.data.name)
         return (
           <FloodGaugePopup {...data} popupWidth={popupWidth} updatePopup={() => {this.leafletPopup.update()}} />
         )
