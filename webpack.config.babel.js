@@ -4,6 +4,7 @@ import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import swig from 'swig'
 
+
 const isProd = process.env.NODE_ENV === 'production'
 
 const folders = {
@@ -14,6 +15,9 @@ const folders = {
 //compile index.swig
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
+
+// Move favicon to dist directory
+fs.createReadStream(folders.src + "images/favicon.ico").pipe(fs.createWriteStream(folders.dist + "favicon.ico"));
 
 //setup webpack plugins
 const plugins = []
@@ -56,10 +60,6 @@ export default {
       {
         test: /\.(jpg|png|gif)$/,
         loader: 'url-loader?limit=65536'
-      },
-      {
-        test: /\.ico$/,
-        loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
       },
       {
         test: /\.(es|jsx)$/,

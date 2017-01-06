@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.blue-indigo.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
     
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     {% if isProd %}
       <link rel="stylesheet" type="text/css" href="/assets/styles.css">
