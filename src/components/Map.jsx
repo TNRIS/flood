@@ -58,7 +58,7 @@ export default class Map extends Component {
     this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
@@ -74,10 +74,11 @@ export default class Map extends Component {
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
+      this.initializeSimulateFloodControl()
     }, 0)
 
     this.setState({
-      flooded: true
+      flooded: false
     })
   }
 
@@ -140,11 +141,9 @@ export default class Map extends Component {
   }
 
   updateLayerStore() {
-    console.log(this.state)
     this.setState({
       flooded: !this.state.flooded
     })
-    console.log(this.state)
     
     let sqlRef = SQL
     
@@ -218,15 +217,51 @@ export default class Map extends Component {
 
     control.addTo(this.map)
   }
+  
+  initializeSimulateFloodControl() {
+      const toggleFloodAction = this.updateLayerStore;
+      const toggleFlood = L.easyButton({
+          type: 'animate',
+          position: 'topright',
+          states: [{
+              stateName: 'real-time-data',
+              icon: '&bcong; &backcong;&#x0224C;&#8780;',
+              title: 'Simulate Flood',
+              onClick: function(control){
+                  toggleFloodAction();
+                  control.state('simulate-flood');
+              }
+          }, {
+              stateName: 'simulate-flood',
+              icon: '&bcong; &backcong;&#x0224C;&#8780;',
+              title: 'Show Current Data',
+              onClick: function(control){
+                  toggleFloodAction();
+                  control.state('real-time-data');
+              }
+          }]
+      });
+      
+      toggleFlood.addTo(this.map);
+  }
+  
+  betaNotice() {
+      if (document.URL === 'http://map.texasflood.org/') {
+          return "hide-beta"
+      } else {
+          return "betanotice"
+      }
+  }
 
   render() {
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <PopupContainer leafletMap={this.map} />
-          <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
+        <div id="betanotice" className={this.betaNotice()}>
+          <p><strong>Warning: </strong>This application is currently in development. For the official version, go to <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
         </div>
-        // <Button raised className="simulateFlood" onClick={this.updateLayerStore}>Simulate Flood</Button>
+        <PopupContainer leafletMap={this.map} />
+        </div>
       </div>
       
     )

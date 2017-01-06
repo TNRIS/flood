@@ -32,7 +32,7 @@ describe('reducer: featureLayers', () => {
       layers: [
         {
           'id': 'ahps-flood',
-          'text': 'Flood Gauges',
+          'text': 'Flood Gages',
           'type': 'cartodb',
           'active': true,
           'status': null,

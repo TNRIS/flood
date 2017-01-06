@@ -450,9 +450,39 @@ dialog.subscribeDialog h4 {
     font-size: 1.5em;
 }
 
-.simulateFlood {
-    position: absolute;
+.betanotice {
+    background-color: #FCF8E3;
+    bottom: -10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     left: 50%;
-    margin-top: 30px !important;
+    min-width: 230px;
+    opacity: 0.9;
+    padding: 10px;
+    position: absolute;
     transform: translate(-50%, -50%);
+    z-index: 6;
+    p {
+        color: #DB9840;
+        font-size: 12px;
+        margin: 0;
+    }
+    .simulateFlood {
+        width: 100%;
+    }
+}
+
+.hide-beta {
+    display: none;
+}
+
+.easy-button-button.simulate-flood-active,  .easy-button-button.simulate-flood-active:hover{
+    background-color: #4094C1;
+    border: none;
+    color: white;
+}
+
+.easy-button-button.simulate-flood-active:hover{
+    background-color: #2C88A9;
+    border: none;
+    color: white;
 }

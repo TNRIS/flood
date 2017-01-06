@@ -58,6 +58,10 @@ export default {
         loader: 'url-loader?limit=65536'
       },
       {
+        test: /\.ico$/,
+        loader: 'file-loader?name=[name].[ext]'  // <-- retain original file name
+      },
+      {
         test: /\.(es|jsx)$/,
         exclude: /node_modules/,
         loaders: ['babel-loader']
