@@ -177,15 +177,18 @@ export default class Map extends Component {
     });
     this.layerStore = null;
     this.map.eachLayer((layer)  => {
-        const gageLayerExt = layer._url.includes('json')
-        if (gageLayerExt) {
-            this.map.removeLayer(layer)
+        if (layer._url) {
+            const gageLayerExt = layer._url.includes('json')
+            if (gageLayerExt) {
+                this.map.removeLayer(layer)
+            }
         }
     })
+    
     this.initializeLayerStore(newProps, this.map);
 
     if (this.state.flooded === true) {
-      // FloodAlerts.checkStage('tnris-flood');
+      FloodAlerts.checkStage('tnris-flood');
     }
     
   }
