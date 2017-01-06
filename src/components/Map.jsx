@@ -258,7 +258,7 @@ export default class Map extends Component {
       <div className="map">
         <div ref="map" className="map--full">
         <div id="betanotice" className={this.betaNotice()}>
-          <p><strong>Warning: </strong>This application is currently in development. For the official version, go to <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
+          <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
         </div>
         <PopupContainer leafletMap={this.map} />
         </div>
