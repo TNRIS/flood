@@ -22,7 +22,7 @@ export default class LakeConditionsPopup extends Component {
 
     return (
       <div className="popup__container--lake" >
-        <PopupTitle icon={icon} title="Lake Conditions Information" />
+        <PopupTitle icon={icon} title="Lake Conditions" />
         <PopupContent>
           <PopupHeader>
             { full_name }

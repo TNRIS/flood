@@ -107,8 +107,8 @@ class Subscribe extends Component {
               Always use all available information resources during weather events.</small></sub>
             </DialogContent>
             <DialogActions>
-              <Button raised ripple type="submit" value="Submit">Submit</Button>
-              <Button raised ripple type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
+              <Button primary ripple type="submit" value="Submit">Submit</Button>
+              <Button primary ripple type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
             </DialogActions>
           </form>
         </Dialog>
