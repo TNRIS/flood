@@ -1,6 +1,6 @@
 {
   "name": "flood-web-viewer",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Texas flood information web viewer",
   "private": true,
   "scripts": {
