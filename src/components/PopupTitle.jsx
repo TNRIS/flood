@@ -19,7 +19,7 @@ const PopupTitle = class PopupTitle extends Component {
         <span className="popup__title-text">
           { this.props.title }
         </span>
-          {this.props.title == "Flood Gage Information" &&
+          {this.props.title == "Flood Gage" &&
             <Button className="subscribe-button mdl-color-text--white" onClick={this.props.showSubscribe}>Subscribe</Button>
           }
       </div>
@@ -29,7 +29,7 @@ const PopupTitle = class PopupTitle extends Component {
 
 PopupTitle.defaultProps = {
   icon: floodGaugeIcon,
-  title: "Flood Gage Information"
+  title: "Flood Gage"
 }
 
 export default PopupTitle
