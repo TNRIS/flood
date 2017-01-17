@@ -66,9 +66,6 @@ export default class Map extends Component {
         minZoom: 5
       })
 
-      // fit to Texas
-      this.map.fitBounds([[25.8371, -106.6460], [36.5007, -93.5083]])
-
       this.map.zoomControl.setPosition('topright')
       this.map.attributionControl.setPrefix('Data Sourced From')
       this.initializeLayerStore(this.props, this.map)
@@ -83,6 +80,8 @@ export default class Map extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    this.map.invalidateSize('false')
+
     // only trigger show() and hide() on feature layers when the set of active
     // layers has changed, or an active layer has had a status change
     const activeFeatureLayerBools = (props) => {
