@@ -1,14 +1,13 @@
 import React from 'react'
-import { Drawer, Navigation } from 'react-mdl'
+import { Drawer } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import Resources from './Resources'
-import Unsubscribe from './Unsubscribe'
 
 import TWDBLogoImage from '../images/twdb_white.png'
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 
-const FeatureLayerDrawer = () => {
+const NavigationDrawer = () => {
   return (
     <Drawer className="nav">
       <div className="nav__head">
@@ -25,12 +24,6 @@ const FeatureLayerDrawer = () => {
       <FeatureLayerChooserContainer/>
       <Resources/>
 
-      <div>
-        <Navigation className="unsubscribe_form">
-            <Unsubscribe text="Manage Subscriptions"/>
-        </Navigation>
-      </div>
-
       <div className="footer">
         <div className="footer__wrapper">
           <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
@@ -42,4 +35,4 @@ const FeatureLayerDrawer = () => {
   )
 }
 
-export default FeatureLayerDrawer
+export default NavigationDrawer
