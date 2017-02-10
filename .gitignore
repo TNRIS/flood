@@ -38,6 +38,4 @@ jspm_packages
 
 /dist/*
 
-.editorconfig
-
 .idea/

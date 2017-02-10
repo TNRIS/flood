@@ -16,6 +16,7 @@ export default class Popup extends Component {
     data: PropTypes.object,
     layerId: PropTypes.string,
     browser: PropTypes.object,
+    setLidAndName: PropTypes.func
   }
 
   constructor() {
