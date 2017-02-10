@@ -35,6 +35,7 @@ class Subscribe extends Component {
   handleShowSnackbar() {
     this.setState({ isSnackbarActive: true });
   }
+
   handleTimeoutSnackbar() {
     this.setState({ isSnackbarActive: false });
   }
@@ -71,9 +72,8 @@ class Subscribe extends Component {
       })
       this.handleShowSnackbar()
     }
-    
   }
-  
+
   render() {
     return (
       <div className='subscribe__wrapper'>

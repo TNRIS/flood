@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { setFeatureLayer } from '../actions'
-import FeatureLayerDrawer from '../components/FeatureLayerDrawer'
+import FeatureLayerChooser from '../components/FeatureLayerChooser'
 
 
 const mapStateToProps = (state) => {
@@ -18,9 +18,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const FeatureLayerChooser = connect(
+const FeatureLayerChooserContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeatureLayerDrawer)
+)(FeatureLayerChooser)
 
-export default FeatureLayerChooser
+export default FeatureLayerChooserContainer
