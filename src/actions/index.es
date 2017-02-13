@@ -81,3 +81,12 @@ export const setLidAndName = (lid, name) => {
     })
   }
 }
+
+export const updateTimestamp = (timestamp) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.UPDATE_TIMESTAMP,
+      timestamp
+    })
+  }
+}

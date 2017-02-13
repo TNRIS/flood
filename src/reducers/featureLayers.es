@@ -45,6 +45,7 @@ const initialState = {
       'type': 'animated-weather',
       'active': false,
       'status': null,
+      'displayedTimestamp': '',
     },
     {
       'id': 'flood-alerts',
@@ -116,6 +117,21 @@ export default function featureLayers(state = initialState, action) {
           return objectAssign({}, layer, {
             active: layer.id === action.id
           })
+        })
+      })
+    case types.UPDATE_TIMESTAMP:
+      return objectAssign({}, state, {
+        layers: state.layers.map((layer) => {
+          let newLayer
+          if (layer.id === 'animated-weather') {
+            newLayer = objectAssign({}, layer, {
+              displayedTimestamp: action.timestamp
+            })
+          }
+          else {
+            newLayer = layer
+          }
+          return newLayer
         })
       })
     default:

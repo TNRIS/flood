@@ -8,7 +8,7 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
+    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
 } from 'react-mdl'
 
 const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
@@ -17,6 +17,8 @@ const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
 
+const playArrow = require('../images/play_arrow.png')
+const pause = require('../images/pause.png')
 
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
@@ -54,7 +56,9 @@ export default class Map extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      animationIcon: playArrow
+    }
     this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
@@ -98,6 +102,13 @@ export default class Map extends Component {
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
     }
+
+    if (nextProps.featureLayers.layers[1]['active'] === true) {
+      this.displayedTimestamp = nextProps.featureLayers.layers[1]['displayedTimestamp']
+    }
+    else {
+      this.displayedTimestamp = ''
+    }
   }
 
   setActiveFeatureLayers(props) {
@@ -132,6 +143,7 @@ export default class Map extends Component {
         onClickUTFGrid: this.props.onClickUTFGrid,
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
+        updateTimestamp: this.props.updateTimestamp,
       }
     })
 
@@ -247,6 +259,16 @@ export default class Map extends Component {
       
       toggleFlood.addTo(this.map);
   }
+
+  toggleAnimation() {
+    this.layerStore.get('animated-weather').toggleAnimation()
+    if (this.layerStore.get('animated-weather').animate === true) {
+      this.setState({animationIcon: pause})
+    }
+    else {
+      this.setState({animationIcon: playArrow})
+    }
+  }
   
   betaNotice() {
       if (document.URL === 'http://map.texasflood.org/') {
@@ -257,13 +279,24 @@ export default class Map extends Component {
   }
 
   render() {
+    let radarInfo
+    if (this.displayedTimestamp != '') {
+      radarInfo =  <FABButton mini onClick={() => {this.toggleAnimation()}}><img src={this.state.animationIcon} /></FABButton>      
+    }
+
     return (
       <div className="map">
         <div ref="map" className="map--full">
-        <div id="betanotice" className={this.betaNotice()}>
-          <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
-        </div>
-        <PopupContainer leafletMap={this.map} />
+          <div className="weatherTimestamp">
+              <p>{this.displayedTimestamp}</p>
+            </div>
+            <div className="animateRadar"> 
+              {radarInfo}
+            </div>
+          <div id="betanotice" className={this.betaNotice()}>
+            <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
+          </div>
+          <PopupContainer leafletMap={this.map} />
         </div>
       </div>
       

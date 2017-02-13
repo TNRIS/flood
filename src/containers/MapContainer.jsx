@@ -33,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
     onMouseoverUTFGrid: (data) => {
       dispatch(actions.hoverOverMapClickable(data))
     },
+    updateTimestamp: (timestamp) => {
+      dispatch(actions.updateTimestamp(timestamp))
+    },
   }
 }
 
