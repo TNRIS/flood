@@ -90,3 +90,19 @@ export const updateTimestamp = (timestamp) => {
     })
   }
 }
+
+export const showAboutDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SHOW_ABOUT_DIALOG
+    })
+  }
+}
+
+export const hideAboutDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.HIDE_ABOUT_DIALOG
+    })
+  }
+}
