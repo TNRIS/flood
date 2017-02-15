@@ -58,7 +58,7 @@ export default class Map extends Component {
     this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
@@ -135,7 +135,7 @@ export default class Map extends Component {
       }
     })
 
-    props.featureLayers.layers.forEach((layer) => {
+    props.featureLayers.layers.map((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
   }
@@ -144,13 +144,13 @@ export default class Map extends Component {
     this.setState({
       flooded: !this.state.flooded
     })
-    
+
     let sqlRef = SQL
-    
+
     if (this.state.flooded === true) {
         sqlRef = demoSQL
-    } 
-    
+    }
+
     const newProps = objectAssign({}, this.props, {
         featureLayers: { layers:
           this.props.featureLayers.layers.map((layer) => {
@@ -184,18 +184,18 @@ export default class Map extends Component {
             }
         }
     })
-    
+
     this.initializeLayerStore(newProps, this.map);
 
     if (this.state.flooded === true) {
       FloodAlerts.checkStage('tnris-flood');
     }
-    
+
   }
-    
+
 
   initializeBasemapLayers() {
-    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
+    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
     const layerControl = L.control.layers(layers)
@@ -220,7 +220,7 @@ export default class Map extends Component {
 
     control.addTo(this.map)
   }
-  
+
   initializeSimulateFloodControl() {
       const toggleFloodAction = this.updateLayerStore;
       const toggleFlood = L.easyButton({
@@ -244,10 +244,10 @@ export default class Map extends Component {
               }
           }]
       });
-      
+
       toggleFlood.addTo(this.map);
   }
-  
+
   betaNotice() {
       if (document.URL === 'http://map.texasflood.org/') {
           return "hide-beta"
@@ -266,7 +266,7 @@ export default class Map extends Component {
         <PopupContainer leafletMap={this.map} />
         </div>
       </div>
-      
+
     )
   }
 }

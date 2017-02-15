@@ -65,7 +65,6 @@ export default class Popup extends Component {
   getPopupContent() {
     const { data, layerId } = this.props
     const popupWidth = this.calculatePopupWidth()
-
     switch (layerId) {
       case 'ahps-flood':
         this.props.setLidAndName(this.props.data.lid, this.props.data.name)
