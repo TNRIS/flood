@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
       payload.data = data
       dispatch(actions.setPopup(payload))
     }
-    console.log(id, data.data)
+    console.log(id, data)
   }
 
   return {

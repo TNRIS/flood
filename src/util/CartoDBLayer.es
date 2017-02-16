@@ -68,7 +68,8 @@ export default class CartoDBLayer extends Layer {
 
         if (data.gridsUrl) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {
-            useJsonP: false
+            useJsonP: false,
+            jason: true
           })
 
           utfGridLayer.on('click', (gridData) => {
