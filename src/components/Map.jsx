@@ -66,12 +66,10 @@ export default class Map extends Component {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
         center: [31, -100],
-        zoom: 7,
-        minZoom: 5
+        zoom: 6,
+        minZoom: 6,
+        maxBounds: [[24.8, -108], [37.5, -92]]
       })
-
-      // fit to Texas
-      this.map.fitBounds([[25.8371, -106.6460], [36.5007, -93.5083]])
 
       this.map.zoomControl.setPosition('topright')
       this.map.attributionControl.setPrefix('Data Sourced From')
