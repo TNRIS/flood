@@ -454,7 +454,7 @@ dialog.subscribeDialog h4 {
     /* Override default which is too narrow */
     // width: 85% !important;
     /* Limit width for readability */
-    width: 70% !important;
+    min-width: 70% !important;
     margin-left: 0;
     margin-right: 0;
     /* Center vertically - also set left for Firefox */
@@ -464,7 +464,7 @@ dialog.subscribeDialog h4 {
     /* Scrollbar to allow text viewing and input access on small screens */
     overflow-y: auto !important;
     /* Allow the scrollbar to work without forcing it on */
-    max-height: 80%;
+    max-height: 90%;
     /* Ensure this isn't transparent on Firefox */
     background-color: white;
     position: fixed;

@@ -24,7 +24,7 @@ class About extends React.Component {
         <Dialog ref='about' className='aboutDialog' open={this.props.openDialog}>
           <DialogTitle>About</DialogTitle>
           <DialogContent>
-            <h4>Purpose</h4>
+            <h4>Legal Review and Disclaimer</h4>
             <p>
             The intent of the TexasFlood.org flood viewer is to assist
             individuals in quickly assessing the potential flood risk during a
@@ -45,18 +45,49 @@ class About extends React.Component {
             <p>
             The data presented in this application is collected from both public and
             private contributors. <br />
-            Flood Gage readings are provided by the National Oceanic & Atmospheric Administration&#39;s 
+            Flood Gage readings are acquired from the National Oceanic & Atmospheric Administration&#39;s 
             National Weather Service (NOAA NWS). The data within this application is 
             pulled directly from NOAA&#39;s database and displayed within this application. 
-            The application re-pulls the flood gage data from NOAA every 5 minutes.
+            The application refreshes the flood gage data from NOAA every 5 minutes 
+            although NOAA updates the data for each individual flood gage in their database 
+            at intervals no longer than every 1 hour.
             The stage levels are predefined by NOAA and represented with this application 
-            mirroring their default symbology. For more information on flood gage readings, 
+            mirroring their default symbology. The stage levels are defined by the water 
+            level for each individual gage relative to their capacity.
+            For more information on Flood Gage readings, 
             please visit NOAA&#39;s website at: 
             <a href="http://water.weather.gov/ahps/"> http://water.weather.gov/ahps/</a><br />
-
+            Weather Radar rasters are acquired from the Aeris Weather&#39;s Aeris Maps 
+            Platform (AMP). This is a national dataset displaying rain, snow, and ice 
+            precipitation in decibel relative to Z (dBZ) units. By default, the Weather 
+            Radar layer displays the most recent still radar. By pressing the <i>play</i> 
+            button in the bottom left corner of the map, the layer will animate, cycling 
+            through 5 still radar captures spanning approximately 4 hours and 10 minutes 
+            at approximately 50 minute intervals. The application refreshes the weather 
+            radar data from the AMP every 6 minutes. This is the same interval Aeris 
+            updates the radar data. For more information on the Weather Radar, please visit 
+            Aeris Weather&#39;s website at:
+            <a href="https://www.aerisweather.com/"> https://www.aerisweather.com/</a><br />
+            Weather Alerts are acquired from the Aeris Weather&#39;s Aeris Weather API. 
+            This is a national dataset of all active US advisories issued by the National 
+            Weather Service (NWS). "The NWS issues a variety of severe weather warnings, 
+            watches, advisories, and statemetns that may be issued for a single forecast 
+            zone or county, or for a large region." The application refreshes the weather 
+            alerts data from the Aeris Weather API every 1 minute. For more information on 
+            the Weather Alerts, please visit Aeris Weather&#39;s website at:
+            <a href="https://www.aerisweather.com/"> https://www.aerisweather.com/</a><br />
+            Lake Conditions are acquired from the Texas Water Development Board&#39;s 
+            Water Data for Texas (WDFT) project. This is a Texas statewide dataset displaying current 
+            lake water storage levels as part of a graphical display including storage levels 
+            up to 13 months before the current date. The application refreshes the weather 
+            alerts data from the  WDFT database every 30 minutes. For more information on the 
+            Lake Conditions, please visit the WDFT website at:
+            <a href="https://waterdatafortexas.org/"> https://waterdatafortexas.org/</a><br />
             </p>
             <h4>Subscriptions</h4>
             <p>
+            ***Official subscription disclaimer goes here***<br /><br />
+
             The application provides the ability for users to subscribe to flood
             gages in order to receive alerts when gage readings are staged at potentially
             dangerous levels. These levels are designated as Action, Flood, Moderate, and Major. <br /> 
