@@ -10,7 +10,8 @@ const initialState = {
   phone: '',
   currentSubscriptions: {},
   error: null,
-  isFetching: false
+  isFetching: false,
+  nextToken: ''
 }
 
 export default function subscriptions(state = initialState, action) {
@@ -27,7 +28,6 @@ export default function subscriptions(state = initialState, action) {
         isFetching: false
       })
     case GET_SUBSCRIPTIONS_SUCCESS:
-      console.log(action);
       return objectAssign({}, state, {
         email: action.email,
         phone: action.phone,

@@ -9,7 +9,8 @@ const mapStateToProps = (state) => {
     phone: state.subscriptions.phone,
     currentSubscriptions: state.subscriptions.currentSubscriptions,
     error: state.subscriptions.error,
-    isFetching: state.subscriptions.isFetching
+    isFetching: state.subscriptions.isFetching,
+    nextToken: state.subscriptions.nextToken
   }
 
   return props
@@ -17,8 +18,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserSubscriptions: (email, phone) => {
-      dispatch(actions.getUserSubscriptions(email, phone))
+    getUserSubscriptions: (email, phone, nextToken) => {
+      dispatch(actions.getUserSubscriptions(email, phone, nextToken))
     }
   }
 }
