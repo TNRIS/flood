@@ -4,9 +4,9 @@ import { Textfield, Button, DataTable, TableHeader, Checkbox, Spinner } from 're
 
 class Subscriptions extends Component {
   static propTypes = {
-    getSubscriptions: React.PropTypes.func,
+    getUserSubscriptions: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
-    subscriptions: React.PropTypes.array
+    currentSubscriptions: React.PropTypes.object
   }
 
   constructor(props) {
@@ -21,7 +21,7 @@ class Subscriptions extends Component {
       this.setState({
         email: nextProps.email,
         phone: nextProps.phone,
-        subscriptions: nextProps.subscriptions,
+        currentSubscriptions: nextProps.currentSubscriptions,
         error: nextProps.error,
         isFetching: nextProps.isFetching
       })
@@ -40,7 +40,7 @@ class Subscriptions extends Component {
     event.preventDefault()
 
     if (this.state.email || this.state.phone) {
-      this.props.getSubscriptions(this.state.email, this.state.phone)
+      this.props.getUserSubscriptions(this.state.email, this.state.phone)
     }
   }
 
@@ -50,20 +50,29 @@ class Subscriptions extends Component {
       subscriptionsList = <Spinner />
     }
     else {
-      if (this.props.subscriptions.length > 0) {
+      console.log(this.props.currentSubscriptions);
+      if (this.props.currentSubscriptions) {
         subscriptionsList = (<div>
           <DataTable
               sortable
               shadow={0}
               rowKeyColumn="gage"
-              rows={this.props.subscriptions.map((subscription) => {
-                const topic = subscription.TopicArn.split(":")[subscription.TopicArn.split(":").length - 1].toString()
+              rows={Object.keys(this.props.currentSubscriptions).map((topic) => {
                 console.log(topic)
                 const gagePattern = new RegExp("^\S\S\S\S\n$")
                 if (topic) {
-                  const email = subscription.Protocol === "email" ? <Checkbox defaultChecked/> : <Checkbox/>
-                  const phone = subscription.Protocol === "sms" ? <Checkbox defaultChecked/> : <Checkbox/>
-                  return {gage: topic, email: email, phone: phone }
+                  let emailCheckbox = <Checkbox/>
+                  let phoneCheckbox = <Checkbox/>
+                  if (this.props.currentSubscriptions[topic].email) {
+                    emailCheckbox = this.props.currentSubscriptions[topic].email.Protocol === "email" ? <Checkbox defaultChecked/> : <Checkbox/>
+                  } 
+
+                  
+                  if (this.props.currentSubscriptions[topic].phone) {
+                    phoneCheckbox = this.props.currentSubscriptions[topic].phone.Protocol === "sms" ? <Checkbox defaultChecked/> : <Checkbox/>
+                  }
+
+                  return {gage: this.props.currentSubscriptions[topic].gage, email: emailCheckbox, phone: phoneCheckbox}
                 }
               })}
               style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}>

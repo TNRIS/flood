@@ -3,7 +3,8 @@
   "plugins": ["react"],
   "ecmaFeatures": {
     "modules": true,
-    "jsx": true
+    "jsx": true,
+    "es": true
   },
   "parser": "babel-eslint",
   "environment": {

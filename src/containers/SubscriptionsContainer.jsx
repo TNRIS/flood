@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
 
-import * as actions from '../actions/SubscriptionsListActions'
+import * as actions from '../actions/SubscriptionsActions'
 import Subscriptions from '../components/Subscriptions'
 
 const mapStateToProps = (state) => {
   const props = {
-    email: state.email,
-    phone: state.phone,
-    subscriptions: state.subscriptions,
-    error: state.error,
-    isFetching: state.isFetching
+    email: state.subscriptions.email,
+    phone: state.subscriptions.phone,
+    currentSubscriptions: state.subscriptions.currentSubscriptions,
+    error: state.subscriptions.error,
+    isFetching: state.subscriptions.isFetching
   }
 
   return props
@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSubscriptions: (email, phone) => {
-      dispatch(actions.getSubscriptions(email, phone))
+    getUserSubscriptions: (email, phone) => {
+      dispatch(actions.getUserSubscriptions(email, phone))
     }
   }
 }
