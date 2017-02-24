@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { Textfield, Button, DataTable, TableHeader, Checkbox, Spinner } from 'react-mdl'
 
+import SubscriptionList from './SubscriptionList'
+import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 
-class Subscriptions extends Component {
+
+class SubscriptionForm extends Component {
   static propTypes = {
     getUserSubscriptions: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
@@ -13,7 +16,8 @@ class Subscriptions extends Component {
     super(props)
     this.state = {}
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.handleSaveChanges = this.handleSaveChanges.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,12 +40,27 @@ class Subscriptions extends Component {
     nextState[name] = value
     this.setState(nextState)
   }
+  
 
-  handleSubmit(event) {
+  handleSearch(event) {
     event.preventDefault()
-
-    if (this.state.email || this.state.phone) {
-      this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
+    this.props.clearSubscriptions()
+    this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
+  }
+  
+  handleSaveChanges(event){
+    console.log("Saving subscription updates");
+    this.props.saveSubscriptionUpdates()
+  }
+  
+  handleSmsSubscriptionChange(event) {
+    if (event.target.checked) {
+      console.log("Adding SMS");
+      this.props.addSmsSubscription(topic)
+    }
+    else {
+      console.log("Removing SMS");
+      this.props.removeSmsSubscription(topic)
     }
   }
 
@@ -58,18 +77,16 @@ class Subscriptions extends Component {
             shadow={0}
             rowKeyColumn="gage"
             rows={Object.keys(this.props.currentSubscriptions).map((topic) => {
-              console.log(topic)
               const gagePattern = new RegExp("^\S\S\S\S\n$")
               if (topic) {
-                let emailCheckbox = <Checkbox/>
-                let phoneCheckbox = <Checkbox/>
+                let emailCheckbox = <Checkbox onChange={ this.handleEmailSubscriptionChange }/>
+                let phoneCheckbox = <Checkbox onChange={ this.handleSmsSubscriptionChange }/>
                 if (this.props.currentSubscriptions[topic].email) {
-                  emailCheckbox = this.props.currentSubscriptions[topic].email.Protocol === "email" ? <Checkbox defaultChecked/> : <Checkbox/>
+                  emailCheckbox = this.props.currentSubscriptions[topic].email.Protocol === "email" ? <Checkbox defaultChecked /> : <Checkbox />
                 } 
 
-                
                 if (this.props.currentSubscriptions[topic].phone) {
-                  phoneCheckbox = this.props.currentSubscriptions[topic].phone.Protocol === "sms" ? <Checkbox defaultChecked/> : <Checkbox/>
+                  phoneCheckbox = this.props.currentSubscriptions[topic].phone.Protocol === "sms" ? <Checkbox defaultChecked /> : <Checkbox />
                 }
 
                 return {gage: this.props.currentSubscriptions[topic].gage, email: emailCheckbox, phone: phoneCheckbox}
@@ -80,23 +97,23 @@ class Subscriptions extends Component {
             <TableHeader name="email">Email</TableHeader>
             <TableHeader name="phone" >Phone</TableHeader>
         </DataTable>
-        <Button primary ripple onClick="">Save Changes</Button>
+        <Button primary ripple onClick={ this.handleSaveChanges }>Save Changes</Button>
       </div>
       )
     }
     return (
         <div ref="subscriptionManager" style={{padding: '10px'}}>
-          <form onSubmit={ this.handleSubmit }>
+          <form onSubmit={ this.handleSearch }>
               <p>Enter your phone number and email to manage your current subscriptions.</p>
               <Textfield floatingLabel
-                         onChange= { this.handleChange }
+                         onChange={ this.handleChange }
                          label="Email..."
                          type="email"
                          id="email"
                          name="email"
                          value= { this.state.email }/>
               <Textfield floatingLabel
-                         onChange= { this.handleChange }
+                         onChange={ this.handleChange }
                          pattern="[0-9]*"
                          minLength={10}
                          maxLength={10}
@@ -105,14 +122,14 @@ class Subscriptions extends Component {
                          type="tel"
                          id="phone"
                          name="phone"
-                         value= { this.state.phoneNumber }/>
+                         value= { this.state.phone }/>
               <Button primary ripple type="submit" value="Submit">SEARCH</Button>
               <Button primary ripple type="button" value="Cancel" onClick="">CANCEL</Button>
           </form>
-          {subscriptionsList}
+          <SubscriptionListContainer/>
         </div>
     )
   }
 }
 
-export default Subscriptions
+export default SubscriptionForm

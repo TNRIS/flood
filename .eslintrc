@@ -8,7 +8,7 @@
   },
   "parser": "babel-eslint",
   "environment": {
-    "browser": true,
+    "browser": true
   },
   "rules": {
     "strict": [1],
@@ -22,6 +22,6 @@
     "quotes": [0],
     "semi": [2, "never"],
     "spaced-comment": [0],
-    "eol-last": 0,
+    "eol-last": 0
   }
 }

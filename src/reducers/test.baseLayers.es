@@ -12,10 +12,10 @@ const extractImportant = state => {
   let copy = Object.assign({}, state)
   copy.layers = copy.layers.map(layer => {
     return R.pick([
-        'id',
-        'text',
-        'type',
-      ], layer)
+      'id',
+      'text',
+      'type',
+    ], layer)
   })
 
   return copy

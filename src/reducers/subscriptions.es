@@ -1,41 +1,69 @@
 import objectAssign from 'object-assign'
 
 import {
-  GET_SUBSCRIPTIONS_ATTEMPT,
-  GET_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_SUCCESS } from '../constants/SubscriptionsActionTypes'
+  ADD_SUBSCRIPTION,
+  CLEAR_SUBSCRIPTIONS,
+  REMOVE_SUBSCRIPTION,
+  SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
+  SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
+  TOGGLE_SUBSCRIPTION
+} from '../constants/SubscriptionListActionTypes'
 
-const initialState = {
-  email: '',
-  phone: '',
-  currentSubscriptions: {},
-  error: null,
-  isFetching: false,
-  nextToken: ''
-}
 
-export default function subscriptions(state = initialState, action) {
+const subscription = (state = {}, action) => {
   switch (action.type) {
-    case GET_SUBSCRIPTIONS_ATTEMPT:
+    case ADD_SUBSCRIPTION:
       return objectAssign({}, state, {
-        email: action.email,
-        phone: action.phone,
-        isFetching: true,
       })
-    case GET_SUBSCRIPTIONS_ERROR:
+    case CLEAR_SUBSCRIPTIONS:
       return objectAssign({}, state, {
-        error: action.error,
-        isFetching: false
       })
-    case GET_SUBSCRIPTIONS_SUCCESS:
+    case REMOVE_SUBSCRIPTION:
       return objectAssign({}, state, {
-        email: action.email,
-        phone: action.phone,
-        currentSubscriptions: action.currentSubscriptions,
-        error: null,
-        isFetching: false
+      })
+    case SAVE_SUBSCRIPTION_CHANGES_ATTEMPT:
+      return objectAssign({}, state, {
+      })
+    case SAVE_SUBSCRIPTION_CHANGES_SUCCESS:
+      return objectAssign({}, state, {
+      })
+    case TOGGLE_SUBSCRIPTION:
+      return objectAssign({}, state, {
       })
     default:
       return state
   }
 }
+
+const subscriptions = (state = [], action) => {
+  switch (action.type) {
+    case ADD_SUBSCRIPTION:
+      return [
+        ...state, subscription(undefined, action)
+      ]
+    case CLEAR_SUBSCRIPTIONS:
+      return [
+        state, subscription(undefined, action)
+      ]
+    case REMOVE_SUBSCRIPTION:
+      return [
+        state, subscription(undefined, action)
+      ]
+    case SAVE_SUBSCRIPTION_CHANGES_ATTEMPT:
+      return [
+        state, subscription(undefined, action)
+      ]
+    case SAVE_SUBSCRIPTION_CHANGES_SUCCESS:
+      return [
+        state, subscription(undefined, action)
+      ]
+    case TOGGLE_SUBSCRIPTION:
+      return [
+        state, subscription(undefined, action)
+      ]
+    default:
+      return state
+  }
+}
+
+export default subscriptions

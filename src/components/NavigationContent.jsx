@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
-import SubscriptionsContainer from '../containers/SubscriptionsContainer'
+import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
 
 
 class NavigationToggle extends Component {
@@ -36,7 +36,7 @@ class NavigationToggle extends Component {
     else {
       content = (
         <div>
-          <SubscriptionsContainer/>
+          <SubscriptionFormContainer/>
           <Button raised className="toggle-navigation-content" onClick={this.handleSetNavigationLayers}>View Layers</Button>
         </div>
       )

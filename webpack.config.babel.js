@@ -17,7 +17,7 @@ const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
 // Move favicon to dist directory
-fs.createReadStream(folders.src + "images/favicon.ico").pipe(fs.createWriteStream(folders.dist + "favicon.ico"));
+fs.createReadStream(folders.src + "images/favicon.ico").pipe(fs.createWriteStream(folders.dist + "favicon.ico"))
 
 //setup webpack plugins
 const plugins = []
