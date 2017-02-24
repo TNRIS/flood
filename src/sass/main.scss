@@ -450,6 +450,58 @@ dialog.subscribeDialog h4 {
     font-size: 1.5em;
 }
 
+.aboutDialog {
+    /* Override default which is too narrow */
+    // width: 85% !important;
+    /* Limit width for readability */
+    min-width: 70% !important;
+    margin-left: 0;
+    margin-right: 0;
+    /* Center vertically - also set left for Firefox */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    /* Scrollbar to allow text viewing and input access on small screens */
+    overflow-y: auto !important;
+    /* Allow the scrollbar to work without forcing it on */
+    max-height: 90%;
+    /* Ensure this isn't transparent on Firefox */
+    background-color: white;
+    position: fixed;
+
+    h4 {
+      /* Reduce size to avoid line break in title */
+      margin-top: 0;
+    }
+}
+
+.weatherTimestamp {
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+    text-shadow:
+    -1px -1px 0 #666666,
+    1px -1px 0 #666666,
+    -1px 1px 0 #666666,
+    1px 1px 0 #666666;  
+  }
+  z-index: 6;
+  position: absolute;
+  left: 60px;
+  bottom: 5px;
+  padding: 4px;
+}
+
+.animateRadar {
+  font-size: 14px;
+  z-index: 6;
+  position: absolute;
+  left: 10px;
+  bottom: 5px;
+  padding: 4px;
+}
+
 .betanotice {
     background-color: #FCF8E3;
     bottom: -10px;

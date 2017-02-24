@@ -16,6 +16,7 @@ export default class Popup extends Component {
     data: PropTypes.object,
     layerId: PropTypes.string,
     browser: PropTypes.object,
+    setLidAndName: PropTypes.func
   }
 
   constructor() {
@@ -29,6 +30,7 @@ export default class Popup extends Component {
       className: 'popup',
       closeButton: false,
       offset: [0, 15],
+      keepInView: true,
       ...widths
     })
   }

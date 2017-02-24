@@ -1,4 +1,4 @@
-SELECT * FROM nws_ahps_gauges_texas
+SELECT * FROM nws_ahps_gauges_texas_develop
   LEFT JOIN
     (VALUES
       ('major', 90),
@@ -10,5 +10,5 @@ SELECT * FROM nws_ahps_gauges_texas
       ('low', 30),
       ('', 20)
     ) as render_order(r_sigstage, render_z)
-  ON render_order.r_sigstage = concat('', nws_ahps_gauges_texas.sigstage)
+  ON render_order.r_sigstage = concat('', nws_ahps_gauges_texas_develop.sigstage)
 ORDER BY render_z asc

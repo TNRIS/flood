@@ -1,15 +1,12 @@
 import React from 'react'
-import { Content, Layout, Header, HeaderRow } from 'react-mdl'
+import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
-import NavigationContainer from '../containers/NavigationContainer'
 import MapContainer from '../containers/MapContainer'
-import FeatureLayerChooser from '../containers/FeatureLayerChooser'
+import NavigationDrawer from '../components/NavigationDrawer'
 import Disclaimer from '../components/Disclaimer'
 import SubscribeContainer from '../containers/SubscribeContainer'
-import PopupTitle from '../components/PopupTitle'
-
-import { colors } from '../constants'
+import AboutContainer from '../containers/AboutContainer'
 
 
 ga.pageview(window.location.pathname)
@@ -18,8 +15,9 @@ const App = () => (
   <div>
     <Disclaimer />
     <SubscribeContainer />
+    <AboutContainer />
     <Layout fixedDrawer style={{background: 'white'}}>
-      <FeatureLayerChooser />
+      <NavigationDrawer/>
       <Content>
         <MapContainer />
       </Content>

@@ -81,3 +81,28 @@ export const setLidAndName = (lid, name) => {
     })
   }
 }
+
+export const updateTimestamp = (timestamp) => {
+  return (dispatch) => {
+    dispatch({
+      type: types.UPDATE_TIMESTAMP,
+      timestamp
+    })
+  }
+}
+
+export const showAboutDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.SHOW_ABOUT_DIALOG
+    })
+  }
+}
+
+export const hideAboutDialog = () => {
+  return (dispatch) => {
+    dispatch({
+      type: types.HIDE_ABOUT_DIALOG
+    })
+  }
+}
