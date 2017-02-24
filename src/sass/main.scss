@@ -202,6 +202,8 @@ body {
 }
 
 .popup {
+   cursor: -webkit-grab;
+   
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
     border-radius: 0px;
@@ -484,7 +486,7 @@ dialog.subscribeDialog h4 {
     -1px -1px 0 #666666,
     1px -1px 0 #666666,
     -1px 1px 0 #666666,
-    1px 1px 0 #666666;  
+    1px 1px 0 #666666;
   }
   z-index: 6;
   position: absolute;
@@ -541,7 +543,7 @@ dialog.subscribeDialog h4 {
 
 div.dialog-button-div {
   padding-left: 8px;
-    
+
   .terms-agree-button {
     width: 100%;
     font-size: 90%;
