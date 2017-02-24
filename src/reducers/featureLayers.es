@@ -114,6 +114,8 @@ export default function featureLayers(state = initialState, action) {
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
           let newLayer
+
+          // This allows us to turn multiple layers on at the same time
           if (layer.id === action.id) {
             newLayer = objectAssign({}, layer, {
               active: !layer.active

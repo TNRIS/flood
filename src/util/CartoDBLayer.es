@@ -68,8 +68,7 @@ export default class CartoDBLayer extends Layer {
 
         if (data.gridsUrl) {
           const utfGridLayer = L.utfGrid(data.gridsUrl, {
-            useJsonP: false,
-            jason: true
+            useJsonP: false
           })
 
           utfGridLayer.on('click', (gridData) => {
@@ -84,6 +83,18 @@ export default class CartoDBLayer extends Layer {
         if (currentlyVisible && previousTileLayer) {
           this.map.removeLayer(previousTileLayer)
           this.map.addLayer(this.tileLayer)
+
+          //  This will set the visible layer order relative to the order set in TileLayer.es
+          switch (this.id) {
+            case "ahps-flood":
+              this.tileLayer.setZIndex(99)
+              break
+            case "reservoir-conditions":
+              this.tileLayer.setZIndex(98)
+              break
+            default:
+              null
+          }
 
           if (previousUtfGridLayer) {
             this.map.removeLayer(previousUtfGridLayer)
@@ -106,6 +117,18 @@ export default class CartoDBLayer extends Layer {
     if (this.status === 'ready') {
       if (this.tileLayer && !this.map.hasLayer(this.tileLayer)) {
         this.map.addLayer(this.tileLayer)
+
+        // This will set the visible layer order relative to the order set in TileLayer.es
+        switch (this.id) {
+          case "ahps-flood":
+            this.tileLayer.setZIndex(99)
+            break
+          case "reservoir-conditions":
+            this.tileLayer.setZIndex(98)
+            break
+          default:
+            null
+        }
       }
       if (this.utfGridLayer && !this.map.hasLayer(this.utfGridLayer)) {
         this.map.addLayer(this.utfGridLayer)

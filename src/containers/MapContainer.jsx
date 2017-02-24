@@ -13,13 +13,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   function clickHandler(id, data) {
+
+    // This allows the poups to open when multiple layers are turned on
     if (data.data) {
       let payload = {}
       payload.id = id
       payload.data = data
       dispatch(actions.setPopup(payload))
     }
-    console.log(id, data)
   }
 
   return {
