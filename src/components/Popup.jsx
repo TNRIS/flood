@@ -2,7 +2,7 @@ import objectAssign from 'object-assign'
 import ReactDOM from 'react-dom'
 import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
-
+import L from 'leaflet'
 import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
@@ -58,14 +58,42 @@ export default class Popup extends Component {
     }
 
     if (this.leafletPopup._isOpen) {
-      this.renderPopupContent()
+
+      // this will ensure that only the popup for the topmost layer will
+      // show when features are stacked at a clicked location
+      if (position === prevProps.position) {
+        switch (this.props.layerId) {
+          case "ahps-flood":
+            console.log("gage")
+            this.renderPopupContent()
+            break
+          case "reservoir-conditions":
+            if (prevProps.layerId !== "ahps-flood") {
+              console.log("lake")
+              this.renderPopupContent()
+            }
+            break
+          case "flood-alerts":
+            if (prevProps.layerId !== "ahps-flood") {
+              if (prevProps.layerId !== "reservoir-conditions") {
+                console.log(prevProps.layerId)
+                this.renderPopupContent()
+              }
+            }
+            break
+          default:
+            null
+        }
+      }
+      else {
+        this.renderPopupContent()
+      }
     }
   }
 
   getPopupContent() {
     const { data, layerId } = this.props
     const popupWidth = this.calculatePopupWidth()
-
     switch (layerId) {
       case 'ahps-flood':
         this.props.setLidAndName(this.props.data.lid, this.props.data.name)

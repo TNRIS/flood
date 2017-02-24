@@ -113,13 +113,21 @@ export default function featureLayers(state = initialState, action) {
     case types.SET_FEATURE_LAYER:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
-          return objectAssign({}, layer, {
-            active: layer.id === action.id
-          })
+          let newLayer
+
+          // This allows us to turn multiple layers on at the same time
+          if (layer.id === action.id) {
+            newLayer = objectAssign({}, layer, {
+              active: !layer.active
+            })
+          }
+          else {
+            newLayer = layer
+          }
+          return newLayer
         })
       })
     default:
       return state
   }
 }
-

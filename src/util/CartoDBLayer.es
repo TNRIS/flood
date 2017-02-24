@@ -84,6 +84,18 @@ export default class CartoDBLayer extends Layer {
           this.map.removeLayer(previousTileLayer)
           this.map.addLayer(this.tileLayer)
 
+          //  This will set the visible layer order relative to the order set in TileLayer.es
+          switch (this.id) {
+            case "ahps-flood":
+              this.tileLayer.setZIndex(99)
+              break
+            case "reservoir-conditions":
+              this.tileLayer.setZIndex(98)
+              break
+            default:
+              null
+          }
+
           if (previousUtfGridLayer) {
             this.map.removeLayer(previousUtfGridLayer)
             this.map.addLayer(this.utfGridLayer)
@@ -105,6 +117,18 @@ export default class CartoDBLayer extends Layer {
     if (this.status === 'ready') {
       if (this.tileLayer && !this.map.hasLayer(this.tileLayer)) {
         this.map.addLayer(this.tileLayer)
+
+        // This will set the visible layer order relative to the order set in TileLayer.es
+        switch (this.id) {
+          case "ahps-flood":
+            this.tileLayer.setZIndex(99)
+            break
+          case "reservoir-conditions":
+            this.tileLayer.setZIndex(98)
+            break
+          default:
+            null
+        }
       }
       if (this.utfGridLayer && !this.map.hasLayer(this.utfGridLayer)) {
         this.map.addLayer(this.utfGridLayer)
