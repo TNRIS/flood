@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
-} from 'react-mdl'
+import { Button } from 'react-mdl'
 
 const floodGaugeIcon = require('../images/flood_gauge_white.png')
 
 const PopupTitle = class PopupTitle extends Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   render() {
