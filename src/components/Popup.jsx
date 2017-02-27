@@ -42,7 +42,7 @@ export default class Popup extends Component {
       leafletMap.closePopup(this.leafletPopup)
     }
 
-    // should only happen the first time map after map has initialized
+    // should only happen the first time after map has initialized
     if ( !prevProps.leafletMap && leafletMap ) {
       this.updatePopupSize()
     }
@@ -60,25 +60,21 @@ export default class Popup extends Component {
     }
 
     if (this.leafletPopup._isOpen) {
-
       // this will ensure that only the popup for the topmost layer will
       // show when features are stacked at a clicked location
       if (position === prevProps.position) {
         switch (this.props.layerId) {
           case "ahps-flood":
-            console.log("gage")
             this.renderPopupContent()
             break
           case "reservoir-conditions":
             if (prevProps.layerId !== "ahps-flood") {
-              console.log("lake")
               this.renderPopupContent()
             }
             break
           case "flood-alerts":
             if (prevProps.layerId !== "ahps-flood") {
               if (prevProps.layerId !== "reservoir-conditions") {
-                console.log(prevProps.layerId)
                 this.renderPopupContent()
               }
             }

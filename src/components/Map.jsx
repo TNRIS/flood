@@ -267,7 +267,7 @@ export default class Map extends Component {
       this.setState({animationIcon: playArrow})
     }
   }
-  
+
   betaNotice() {
       if (document.URL === 'http://map.texasflood.org/') {
           return "hide-beta"
@@ -279,7 +279,7 @@ export default class Map extends Component {
   render() {
     let radarInfo
     if (this.displayedTimestamp != '') {
-      radarInfo =  <FABButton mini onClick={() => {this.toggleAnimation()}}><img src={this.state.animationIcon} /></FABButton>      
+      radarInfo =  <FABButton mini onClick={() => {this.toggleAnimation()}}><img src={this.state.animationIcon} /></FABButton>
     }
 
     return (
@@ -288,7 +288,7 @@ export default class Map extends Component {
           <div className="weatherTimestamp">
               <p>{this.displayedTimestamp}</p>
             </div>
-            <div className="animateRadar"> 
+            <div className="animateRadar">
               {radarInfo}
             </div>
           <div id="betanotice" className={this.betaNotice()}>
