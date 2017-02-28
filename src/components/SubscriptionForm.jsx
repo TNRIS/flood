@@ -25,7 +25,6 @@ class SubscriptionForm extends Component {
       this.setState({
         email: nextProps.email,
         phone: nextProps.phone,
-        currentSubscriptions: nextProps.currentSubscriptions,
         error: nextProps.error,
         isFetching: nextProps.isFetching,
         nextToken: nextProps.nextToken
@@ -65,42 +64,6 @@ class SubscriptionForm extends Component {
   }
 
   render() {
-    let subscriptionsList = null
-    if (this.props.isFetching) {
-      subscriptionsList = <Spinner />
-    }
-    else if (Object.keys(this.props.currentSubscriptions).length > 0) {
-      subscriptionsList = (
-        <div>
-          <DataTable
-            sortable
-            shadow={0}
-            rowKeyColumn="gage"
-            rows={Object.keys(this.props.currentSubscriptions).map((topic) => {
-              const gagePattern = new RegExp("^\S\S\S\S\n$")
-              if (topic) {
-                let emailCheckbox = <Checkbox onChange={ this.handleEmailSubscriptionChange }/>
-                let phoneCheckbox = <Checkbox onChange={ this.handleSmsSubscriptionChange }/>
-                if (this.props.currentSubscriptions[topic].email) {
-                  emailCheckbox = this.props.currentSubscriptions[topic].email.Protocol === "email" ? <Checkbox defaultChecked /> : <Checkbox />
-                } 
-
-                if (this.props.currentSubscriptions[topic].phone) {
-                  phoneCheckbox = this.props.currentSubscriptions[topic].phone.Protocol === "sms" ? <Checkbox defaultChecked /> : <Checkbox />
-                }
-
-                return {gage: this.props.currentSubscriptions[topic].gage, email: emailCheckbox, phone: phoneCheckbox}
-              }
-            })}
-            style={{marginTop: "10px", marginBottom: "10px", width: "100%"}}>
-            <TableHeader name="gage">Gage</TableHeader>
-            <TableHeader name="email">Email</TableHeader>
-            <TableHeader name="phone" >Phone</TableHeader>
-        </DataTable>
-        <Button primary ripple onClick={ this.handleSaveChanges }>Save Changes</Button>
-      </div>
-      )
-    }
     return (
         <div ref="subscriptionManager" style={{padding: '10px'}}>
           <form onSubmit={ this.handleSearch }>

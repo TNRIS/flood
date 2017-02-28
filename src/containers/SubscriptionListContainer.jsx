@@ -4,13 +4,16 @@ import * as actions from '../actions/SubscriptionFormActions'
 import SubscriptionList from '../components/SubscriptionList'
 
 const mapStateToProps = (state) => {
-  return {
+  const props = {
     subscriptions: state.subscriptions
   }
+
+  return props
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+  }
 }
 
 const SubscriptionListContainer = connect(

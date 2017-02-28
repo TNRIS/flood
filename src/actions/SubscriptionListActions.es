@@ -1,15 +1,26 @@
 import {
-  ADD_SUBSCRIPTION,
+  ADD_TO_SUBSCRIPTION_LIST,
   CLEAR_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
   SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
+  SEED_SUBSCRIPTION_LIST,
   TOGGLE_SUBSCRIPTION
 } from '../constants/SubscriptionListActionTypes'
 
-export const addSubscription = () => {
+export const seedSubscriptionList = (subscriptions) => {
   return {
-    type: ADD_SUBSCRIPTION
+    type: SEED_SUBSCRIPTION_LIST,
+    subscriptions
+  }
+}
+
+const addToSubscriptionList = (subscriptionData) => {
+  return {
+    type: ADD_TO_SUBSCRIPTION_LIST,
+    gage: subscriptionData.gage,
+    email: subscriptionData.email,
+    sms: subscriptionData.sms
   }
 }
 

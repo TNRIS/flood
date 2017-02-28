@@ -1,24 +1,31 @@
 import React, { PropTypes } from 'react'
-import { List } from 'react-mdl'
+import { List, ListItem, ListItemContent, ListItemAction, Switch } from 'react-mdl'
 
-import Subscription from './Subscription'
 
-const SubscriptionList = ({subscriptions}) => (
-  <List>
-    {subscriptions.map(
-      (subscription) => {
-        <Subscription key={subscription.id} {...subscription} />
-      }
-    )}
-  </List>
-)
+class SubscriptionList extends React.Component {
 
-SubscriptionList.propTypes = {
-  subscriptions: PropTypes.arrayOf(PropTypes.shape({
-    gage: PropTypes.string.isRequired,
-    email: PropTypes.object,
-    phone: PropTypes.object
-  }).isRequired).isRequired
+  constructor(subscriptionData) {
+    super()
+    this.state = {}
+  }
+
+  render() {
+    return (
+      <List>
+      {Object.keys(this.props.subscriptions).map(subscription =>
+        <ListItem key={this.props.subscriptions[subscription].gage}>
+          <ListItemContent>{this.props.subscriptions[subscription].gage}</ListItemContent>
+          <ListItemAction info="Email">
+            <Switch defaultChecked={this.props.subscriptions[subscription].email.subscribed} />
+          </ListItemAction>
+          <ListItemAction info="SMS">
+            <Switch defaultChecked={this.props.subscriptions[subscription].sms.subscribed}  />
+          </ListItemAction>
+        </ListItem>
+      )}
+      </List>
+    )
+  }
 }
 
 export default SubscriptionList

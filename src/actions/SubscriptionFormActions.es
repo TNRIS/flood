@@ -7,9 +7,16 @@ import {
   SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
   SUBSCRIPTION_FORM_UPDATED } from '../constants/SubscriptionFormActionTypes'
 
+import {
+  addToSubscriptionList,
+  seedSubscriptionList
+} from './SubscriptionListActions'
+
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
 import subscribeAlerts from '../util/FloodAlerts'
+
+import objectAssign from 'object-assign'
 
 export function clearSubscriptions() {
   return {
@@ -31,12 +38,11 @@ export function getSubscriptionsAttempt(email, phone) {
   }
 }
 
-export function getSubscriptionsSuccess(email, phone, currentSubscriptions) {
+export function getSubscriptionsSuccess(email, phone) {
   return {
     type: GET_SUBSCRIPTIONS_SUCCESS,
     email,
-    phone,
-    currentSubscriptions
+    phone
   }
 }
 
@@ -49,20 +55,35 @@ export function getUserSubscriptions(email, phone, nextToken) {
     dispatch(getSubscriptionsAttempt())
     return sns.listSubscriptions({NextToken: nextToken}).promise().then(
       results => {
+        // Set a counter to zero for iterating through the AWS SDK response
         let counter = 0
-        const currentSubscriptions =  getState().subscriptions.currentSubscriptions
+
+        // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
+        const currentSubscriptions = getState().subscriptions
         const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
+
+        // Iterate through the records
         results.Subscriptions.forEach((sub) =>{
           const endpoint = sub.Endpoint
           const topic = sub.TopicArn.split(":").pop()
+
           if (gagePattern.test(topic)) {
-            if (endpoint === ("+1" + phone) || endpoint === phone) {
-              currentSubscriptions[topic] = currentSubscriptions[topic] || {"gage": topic, "email": null, "phone": null, "add": null, "remove": null}
-              currentSubscriptions[topic].phone = sub
+            const baseRecord = {
+              "gage": topic,
+              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false},
+              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false}
             }
-            else if (endpoint === email) {
-              currentSubscriptions[topic] = currentSubscriptions[topic] || {"gage": topic, "email": null, "phone": null, "add": null, "remove": null}
-              currentSubscriptions[topic].email = sub
+
+            if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
+              currentSubscriptions[topic] = currentSubscriptions[topic] || baseRecord
+              currentSubscriptions[topic].sms.subscription = sub
+              currentSubscriptions[topic].sms.subscribed = true
+            }
+            if (email && endpoint === email) {
+              console.log("Found email subscription" + " " + endpoint)
+              currentSubscriptions[topic] = currentSubscriptions[topic] || baseRecord
+              currentSubscriptions[topic].email.subscription = sub
+              currentSubscriptions[topic].email.subscribed = true
             }
           }
           counter++
@@ -71,7 +92,9 @@ export function getUserSubscriptions(email, phone, nextToken) {
               dispatch(getUserSubscriptions(email, phone, results.NextToken))
             }
             else {
-              dispatch(getSubscriptionsSuccess(email, phone, currentSubscriptions))
+              dispatch(getSubscriptionsSuccess(email, phone))
+              console.log(currentSubscriptions)
+              dispatch(seedSubscriptionList(currentSubscriptions))
             }
           }
         })

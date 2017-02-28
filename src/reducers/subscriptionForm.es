@@ -12,19 +12,17 @@ import {
 const initialState = {
   email: '',
   phone: '',
-  currentSubscriptions: {},
   error: null,
   isFetching: false,
-  nextToken: ''
+  nextToken: null
 }
 
-export default function subscriptions(state = initialState, action) {
+export default function subscriptionForm(state = initialState, action) {
   switch (action.type) {
     case CLEAR_SUBSCRIPTIONS:
       return objectAssign({}, state, {
         email: action.email,
-        phone: action.phone,
-        currentSubscriptions: {}
+        phone: action.phone
       })
     case GET_SUBSCRIPTIONS_ATTEMPT:
       return objectAssign({}, state, {
@@ -41,7 +39,6 @@ export default function subscriptions(state = initialState, action) {
       return objectAssign({}, state, {
         email: action.email,
         phone: action.phone,
-        currentSubscriptions: action.currentSubscriptions,
         error: null,
         isFetching: false
       })
@@ -49,7 +46,6 @@ export default function subscriptions(state = initialState, action) {
       return objectAssign({}, state, {
         email: action.email,
         phone: action.phone,
-        currentSubscriptions: action.currentSubscriptions,
         error: null,
         isFetching: true
       })
@@ -57,15 +53,14 @@ export default function subscriptions(state = initialState, action) {
       return objectAssign({}, state, {
         email: action.email,
         phone: action.phone,
-        currentSubscriptions: action.currentSubscriptions,
         error: null,
-        isFetching: false
+        isFetching: false,
+        nextToken: null
       })
     case SUBSCRIPTION_FORM_UPDATED:
       return objectAssign({}, state, {
         email: action.email,
         phone: action.phone,
-        currentSubscriptions: {},
         error: null,
         isFetching: false
       })
