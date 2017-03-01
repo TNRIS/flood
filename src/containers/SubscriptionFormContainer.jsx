@@ -4,6 +4,8 @@ import * as actions from '../actions/SubscriptionFormActions'
 import { setUserInfo } from '../actions/UserInfoActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
+import { clearSubscriptionList }  from '../actions/SubscriptionListActions'
+
 const mapStateToProps = (state) => {
   const props = {
     email: state.user.email,
@@ -19,8 +21,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearSubscriptions: () => {
-      dispatch(actions.clearSubscriptions())
+    clearSubscriptionList: () => {
+      dispatch(clearSubscriptionList())
     },
     getUserSubscriptions: (email, phone, nextToken) => {
       dispatch(actions.getUserSubscriptions(email, phone, nextToken))

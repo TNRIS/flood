@@ -24,12 +24,14 @@ export default function subscriptionForm(state = initialState, action) {
     case GET_SUBSCRIPTIONS_ERROR:
       return objectAssign({}, state, {
         error: action.error,
-        isFetching: false
+        isFetching: false,
+        nextToken: null
       })
     case GET_SUBSCRIPTIONS_SUCCESS:
       return objectAssign({}, state, {
         error: null,
-        isFetching: false
+        isFetching: false,
+        nextToken: null
       })
     default:
       return state

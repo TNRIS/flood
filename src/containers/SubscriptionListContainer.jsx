@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 
 import {
+  clearSubscriptionList,
   markSubscriptionForAdd,
-  markSubscriptionForRemove
+  markSubscriptionForRemove,
+  saveSubscriptionChanges
 } from '../actions/SubscriptionListActions'
 import SubscriptionList from '../components/SubscriptionList'
 
 const mapStateToProps = (state) => {
-  const props = {
+  return {
     subscriptions: state.subscriptions,
     email: state.user.email,
     phone: state.user.phone
   }
-
-  return props
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -23,6 +23,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     markSubscriptionForRemove: (lid, protocol) => {
       dispatch(markSubscriptionForRemove(lid, protocol))
+    },
+    saveSubscriptionChanges: () => {
+      dispatch(saveSubscriptionChanges())
+    },
+    clearSubscriptionList: () => {
+      dispatch(clearSubscriptionList())
     }
   }
 }

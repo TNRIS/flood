@@ -7,9 +7,11 @@ import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 
 class SubscriptionForm extends Component {
   static propTypes = {
+    clearSubscriptionList: React.PropTypes.func,
+    currentSubscriptions: React.PropTypes.object,
     getUserSubscriptions: React.PropTypes.func,
     isFetching: React.PropTypes.bool,
-    currentSubscriptions: React.PropTypes.object
+    setUserInfo: React.PropTypes.func
   }
 
   constructor(props) {
@@ -17,7 +19,6 @@ class SubscriptionForm extends Component {
     this.state = {}
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
-    this.handleSaveChanges = this.handleSaveChanges.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,23 +34,18 @@ class SubscriptionForm extends Component {
   }
 
   handleChange(event) {
+    // this.props.clearSubscriptionList()
     const name = event.target.name
     const value = event.target.value
     const nextState = {}
     nextState[name] = value
     this.setState(nextState)
   }
-  
 
   handleSearch(event) {
     event.preventDefault()
     this.props.setUserInfo(this.state.email, this.state.phone)
     this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
-  }
-  
-  handleSaveChanges(event){
-    console.log("Saving subscription updates");
-    this.props.saveSubscriptionUpdates()
   }
 
   render() {

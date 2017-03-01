@@ -8,7 +8,8 @@ import {
   SUBSCRIPTION_FORM_UPDATED } from '../constants/SubscriptionFormActionTypes'
 
 import {
-  seedSubscriptionList
+  seedSubscriptionList,
+  clearSubscriptionList
 } from './SubscriptionListActions'
 
 import AWS from 'aws-sdk/dist/aws-sdk'
@@ -48,17 +49,23 @@ export function getUserSubscriptions(email, phone, nextToken) {
 
   return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
+    // dispatch(clearSubscriptionList())
     return sns.listSubscriptions({NextToken: nextToken}).promise().then(
       results => {
         // Set a counter to zero for iterating through the AWS SDK response
         let counter = 0
 
         // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
-        const currentSubscriptions = getState().subscriptions
+        console.log(nextToken)
+        if (nextToken ) {
+          dispatch(clearSubscriptionList())
+        }
+        const currentSubscriptions = {...currentSubscriptions, ...getState().subscriptions}
+
         const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
 
         // Iterate through the records
-        results.Subscriptions.forEach((sub) =>{
+        results.Subscriptions.forEach((sub) => {
           const endpoint = sub.Endpoint
           const topic = sub.TopicArn.split(":").pop()
 
@@ -88,7 +95,6 @@ export function getUserSubscriptions(email, phone, nextToken) {
             }
             else {
               dispatch(getSubscriptionsSuccess())
-              console.log(currentSubscriptions)
               dispatch(seedSubscriptionList(currentSubscriptions))
             }
           }

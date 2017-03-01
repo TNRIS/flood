@@ -7,6 +7,7 @@ import floodStatus from './floodStatus'
 import map from './map'
 import subscribeDialog from './subscribeDialog'
 import subscriptionForm from './subscriptionForm'
+import subscriptionList from './subscriptionList'
 import subscriptions from './subscriptions'
 import user from './user'
 
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
   subscribeDialog: subscribeDialog,
   browser: responsiveStateReducer,
   subscriptionForm: subscriptionForm,
+  subscriptionList: subscriptionList,
   subscriptions: subscriptions,
   user: user
 })
