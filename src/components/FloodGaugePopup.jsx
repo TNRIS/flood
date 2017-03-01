@@ -21,8 +21,8 @@ export default class FloodGaugePopup extends Component {
 
   render() {
     const { lid, name, wfo, updatePopup } = this.props
-    const hydrographImage = `http://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
-    const gaugeLink = `http://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
+    const hydrographImage = `https://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
+    const gaugeLink = `https://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
     return (
       <div>
         <Provider store={store}>

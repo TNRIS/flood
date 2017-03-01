@@ -24,7 +24,7 @@ export default class AnimatedWeatherLayer extends Layer {
   update() {
     this.setStatus('loading')
 
-    return axios.get(`http://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
+    return axios.get(`https://maps.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar.json`)
       .then(({ data }) => {
         const baseUrl = `https://maps{s}.aerisapi.com/${keys.aerisApiId}_${keys.aerisApiSecret}/radar/{z}/{x}/{y}/`
         let frames
@@ -34,7 +34,7 @@ export default class AnimatedWeatherLayer extends Layer {
         else {
           frames = R.of(data.files[0])
         }
-          
+
         const frameTimes = R.pluck('time')(frames)
         const recentTimestamps = R.reverse(frameTimes)
         recentTimestamps.forEach((timestamp) => {
@@ -71,7 +71,7 @@ export default class AnimatedWeatherLayer extends Layer {
         const allTimestamps = R.keys(this.timestampLayers)
         const dropTimestamps = R.difference(allTimestamps, recentTimestamps)
         this.clearTimestamps(dropTimestamps)
-        
+
         this.setStatus('ready')
 
         this.updateTimeout = setTimeout(() => {
@@ -104,7 +104,7 @@ export default class AnimatedWeatherLayer extends Layer {
           layer.addTo(this.map).bringToFront()
           layer.setOpacity(0)
         })
-        
+
         this.visibleTimestamp = R.keys(this.timestampLayers)[0]
         const firstLayer = this.timestampLayers[this.visibleTimestamp].layer
         setVisible(firstLayer)
