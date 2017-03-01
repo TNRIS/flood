@@ -8,7 +8,6 @@ import {
   SUBSCRIPTION_FORM_UPDATED } from '../constants/SubscriptionFormActionTypes'
 
 import {
-  addToSubscriptionList,
   seedSubscriptionList
 } from './SubscriptionListActions'
 
@@ -30,19 +29,15 @@ export function getSubscriptionsError(error) {
   }
 }
 
-export function getSubscriptionsAttempt(email, phone) {
+export function getSubscriptionsAttempt() {
   return {
     type: GET_SUBSCRIPTIONS_ATTEMPT,
-    email,
-    phone
   }
 }
 
-export function getSubscriptionsSuccess(email, phone) {
+export function getSubscriptionsSuccess() {
   return {
-    type: GET_SUBSCRIPTIONS_SUCCESS,
-    email,
-    phone
+    type: GET_SUBSCRIPTIONS_SUCCESS
   }
 }
 
@@ -69,9 +64,9 @@ export function getUserSubscriptions(email, phone, nextToken) {
 
           if (gagePattern.test(topic)) {
             const baseRecord = {
-              "gage": topic,
-              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false},
-              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false}
+              "lid": topic,
+              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false, "id": topic + "_email"},
+              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false, "id": topic + "_sms"}
             }
 
             if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
@@ -92,7 +87,7 @@ export function getUserSubscriptions(email, phone, nextToken) {
               dispatch(getUserSubscriptions(email, phone, results.NextToken))
             }
             else {
-              dispatch(getSubscriptionsSuccess(email, phone))
+              dispatch(getSubscriptionsSuccess())
               console.log(currentSubscriptions)
               dispatch(seedSubscriptionList(currentSubscriptions))
             }

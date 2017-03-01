@@ -43,24 +43,13 @@ class SubscriptionForm extends Component {
 
   handleSearch(event) {
     event.preventDefault()
-    this.props.clearSubscriptions()
+    this.props.setUserInfo(this.state.email, this.state.phone)
     this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
   }
   
   handleSaveChanges(event){
     console.log("Saving subscription updates");
     this.props.saveSubscriptionUpdates()
-  }
-  
-  handleSmsSubscriptionChange(event) {
-    if (event.target.checked) {
-      console.log("Adding SMS");
-      this.props.addSmsSubscription(topic)
-    }
-    else {
-      console.log("Removing SMS");
-      this.props.removeSmsSubscription(topic)
-    }
   }
 
   render() {

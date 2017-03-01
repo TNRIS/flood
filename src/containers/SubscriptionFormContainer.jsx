@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/SubscriptionFormActions'
+import { setUserInfo } from '../actions/UserInfoActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
 const mapStateToProps = (state) => {
   const props = {
-    email: state.subscriptionForm.email,
-    phone: state.subscriptionForm.phone,
+    email: state.user.email,
+    phone: state.user.phone,
     currentSubscriptions: state.subscriptionForm.currentSubscriptions,
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     saveSubscriptionUpdates: () => {
       dispatch(actions.saveSubscriptionUpdates())
+    },
+    setUserInfo: (email, phone) => {
+      dispatch(setUserInfo(email, phone))
     },
     subscriptionFormUpdated: () => {
       dispatch(actions.subscriptionFormUpdated(email, phone))

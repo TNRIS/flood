@@ -6,20 +6,32 @@ class SubscriptionList extends React.Component {
 
   constructor(subscriptionData) {
     super()
-    this.state = {}
+  }
+
+  toggleSubscription(event, lid, protocol) {
+    if (event.target.checked) {
+      this.props.markSubscriptionForAdd(lid, protocol)
+    }
+    else if (!event.target.checked) {
+      this.props.markSubscriptionForRemove(lid, protocol)
+    }
   }
 
   render() {
     return (
       <List>
       {Object.keys(this.props.subscriptions).map(subscription =>
-        <ListItem key={this.props.subscriptions[subscription].gage}>
-          <ListItemContent>{this.props.subscriptions[subscription].gage}</ListItemContent>
+        <ListItem key={subscription}>
+          <ListItemContent>{this.props.subscriptions[subscription].lid}</ListItemContent>
           <ListItemAction info="Email">
-            <Switch defaultChecked={this.props.subscriptions[subscription].email.subscribed} />
+            <Switch ripple
+            defaultChecked={this.props.subscriptions[subscription].email.subscribed} 
+            onClick={(event) => this.toggleSubscription(event, this.props.subscriptions[subscription].lid, "email")} />
           </ListItemAction>
           <ListItemAction info="SMS">
-            <Switch defaultChecked={this.props.subscriptions[subscription].sms.subscribed}  />
+            <Switch ripple
+            defaultChecked={this.props.subscriptions[subscription].sms.subscribed}  
+            onClick={(event) => this.toggleSubscription(event, this.props.subscriptions[subscription].lid, "sms")} />
           </ListItemAction>
         </ListItem>
       )}

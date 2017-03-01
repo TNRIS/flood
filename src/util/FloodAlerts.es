@@ -219,7 +219,7 @@ export function getAWSSubscriptionsPromise(email, phone) {
 
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
-export function initialStatus () {
+export function initialStatus() {
 	const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas`;
 	return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
 		.then(({data}) => {

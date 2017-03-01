@@ -8,6 +8,7 @@ import map from './map'
 import subscribeDialog from './subscribeDialog'
 import subscriptionForm from './subscriptionForm'
 import subscriptions from './subscriptions'
+import user from './user'
 
 export const rootReducer = combineReducers({
   baseLayers: baseLayers,
@@ -17,5 +18,6 @@ export const rootReducer = combineReducers({
   subscribeDialog: subscribeDialog,
   browser: responsiveStateReducer,
   subscriptionForm: subscriptionForm,
-  subscriptions: subscriptions
+  subscriptions: subscriptions,
+  user: user
 })
