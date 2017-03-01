@@ -54,6 +54,12 @@ class About extends React.Component {
             The stage levels are predefined by NOAA and represented with this application 
             mirroring their default symbology. The stage levels are defined by the water 
             level for each individual gage relative to their capacity.
+            When a gage reaches the 'Action' stage level, NOAA will algorithmically produce 
+            predictive water depths for the gage and provide those depths within the 
+            graphical charts. These predicitive levels are updated every 6 hours by NOAA 
+            unless a significant event demands more accurate and immediate information. In which 
+            case the predictive water depths will be monitored and updated more frequently. 
+            This means the predictive depth readings may vary and change over time.
             For more information on Flood Gage readings, 
             please visit NOAA&#39;s website at: 
             <a href="http://water.weather.gov/ahps/"> http://water.weather.gov/ahps/</a><br />
