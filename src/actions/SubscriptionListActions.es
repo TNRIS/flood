@@ -1,4 +1,5 @@
 import {
+  ADD_SUBSCRIPTION,
   CLEAR_SUBSCRIPTION_LIST,
   MARK_SUBSCRIPTION_FOR_ADD,
   MARK_SUBSCRIPTION_FOR_REMOVE,
@@ -13,6 +14,22 @@ import keys from '../keys'
 import subscribeAlerts from '../util/FloodAlerts'
 
 import objectAssign from 'object-assign'
+
+let nextSubscriptionId = 0
+
+export function addSubscription(lid, subscription, protocol, endpoint) {
+  console.log("adding subscription")
+  return {
+    type: ADD_SUBSCRIPTION,
+    payload: {
+      id: nextSubscriptionId++,
+      lid,
+      subscription,
+      protocol,
+      endpoint
+    }
+  }
+}
 
 export function markSubscriptionForAdd(lid, protocol) {
   return {

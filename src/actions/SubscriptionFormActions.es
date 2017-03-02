@@ -8,6 +8,7 @@ import {
   SUBSCRIPTION_FORM_UPDATED } from '../constants/SubscriptionFormActionTypes'
 
 import {
+  addSubscription,
   seedSubscriptionList,
   clearSubscriptionList
 } from './SubscriptionListActions'
@@ -75,22 +76,11 @@ export function getUserSubscriptions(email, phone, nextToken) {
           const topic = sub.TopicArn.split(":").pop()
 
           if (gagePattern.test(topic)) {
-            const baseRecord = {
-              "lid": topic,
-              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false},
-              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false}
-            }
             if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
-              console.log("Found sms subscription" + " " + endpoint)
-              currentSubscriptions[topic] = currentSubscriptions[topic] || baseRecord
-              currentSubscriptions[topic].sms.subscription = sub
-              currentSubscriptions[topic].sms.subscribed = true
+              dispatch(addSubscription(topic, sub, "sms", endpoint))
             }
             if (email && endpoint === email) {
-              console.log("Found email subscription" + " " + endpoint)
-              currentSubscriptions[topic] = currentSubscriptions[topic] || baseRecord
-              currentSubscriptions[topic].email.subscription = sub
-              currentSubscriptions[topic].email.subscribed = true
+              dispatch(addSubscription(topic, sub, "email", endpoint))
             }
           }
           counter++
@@ -100,7 +90,7 @@ export function getUserSubscriptions(email, phone, nextToken) {
             }
             else {
               dispatch(getSubscriptionsSuccess())
-              dispatch(seedSubscriptionList(currentSubscriptions))
+              // dispatch(seedSubscriptionList(currentSubscriptions))
             }
           }
         })
