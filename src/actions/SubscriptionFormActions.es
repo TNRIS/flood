@@ -49,34 +49,39 @@ export function getUserSubscriptions(email, phone, nextToken) {
 
   return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
-    // dispatch(clearSubscriptionList())
-    return sns.listSubscriptions({NextToken: nextToken}).promise().then(
-      results => {
-        // Set a counter to zero for iterating through the AWS SDK response
+    return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
+      if (err) {
+        console.log(err)
+      }
+      if (data) {
+        console.log(data)
         let counter = 0
+        let currentSubscriptions
 
         // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
-        console.log(nextToken)
-        if (nextToken ) {
+        if (!nextToken) {
           dispatch(clearSubscriptionList())
         }
-        const currentSubscriptions = {...currentSubscriptions, ...getState().subscriptions}
 
+        currentSubscriptions = getState().subscriptions
+        console.log(currentSubscriptions)
+
+        console.log(getState().subscriptions)
         const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
 
         // Iterate through the records
-        results.Subscriptions.forEach((sub) => {
+        data.Subscriptions.forEach((sub) => {
           const endpoint = sub.Endpoint
           const topic = sub.TopicArn.split(":").pop()
 
           if (gagePattern.test(topic)) {
             const baseRecord = {
               "lid": topic,
-              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false, "id": topic + "_email"},
-              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false, "id": topic + "_sms"}
+              "email": {"subscription": null, "subscriptionAction": null, "subscribed": false},
+              "sms": {"subscription": null, "subscriptionAction": null, "subscribed": false}
             }
-
             if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
+              console.log("Found sms subscription" + " " + endpoint)
               currentSubscriptions[topic] = currentSubscriptions[topic] || baseRecord
               currentSubscriptions[topic].sms.subscription = sub
               currentSubscriptions[topic].sms.subscribed = true
@@ -89,9 +94,9 @@ export function getUserSubscriptions(email, phone, nextToken) {
             }
           }
           counter++
-          if (counter === results.Subscriptions.length) {
-            if (results.NextToken) {
-              dispatch(getUserSubscriptions(email, phone, results.NextToken))
+          if (counter === data.Subscriptions.length) {
+            if (data.NextToken) {
+              dispatch(getUserSubscriptions(email, phone, data.NextToken))
             }
             else {
               dispatch(getSubscriptionsSuccess())
@@ -99,9 +104,8 @@ export function getUserSubscriptions(email, phone, nextToken) {
             }
           }
         })
-      },
-      error => console.log(error)
-    )
+      }
+    })
   }
 }
 
