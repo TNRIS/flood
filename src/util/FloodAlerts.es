@@ -170,52 +170,6 @@ export function subscribeGauge(lid, phone, email) {
 	});
 }
 
-/**
- * Uses the Amazon AWS SDK to get a list of all subscriptions
- * @param  {[type]} email [description]
- * @param  {[type]} phone [description]
- * @return {[type]}       [description]
- */
-export function getAWSSubscriptions(email, phone) {
-  const WINDOW_AWS = window.AWS
-  WINDOW_AWS.config.update(keys.awsConfig)
-  const sns = new WINDOW_AWS.SNS()
-  const userSubscriptions = []
-
-  sns.listSubscriptions({}, (err, data) => {
-    if (err) {console.log(err, err.stack)}
-    else {
-      data.Subscriptions.forEach((sub) => {
-        const endpoint = sub.Endpoint
-        const topic = sub.TopicArn.split(":").pop()
-        if (endpoint === phone) {
-          userSubscriptions[topic] = userSubscriptions[topic] || {"gage": topic, "email": null, "phone": null}
-          userSubscriptions[topic].phone = sub
-        }
-        else if (endpoint === email) {
-          userSubscriptions[topic] = userSubscriptions[topic] || {"gage": topic, "email": null, "phone": null}
-          userSubscriptions[topic].email = sub
-        }
-      })
-    }
-    return userSubscriptions
-  })
-}
-
-export function getAWSSubscriptionsPromise(email, phone) {
-  const WINDOW_AWS = window.AWS
-  WINDOW_AWS.config.update(keys.awsConfig)
-  const sns = new WINDOW_AWS.SNS()
-
-  const subscriptions = sns.listSubscriptions().promise()
-  subscriptions.then((data) => {
-    console.log(data)
-    return data.Subscriptions
-  }).catch((err) => {
-    console.log(err)
-    return err
-  })
-}
 
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges

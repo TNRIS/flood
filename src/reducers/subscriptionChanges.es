@@ -4,6 +4,10 @@ import {
   UNQUEUE_CHANGE_FROM_CHANGE_LIST
 } from '../constants/SubscriptionChangeActionTypes'
 
+import {
+  CLEAR_SUBSCRIPTION_LIST
+} from '../constants/SubscriptionListActionTypes'
+
 const initialState = {}
 
 function addChangeSubscribe(state, action) {
@@ -41,6 +45,8 @@ export const subscriptionChangesById = (state = initialState, action) => {
       return addChangeSubscribe(state, action)
     case ADD_UNSUBSCRIBE_TO_CHANGE_LIST:
       return addChangeUnsubscribe(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return initialState
     case UNQUEUE_CHANGE_FROM_CHANGE_LIST:
       return removeChangeFromQueue(state, action)
     default:
@@ -65,6 +71,8 @@ export const allSubscriptionChanges = (state = [], action) => {
       return addSubscriptionChangeId(state, action)
     case ADD_UNSUBSCRIBE_TO_CHANGE_LIST:
       return addSubscriptionChangeId(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return []
     case UNQUEUE_CHANGE_FROM_CHANGE_LIST:
       return removeSubscriptionChangeId(state, action)
     default:

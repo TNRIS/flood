@@ -43,7 +43,6 @@ class SubscriptionForm extends Component {
 
   handleSearch(event) {
     event.preventDefault()
-    console.log(this.state)
     this.props.setUserInfo(this.state.email, this.state.phone)
     this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
   }

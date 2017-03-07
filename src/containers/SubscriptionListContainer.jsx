@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import {
   clearSubscriptionList,
   markSubscriptionForAdd,
-  markSubscriptionForRemove,
-  saveSubscriptionChanges
+  markSubscriptionForRemove
 } from '../actions/SubscriptionListActions'
 import SubscriptionList from '../components/SubscriptionList'
 
 import {
   addSubscribeToChangeList,
   addUnsubscribeToChangeList,
+  saveSubscriptionChanges,
   unqueueChangeFromChangeList
 } from '../actions/SubscriptionChangeActions'
 

@@ -1,10 +1,19 @@
 import {
   ADD_SUBSCRIBE_TO_CHANGE_LIST,
   ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
+  SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
+  SAVE_SUBSCRIPTION_CHANGES_ERROR,
+  SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
   UNQUEUE_CHANGE_FROM_CHANGE_LIST
 } from '../constants/SubscriptionChangeActionTypes'
 
-let nextSubscriptionChangeId = 0
+
+import { subscribeGauge } from '../util/FloodAlerts'
+
+
+import AWS from 'aws-sdk/dist/aws-sdk'
+import keys from '../keys'
+
 
 export function addSubscribeToChangeList(lid, protocol) {
   return {
@@ -40,7 +49,7 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
   }
 }
 
-export function removeSubscription(subscriptionArn) {
+export function unsubscribeGage(subscriptionArn) {
   const WINDOW_AWS = window.AWS
   WINDOW_AWS.config.update(keys.awsConfig)
   const sns = new WINDOW_AWS.SNS()
@@ -49,4 +58,29 @@ export function removeSubscription(subscriptionArn) {
     if (err) console.log(err, err.stack)
     else console.log(data)
   })
+}
+
+export function saveSubscriptionChanges() {
+  return (dispatch, getState) => {
+    setTimeout(() => {
+      if (getState().subscriptionChanges.allSubscriptionChanges.length > 0) {
+        const currentState = getState()
+        const user = currentState.user
+        const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
+        for (const change in changes) {
+          if (changes.hasOwnProperty(change)) {
+            const changeData = changes[change]
+            const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
+            const subscriptionArn = subscription.SubscriptionArn
+            if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
+              unsubscribeGage(subscriptionArn)
+            }
+            else if (changeData.subscriptionAction === 'SUBSCRIBE') {
+              subscribeGage(changeData.lid, user.phone, user.email)
+            }
+          }
+        }
+      }
+    })
+  }
 }
