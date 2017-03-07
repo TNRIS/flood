@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, List, ListItem, ListItemContent, ListItemAction, Switch } from 'react-mdl'
+import { Button, Badge, List, ListItem, ListItemContent, ListItemAction, Switch, Tooltip } from 'react-mdl'
 
 
 class SubscriptionList extends React.Component {
@@ -10,64 +10,85 @@ class SubscriptionList extends React.Component {
     saveSubscriptionChanges: React.PropTypes.func,
     subscriptions: React.PropTypes.object,
   }
-
+  
   constructor() {
     super()
   }
 
-  toggleSubscription(event, lid, protocol) {
+  toggleSubscription(event, gsId, protocol) {
+    const gs = this.props.gageSubscriptionById[gsId]
+    
     if (event.target.checked) {
-      this.props.markSubscriptionForAdd(lid, protocol)
+      if (!gs.hasOwnProperty(protocol)) {
+        this.props.addSubscribeToChangeList(gs.lid, protocol)
+      }
+      else {
+        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
+      }
     }
-    else if (!event.target.checked) {
-      this.props.markSubscriptionForRemove(lid, protocol)
+    else {
+      if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
+        const sId = gs[protocol]
+        this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
+      }
+      else {
+        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
+      }
     }
   }
 
   saveChanges() {
     this.props.saveSubscriptionChanges()
   }
+  
+  tooltipMessage(userInfoType) {
+    if (userInfoType == "email" && this.props.email.length < 1) {
+      return "Please enter your email and search again"
+    }
+    else if (userInfoType="phone" && this.props.phone < 1) {
+      return "Please enter your phone number and search again"
+    }
+    return "Changes will not be made until you click SAVE CHANGES"
+  }
 
   render() {
-    let listActions = null
+    console.log(this.props);
+    let emailToggle = null
+    let smsToggle = null
 
-    if (Object.keys(this.props.subscriptions).length === 0 && this.props.subscriptions.constructor === Object) {
-      listActions = null
-    }
-    else {
-      listActions = (
-        <div>
-          <Button primary ripple
-          type="button"
-          value="Cancel"
-          onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
-          <Button primary ripple
-          onClick={this.props.clearSubscriptionList}>CLEAR</Button>
-        </div>
-      )
-    }
+    
     return (
       <div>
+      <Badge text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
         <List>
-        {Object.keys(this.props.subscriptions).map(subscription =>
-          <ListItem key={subscription} className="subscription-list-item">
-            <ListItemContent>{this.props.subscriptions[subscription].lid}</ListItemContent>
-            <ListItemAction info="Email">
-              <Switch ripple
-              defaultChecked={this.props.subscriptions[subscription].email.subscribed}
-              onClick={(event) =>
-                this.toggleSubscription(event, this.props.subscriptions[subscription].lid, "email")} />
-            </ListItemAction>
-            <ListItemAction info="SMS">
-              <Switch ripple
-              defaultChecked={this.props.subscriptions[subscription].sms.subscribed}
-              onClick={(event) =>
-                this.toggleSubscription(event, this.props.subscriptions[subscription].lid, "sms")} />
-            </ListItemAction>
-          </ListItem>
-        )}
+          {this.props.allGageSubscriptions.map(gageSubscriptionId =>
+            <ListItem key={gageSubscriptionId} className="subscription-list-item">
+              <ListItemContent>{this.props.gageSubscriptionById[gageSubscriptionId].lid}</ListItemContent>
+              <Tooltip label={this.tooltipMessage("email")}>
+                <ListItemAction info="Email">
+                  <Switch ripple
+                  disabled={this.props.email.length < 1}
+                  defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
+                  onClick={(event) =>
+                    this.toggleSubscription(event, gageSubscriptionId, "email")} />
+                </ListItemAction>
+              </Tooltip>
+              <Tooltip label={this.tooltipMessage("phone")}>
+              <ListItemAction info="SMS">
+                <Switch ripple
+                disabled={this.props.phone.length < 1}
+                defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
+                onClick={(event) =>
+                  this.toggleSubscription(event, gageSubscriptionId, "sms")} />
+              </ListItemAction>
+              </Tooltip>
+            </ListItem>
+          )}
         </List>
-        {listActions}
+        <Button primary ripple type="button" value="Cancel"
+          onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
+        <Button primary ripple
+          onClick={this.props.clearSubscriptionList}>CLEAR</Button>
       </div>
     )
   }

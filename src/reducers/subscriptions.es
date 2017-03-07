@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
+import objectAssign from 'object-assign'
 
 import {
-  ADD_SUBSCRIPTION,
+  ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST,
   CLEAR_SUBSCRIPTION_LIST,
   SEED_SUBSCRIPTION_LIST,
   MARK_SUBSCRIPTION_FOR_ADD,
@@ -10,85 +11,55 @@ import {
 
 let subscriptionOperation
 
-// function subscription(state, action) {
-//   switch (action.type) {
-//     case ADD_SUBSCRIPTION:
-//       const sub = {
-//         id: action.id,
-//         lid: action.lid,
-//         subscription: action.subscription,
-//         protocol: action.protocol,
-//         endpoint: action.endpoint
-//       }
-// 
-//       return {
-//         ...state,
-//         [action.id]: sub
-//       }
-//     case 'MARK_SUBSCRIPTION_FOR_ADD':
-//       if (state.lid !== action.lid) {
-//         return {...state}
-//       }
-//       subscriptionOperation = !state[action.protocol].subscribed ? "Add" : null
-//       return {...state, [action.protocol]: {...state[action.protocol], subscriptionAction: subscriptionOperation}}
-//     case 'MARK_SUBSCRIPTION_FOR_REMOVE':
-//       if (state.lid !== action.lid) {
-//         return {...state}
-//       }
-//       subscriptionOperation = state[action.protocol].subscribed ? "Remove" : null
-//       return {...state, [action.protocol]: {...state[action.protocol], subscriptionAction: subscriptionOperation}}
-//     default:
-//       return {...state}
-//   }
-// }
-
 const initialState = {}
-//
-// const subscriptions = (state = initialState, action) => {
-//   switch (action.type) {
-//     case ADD_SUBSCRIPTION:
-//       return {...state, [action.id]: subscription({}, action)}
-//     case SEED_SUBSCRIPTION_LIST:
-//       console.log("Updating subscription list")
-//       return {...initialState, ...action.subscriptions}
-//     case CLEAR_SUBSCRIPTION_LIST:
-//       return initialState
-//     case MARK_SUBSCRIPTION_FOR_ADD:
-//       return {...state, [action.lid]: subscription(state[action.lid], action)}
-//     case MARK_SUBSCRIPTION_FOR_REMOVE:
-//       return {...state, [action.lid]: subscription(state[action.lid], action)}
-//     default:
-//       return {...state}
-//   }
-// }
 
 function addSubscriptionEntry(state, action) {
-  const sub = {
-    id: action.id,
-    lid: action.lid,
-    subscription: action.subscription,
-    protocol: action.protocol,
-    endpoint: action.endpoint
-  }
-  console.log(...sub)
+  const {payload} = action
+  const {id, lid, subscription, protocol, endpoint} = payload
+
+  const sub = {id, lid, subscription, protocol, endpoint, subscriptionAction: null}
+
   return {
     ...state,
-    [action.id]: sub
+    [id]: sub
   }
 }
 
-export const subscriptionsById = (state = {}, action) => {
+export const subscribe = (state) => {
+  return objectAssign({}, state, {
+    subscriptionAction: "Add"
+  })
+}
+
+export const unsubscribe = (state, action) => {
+  return {...state, [action.id]: {...state[action.id], subscriptionAction: "Remove" }}
+}
+
+export const subscriptionsById = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_SUBSCRIPTION:
+    case ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST:
       return addSubscriptionEntry(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return {}
+    case MARK_SUBSCRIPTION_FOR_ADD:
+      return subscribe(state, action)
+    case MARK_SUBSCRIPTION_FOR_REMOVE:
+      return unsubscribe(state, action)
     default:
-      console.log("default subscriptions by id")
       return state
   }
 }
 
+export const addSubscriptionId = (state, action) => {
+  return state.concat(action.payload.id)
+}
+
 export const allSubscriptions = (state = [], action) => {
   switch (action.type) {
+    case ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST:
+      return addSubscriptionId(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return []
     default:
       return state
   }

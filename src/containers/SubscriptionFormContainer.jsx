@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     currentSubscriptions: state.subscriptionForm.currentSubscriptions,
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
-    nextToken: state.subscriptionForm.nextToken
+    nextToken: state.subscriptionForm.nextToken,
+    allSubscriptions: state.subscriptions.allSubscriptions
   }
 
   return props

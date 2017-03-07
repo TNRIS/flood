@@ -12,9 +12,11 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
     case SET_USER_INFO:
+      const emailAddress = action.email || initialState.email
+      const phoneNumber = action.phone || initialState.phone
       return objectAssign({}, state, {
-        email: action.email,
-        phone: action.phone
+        email: emailAddress,
+        phone: phoneNumber
       })
     default:
       return state
