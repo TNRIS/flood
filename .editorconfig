@@ -19,12 +19,12 @@ indent_style = space
 indent_size = 4
 
 [*.es]
-indent_style = space
+indent_style = tab
 indent_size = 2
 
-# Tab indentation (no size specified)
-[Makefile]
-indent_style = tab
+[*.jsx]
+indent_style = space
+indent_size = 2
 
 # Indentation override for all JS under lib directory
 [*.{js,es}]

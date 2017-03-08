@@ -74,7 +74,7 @@ describe('reducer: map', () => {
           coordinates: [32, 11.2],
           text: 'hovering!'
         }
-      },{
+      }, {
         type: types.HOVER_OVER_MAP_CLICKABLE,
         data: {
           coordinates: [19, 100],

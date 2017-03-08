@@ -3,9 +3,16 @@ import R from 'ramda'
 
 import * as types from '../actions/types'
 
-const initialState = {}
+import { SET_CENTER_AND_ZOOM } from '../constants/SubscriptionChangeActionTypes'
+
+const initialState = {
+  mapCenterLat: 31,
+  mapCenterLng: -100,
+  zoomLevel: 7
+}
 
 export default function map(state = initialState, action) {
+  console.log(action.type, SET_CENTER_AND_ZOOM)
   switch (action.type) {
     case types.SET_POPUP:
       if (action.payload) {
@@ -16,11 +23,20 @@ export default function map(state = initialState, action) {
       else {
         return objectAssign({}, R.omit(['popup'], state))
       }
+      break
     case types.HOVER_OVER_MAP_CLICKABLE:
       return objectAssign({}, state, {
         hoveringOver: action.data
       })
+    case SET_CENTER_AND_ZOOM:
+      console.log(action)
+      return objectAssign({}, state, {
+        mapCenterLat: action.lat,
+        mapCenterLng: action.lng,
+        zoomLevel: action.zoom
+      })
     default:
+      console.log("returning default")
       return state
   }
 }

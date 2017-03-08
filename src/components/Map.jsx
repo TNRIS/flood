@@ -54,15 +54,14 @@ export default class Map extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
     this.updateLayerStore = this.updateLayerStore.bind(this);
   }
 
   componentDidMount() {    
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
-        center: [31, -100],
-        zoom: 7,
+        center: [this.props.mapCenterLat, this.props.mapCenterLng],
+        zoom: this.props.zoomLevel,
         minZoom: 5
       })
 
@@ -98,6 +97,12 @@ export default class Map extends Component {
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
     }
+    
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.map.mapCenterLat !== this.props.map.mapCenterLat || prevProps.map.mapCenterLng !== this.props.map.mapCenterLng || prevProps.map.zoomLevel !== this.props.map.zoomLevel  )
+    this.map.setView([this.props.map.mapCenterLat, this.props.map.mapCenterLng], this.props.map.zoomLevel)
   }
 
   setActiveFeatureLayers(props) {

@@ -7,7 +7,7 @@ const initialState = {
   lid: '',
   name: ''
 }
-//reducer for handling the subscription form. manages showing/hiding 
+//reducer for handling the subscription form. manages showing/hiding
 //the dialog and the gauge identifiers for subscribing to a gauge
 export default function subscribeDialog(state = initialState, action) {
   switch (action.type) {

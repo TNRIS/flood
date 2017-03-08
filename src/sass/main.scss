@@ -495,3 +495,50 @@ div.dialog-button-div {
     font-size: 90%;
   }
 }
+
+button.toggle-navigation-content {
+    background-color: white;
+    border-radius: 0;
+    height: 73px;
+    width: 100%;
+}
+
+.subscription-list-item {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin-bottom: 4px;
+}
+
+.mdl-list__item--two-line {
+    height: 85px !important;
+}
+
+.mdl-tooltip {
+    will-change: auto;
+}
+
+.subscription-list-item__locateAction {
+    // height: 85px;
+    margin: 0 !important;
+    width: 40px !important;
+    margin-left: -4px !important;
+    // margin-top: -30px !important;
+    // margin-bottom: -30px !important;
+    
+    span {
+        height: 100%;
+        width: 40px;
+        margin-right: 4px;
+    }
+    
+    // button {
+    //     height: 85px !important;
+    //     max-width: 40px !important;
+    //     border: none;
+    //     border-radius: 0;
+    //     box-shadow: none;
+    // }
+}
+
+.mdl-tooltip {
+    will-change: inherit !important;
+}
