@@ -12,6 +12,7 @@ import subscriptionList from './subscriptionList'
 import { subscriptionsById, allSubscriptions } from './subscriptions'
 import { gageSubscriptionById, allGageSubscriptions }  from './gageSubscription'
 import user from './user'
+import aboutDialog from './aboutDialog'
 
 export const rootReducer = combineReducers({
   baseLayers: baseLayers,
@@ -35,4 +36,6 @@ export const rootReducer = combineReducers({
     allGageSubscriptions
   }),
   user
+  aboutDialog: aboutDialog,
+  browser: responsiveStateReducer
 })

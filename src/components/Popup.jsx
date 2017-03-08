@@ -2,7 +2,7 @@ import objectAssign from 'object-assign'
 import ReactDOM from 'react-dom'
 import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
-
+import L from 'leaflet'
 import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
@@ -30,6 +30,7 @@ export default class Popup extends Component {
       className: 'popup',
       closeButton: false,
       offset: [0, 15],
+      keepInView: true,
       ...widths
     })
   }
@@ -41,7 +42,7 @@ export default class Popup extends Component {
       leafletMap.closePopup(this.leafletPopup)
     }
 
-    // should only happen the first time map after map has initialized
+    // should only happen the first time after map has initialized
     if ( !prevProps.leafletMap && leafletMap ) {
       this.updatePopupSize()
     }
@@ -59,14 +60,38 @@ export default class Popup extends Component {
     }
 
     if (this.leafletPopup._isOpen) {
-      this.renderPopupContent()
+      // this will ensure that only the popup for the topmost layer will
+      // show when features are stacked at a clicked location
+      if (position === prevProps.position) {
+        switch (this.props.layerId) {
+          case "ahps-flood":
+            this.renderPopupContent()
+            break
+          case "reservoir-conditions":
+            if (prevProps.layerId !== "ahps-flood") {
+              this.renderPopupContent()
+            }
+            break
+          case "flood-alerts":
+            if (prevProps.layerId !== "ahps-flood") {
+              if (prevProps.layerId !== "reservoir-conditions") {
+                this.renderPopupContent()
+              }
+            }
+            break
+          default:
+            null
+        }
+      }
+      else {
+        this.renderPopupContent()
+      }
     }
   }
 
   getPopupContent() {
     const { data, layerId } = this.props
     const popupWidth = this.calculatePopupWidth()
-
     switch (layerId) {
       case 'ahps-flood':
         this.props.setLidAndName(this.props.data.lid, this.props.data.name)

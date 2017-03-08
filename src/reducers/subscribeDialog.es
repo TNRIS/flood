@@ -1,11 +1,11 @@
-import objectAssign from 'object-assign'
+import objectAssign from "object-assign"
 
-import * as types from '../actions/types'
+import * as types from "../actions/types"
 
 const initialState = {
   openDialog: false,
-  lid: '',
-  name: ''
+  lid: "",
+  name: ""
 }
 //reducer for handling the subscription form. manages showing/hiding
 //the dialog and the gauge identifiers for subscribing to a gauge

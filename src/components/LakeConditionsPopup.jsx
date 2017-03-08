@@ -19,6 +19,7 @@ export default class LakeConditionsPopup extends Component {
     // below is the link to the old charts from version 1
     // const image_src = `http://waterdatafortexas.org/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
     const image_src = `https://waterdatafortexas.org/reservoirs/individual/${lake_url_name}/recent-volume.png`
+    const link_src = `https://waterdatafortexas.org/reservoirs/individual/${lake_url_name}`
 
     return (
       <div className="popup__container--lake" >
@@ -27,7 +28,7 @@ export default class LakeConditionsPopup extends Component {
           <PopupHeader>
             { full_name }
           </PopupHeader>
-          <PopupImage link={image_src} src={image_src} updatePopup={updatePopup} />
+          <PopupImage link={link_src} src={image_src} updatePopup={updatePopup} />
         </PopupContent>
       </div>
     )

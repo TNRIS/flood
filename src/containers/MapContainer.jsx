@@ -13,12 +13,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   function clickHandler(id, data) {
-    const payload = {}
+    // This allows the poups to open when multiple layers are turned on
     if (data.data) {
+      const payload = {}
       payload.id = id
       payload.data = data
+      dispatch(actions.setPopup(payload))
     }
-    dispatch(actions.setPopup(payload))
   }
 
   return {
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onMouseoverUTFGrid: (data) => {
       dispatch(actions.hoverOverMapClickable(data))
+    },
+    updateTimestamp: (timestamp) => {
+      dispatch(actions.updateTimestamp(timestamp))
     },
   }
 }

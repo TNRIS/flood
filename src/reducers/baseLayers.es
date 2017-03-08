@@ -9,7 +9,7 @@ const initialState = {
       'id': 'osm',
       'text': 'OpenStreetMap',
       'type': 'tile',
-      'url': 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      'url': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }
@@ -18,7 +18,7 @@ const initialState = {
       'id': 'positron',
       'text': 'Positron',
       'type': 'tile',
-      'url': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      'url': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       }
@@ -27,7 +27,8 @@ const initialState = {
       'id': 'dark-matter',
       'text': 'Dark Matter',
       'type': 'tile',
-      'url': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+      'url': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
+      // 'url': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
       'options': {
         'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
       }

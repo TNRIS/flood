@@ -6,6 +6,7 @@ import MapContainer from '../containers/MapContainer'
 import NavigationDrawer from '../components/NavigationDrawer'
 import Disclaimer from '../components/Disclaimer'
 import SubscribeContainer from '../containers/SubscribeContainer'
+import AboutContainer from '../containers/AboutContainer'
 
 
 ga.pageview(window.location.pathname)
@@ -14,6 +15,7 @@ const App = () => (
   <div>
     <Disclaimer />
     <SubscribeContainer />
+    <AboutContainer />
     <Layout fixedDrawer style={{background: 'white'}}>
       <NavigationDrawer/>
       <Content>
