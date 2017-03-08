@@ -83,6 +83,7 @@ function subscribeAlerts (protocol, endpoint, topicArn, sns) {
       TopicArn: topicArn,
       Endpoint: endpoint
     };
+    console.log(params)
     //subscribe to the gauge
     sns.subscribe(params, function (err_subscribe, data) {
       if (err_subscribe) {
