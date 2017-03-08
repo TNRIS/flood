@@ -11,7 +11,8 @@ import {
   addSubscribeToChangeList,
   addUnsubscribeToChangeList,
   saveSubscriptionChanges,
-  unqueueChangeFromChangeList
+  unqueueChangeFromChangeList,
+  setCenterAndZoom
 } from '../actions/SubscriptionChangeActions'
 
 const mapStateToProps = (state) => {
@@ -21,7 +22,8 @@ const mapStateToProps = (state) => {
     allSubscriptions: state.subscriptions.allSubscriptions,
     subscriptions: state.subscriptions,
     email: state.user.email,
-    phone: state.user.phone
+    phone: state.user.phone,
+    gageInfo: state.gageInfo
   }
 }
 
@@ -47,6 +49,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     unqueueChangeFromChangeList: (lid, protocol, action) => {
       dispatch(unqueueChangeFromChangeList(lid, protocol, action))
+    },
+    setCenterAndZoom: (lat, lng, zoom) => {
+      dispatch(setCenterAndZoom(lat, lng, zoom))
     }
   }
 }

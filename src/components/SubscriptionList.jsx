@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Badge, List, ListItem, ListItemContent, ListItemAction, Switch, Tooltip } from 'react-mdl'
+import { Button, IconButton, FABButton, Badge, Icon, List, ListItem, ListItemContent, ListItemAction, Switch, Tooltip } from 'react-mdl'
 
 
 class SubscriptionList extends React.Component {
@@ -42,13 +42,21 @@ class SubscriptionList extends React.Component {
   }
   
   tooltipMessage(userInfoType) {
+    console.log(userInfoType)
     if (userInfoType == "email" && this.props.email.length < 1) {
       return "Please enter your email and search again"
-    }
-    else if (userInfoType="phone" && this.props.phone < 1) {
+    } 
+    else if (userInfoType="phone" && this.props.phone.length < 1) {
       return "Please enter your phone number and search again"
     }
-    return "Changes will not be made until you click SAVE CHANGES"
+    else {
+      return "Changes will not be made until you click SAVE CHANGES"
+    }
+  }
+  
+  zoomToGage(event, gageInfo) {
+    console.log(gageInfo)
+    this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
   }
 
   render() {
@@ -59,18 +67,27 @@ class SubscriptionList extends React.Component {
     
     return (
       <div>
-      <Badge text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
+      <Badge text={this.props.allSubscriptions.length}>Total Subscriptions</Badge>
         <List>
           {this.props.allGageSubscriptions.map(gageSubscriptionId =>
-            <ListItem key={gageSubscriptionId} className="subscription-list-item">
-              <ListItemContent>{this.props.gageSubscriptionById[gageSubscriptionId].lid}</ListItemContent>
+            <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
+              <ListItemAction className="subscription-list-item__locateAction">
+                <FABButton colored mini ripple
+                onClick={(event) => this.zoomToGage(event, this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid])}
+                >
+                  <Icon name="room"/>
+                </FABButton>
+              </ListItemAction>
+              <ListItemContent
+              subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
+                {this.props.gageSubscriptionById[gageSubscriptionId].lid}
+              </ListItemContent>
               <Tooltip label={this.tooltipMessage("email")}>
                 <ListItemAction info="Email">
                   <Switch ripple
                   disabled={this.props.email.length < 1}
                   defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
-                  onClick={(event) =>
-                    this.toggleSubscription(event, gageSubscriptionId, "email")} />
+                  onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "email")}/>
                 </ListItemAction>
               </Tooltip>
               <Tooltip label={this.tooltipMessage("phone")}>
@@ -78,8 +95,7 @@ class SubscriptionList extends React.Component {
                 <Switch ripple
                 disabled={this.props.phone.length < 1}
                 defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
-                onClick={(event) =>
-                  this.toggleSubscription(event, gageSubscriptionId, "sms")} />
+                onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
               </ListItemAction>
               </Tooltip>
             </ListItem>

@@ -17,7 +17,7 @@ export const rootReducer = combineReducers({
   baseLayers: baseLayers,
   featureLayers: featureLayers,
   map: map,
-  floodStatus: floodStatus,
+  gageInfo: floodStatus,
   subscribeDialog: subscribeDialog,
   browser: responsiveStateReducer,
   subscriptionChanges: combineReducers({

@@ -4,9 +4,11 @@ import {
   SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
   SAVE_SUBSCRIPTION_CHANGES_ERROR,
   SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
+  SET_CENTER_AND_ZOOM,
   UNQUEUE_CHANGE_FROM_CHANGE_LIST
 } from '../constants/SubscriptionChangeActionTypes'
 
+import { getUserSubscriptions } from './SubscriptionFormActions'
 
 import { subscribeGauge } from '../util/FloodAlerts'
 
@@ -70,17 +72,33 @@ export function saveSubscriptionChanges() {
         for (const change in changes) {
           if (changes.hasOwnProperty(change)) {
             const changeData = changes[change]
-            const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
-            const subscriptionArn = subscription.SubscriptionArn
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
+              const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
+              const subscriptionArn = subscription.SubscriptionArn
               unsubscribeGage(subscriptionArn)
             }
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
-              subscribeGage(changeData.lid, user.phone, user.email)
+              if (changeData.protocol === 'email') {
+                subscribeGauge(changeData.lid, "", user.email)
+              }
+              else if (changeData.protocol === 'sms') {
+                subscribeGauge(changeData.lid, user.phone, "")
+              }
             }
           }
         }
+        dispatch(getUserSubscriptions(user.email, user.phone, ""))
       }
     })
+  }
+}
+
+export function setCenterAndZoom(lat, lng, zoom) {
+  console.log("zooming")
+  return {
+    type: SET_CENTER_AND_ZOOM,
+    lat,
+    lng,
+    zoom
   }
 }

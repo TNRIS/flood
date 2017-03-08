@@ -11,7 +11,7 @@ const initialState = {}
 //Any gauges with a stage change to a higher flood stage will send notifications
 export default function floodStatus(state = initialState, action) {
   switch (action.type) {
-    case types.SET_SIGSTAGE:
+    case types.SET_GAUGE_INIT:
       return objectAssign({}, action.initState)
     case types.UPDATE_SIGSTAGE:
       let newState = objectAssign({}, state)

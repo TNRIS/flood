@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
   return {
     baseLayers: state.baseLayers,
     featureLayers: state.featureLayers,
-    map: state.map,
+    map: state.map
   }
 }
 
@@ -18,7 +18,6 @@ const mapDispatchToProps = (dispatch) => {
       payload.id = id
       payload.data = data
     }
-    console.log(payload)
     dispatch(actions.setPopup(payload))
   }
 

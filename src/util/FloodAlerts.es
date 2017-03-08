@@ -174,15 +174,15 @@ export function subscribeGauge(lid, phone, email) {
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
 export function initialStatus() {
-	const query = `SELECT lid, sigstage FROM nws_ahps_gauges_texas`;
+	const query = `SELECT lid, name, latitude, longitude FROM nws_ahps_gauges_texas`;
 	return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
 		.then(({data}) => {
 			const formatState = data.rows.map((gauge) => {
 				let obj = {}
-				obj[gauge.lid] = gauge.sigstage
+				obj[gauge.lid] = {"name": gauge.name, "latitude": gauge.latitude, "longitude": gauge.longitude}
 				return obj
 			})
 			const initState = R.mergeAll(formatState)
-			store.dispatch(actions.setSigStage(initState))
+			store.dispatch(actions.setGaugeInit(initState))
 		});
 }

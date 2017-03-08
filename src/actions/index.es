@@ -37,10 +37,10 @@ export const setFeatureLayer = (id) => {
   }
 }
 
-export const setSigStage = (initState) => {
+export const setGaugeInit = (initState) => {
   return (dispatch) => {
     dispatch({
-      type: types.SET_SIGSTAGE,
+      type: types.SET_GAUGE_INIT,
       initState
     })
   }
