@@ -109,9 +109,7 @@ export default class Map extends Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.map.mapCenterLat !== this.props.map.mapCenterLat || prevProps.map.mapCenterLng !== this.props.map.mapCenterLng || prevProps.map.zoomLevel !== this.props.map.zoomLevel) {
-      this.map.setView([this.props.map.mapCenterLat, this.props.map.mapCenterLng], this.props.map.zoomLevel)
-    }
+    this.map.setView([this.props.map.mapCenterLat, this.props.map.mapCenterLng], this.props.map.zoomLevel)
   }
 
   setActiveFeatureLayers(props) {
