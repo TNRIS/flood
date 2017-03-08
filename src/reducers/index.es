@@ -35,7 +35,6 @@ export const rootReducer = combineReducers({
     gageSubscriptionById,
     allGageSubscriptions
   }),
-  user
-  aboutDialog: aboutDialog,
-  browser: responsiveStateReducer
+  user,
+  aboutDialog: aboutDialog
 })
