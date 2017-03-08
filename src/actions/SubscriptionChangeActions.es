@@ -1,6 +1,7 @@
 import {
   ADD_SUBSCRIBE_TO_CHANGE_LIST,
   ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
+  CLEAR_CENTER_AND_ZOOM,
   SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
   SAVE_SUBSCRIPTION_CHANGES_ERROR,
   SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
@@ -9,6 +10,11 @@ import {
 } from '../constants/SubscriptionChangeActionTypes'
 
 import { getUserSubscriptions } from './SubscriptionFormActions'
+import {
+  updateSubscriptionsAttempt,
+  updateSubscriptionsError,
+  updateSubscriptionsSuccess
+} from './SubscriptionListActions'
 
 import { subscribeGauge } from '../util/FloodAlerts'
 
@@ -55,6 +61,7 @@ export function unsubscribeGage(subscriptionArn) {
   const WINDOW_AWS = window.AWS
   WINDOW_AWS.config.update(keys.awsConfig)
   const sns = new WINDOW_AWS.SNS()
+  console.log(subscriptionArn)
 
   return sns.unsubscribe({SubscriptionArn: subscriptionArn}, (err, data) => {
     if (err) console.log(err, err.stack)
@@ -64,8 +71,10 @@ export function unsubscribeGage(subscriptionArn) {
 
 export function saveSubscriptionChanges() {
   return (dispatch, getState) => {
+    dispatch(updateSubscriptionsAttempt())
     setTimeout(() => {
       if (getState().subscriptionChanges.allSubscriptionChanges.length > 0) {
+        let counter = 0
         const currentState = getState()
         const user = currentState.user
         const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
@@ -87,7 +96,11 @@ export function saveSubscriptionChanges() {
             }
           }
         }
-        dispatch(getUserSubscriptions(user.email, user.phone, ""))
+        counter++
+        if (counter === getState().subscriptionChanges.allSubscriptionChanges.length) {
+          dispatch(getUserSubscriptions(user.email, user.phone, ""))
+          dispatch(updateSubscriptionsSuccess())
+        }
       }
     })
   }
@@ -100,5 +113,11 @@ export function setCenterAndZoom(lat, lng, zoom) {
     lat,
     lng,
     zoom
+  }
+}
+
+export function clearCenterAndZoom() {
+  return {
+    type: CLEAR_CENTER_AND_ZOOM
   }
 }

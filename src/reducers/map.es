@@ -3,7 +3,10 @@ import R from 'ramda'
 
 import * as types from '../actions/types'
 
-import { SET_CENTER_AND_ZOOM } from '../constants/SubscriptionChangeActionTypes'
+import {
+  CLEAR_CENTER_AND_ZOOM,
+  SET_CENTER_AND_ZOOM
+} from '../constants/SubscriptionChangeActionTypes'
 
 const initialState = {
   mapCenterLat: 31,
@@ -34,6 +37,12 @@ export default function map(state = initialState, action) {
         mapCenterLat: action.lat,
         mapCenterLng: action.lng,
         zoomLevel: action.zoom
+      })
+    case CLEAR_CENTER_AND_ZOOM:
+      return objectAssign({}, state, {
+        mapCenterLat: null,
+        mapCenterLng: null,
+        zoomLevel: null
       })
     default:
       console.log("returning default")
