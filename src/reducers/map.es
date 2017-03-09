@@ -9,9 +9,9 @@ import {
 } from '../constants/SubscriptionChangeActionTypes'
 
 const initialState = {
-  mapCenterLat: 31,
-  mapCenterLng: -100,
-  zoomLevel: 7
+  mapCenterLat: null,
+  mapCenterLng: null,
+  zoomLevel: null
 }
 
 export default function map(state = initialState, action) {

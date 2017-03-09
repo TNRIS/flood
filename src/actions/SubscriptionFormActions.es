@@ -10,6 +10,10 @@ import {
   clearSubscriptionList
 } from './SubscriptionListActions'
 
+import {
+  showSnackbar
+} from './ToasterActions'
+
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
 
@@ -19,16 +23,16 @@ export function clearSubscriptions() {
   }
 }
 
+export function getSubscriptionsAttempt() {
+  return {
+    type: GET_SUBSCRIPTIONS_ATTEMPT,
+  }
+}
+
 export function getSubscriptionsError(error) {
   return {
     type: GET_SUBSCRIPTIONS_ERROR,
     error
-  }
-}
-
-export function getSubscriptionsAttempt() {
-  return {
-    type: GET_SUBSCRIPTIONS_ATTEMPT,
   }
 }
 
@@ -43,7 +47,7 @@ export function getUserSubscriptions(email, phone, nextToken) {
   WINDOW_AWS.config.update(keys.awsConfig)
   const sns = new WINDOW_AWS.SNS()
 
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
     return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
       if (err) {
@@ -51,7 +55,7 @@ export function getUserSubscriptions(email, phone, nextToken) {
       }
       if (data) {
         let counter = 0
-
+        console.log(counter)
         // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
         if (!nextToken) {
           dispatch(clearSubscriptionList())
@@ -77,6 +81,9 @@ export function getUserSubscriptions(email, phone, nextToken) {
             }
             else {
               dispatch(getSubscriptionsSuccess())
+              if (getState().subscriptions.allSubscriptions.length === 0) {
+                dispatch(showSnackbar("No subscriptions found."))
+              }
             }
           }
         })

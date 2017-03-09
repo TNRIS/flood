@@ -42,7 +42,6 @@ class SubscriptionList extends React.Component {
   }
   
   tooltipMessage(userInfoType) {
-    console.log(userInfoType)
     if (userInfoType == "email" && this.props.email.length < 1) {
       return "Please enter your email and search again"
     } 
@@ -104,6 +103,7 @@ class SubscriptionList extends React.Component {
     }
     
     if (this.props.isUpdating) {
+      console.log("show spinner")
       listContentDiv = <Spinner />
     }
     else {

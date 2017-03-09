@@ -1,6 +1,7 @@
 import {
   ADD_SUBSCRIBE_TO_CHANGE_LIST,
   ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
+  SUBSCRIPTION_UPDATED,
   UNQUEUE_CHANGE_FROM_CHANGE_LIST
 } from '../constants/SubscriptionChangeActionTypes'
 
@@ -10,10 +11,11 @@ import {
 
 const initialState = {}
 
-function addChangeSubscribe(state, action) {
+
+function addSubscriptionChange(state, action) {
   const {payload} = action
-  const {id, lid, protocol, subscriptionAction} = payload
-  const change = {lid, protocol, subscriptionAction}
+  const {id, lid, protocol, subscriptionId, subscriptionAction, changeRequestId} = payload
+  const change = {id, lid, protocol, subscriptionId, subscriptionAction, changeRequestId}
 
   return {
     ...state,
@@ -21,13 +23,14 @@ function addChangeSubscribe(state, action) {
   }
 }
 
-function addChangeUnsubscribe(state, action) {
+function addSubscriptionRequestUpdated(state, action) {
   const {payload} = action
-  const {id, lid, protocol, subscriptionId, subscriptionAction} = payload
-  const change = {lid, protocol, subscriptionId, subscriptionAction}
+  const {id, changeRequestId} = payload
+  const change = {...state[id], changeRequestId}
 
   return {
-    ...state, [id]: {...change}
+    ...state,
+    [id]: {...change}
   }
 }
 
@@ -42,11 +45,13 @@ function removeChangeFromQueue(state, action) {
 export const subscriptionChangesById = (state = initialState, action) => {
   switch (action.type) {
     case ADD_SUBSCRIBE_TO_CHANGE_LIST:
-      return addChangeSubscribe(state, action)
+      return addSubscriptionChange(state, action)
     case ADD_UNSUBSCRIBE_TO_CHANGE_LIST:
-      return addChangeUnsubscribe(state, action)
+      return addSubscriptionChange(state, action)
     case CLEAR_SUBSCRIPTION_LIST:
       return initialState
+    case SUBSCRIPTION_UPDATED:
+      return addSubscriptionRequestUpdated(state, action)
     case UNQUEUE_CHANGE_FROM_CHANGE_LIST:
       return removeChangeFromQueue(state, action)
     default:
@@ -75,6 +80,21 @@ export const allSubscriptionChanges = (state = [], action) => {
       return []
     case UNQUEUE_CHANGE_FROM_CHANGE_LIST:
       return removeSubscriptionChangeId(state, action)
+    default:
+      return state
+  }
+}
+
+export const addProcessedSubscriptionId = (state, action) => {
+  return state.concat(action.payload.id)
+}
+
+export const allProcessedSubscriptions = (state = [], action) => {
+  switch (action.type) {
+    case SUBSCRIPTION_UPDATED:
+      return addProcessedSubscriptionId(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return []
     default:
       return state
   }
