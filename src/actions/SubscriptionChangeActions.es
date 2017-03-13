@@ -17,12 +17,12 @@ import {
 } from './SubscriptionListActions'
 
 import {
-  subscribeGauge
-} from '../util/FloodAlerts'
-
-import {
   showSnackbar
 } from './ToasterActions'
+
+import {
+  subscribeGauge
+} from '../util/FloodAlerts'
 
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
@@ -169,6 +169,16 @@ export function saveSubscriptionChanges() {
 }
 
 /**
+ * Emit action to reset the map's state to a null center and zoom
+ * @return {object} action
+ */
+export function clearCenterAndZoom() {
+  return {
+    type: CLEAR_CENTER_AND_ZOOM
+  }
+}
+
+/**
  * Emit action to change the center and zoom in the map
  * @param  {number} lat  latitude of new center point
  * @param  {number} lng  longitude of new center point
@@ -181,15 +191,5 @@ export function setCenterAndZoom(lat, lng, zoom) {
     lat,
     lng,
     zoom
-  }
-}
-
-/**
- * Emit action to reset the map's state to a null center and zoom
- * @return {object} action
- */
-export function clearCenterAndZoom() {
-  return {
-    type: CLEAR_CENTER_AND_ZOOM
   }
 }

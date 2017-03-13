@@ -4,6 +4,7 @@ import {
   FABButton,
   Badge,
   Icon,
+  IconButton,
   List,
   ListItem,
   ListItemContent,
@@ -152,15 +153,14 @@ class SubscriptionList extends React.Component {
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
                 <ListItemAction className="subscription-list-item__locateAction">
-                  <FABButton colored mini ripple
+                  <IconButton accent mini ripple raised name="room"
                   onClick={(event) => {
                     this.zoomToGage(
                       event,
                       this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
                     )}
                   }>
-                    <Icon name="room"/>
-                  </FABButton>
+                  </IconButton>
                 </ListItemAction>
                 <ListItemContent
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
@@ -172,6 +172,7 @@ class SubscriptionList extends React.Component {
             )}
           </List>
           <Button primary ripple type="button" value="Cancel"
+          style={{marginRight: "10px"}}
             onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
           <Button primary ripple
             onClick={this.props.clearSubscriptionList}>CLEAR</Button>

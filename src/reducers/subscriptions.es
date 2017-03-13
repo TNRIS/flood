@@ -1,18 +1,13 @@
-import { combineReducers } from 'redux'
-import objectAssign from 'object-assign'
-
 import {
   ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST,
-  CLEAR_SUBSCRIPTION_LIST,
-  SEED_SUBSCRIPTION_LIST,
-  MARK_SUBSCRIPTION_FOR_ADD,
-  MARK_SUBSCRIPTION_FOR_REMOVE
+  CLEAR_SUBSCRIPTION_LIST
 } from '../constants/SubscriptionListActionTypes'
 
-let subscriptionOperation
-
-const initialState = {}
-
+/**
+ * Process subscription payload to add a new subscription to the list
+ * @param {object} state  state
+ * @param {object} action action
+ */
 function addSubscriptionEntry(state, action) {
   const {payload} = action
   const {id, lid, subscription, protocol, endpoint} = payload
@@ -25,35 +20,39 @@ function addSubscriptionEntry(state, action) {
   }
 }
 
-export const subscribe = (state) => {
-  return objectAssign({}, state, {
-    subscriptionAction: "Add"
-  })
-}
-
-export const unsubscribe = (state, action) => {
-  return {...state, [action.id]: {...state[action.id], subscriptionAction: "Remove" }}
-}
-
-export const subscriptionsById = (state = initialState, action) => {
+/**
+ * Reducer to add a subscription to the list by ID
+ * @param  {Object} [state={}] the reducer's state
+ * @param  {Object} action     action
+ * @return {Object}            the new state
+ */
+export const subscriptionsById = (state = {}, action) => {
   switch (action.type) {
     case ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST:
       return addSubscriptionEntry(state, action)
     case CLEAR_SUBSCRIPTION_LIST:
       return {}
-    case MARK_SUBSCRIPTION_FOR_ADD:
-      return subscribe(state, action)
-    case MARK_SUBSCRIPTION_FOR_REMOVE:
-      return unsubscribe(state, action)
     default:
       return state
   }
 }
 
+/**
+ * Add a new subscription to the all subscriptions array
+ * @param {Object} state  the reducer's state
+ * @param {Object} action action
+ * @return {Array} updated array
+ */
 export const addSubscriptionId = (state, action) => {
   return state.concat(action.payload.id)
 }
 
+/**
+ * List of all subscription id
+ * @param  {Array}  [state=[]] reducer's state
+ * @param  {Object} action     action
+ * @return {Object}            the new state
+ */
 export const allSubscriptions = (state = [], action) => {
   switch (action.type) {
     case ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST:

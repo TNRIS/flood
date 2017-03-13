@@ -1,13 +1,9 @@
 import objectAssign from 'object-assign'
 
 import {
-  CLEAR_SUBSCRIPTIONS,
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_SUCCESS,
-  SAVE_SUBSCRIPTION_CHANGES_ATTEMPT,
-  SAVE_SUBSCRIPTION_CHANGES_SUCCESS,
-  SUBSCRIPTION_FORM_UPDATED} from '../constants/SubscriptionFormActionTypes'
+  GET_SUBSCRIPTIONS_SUCCESS} from '../constants/SubscriptionFormActionTypes'
 
 const initialState = {
   error: null,
@@ -15,6 +11,12 @@ const initialState = {
   nextToken: null
 }
 
+/**
+ * Actions upon the subscription form
+ * @param  {Object} [state=initialState] the reducer's state
+ * @param  {Object} action               action
+ * @return {Object}                      the new state
+ */
 export default function subscriptionForm(state = initialState, action) {
   switch (action.type) {
     case GET_SUBSCRIPTIONS_ATTEMPT:

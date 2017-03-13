@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Textfield, Spinner } from 'react-mdl'
+import { Button, Spinner, Textfield } from 'react-mdl'
 
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 
@@ -61,9 +61,11 @@ class SubscriptionForm extends Component {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
     }
     else if (this.props.isFetching || this.props.isUpdating){
-      subscriptionManagerContent = (<Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>)
+      subscriptionManagerContent = (
+        <Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>
+      )
     }
-    else {0
+    else {
       subscriptionManagerContent = (
         <form onSubmit={ this.handleSearch }>
             <p>Enter your phone number and email to manage your current subscriptions.</p>
@@ -85,13 +87,17 @@ class SubscriptionForm extends Component {
                        id="phone"
                        name="phone"
                        value= { this.state.phone }/>
-            <Button primary ripple type="submit" value="Submit">SEARCH</Button>
+            <Button primary ripple
+            type="submit"
+            value="Submit"
+            style={{marginRight: "10px"}}>SEARCH</Button>
             <Button primary ripple type="button" value="Cancel" onClick="">CANCEL</Button>
         </form>
       )
     }
     return (
-        <div ref="subscriptionManager" style={{paddingTop: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
+        <div ref="subscriptionManager"
+        style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
           {subscriptionManagerContent}
         </div>
     )
