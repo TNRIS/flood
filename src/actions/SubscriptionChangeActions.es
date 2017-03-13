@@ -20,6 +20,10 @@ import {
   subscribeGauge
 } from '../util/FloodAlerts'
 
+import {
+  showSnackbar
+} from './ToasterActions'
+
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
 
@@ -119,10 +123,11 @@ export function saveSubscriptionChanges() {
         WINDOW_AWS.config.update(keys.awsConfig)
         const sns = new WINDOW_AWS.SNS()
 
-        const promiseChain = []
+        const promiseQueue = []
 
         // Start iteration on change queue
-        for (const change in changes) {
+        // for (const change of changes) {
+        Object.keys(changes).forEach((change) => {
           if (changes.hasOwnProperty(change)) {
             const changeData = changes[change]
 
@@ -130,34 +135,34 @@ export function saveSubscriptionChanges() {
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
               const subscriptionArn = subscription.SubscriptionArn
-              const unsubscribeFunc = sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
+              promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
                 .then((data) => dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId)))
-                .catch((err) => console.log(err))
-              promiseChain.push(unsubscribeFunc)
-            }
+                .catch((err) => dispatch(updateSubscriptionsError(err))
+              )
+            )}
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
               if (changeData.protocol === 'email') {
-                console.log(subscribeGauge(changeData.lid, "", user.email))
-                promiseChain.push(subscribeGauge(changeData.lid, "", user.email))
+                promiseQueue.push(subscribeGauge(changeData.lid, "", user.email))
               }
               else if (changeData.protocol === 'sms') {
-                promiseChain.push(subscribeGauge(changeData.lid, user.phone, ""))
+                promiseQueue.push(subscribeGauge(changeData.lid, user.phone, ""))
               }
             }
           }
-        }
-        console.log(promiseChain)
-        Promise.all(promiseChain).then(() => {
-          console.log("WhooHooo")
+        })
+
+        // Execute promise queue containing the subscription update operations.
+        Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
           dispatch(getUserSubscriptions(user.email, user.phone, ""))
-        })
+        }).catch(err => dispatch(updateSubscriptionsError(err)))
       }
+
       // Finished processing the queue. Send an action to update the Subscription List component that we're done
       else {
-        dispatch(updateSubscriptionsSuccess())
+        dispatch(showSnackbar("No subscription changes found."))
       }
     })
   }

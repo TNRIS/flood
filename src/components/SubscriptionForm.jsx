@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Textfield, Button } from 'react-mdl'
+import { Button, Textfield, Spinner } from 'react-mdl'
 
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 
@@ -57,10 +57,13 @@ class SubscriptionForm extends Component {
     let subscriptionManagerContent
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
-    if (this.props.allSubscriptions.length > 0 && !this.props.isFetching) {
+    if (this.props.allSubscriptions.length > 0 && !this.props.isFetching && !this.props.isUpdating) {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
     }
-    else {
+    else if (this.props.isFetching || this.props.isUpdating){
+      subscriptionManagerContent = (<Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>)
+    }
+    else {0
       subscriptionManagerContent = (
         <form onSubmit={ this.handleSearch }>
             <p>Enter your phone number and email to manage your current subscriptions.</p>

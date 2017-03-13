@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
     phone: state.user.phone,
+    isUpdating: state.subscriptionList.isUpdating
   }
 
   return props
