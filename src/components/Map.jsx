@@ -110,6 +110,7 @@ export default class Map extends Component {
   
   componentDidUpdate(prevProps, prevState) {
     if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
+      this.map.closePopup()
       this.map.setView([this.props.map.mapCenterLat, this.props.map.mapCenterLng], this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
