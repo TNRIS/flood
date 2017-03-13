@@ -8,13 +8,13 @@ import { clearSubscriptionList }  from '../actions/SubscriptionListActions'
 
 const mapStateToProps = (state) => {
   const props = {
-    email: state.user.email,
-    phone: state.user.phone,
+    allSubscriptions: state.subscriptions.allSubscriptions,
     currentSubscriptions: state.subscriptionForm.currentSubscriptions,
+    email: state.user.email,
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
-    allSubscriptions: state.subscriptions.allSubscriptions
+    phone: state.user.phone,
   }
 
   return props

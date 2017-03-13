@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Textfield, Button, DataTable, TableHeader, Checkbox, Spinner } from 'react-mdl'
+import { Textfield, Button } from 'react-mdl'
 
-import SubscriptionList from './SubscriptionList'
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 
-
+/** Form for entering user info and updating current subscriptions */
 class SubscriptionForm extends Component {
   static propTypes = {
+    allSubscriptions: React.PropTypes.array,
     clearSubscriptionList: React.PropTypes.func,
     currentSubscriptions: React.PropTypes.object,
     getUserSubscriptions: React.PropTypes.func,
@@ -24,8 +24,6 @@ class SubscriptionForm extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
       this.setState({
-        email: nextProps.email,
-        phone: nextProps.phone,
         error: nextProps.error,
         isFetching: nextProps.isFetching,
         nextToken: nextProps.nextToken
@@ -33,6 +31,10 @@ class SubscriptionForm extends Component {
     }
   }
 
+  /**
+   * Watches for changes on the html inputs
+   * @param {object} event - event fired when the SEARCH button is clicked
+   */
   handleChange(event) {
     const name = event.target.name
     const value = event.target.value
@@ -41,6 +43,10 @@ class SubscriptionForm extends Component {
     this.setState(nextState)
   }
 
+  /**
+   * Sets the user info in the store and searches for the user's subscriptions
+   * @param {object} event - event fired when the SEARCH button is clicked
+   */
   handleSearch(event) {
     event.preventDefault()
     this.props.setUserInfo(this.state.email, this.state.phone)
@@ -48,9 +54,9 @@ class SubscriptionForm extends Component {
   }
 
   render() {
-    
     let subscriptionManagerContent
-    
+
+    // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.allSubscriptions.length > 0 && !this.props.isFetching) {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
     }

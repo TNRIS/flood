@@ -3,8 +3,8 @@ import {
   ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
   CLEAR_CENTER_AND_ZOOM,
   SET_CENTER_AND_ZOOM,
-  UNQUEUE_CHANGE_FROM_CHANGE_LIST,
-  SUBSCRIPTION_UPDATED
+  SUBSCRIPTION_UPDATED,
+  UNQUEUE_CHANGE_FROM_CHANGE_LIST
 } from '../constants/SubscriptionChangeActionTypes'
 
 import {
@@ -13,7 +13,6 @@ import {
 
 import {
   updateSubscriptionsAttempt,
-  updateSubscriptionsError,
   updateSubscriptionsSuccess
 } from './SubscriptionListActions'
 
@@ -25,7 +24,7 @@ import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
 
 /**
- * Emits a SUBSCRIBE action on the queue of subscription changes
+ * SUBSCRIBE action on the queue of subscription changes
  * @param  {string} lid      lid of gage user is subscribing to
  * @param  {string} protocol the subscription protocol (email or sms)
  * @return {obj}              the action created
@@ -45,7 +44,7 @@ export function addSubscribeToChangeList(lid, protocol) {
 }
 
 /**
- * Emits a UNSUBSCRIBE action on the queue of subscription changes
+ * UNSUBSCRIBE action on the queue of subscription changes
  * @param  {string} lid            lid of gage user is unsubscribing to
  * @param  {string} protocol       the subscription protocol (email or sms)
  * @param  {Number}    subscriptionId the id of the subscription held in the store
@@ -65,6 +64,12 @@ export function addUnsubscribeToChangeList(lid, protocol, subscriptionId) {
   }
 }
 
+/**
+ * Action for a single subscription update
+ * @param  {string} subscriptionChangeId id of record in the subscription changes portion of the store
+ * @param  {string} changeRequestId      request id returned from Amazon
+ * @return {object}                      action
+ */
 export function subscriptionUpdated(subscriptionChangeId, changeRequestId) {
   return {
     type: SUBSCRIPTION_UPDATED,
@@ -98,24 +103,6 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
  */
 export function saveSubscriptionChanges() {
   return (dispatch, getState) => {
-    /**
-     * Send unsubscribe request to Amazon and return errors or return the RequestId
-     * @param  {number} subscriptionChangeId id of the subscription change to be made
-     * @param  {string} subscriptionArn      SubscriptionArn for the subscription to be unsubscribed from
-     */
-    function unsubscribeGage(subscriptionChangeId, subscriptionArn) {
-      // Set the variables required for the SDK request
-      const WINDOW_AWS = window.AWS
-      WINDOW_AWS.config.update(keys.awsConfig)
-      const sns = new WINDOW_AWS.SNS()
-
-      // Send the unsubscribe request
-      sns.unsubscribe({SubscriptionArn: subscriptionArn}, (err, data) => {
-        if (err) dispatch(subscriptionUpdated(subscriptionChangeId, err))
-        else dispatch(subscriptionUpdated(subscriptionChangeId, data.ResponseMetadata.RequestId))
-      })
-    }
-
     setTimeout(() => {
       const allSubscriptionChangesCount = getState().subscriptionChanges.allSubscriptionChanges.length
 
@@ -128,6 +115,12 @@ export function saveSubscriptionChanges() {
         const user = currentState.user
         const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
 
+        const WINDOW_AWS = window.AWS
+        WINDOW_AWS.config.update(keys.awsConfig)
+        const sns = new WINDOW_AWS.SNS()
+
+        const promiseChain = []
+
         // Start iteration on change queue
         for (const change in changes) {
           if (changes.hasOwnProperty(change)) {
@@ -137,32 +130,34 @@ export function saveSubscriptionChanges() {
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
               const subscriptionArn = subscription.SubscriptionArn
-              unsubscribeGage(changeData.id, subscriptionArn)
+              const unsubscribeFunc = sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
+                .then((data) => dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId)))
+                .catch((err) => console.log(err))
+              promiseChain.push(unsubscribeFunc)
             }
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
               if (changeData.protocol === 'email') {
-                subscribeGauge(changeData.lid, "", user.email)
+                console.log(subscribeGauge(changeData.lid, "", user.email))
+                promiseChain.push(subscribeGauge(changeData.lid, "", user.email))
               }
               else if (changeData.protocol === 'sms') {
-                subscribeGauge(changeData.lid, user.phone, "")
+                promiseChain.push(subscribeGauge(changeData.lid, user.phone, ""))
               }
             }
           }
-
-          // Check to see if all of the subscription changes have been processed
-          if (getState().subscriptionChanges.processedSubscriptionChanges.length === allSubscriptionChangesCount) {
-            dispatch(updateSubscriptionsSuccess())
-            dispatch(getUserSubscriptions(user.email, user.phone, ""))
-          }
         }
+        console.log(promiseChain)
+        Promise.all(promiseChain).then(() => {
+          console.log("WhooHooo")
+          dispatch(updateSubscriptionsSuccess())
+          dispatch(getUserSubscriptions(user.email, user.phone, ""))
+        })
       }
       // Finished processing the queue. Send an action to update the Subscription List component that we're done
       else {
-        // Here we need a toast notification that no changes were found
-        console.log("No subscriptions were found for this user...")
-        //dispatch(updateSubscriptionsSuccess())
+        dispatch(updateSubscriptionsSuccess())
       }
     })
   }
