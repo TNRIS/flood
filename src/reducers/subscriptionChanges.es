@@ -11,7 +11,12 @@ import {
 
 const initialState = {}
 
-
+/**
+ * Add subscription change to queue of changes
+ * @param {Object} state  the reducer's state
+ * @param {Object} action the action upon th state
+ * @return {Object}       the new state
+ */
 function addSubscriptionChange(state, action) {
   const {payload} = action
   const {id, lid, protocol, subscriptionId, subscriptionAction, changeRequestId} = payload
@@ -23,6 +28,12 @@ function addSubscriptionChange(state, action) {
   }
 }
 
+/**
+ * Add subscription change ID to the list of updated subscriptions
+ * @param {Object} state  the reducer's state
+ * @param {Object} action the action upon the reducer
+ * @return {Object}       the new state
+ */
 function addSubscriptionRequestUpdated(state, action) {
   const {payload} = action
   const {id, changeRequestId} = payload
@@ -34,14 +45,26 @@ function addSubscriptionRequestUpdated(state, action) {
   }
 }
 
+/**
+ * Remove a queued change from the list of changes
+ * @param  {Object} state  the reducer's state
+ * @param  {Object} action the action upon the state
+ * @return {Object}        the updated state
+ */
 function removeChangeFromQueue(state, action) {
   const {payload} = action
   const {id} = payload
-  const {[id]: deletedChange, ...remainingState} = state
+  const {[id]: deletedChange, ...remainingState} = state // eslint-disable-line  no-unused-vars
 
   return remainingState
 }
 
+/**
+ * Add a subscription change to the changes by ID
+ * @param  {Object} [state=initialState] the reducer's state
+ * @param  {Object} action               the action upon the reducer
+ * @return {Object}                      the updated state
+ */
 export const subscriptionChangesById = (state = initialState, action) => {
   switch (action.type) {
     case ADD_SUBSCRIBE_TO_CHANGE_LIST:
@@ -59,10 +82,22 @@ export const subscriptionChangesById = (state = initialState, action) => {
   }
 }
 
+/**
+ * Add a subscription to the list of subscription change ID's
+ * @param {Object} state  the reducer's state
+ * @param {Object} action action upon the state
+ * @returns {Array} the updated list of subscription changes
+ */
 export const addSubscriptionChangeId = (state, action) => {
   return state.concat(action.payload.id)
 }
 
+/**
+ * Remove a subscription to the list of subscription change ID's
+ * @param {Object} state  the reducer's state
+ * @param {Object} action action upon the state
+ * @returns {Array} the updated list of subscription changes
+ */
 export const removeSubscriptionChangeId = (state, action) => {
   const {payload} = action
   const {id} = payload
@@ -70,6 +105,12 @@ export const removeSubscriptionChangeId = (state, action) => {
   return state.filter(item => item !== id)
 }
 
+/**
+ * List of all subscription changes to be made on submit
+ * @param  {Array}  [state=[]] the reducer's state
+ * @param  {Object} action     action upon the reducer
+ * @return {Array}             the updated state
+ */
 export const allSubscriptionChanges = (state = [], action) => {
   switch (action.type) {
     case ADD_SUBSCRIBE_TO_CHANGE_LIST:
@@ -85,10 +126,22 @@ export const allSubscriptionChanges = (state = [], action) => {
   }
 }
 
+/**
+ * Adds a processed subscription change to the list
+ * @param {Object} state  reducer's state
+ * @param {Object} action the action upon the state
+ * @returns {Array}       the updated list
+ */
 export const addProcessedSubscriptionId = (state, action) => {
   return state.concat(action.payload.id)
 }
 
+/**
+ * List of processed subscription changes
+ * @param  {Array}  [state=[]] [description]
+ * @param {Object} action the action upon the state
+ * @returns {Array}       the updated list
+ */
 export const allProcessedSubscriptions = (state = [], action) => {
   switch (action.type) {
     case SUBSCRIPTION_UPDATED:

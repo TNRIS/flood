@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'react-mdl'
+import { Button, Icon } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
@@ -29,7 +29,9 @@ class NavigationToggle extends Component {
       content = (
         <div>
           <FeatureLayerChooserContainer/>
-          <Button raised className="toggle-navigation-content" onClick={this.handleSetNavigationUnsubscribe}>Manage Subscriptions</Button>
+          <Button raised
+          className="toggle-navigation-content"
+          onClick={this.handleSetNavigationUnsubscribe}>Manage Subscriptions</Button>
         </div>
       )
     }
@@ -37,7 +39,10 @@ class NavigationToggle extends Component {
       content = (
         <div>
           <SubscriptionFormContainer/>
-          <Button raised className="toggle-navigation-content" onClick={this.handleSetNavigationLayers}>View Layers</Button>
+          <Button raised 
+          className="toggle-navigation-content"
+          style={{borderTop: "1px solid rgb(44, 136, 169)"}}
+          onClick={this.handleSetNavigationLayers}>View Layers</Button>
         </div>
       )
     }

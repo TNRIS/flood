@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as FloodAlerts from '../util/FloodAlerts'
 import {
-    Textfield, Snackbar, Button, Dialog, DialogTitle, DialogContent, DialogActions
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Textfield
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 

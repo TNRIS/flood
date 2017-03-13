@@ -1,5 +1,3 @@
-import objectAssign from 'object-assign'
-
 import {
   UPDATE_SUBSCRIPTIONS_ATTEMPT,
   UPDATE_SUBSCRIPTIONS_ERROR,
@@ -11,6 +9,12 @@ const initialState = {
   isUpdating: false
 }
 
+/**
+ * List of user's current subscriptions
+ * @param  {Object} [state=initialState] reducer's state
+ * @param  {Object} action               action
+ * @return {Object}                      the new state
+ */
 export default function subscriptionList(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SUBSCRIPTIONS_ATTEMPT:

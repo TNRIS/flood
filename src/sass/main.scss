@@ -573,24 +573,20 @@ button.toggle-navigation-content {
 .subscription-list-item__locateAction {
     // height: 85px;
     margin: 0 !important;
-    width: 40px !important;
     margin-left: -4px !important;
+    width: 40px !important;
     // margin-top: -30px !important;
     // margin-bottom: -30px !important;
     
     span {
         height: 100%;
-        width: 40px;
         margin-right: 4px;
+        width: 40px;
     }
-    
-    // button {
-    //     height: 85px !important;
-    //     max-width: 40px !important;
-    //     border: none;
-    //     border-radius: 0;
-    //     box-shadow: none;
-    // }
+}
+
+.mdl-list__item-sub-title {
+    font-size: 10px !important;
 }
 
 .mdl-tooltip {
