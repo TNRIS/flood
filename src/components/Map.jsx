@@ -65,8 +65,8 @@ export default class Map extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.map = L.map(this.refs.map, {
-        center: [this.props.mapCenterLat, this.props.mapCenterLng],
-        zoom: this.props.zoomLevel,
+        center: [31, -100],
+        zoom: 7,
         minZoom: 5
       })
 

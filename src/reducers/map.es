@@ -9,13 +9,12 @@ import {
 } from '../constants/SubscriptionChangeActionTypes'
 
 const initialState = {
-  mapCenterLat: 31,
-  mapCenterLng: -100,
-  zoomLevel: 7
+  mapCenterLat: null,
+  mapCenterLng: null,
+  zoomLevel: null
 }
 
 export default function map(state = initialState, action) {
-  console.log(action.type, SET_CENTER_AND_ZOOM)
   switch (action.type) {
     case types.SET_POPUP:
       if (action.payload) {
@@ -32,7 +31,6 @@ export default function map(state = initialState, action) {
         hoveringOver: action.data
       })
     case SET_CENTER_AND_ZOOM:
-      console.log(action)
       return objectAssign({}, state, {
         mapCenterLat: action.lat,
         mapCenterLng: action.lng,
@@ -45,7 +43,6 @@ export default function map(state = initialState, action) {
         zoomLevel: null
       })
     default:
-      console.log("returning default")
       return state
   }
 }
