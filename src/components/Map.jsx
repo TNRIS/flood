@@ -57,17 +57,22 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animationIcon: playArrow
+      animationIcon: "play_arrow",
+      flooded: false
     }
-    this.updateLayerStore = this.updateLayerStore.bind(this);
+    this.updateLayerStore = this.updateLayerStore.bind(this)
   }
 
   componentDidMount() {
     setTimeout(() => {
+      // check the screen width and set the initial zoom to 5 if they are
+      // on a phone, set it to 6 for all other devices
+      const initialZoom = document.documentElement.clientWidth < 768 ? 5 : 6
       this.map = L.map(this.refs.map, {
         center: [31, -100],
-        zoom: 7,
-        minZoom: 5
+        zoom: initialZoom,
+        minZoom: initialZoom,
+        maxBounds: [[24.8, -108], [37.5, -92]]
       })
 
       this.map.zoomControl.setPosition('topright')
@@ -77,10 +82,6 @@ export default class Map extends Component {
       this.initializeGeocoderControl()
       this.initializeSimulateFloodControl()
     }, 0)
-
-    this.setState({
-      flooded: false
-    })
   }
 
   componentWillUpdate(nextProps) {
@@ -239,65 +240,72 @@ export default class Map extends Component {
   }
 
   initializeSimulateFloodControl() {
-      const toggleFloodAction = this.updateLayerStore;
-      const toggleFlood = L.easyButton({
-          type: 'animate',
-          position: 'topright',
-          states: [{
-              stateName: 'real-time-data',
-              icon: '&bcong; &backcong;&#x0224C;&#8780;',
-              title: 'Simulate Flood',
-              onClick: function(control){
-                  toggleFloodAction();
-                  control.state('simulate-flood');
-              }
-          }, {
-              stateName: 'simulate-flood',
-              icon: '&bcong; &backcong;&#x0224C;&#8780;',
-              title: 'Show Current Data',
-              onClick: function(control){
-                  toggleFloodAction();
-                  control.state('real-time-data');
-              }
-          }]
-      });
+    const toggleFloodAction = this.updateLayerStore
+    const toggleFlood = L.easyButton({
+      type: 'animate',
+      position: 'topright',
+      states: [{
+        stateName: 'real-time-data',
+        icon: '&bcong; &backcong;&#x0224C;&#8780;',
+        title: 'Simulate Flood',
+        onClick: function(control) {
+          toggleFloodAction()
+          control.state('simulate-flood')
+        }
+      }, {
+        stateName: 'simulate-flood',
+        icon: '&bcong; &backcong;&#x0224C;&#8780;',
+        title: 'Show Current Data',
+        onClick: function(control) {
+          toggleFloodAction()
+          control.state('real-time-data');
+        }
+      }]
+    })
 
-      toggleFlood.addTo(this.map);
+    toggleFlood.addTo(this.map)
   }
 
   toggleAnimation() {
     this.layerStore.get('animated-weather').toggleAnimation()
     if (this.layerStore.get('animated-weather').animate === true) {
-      this.setState({animationIcon: pause})
+      this.setState({animationIcon: "pause"})
     }
     else {
-      this.setState({animationIcon: playArrow})
+      this.setState({animationIcon: "play_arrow"})
     }
   }
 
   betaNotice() {
-      if (document.URL === 'http://map.texasflood.org/') {
-          return "hide-beta"
-      } else {
-          return "betanotice"
-      }
+    if (document.URL === 'http://map.texasflood.org/') {
+      return "hide-beta"
+    } else {
+      return "betanotice"
+    }
   }
 
   render() {
     let radarInfo
-    if (this.displayedTimestamp != '') {
-      radarInfo =  <FABButton mini onClick={() => {this.toggleAnimation()}}><img src={this.state.animationIcon} /></FABButton>
+    if (this.displayedTimestamp !== '') {
+      radarInfo =  (
+                   <FABButton mini onClick={() => {this.toggleAnimation()}}>
+                   <Icon
+                        name={this.state.animationIcon}
+                        className="material-icons md-dark"
+                   />
+                   </FABButton>
+      )
     }
 
     return (
       <div className="map">
         <div ref="map" className="map--full">
           <div className="weatherTimestamp">
-              <p>{this.displayedTimestamp}</p>
-            </div>
-            <div className="animateRadar">
-              {radarInfo}
-            </div>
+            <p>{this.displayedTimestamp}</p>
+          </div>
+          <div className="animateRadar">
+            {radarInfo}
+          </div>
           <div id="betanotice" className={this.betaNotice()}>
             <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
           </div>

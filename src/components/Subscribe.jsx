@@ -87,7 +87,8 @@ class Subscribe extends React.Component {
           <form className="subscribe-form" onSubmit={ this.handleSubmit }>
             <DialogContent>
               <p>Subscribe to receive email and/or text alerts when this gage reaches elevated flood stages.</p>
-              <Textfield floatingLabel
+              <Textfield
+                         floatingLabel
                          onChange={ this.handleChange }
                          label="Email..."
                          type="email"
