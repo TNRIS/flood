@@ -80,7 +80,7 @@ export default class Map extends Component {
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
-      this.initializeSimulateFloodControl()
+      this.geolocateControl()
     }, 0)
   }
 
@@ -227,7 +227,8 @@ export default class Map extends Component {
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
-      geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
+      geocoder: L.Control.Geocoder.bing(keys.bingApiKey),
+      placeholder: "Search by City or Street Address"
     })
 
     //override the default markGeocode method
@@ -239,31 +240,20 @@ export default class Map extends Component {
     control.addTo(this.map)
   }
 
-  initializeSimulateFloodControl() {
-    const toggleFloodAction = this.updateLayerStore
-    const toggleFlood = L.easyButton({
-      type: 'animate',
+  geolocateControl() {
+    const thisMap = this.map
+    const geolocateButton = L.easyButton({
       position: 'topright',
       states: [{
-        stateName: 'real-time-data',
-        icon: '&bcong; &backcong;&#x0224C;&#8780;',
-        title: 'Simulate Flood',
+        icon: '<i class="material-icons" style="font-size: 20px;margin-top:2px;">location_searching</i>',
+        title: 'Find my location',
         onClick: function(control) {
-          toggleFloodAction()
-          control.state('simulate-flood')
-        }
-      }, {
-        stateName: 'simulate-flood',
-        icon: '&bcong; &backcong;&#x0224C;&#8780;',
-        title: 'Show Current Data',
-        onClick: function(control) {
-          toggleFloodAction()
-          control.state('real-time-data');
+          thisMap.closePopup()
+          thisMap.locate({setView: true, enableHighAccuracy: true})
         }
       }]
     })
-
-    toggleFlood.addTo(this.map)
+    geolocateButton.addTo(this.map)
   }
 
   toggleAnimation() {

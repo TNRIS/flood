@@ -172,7 +172,7 @@ class SubscriptionList extends React.Component {
             )}
           </List>
           <Button primary ripple
-            onClick={this.props.clearSubscriptionList}>SEARCH AGAIN</Button>
+            onClick={this.props.clearSubscriptionList}>CLEAR</Button>
           <Button primary ripple
             onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
         </div>
