@@ -1,5 +1,14 @@
-$lighter-blue: #39aad2;
-$darker-blue: #2c88a9;
+$primary-color-dark:   #303F9F;
+$primary-color:        #3F51B5;
+$primary-color-light:  #C5CAE9;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #009688;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+
+$lighter-blue: #3473a2; 
+$darker-blue: $primary-color-dark;
 $twdb-blue: #3f556d;
 
 $layout-drawer-width-threshold: 400px !default;
@@ -306,7 +315,7 @@ body {
   flex-direction: column;
 
   padding-left: $nav-spacing-from-left-wide - 6;
-  border-bottom: 1px solid $darker-blue;
+  border-bottom: 1px solid #92c553;
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
     padding-left: $nav-spacing-from-left-narrow - 2;

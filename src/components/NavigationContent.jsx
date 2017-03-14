@@ -29,8 +29,9 @@ class NavigationToggle extends Component {
       content = (
         <div>
           <FeatureLayerChooserContainer/>
-          <Button raised
+          <Button ripple
           className="toggle-navigation-content"
+          style={{backgroundColor: "#aed480", color: "white !important"}}
           onClick={this.handleSetNavigationUnsubscribe}>Manage Subscriptions</Button>
         </div>
       )
@@ -39,9 +40,9 @@ class NavigationToggle extends Component {
       content = (
         <div>
           <SubscriptionFormContainer/>
-          <Button raised 
+          <Button accent ripple
           className="toggle-navigation-content"
-          style={{borderTop: "1px solid rgb(44, 136, 169)"}}
+          style={{borderTop: "1px solid rgb(44, 136, 169)", backgroundColor: "#aed480", color: "#212121"}}
           onClick={this.handleSetNavigationLayers}>View Layers</Button>
         </div>
       )

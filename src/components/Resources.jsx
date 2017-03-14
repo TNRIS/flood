@@ -7,12 +7,6 @@ import AboutLinkContainer from '../containers/AboutLinkContainer'
 const Resources = () => {
   return (
       <div className="resources">
-        <div className="resources__title">
-          <div className="resources__title-text">
-            More Resources
-          </div>
-        </div>
-
         <Navigation className="resources__links">
           <ResourceLink text="Preparing Before Flood" href="http://www.twdb.texas.gov/flood/prep/before.asp" />
           <ResourceLink text="Being Safe During Flood" href="http://www.twdb.texas.gov/flood/prep/during.asp" />
