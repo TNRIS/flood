@@ -57,10 +57,8 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animationIcon: "play_arrow",
-      flooded: false
+      animationIcon: "play_arrow"
     }
-    this.updateLayerStore = this.updateLayerStore.bind(this)
   }
 
   componentDidMount() {
@@ -152,65 +150,10 @@ export default class Map extends Component {
         updateTimestamp: this.props.updateTimestamp,
       }
     })
-
     props.featureLayers.layers.map((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
   }
-
-  updateLayerStore() {
-    this.setState({
-      flooded: !this.state.flooded
-    })
-
-    let sqlRef = SQL
-
-    if (this.state.flooded === true) {
-        sqlRef = demoSQL
-    }
-
-    const newProps = objectAssign({}, this.props, {
-        featureLayers: { layers:
-          this.props.featureLayers.layers.map((layer) => {
-            if (layer.id == 'ahps-flood') {
-              return objectAssign({}, layer, {
-                options: {
-                  'refreshTimeMs': 300000, // 5 minutes
-                  'account': 'tnris-flood',
-                  'sql': sqlRef,
-                  'interactivity': [
-                    'lid',
-                    'name',
-                    'wfo',
-                  ],
-                  'cartocss': floodCartoCSS,
-                  'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
-                }
-              })
-            } else {
-              return objectAssign({}, layer)
-            }
-          })
-        }
-    });
-    this.layerStore = null;
-    this.map.eachLayer((layer)  => {
-        if (layer.hasOwnProperty('_url')) {
-            const gageLayerExt = layer._url.includes('json')
-            if (gageLayerExt) {
-                this.map.removeLayer(layer)
-            }
-        }
-    })
-
-    this.initializeLayerStore(newProps, this.map);
-
-    if (this.state.flooded === true) {
-      FloodAlerts.checkStage('tnris-flood');
-    }
-
-  }
-
 
   initializeBasemapLayers() {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>

@@ -83,7 +83,7 @@ class SubscriptionForm extends Component {
                        type="email"
                        id="email"
                        name="email"
-                       value= { this.props.email }/>
+                       value= { this.state.email }/>
             <Textfield floatingLabel
                        onChange={ this.handleChange }
                        pattern="[0-9]*"
@@ -94,7 +94,7 @@ class SubscriptionForm extends Component {
                        type="tel"
                        id="phone"
                        name="phone"
-                       value= { this.props.phone }/>
+                       value= { this.state.phone }/>
             <Button primary ripple
             type="submit"
             value="Submit"
