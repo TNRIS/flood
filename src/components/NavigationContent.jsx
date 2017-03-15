@@ -41,7 +41,6 @@ class NavigationToggle extends Component {
           <SubscriptionFormContainer/>
           <Button accent ripple
           className="toggle-navigation-content"
-          style={{borderTop: "1px solid rgb(44, 136, 169)"}}
           onClick={this.handleSetNavigationLayers}>View Layers</Button>
         </div>
       )

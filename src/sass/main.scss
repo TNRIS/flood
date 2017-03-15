@@ -555,9 +555,11 @@ div.dialog-button-div {
 }
 
 button.toggle-navigation-content {
-    color: white;
-    background-color: $darker-blue;
-    letter-spacing: 1.2px;
+    color: black;
+    background-color: #AED480;
+    // letter-spacing: 1.2px;
+    border: 0;
+    border-color:  #AED480;
     border-radius: 0;
     height: 73px;
     width: 100%;
