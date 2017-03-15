@@ -124,7 +124,8 @@ body {
       }
 
       &:hover {
-        background-color: lighten($lighter-blue, 12%);
+        // background-color: lighten($lighter-blue, 12%);
+        background-color: #265577;
       }
     }
   }
@@ -574,6 +575,15 @@ button.toggle-navigation-content {
     border-radius: 0;
     height: 73px;
     width: 100%;
+    // text-transform: capitalize;
+    font-size: 1.1em;
+    letter-spacing: .8px;
+    word-spacing: 2px;
+    
+    &:hover {
+        color: black;
+        background-color: #92C553;
+    }
 }
 
 .subscription-list-item {
