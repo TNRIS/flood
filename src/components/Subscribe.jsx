@@ -23,7 +23,7 @@ class Subscribe extends React.Component {
     this.handleTimeoutSnackbar = this.handleTimeoutSnackbar.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     const dialog = ReactDOM.findDOMNode(this.refs.subscribeDialog)
     if (!dialog.showModal) {
       dialogPolyfill.registerDialog(dialog)
@@ -32,6 +32,8 @@ class Subscribe extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      email: this.props.email,
+      phone: this.props.phone,
       lid: nextProps.lid,
       name: nextProps.name
     })
@@ -46,10 +48,6 @@ class Subscribe extends React.Component {
   }
 
   handleCloseDialog() {
-    this.setState({
-      phone: null,
-      email: null
-    })
     this.props.hideSubscribe()
   }
 
@@ -67,6 +65,7 @@ class Subscribe extends React.Component {
     if (this.state.email || this.state.phone) {
       FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
       this.setState({toast: "Your subscription has been submitted"})
+      this.props.setUserInfo(this.state.email, this.state.phone)
       this.handleShowSnackbar()
       this.handleCloseDialog()
     }
@@ -87,8 +86,7 @@ class Subscribe extends React.Component {
           <form className="subscribe-form" onSubmit={ this.handleSubmit }>
             <DialogContent>
               <p>Subscribe to receive email and/or text alerts when this gage reaches elevated flood stages.</p>
-              <Textfield
-                         floatingLabel
+              <Textfield floatingLabel
                          onChange={ this.handleChange }
                          label="Email..."
                          type="email"
