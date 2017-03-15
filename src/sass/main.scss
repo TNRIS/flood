@@ -99,7 +99,7 @@ body {
 
 .resources {
   flex-grow: 1;
-  background-color: $lighter-blue;
+  background-color: #3473A2;
   color: white;
 
   a {
@@ -157,7 +157,7 @@ body {
 
 .footer {
   min-height: 50px;
-  background-color: $darker-blue;
+  background-color: #265577;
   color: white;
 
   position: relative;
@@ -173,11 +173,22 @@ body {
 
 .footer__twdb-logo {
   position: absolute;
-  left: 50%;
+  left: 99px;
   bottom: 1px;
 
   img {
-    width: 145px;
+    height: 42px
+  }
+}
+
+.footer__tnris-logo {
+  position: absolute;
+  right: 165px;
+  bottom: -2px;
+
+  img {
+    height: 46px;
+    // width: 145px;
   }
 }
 
