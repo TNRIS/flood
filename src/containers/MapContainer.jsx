@@ -40,6 +40,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearCenterAndZoom: () => {
       dispatch(clearCenterAndZoom())
+    },
+    initialGageStatus: () => {
+      dispatch(actions.initialGageStatus())
     }
   }
 }

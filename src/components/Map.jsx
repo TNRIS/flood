@@ -11,7 +11,6 @@ import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
 } from 'react-mdl'
 
-const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
 const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
@@ -65,6 +64,7 @@ export default class Map extends Component {
     setTimeout(() => {
       // check the screen width and set the initial zoom to 5 if they are
       // on a phone, set it to 6 for all other devices
+      this.props.initialGageStatus()
       const initialZoom = document.documentElement.clientWidth < 768 ? 5 : 6
       this.map = L.map(this.refs.map, {
         center: [31, -100],
