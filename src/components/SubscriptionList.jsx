@@ -171,11 +171,10 @@ class SubscriptionList extends React.Component {
               </ListItem>
             )}
           </List>
-          <Button primary ripple type="button" value="Cancel"
-          style={{marginRight: "10px"}}
-            onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
           <Button primary ripple
             onClick={this.props.clearSubscriptionList}>CLEAR</Button>
+          <Button primary ripple
+            onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
         </div>
       )
     }

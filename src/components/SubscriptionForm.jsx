@@ -20,6 +20,13 @@ class SubscriptionForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
   }
+  
+  componentDidMount() {
+    this.setState({
+      email: this.props.email,
+      phone: this.props.phone
+    })
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
@@ -30,6 +37,7 @@ class SubscriptionForm extends Component {
       })
     }
   }
+  
 
   /**
    * Watches for changes on the html inputs

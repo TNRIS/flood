@@ -34,7 +34,7 @@
 	width: 246px;
 }
 .leaflet-control-geocoder-icon {
-	background-image: url(images/geocoder.png);
+	background-image: url(images/ic_search_black_24dp_1x.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
