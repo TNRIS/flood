@@ -4,6 +4,9 @@ import * as actions from '../actions'
 import {
   setUserInfo
 } from '../actions/UserInfoActions'
+import {
+  showSnackbar
+} from '../actions/ToasterActions'
 
 import Subscribe from '../components/Subscribe'
 
@@ -24,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setUserInfo: (email, phone) => {
       dispatch(setUserInfo(email, phone))
+    },
+    showSnackbar: (toppings) => {
+      dispatch(showSnackbar(toppings))
     }
   }
 }
