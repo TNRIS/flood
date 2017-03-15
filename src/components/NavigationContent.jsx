@@ -39,7 +39,7 @@ class NavigationToggle extends Component {
       content = (
         <div>
           <SubscriptionFormContainer/>
-          <Button accent ripple
+          <Button ripple
           className="toggle-navigation-content"
           onClick={this.handleSetNavigationLayers}>View Layers</Button>
         </div>

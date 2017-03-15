@@ -307,7 +307,7 @@ body {
   flex-direction: column;
 
   padding-left: $nav-spacing-from-left-wide - 6;
-  border-bottom: 1px solid $darker-blue;
+  border-bottom: 1px solid #AED480;
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
     padding-left: $nav-spacing-from-left-narrow - 2;
@@ -557,7 +557,7 @@ div.dialog-button-div {
 button.toggle-navigation-content {
     color: black;
     background-color: #AED480;
-    // letter-spacing: 1.2px;
+    letter-spacing: 1.2px;
     border: 0;
     border-color:  #AED480;
     border-radius: 0;
