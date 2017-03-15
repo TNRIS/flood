@@ -1,3 +1,6 @@
+import axios from 'axios'
+import R from 'ramda'
+
 import { createAction } from 'redux-actions'
 
 import * as types from './types'
@@ -46,13 +49,21 @@ export const setGaugeInit = (initState) => {
   }
 }
 
-export const updateSigStage = (lid, stage) => {
+//function only run once on the initial app build. populationed the subscribeDialog reducer
+//with the current stage of all flood gauges
+export function initialGaugeStatus() {
   return (dispatch) => {
-    dispatch({
-      type: types.UPDATE_SIGSTAGE,
-      lid,
-      stage
-    })
+    const query = `SELECT lid, name, latitude, longitude FROM nws_ahps_gauges_texas`
+    return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
+      .then(({data}) => {
+        const formatState = data.rows.map((gauge) => {
+          const obj = {}
+          obj[gauge.lid] = {"name": gauge.name, "latitude": gauge.latitude, "longitude": gauge.longitude}
+          return obj
+        })
+        const initState = R.mergeAll(formatState)
+        dispatch(setGaugeInit(initState))
+      })
   }
 }
 

@@ -9,7 +9,6 @@ import SubscribeContainer from '../containers/SubscribeContainer'
 import AboutContainer from '../containers/AboutContainer'
 import ToasterContainer from '../containers/ToasterContainer'
 
-
 ga.pageview(window.location.pathname)
 
 const App = () => (
