@@ -11,7 +11,6 @@ import {
     Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
 } from 'react-mdl'
 
-const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
 const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
