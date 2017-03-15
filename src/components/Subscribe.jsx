@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as FloodAlerts from '../util/FloodAlerts'
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Textfield
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, Textfield
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
@@ -15,12 +15,10 @@ class Subscribe extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {isSnackbarActive: false}
+    this.state = {}
     this.handleCloseDialog = this.handleCloseDialog.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleShowSnackbar = this.handleShowSnackbar.bind(this)
-    this.handleTimeoutSnackbar = this.handleTimeoutSnackbar.bind(this)
   }
 
   componentDidMount() {    
@@ -37,14 +35,6 @@ class Subscribe extends React.Component {
       lid: nextProps.lid,
       name: nextProps.name
     })
-  }
-
-  handleShowSnackbar() {
-    this.setState({ isSnackbarActive: true })
-  }
-
-  handleTimeoutSnackbar() {
-    this.setState({ isSnackbarActive: false })
   }
 
   handleCloseDialog() {
@@ -64,16 +54,12 @@ class Subscribe extends React.Component {
 
     if (this.state.email || this.state.phone) {
       FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
-      this.setState({toast: "Your subscription has been submitted"})
+      this.props.showSnackbar("Your subscription has been submitted")
       this.props.setUserInfo(this.state.email, this.state.phone)
-      this.handleShowSnackbar()
       this.handleCloseDialog()
     }
     else {
-      this.setState({
-        toast: "Please enter an email or phone number to submit"
-      })
-      this.handleShowSnackbar()
+      this.props.showSnackbar("Please enter an email or phone number to submit")
     }
   }
 
@@ -115,9 +101,6 @@ class Subscribe extends React.Component {
             </DialogActions>
           </form>
         </Dialog>
-        <Snackbar active={ this.state.isSnackbarActive } onTimeout={ this.handleTimeoutSnackbar } timeout={ 3200 }>
-          { this.state.toast }
-        </Snackbar>
       </div>
     )
   }
