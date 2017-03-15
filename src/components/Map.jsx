@@ -72,7 +72,7 @@ export default class Map extends Component {
         center: [31, -100],
         zoom: initialZoom,
         minZoom: initialZoom,
-        maxBounds: [[24.8, -108], [37.5, -92]]
+        maxBounds: [[21, -112.5], [41, -88]]
       })
 
       this.map.zoomControl.setPosition('topright')
