@@ -3,7 +3,7 @@ import { responsiveStateReducer } from 'redux-responsive'
 
 import baseLayers from './baseLayers'
 import featureLayers from './featureLayers'
-import floodStatus from './floodStatus'
+import gageInfo from './gageInfo'
 import map from './map'
 import subscribeDialog from './subscribeDialog'
 import { subscriptionChangesById, allSubscriptionChanges, allProcessedSubscriptions } from './subscriptionChanges'
@@ -19,7 +19,7 @@ export const rootReducer = combineReducers({
   baseLayers: baseLayers,
   featureLayers: featureLayers,
   map: map,
-  gageInfo: floodStatus,
+  gageInfo,
   subscribeDialog: subscribeDialog,
   browser: responsiveStateReducer,
   subscriptionChanges: combineReducers({

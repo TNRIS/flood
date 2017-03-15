@@ -40,10 +40,10 @@ export const setFeatureLayer = (id) => {
   }
 }
 
-export const setGaugeInit = (initState) => {
+export const setGageInit = (initState) => {
   return (dispatch) => {
     dispatch({
-      type: types.SET_GAUGE_INIT,
+      type: types.SET_GAGE_INIT,
       initState
     })
   }
@@ -51,18 +51,18 @@ export const setGaugeInit = (initState) => {
 
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
-export function initialGaugeStatus() {
+export function initialGageStatus() {
   return (dispatch) => {
     const query = `SELECT lid, name, latitude, longitude FROM nws_ahps_gauges_texas`
     return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
       .then(({data}) => {
-        const formatState = data.rows.map((gauge) => {
+        const formatState = data.rows.map((gage) => {
           const obj = {}
-          obj[gauge.lid] = {"name": gauge.name, "latitude": gauge.latitude, "longitude": gauge.longitude}
+          obj[gage.lid] = {"name": gage.name, "latitude": gage.latitude, "longitude": gage.longitude}
           return obj
         })
         const initState = R.mergeAll(formatState)
-        dispatch(setGaugeInit(initState))
+        dispatch(setGageInit(initState))
       })
   }
 }
