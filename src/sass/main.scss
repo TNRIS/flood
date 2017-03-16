@@ -574,6 +574,8 @@ button.toggle-navigation-content {
 .subscription-list-item {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     margin-bottom: 4px;
+    padding: 4px !important;
+    padding-right: 8px !important;
 }
 
 .mdl-list__item--two-line {
@@ -587,16 +589,32 @@ button.toggle-navigation-content {
 .subscription-list-item__locateAction {
     // height: 85px;
     margin: 0 !important;
-    margin-left: -4px !important;
+    margin-left: 4px !important;
     width: 40px !important;
     // margin-top: -30px !important;
     // margin-bottom: -30px !important;
 
     span {
         height: 100%;
-        margin-right: 4px;
         width: 40px;
     }
+}
+
+span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
+    margin: 0;
+    
+    button > span {
+        margin: 0
+    }
+}
+
+span.mdl-list__item-secondary-info {
+    margin-right: 4px;
+}
+
+span.mdl-list__item-secondary-action > i {
+    font-size: 22px;
+    margin-right: 5px !important;
 }
 
 .mdl-list__item-sub-title {

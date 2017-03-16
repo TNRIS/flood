@@ -3,8 +3,10 @@ import {
   Button,
   FABButton,
   Badge,
+  Checkbox,
   Icon,
   IconButton,
+  IconToggle,
   List,
   ListItem,
   ListItemContent,
@@ -106,8 +108,8 @@ class SubscriptionList extends React.Component {
         .subscription.SubscriptionArn === "PendingConfirmation") {
         return (
           <Tooltip label="Pending Confirmation">
-            <ListItemAction info="Email" style={{marginBottom: "0px", marginTop: "6px", marginRight: "1px"}}>
-              <Icon name="email" style={{color: "#9BA4D5", marginTop: "3px", paddingRight: "3px"}}/>
+            <ListItemAction info="Email" style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
+              <Icon name="email" style={{color: "#9BA4D5"}}/>
             </ListItemAction>
           </Tooltip>
         )
@@ -115,7 +117,8 @@ class SubscriptionList extends React.Component {
       return (
           <Tooltip label={this.tooltipMessage("email")}>
             <ListItemAction info="Email">
-              <Switch ripple
+              <Checkbox ripple
+              name="email"
               disabled={this.props.email.length < 1}
               defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
               onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "email")}/>
@@ -133,7 +136,8 @@ class SubscriptionList extends React.Component {
       return (
         <Tooltip label={this.tooltipMessage("phone")}>
           <ListItemAction info="SMS">
-            <Switch ripple
+            <Checkbox ripple
+            name="textsms"
             disabled={this.props.phone.length < 1}
             defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
             onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
