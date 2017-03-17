@@ -96,8 +96,8 @@ class Subscribe extends React.Component {
               </sub>
             </DialogContent>
             <DialogActions>
-              <Button primary ripple type="submit" value="Submit">Submit</Button>
-              <Button primary ripple type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
+              <Button ripple className="flood-form-button" type="submit" value="Submit">Submit</Button>
+              <Button ripple className="flood-form-button" type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
             </DialogActions>
           </form>
         </Dialog>

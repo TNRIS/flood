@@ -108,7 +108,9 @@ class SubscriptionList extends React.Component {
         .subscription.SubscriptionArn === "PendingConfirmation") {
         return (
           <Tooltip label="Pending Confirmation">
-            <ListItemAction info="Email" style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
+            <ListItemAction
+              info="Email"
+              style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
               <Icon name="email" style={{color: "#9BA4D5"}}/>
             </ListItemAction>
           </Tooltip>
@@ -152,19 +154,20 @@ class SubscriptionList extends React.Component {
     else {
       listContentDiv = (
         <div>
-          <Badge text={this.props.allSubscriptions.length}>Total Subscriptions</Badge>
+          <Badge
+          className="subscriptions-count-badge"
+          text={this.props.allSubscriptions.length}>Total Subscriptions</Badge>
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
                 <ListItemAction className="subscription-list-item__locateAction">
-                  <IconButton accent mini ripple raised name="room"
+                  <IconButton mini name="room"
                   onClick={(event) => {
                     this.zoomToGage(
                       event,
                       this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
                     )}
-                  }>
-                  </IconButton>
+                  }/>
                 </ListItemAction>
                 <ListItemContent
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
@@ -175,9 +178,12 @@ class SubscriptionList extends React.Component {
               </ListItem>
             )}
           </List>
-          <Button primary ripple
+          <Button ripple
+            className="flood-form-button"
+            style={{marginLeft: "10px"}}
             onClick={this.props.clearSubscriptionList}>CLEAR</Button>
-          <Button primary ripple
+          <Button ripple
+            className="flood-form-button"
             onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
         </div>
       )
