@@ -75,7 +75,7 @@ class SubscriptionForm extends Component {
     }
     else {
       subscriptionManagerContent = (
-        <form onSubmit={ this.handleSearch }>
+        <form onSubmit={ this.handleSearch } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Enter your phone number and email to manage your current subscriptions.</p>
             <Textfield floatingLabel
                        onChange={ this.handleChange }
@@ -95,17 +95,20 @@ class SubscriptionForm extends Component {
                        id="phone"
                        name="phone"
                        value= { this.state.phone }/>
-            <Button primary ripple
+            <Button ripple
+            className="flood-form-button"
             type="submit"
             value="Submit"
             style={{marginRight: "10px"}}>SEARCH</Button>
-            <Button primary ripple type="button" value="Cancel" onClick="">CANCEL</Button>
+            <Button ripple
+            className="flood-form-button"
+            type="button" value="Cancel" onClick="">CANCEL</Button>
         </form>
       )
     }
     return (
         <div ref="subscriptionManager"
-        style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
+        style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '0', paddingRight: '0'}}>
           {subscriptionManagerContent}
         </div>
     )

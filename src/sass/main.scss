@@ -2,6 +2,11 @@ $lighter-blue: #39aad2;
 $darker-blue: #2c88a9;
 $twdb-blue: #3f556d;
 
+$darker-blue-version2: #265577;
+$lighter-blue-version2: #3473A2;
+$accent-dark-green: #92C553;
+$accent-light-green: #AED480;
+
 $layout-drawer-width-threshold: 400px !default;
 $nav-spacing-from-left-narrow: 6px;
 $nav-spacing-from-left-wide: 16px;
@@ -168,28 +173,43 @@ body {
   position: relative;
   margin: auto;
 
-  width: 235px;
+  width: 260px;
   height: 47px;
+  
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    width: 240px;
+  }
 }
 
 .footer__twdb-logo {
-  position: absolute;
-  left: 99px;
-  bottom: 1px;
-
+  // position: absolute;
+  // left: 99px;
+  // bottom: 1px;
+  display: inline-block;
+  float: right;
   img {
-    height: 42px
+    height: 2.8em;
+    margin: 5px 0 5px 0;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-right: 4px;
+    }
   }
 }
 
 .footer__tnris-logo {
-  position: absolute;
-  right: 165px;
-  bottom: -2px;
-
+  // position: absolute;
+  // right: 165px;
+  // bottom: -2px;
+  display: inline-block;
+  float: left;
   img {
-    height: 46px;
-    // width: 145px;
+    height: 3.1em;
+    margin: 5px 0 3px 0;
+    
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-left: 4px;
+    }
   }
 }
 
@@ -546,6 +566,9 @@ div.dialog-button-div {
   padding-left: 8px;
 
   .terms-agree-button {
+    color: white !important;
+    background-color: $lighter-blue-version2;
+    border-radius: 0;
     width: 100%;
     font-size: 90%;
   }
@@ -553,29 +576,27 @@ div.dialog-button-div {
 
 button.toggle-navigation-content {
     color: black;
-    background-color: #AED480;
+    background-color: $accent-light-green;
     letter-spacing: 1.2px;
     border: 0;
-    border-color:  #AED480;
+    border-color:  $accent-light-green;
     border-radius: 0;
-    height: 73px;
+    height: 56px;
     width: 100%;
     // text-transform: capitalize;
     font-size: 1.1em;
-    letter-spacing: .8px;
+    letter-spacing: .7px;
     word-spacing: 2px;
     
     &:hover {
         color: black;
-        background-color: #92C553;
+        background-color: $accent-dark-green;
     }
 }
 
 .subscription-list-item {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    margin-bottom: 4px;
-    padding: 4px !important;
-    padding-right: 8px !important;
+    border-bottom: 1px solid $accent-light-green;
+    margin: 0;
 }
 
 .mdl-list__item--two-line {
@@ -583,7 +604,7 @@ button.toggle-navigation-content {
 }
 
 .mdl-tooltip {
-    will-change: auto;
+    // will-change: auto;
 }
 
 .subscription-list-item__locateAction {
@@ -603,8 +624,26 @@ button.toggle-navigation-content {
 span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
     margin: 0;
     
-    button > span {
-        margin: 0
+    button {
+        background-color: $lighter-blue-version2 !important;
+        box-shadow: none;
+        color: white;
+        
+        &:hover {
+            background-color: $darker-blue-version2 !important;
+        }
+
+        span {
+            margin: 0
+        }
+    }
+}
+
+span.mdl-badge {
+    margin-left: 10px;
+    
+    &:after {
+        background-color: $accent-dark-green !important;
     }
 }
 
@@ -623,4 +662,15 @@ span.mdl-list__item-secondary-action > i {
 
 .mdl-tooltip {
     will-change: inherit !important;
+}
+
+.mdl-checkbox.is-checked .mdl-checkbox__box-outline {
+    border: 2px solid $lighter-blue-version2 !important;
+    .mdl-checkbox__tick-outline {
+        background-color: $lighter-blue-version2 !important;
+    }
+}
+
+.flood-form-button {
+    color: $darker-blue-version2 !important;
 }
