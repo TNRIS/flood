@@ -173,28 +173,43 @@ body {
   position: relative;
   margin: auto;
 
-  width: 235px;
+  width: 260px;
   height: 47px;
+  
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    width: 240px;
+  }
 }
 
 .footer__twdb-logo {
-  position: absolute;
-  left: 99px;
-  bottom: 1px;
-
+  // position: absolute;
+  // left: 99px;
+  // bottom: 1px;
+  display: inline-block;
+  float: right;
   img {
-    height: 42px
+    height: 2.8em;
+    margin: 5px 0 5px 0;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-right: 4px;
+    }
   }
 }
 
 .footer__tnris-logo {
-  position: absolute;
-  right: 165px;
-  bottom: -2px;
-
+  // position: absolute;
+  // right: 165px;
+  // bottom: -2px;
+  display: inline-block;
+  float: left;
   img {
-    height: 46px;
-    // width: 145px;
+    height: 3.1em;
+    margin: 5px 0 3px 0;
+    
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-left: 4px;
+    }
   }
 }
 
@@ -570,7 +585,7 @@ button.toggle-navigation-content {
     width: 100%;
     // text-transform: capitalize;
     font-size: 1.1em;
-    letter-spacing: .8px;
+    letter-spacing: .7px;
     word-spacing: 2px;
     
     &:hover {
