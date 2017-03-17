@@ -175,7 +175,7 @@ body {
 
   width: 260px;
   height: 47px;
-  
+
   @media screen and (max-width: $layout-drawer-width-threshold) {
     width: 240px;
   }
@@ -206,7 +206,7 @@ body {
   img {
     height: 3.1em;
     margin: 5px 0 3px 0;
-    
+
     @media screen and (max-width: $layout-drawer-width-threshold) {
       margin-left: 4px;
     }
@@ -577,7 +577,7 @@ div.dialog-button-div {
 button.toggle-navigation-content {
     color: black;
     background-color: $accent-light-green;
-    letter-spacing: 1.2px;
+    // letter-spacing: 1.2px;
     border: 0;
     border-color:  $accent-light-green;
     border-radius: 0;
@@ -585,9 +585,9 @@ button.toggle-navigation-content {
     width: 100%;
     // text-transform: capitalize;
     font-size: 1.1em;
-    letter-spacing: .7px;
-    word-spacing: 2px;
-    
+    // letter-spacing: .7px;
+    // word-spacing: 2px;
+
     &:hover {
         color: black;
         background-color: $accent-dark-green;
@@ -623,12 +623,12 @@ button.toggle-navigation-content {
 
 span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
     margin: 0;
-    
+
     button {
         background-color: $lighter-blue-version2 !important;
         box-shadow: none;
         color: white;
-        
+
         &:hover {
             background-color: $darker-blue-version2 !important;
         }
@@ -641,7 +641,7 @@ span.mdl-list__item-secondary-content.subscription-list-item__locateAction > spa
 
 span.mdl-badge {
     margin-left: 10px;
-    
+
     &:after {
         background-color: $accent-dark-green !important;
     }
