@@ -100,9 +100,6 @@ class SubscriptionForm extends Component {
             type="submit"
             value="Submit"
             style={{marginRight: "10px"}}>SEARCH</Button>
-            <Button ripple
-            className="flood-form-button"
-            type="button" value="Cancel" onClick="">CANCEL</Button>
         </form>
       )
     }
