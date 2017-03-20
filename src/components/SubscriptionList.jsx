@@ -107,25 +107,21 @@ class SubscriptionList extends React.Component {
         this.props.subscriptions.subscriptionsById[this.props.gageSubscriptionById[gageSubscriptionId].email]
         .subscription.SubscriptionArn === "PendingConfirmation") {
         return (
-          <Tooltip label="Pending Confirmation">
-            <ListItemAction
-              info="Email"
-              style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
-              <Icon name="email" style={{color: "#9BA4D5"}}/>
-            </ListItemAction>
-          </Tooltip>
+          <ListItemAction
+            info="Email" title="Pending Confirmation"
+            style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
+            <Icon name="email" style={{color: "#9BA4D5"}}/>
+          </ListItemAction>
         )
       }
       return (
-          <Tooltip label={this.tooltipMessage("email")}>
-            <ListItemAction info="Email">
-              <Checkbox ripple
-              name="email"
-              disabled={this.props.email.length < 1}
-              defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
-              onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "email")}/>
-            </ListItemAction>
-          </Tooltip>
+          <ListItemAction info="Email" title={this.tooltipMessage("email")}>
+            <Checkbox ripple
+            name="email"
+            disabled={this.props.email.length < 1}
+            defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
+            onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "email")}/>
+          </ListItemAction>
         )
     }
 
@@ -136,15 +132,13 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       return (
-        <Tooltip label={this.tooltipMessage("phone")}>
-          <ListItemAction info="SMS">
-            <Checkbox ripple
-            name="textsms"
-            disabled={this.props.phone.length < 1}
-            defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
-            onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
-          </ListItemAction>
-        </Tooltip>
+        <ListItemAction info="SMS" title={this.tooltipMessage("phone")}>
+          <Checkbox ripple
+          name="textsms"
+          disabled={this.props.phone.length < 1}
+          defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
+          onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
+       </ListItemAction>
       )
     }
 
@@ -160,6 +154,7 @@ class SubscriptionList extends React.Component {
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
+                <Tooltip label="Zoom to gage location">
                 <ListItemAction className="subscription-list-item__locateAction">
                   <IconButton mini name="room"
                   onClick={(event) => {
@@ -169,6 +164,7 @@ class SubscriptionList extends React.Component {
                     )}
                   }/>
                 </ListItemAction>
+                </Tooltip>
                 <ListItemContent
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
                   {this.props.gageSubscriptionById[gageSubscriptionId].lid}
