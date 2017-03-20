@@ -154,9 +154,8 @@ class SubscriptionList extends React.Component {
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
-                <Tooltip label="Zoom to gage location">
                 <ListItemAction className="subscription-list-item__locateAction">
-                  <IconButton mini name="room"
+                  <IconButton mini name="room" title="Zoom to gage location"
                   onClick={(event) => {
                     this.zoomToGage(
                       event,
@@ -164,7 +163,6 @@ class SubscriptionList extends React.Component {
                     )}
                   }/>
                 </ListItemAction>
-                </Tooltip>
                 <ListItemContent
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
                   {this.props.gageSubscriptionById[gageSubscriptionId].lid}
