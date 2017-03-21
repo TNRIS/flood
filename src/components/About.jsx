@@ -5,6 +5,9 @@ import {
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
+import TWDBLogoImage from '../images/twdb_white.png'
+import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
+
 
 class About extends React.Component {
   constructor(props) {
@@ -124,14 +127,26 @@ class About extends React.Component {
             to receive flood gage alerts.</b> If you have texted &#39;STOP&#39; in response to the alerts but 
             wish to resubscribe, you must contact TNRIS support at <a href="https://tnris.org/contact/"> 
             https://tnris.org/contact/</a> to request to opt your phone number back in to the TNRIS AWS 
-            alert system.
+            alert system. <br />
+            <small>*SMS charges may apply</small>
             </p>
+            
           </DialogContent>
           <DialogActions className="dialog-button-div">
                 <Button raised colored className="terms-agree-button" type='button' onClick={this.props.hideAbout}>
                 Close
                 </Button>
           </DialogActions>
+          <div className="footer">
+              <div className="footer__wrapper">
+              <a className="footer__tnris-logo" href="http://www.tnris.org">
+                <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
+              </a>
+                <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
+                  <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
+                </a>
+              </div>
+          </div>
         </Dialog>
       </div>
     );

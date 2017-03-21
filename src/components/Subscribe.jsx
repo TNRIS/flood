@@ -91,6 +91,9 @@ class Subscribe extends React.Component {
                          name="phone"
                          value={ this.state.phone }/>
               <sub>
+                <small>{"*SMS charges may apply"}</small>
+              </sub>
+              <sub>
                 <small>{"Disclaimer: Flood gage alerts (or lack thereof) are in no way an indicator of safety or "
                   + "danger. Always use all available information resources during weather events."}</small>
               </sub>
