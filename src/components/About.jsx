@@ -57,7 +57,7 @@ class About extends React.Component {
             The stage levels are predefined by NOAA and represented with this application 
             mirroring their default symbology. The stage levels are defined by the water 
             level for each individual gage relative to their capacity.
-            When a gage reaches the 'Action' stage level, NOAA will algorithmically produce 
+            When a gage reaches the 'Action' stage level or higher, NOAA will algorithmically produce 
             predictive water depths for the gage and provide those depths within the 
             graphical charts. These predicitive levels are updated every 6 hours by NOAA 
             unless a significant event demands more accurate and immediate information. In which 
@@ -99,7 +99,7 @@ class About extends React.Component {
 
             The application provides the ability for users to subscribe to flood
             gages in order to receive alerts when gage readings are staged at potentially
-            dangerous levels. These levels are designated as Action, Flood, Moderate, and Major. <br /> 
+            dangerous levels. These levels are designated as Action, Minor, Moderate, and Major. <br /> 
             Users may subscribe to receive alerts via SMS text message or email. TNRIS maintains a 
             strict privacy policy and will never, under any circumstance, share or disclose 
             a users contact information with any other entities or utilize their contact 
