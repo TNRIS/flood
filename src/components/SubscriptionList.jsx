@@ -110,7 +110,7 @@ class SubscriptionList extends React.Component {
           <ListItemAction
             info="Email" title="Pending Confirmation"
             style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
-            <Icon name="email" style={{color: "#9BA4D5"}}/>
+            <Icon name="email" style={{color: "#999999"}}/>
           </ListItemAction>
         )
       }
