@@ -21,8 +21,12 @@ import {
 } from './ToasterActions'
 
 import {
-  subscribeGauge
-} from '../util/FloodAlerts'
+  subscribeGage
+} from './SubscribeActions'
+
+import {
+  sendErrorReport
+} from './StevieActions'
 
 import AWS from 'aws-sdk/dist/aws-sdk'
 import keys from '../keys'
@@ -144,10 +148,10 @@ export function saveSubscriptionChanges() {
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
               if (changeData.protocol === 'email') {
-                promiseQueue.push(subscribeGauge(changeData.lid, "", user.email))
+                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "email", user.email)))
               }
               else if (changeData.protocol === 'sms') {
-                promiseQueue.push(subscribeGauge(changeData.lid, user.phone, ""))
+                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "sms", user.phone)))
               }
             }
           }
@@ -157,7 +161,7 @@ export function saveSubscriptionChanges() {
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
           dispatch(getUserSubscriptions(user.email, user.phone, ""))
-        }).catch(err => dispatch(updateSubscriptionsError(err)))
+        }).catch(err => dispatch(sendErrorReport(err)))
       }
 
       // Finished processing the queue. Send an action to update the Subscription List component that we're done
