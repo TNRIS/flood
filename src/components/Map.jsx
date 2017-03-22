@@ -106,7 +106,7 @@ export default class Map extends Component {
       this.displayedTimestamp = ''
     }
   }
-  
+
   componentDidUpdate(prevProps, prevState) {
     if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
       this.map.closePopup()
@@ -188,7 +188,7 @@ export default class Map extends Component {
     const geolocateButton = L.easyButton({
       position: 'topright',
       states: [{
-        icon: '<i class="material-icons" style="font-size: 20px;margin-top:2px;">location_searching</i>',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
         title: 'Find my location',
         onClick: function(control) {
           thisMap.closePopup()

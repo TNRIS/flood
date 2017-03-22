@@ -401,9 +401,15 @@ body {
   font-weight: bold;
 }
 
-.easy-button-button {
-  padding: 1px 0 0 0;
-  text-align: center;
+.geolocate-icon {
+  position: relative;
+  top: 2px;
+  left: -1px;
+
+  @media screen and (min-width: 1025px) {
+    top: 0;
+    left: -3px;
+  }
 }
 
 /* Material Icon additional rules. */
