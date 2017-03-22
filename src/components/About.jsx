@@ -5,6 +5,9 @@ import {
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
+import TWDBLogoImage from '../images/twdb_white.png'
+import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
+
 
 class About extends React.Component {
   constructor(props) {
@@ -54,11 +57,11 @@ class About extends React.Component {
             The stage levels are predefined by NOAA and represented with this application
             mirroring their default symbology. The stage levels are defined by the water
             level for each individual gage relative to their capacity.
-            When a gage reaches the 'Action' stage level, NOAA will algorithmically produce
-            predictive water depths for the gage and provide those depths within the
-            graphical charts. These predicitive levels are updated every 6 hours by NOAA
-            unless a significant event demands more accurate and immediate information. In which
-            case the predictive water depths will be monitored and updated more frequently.
+            When a gage reaches the 'Action' stage level or higher, NOAA will algorithmically produce 
+            predictive water depths for the gage and provide those depths within the 
+            graphical charts. These predicitive levels are updated every 6 hours by NOAA 
+            unless a significant event demands more accurate and immediate information. In which 
+            case the predictive water depths will be monitored and updated more frequently. 
             This means the predictive depth readings may vary and change over time.
             For more information on Flood Gage readings,
             please visit NOAA&#39;s website at:
@@ -96,10 +99,10 @@ class About extends React.Component {
 
             The application provides the ability for users to subscribe to flood
             gages in order to receive alerts when gage readings are staged at potentially
-            dangerous levels. These levels are designated as Action, Flood, Moderate, and Major. <br />
-            Users may subscribe to receive alerts via SMS text message or email. TNRIS maintains a
-            strict privacy policy and will never, under any circumstance, share or disclose
-            a users contact information with any other entities or utilize their contact
+            dangerous levels. These levels are designated as Action, Minor, Moderate, and Major. <br /> 
+            Users may subscribe to receive alerts via SMS text message or email. TNRIS maintains a 
+            strict privacy policy and will never, under any circumstance, share or disclose 
+            a users contact information with any other entities or utilize their contact 
             information for any purpose other than that which the user has signed up for. <br />
             A single alert is sent out for each individual gage when it enters one of the dangerous
             levels. As water levels continue to change during a weather event, single alerts will
@@ -119,19 +122,31 @@ class About extends React.Component {
             gage which sent the alert. A user can respond to a SMS text message alert at
             any time with the message &#39;STOP&#39; to opt-out of all SMS text message alerts from TNRIS&#39;
             AWS alert system. <br />
-            <b>Warning: texting &#39;STOP&#39; will completely disable your phone number
-            from receiving SMS alerts from any TNRIS application. You will no longer be able to re-subscribe
-            to receive flood gage alerts.</b> If you have texted &#39;STOP&#39; in response to the alerts but
-            wish to resubscribe, you must contact TNRIS support at <a href="https://tnris.org/contact/">
-            https://tnris.org/contact/</a> to request to opt your phone number back in to the TNRIS AWS
-            alert system.
+            <b>Warning: texting &#39;STOP&#39; will completely disable your phone number 
+            from receiving SMS alerts from any TNRIS application. You will no longer be able to re-subscribe 
+            to receive flood gage alerts.</b> If you have texted &#39;STOP&#39; in response to the alerts but 
+            wish to resubscribe, you must contact TNRIS support at <a href="https://tnris.org/contact/"> 
+            https://tnris.org/contact/</a> to request to opt your phone number back in to the TNRIS AWS 
+            alert system. <br />
+            <small>*SMS charges may apply</small>
             </p>
+            
           </DialogContent>
           <DialogActions className="dialog-button-div">
                 <Button colored className="terms-agree-button" type='button' onClick={this.props.hideAbout}>
                 Close
                 </Button>
           </DialogActions>
+          <div className="footer">
+              <div className="footer__wrapper">
+              <a className="footer__tnris-logo" href="http://www.tnris.org">
+                <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
+              </a>
+                <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
+                  <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
+                </a>
+              </div>
+          </div>
         </Dialog>
       </div>
     );

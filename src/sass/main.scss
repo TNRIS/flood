@@ -513,10 +513,36 @@ dialog.subscribeDialog h4 {
     background-color: white;
     position: fixed;
 
+    padding: 0;
+
     h4 {
       /* Reduce size to avoid line break in title */
       margin-top: 0;
     }
+
+    .dialog-button-div {
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 24px;
+
+      .terms-agree-button:hover {
+        background-color: $lighter-blue-version2;
+      }
+    }
+
+    .footer {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0);
+
+      .footer__wrapper {
+        display: inline-block;
+        border-radius: 10px;
+        background-color: $accent-light-green;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+
 }
 
 .weatherTimestamp {

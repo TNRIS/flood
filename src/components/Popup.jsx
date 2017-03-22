@@ -116,7 +116,7 @@ export default class Popup extends Component {
     return {
       maxWidth: leafletMap ? leafletMap.getSize().x * 0.9 : 500,
       minWidth: leafletMap ? Math.max(300, Math.min(leafletMap.getSize().x * 0.5, 599)) : 270,
-      maxHeight: leafletMap ? leafletMap.getSize().y * 0.8 : 500,
+      // maxHeight: leafletMap ? leafletMap.getSize().y * 0.8 : 500,
     }
   }
 

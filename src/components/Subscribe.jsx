@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import * as FloodAlerts from '../util/FloodAlerts'
+
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, Textfield
 } from 'react-mdl'
@@ -9,8 +9,13 @@ import * as dialogPolyfill from 'dialog-polyfill'
 
 class Subscribe extends React.Component {
   static propTypes = {
+    email: React.PropTypes.string,
+    phone: React.PropTypes.string,
     hideSubscribe: React.PropTypes.func,
-    openDialog: React.PropTypes.bool
+    openDialog: React.PropTypes.bool,
+    setUserInfo: React.PropTypes.func,
+    showSnackbar: React.PropTypes.func,
+    subscribeGage: React.PropTypes.func
   }
 
   constructor(props) {
@@ -21,7 +26,7 @@ class Subscribe extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     const dialog = ReactDOM.findDOMNode(this.refs.subscribeDialog)
     if (!dialog.showModal) {
       dialogPolyfill.registerDialog(dialog)
@@ -53,7 +58,13 @@ class Subscribe extends React.Component {
     event.preventDefault()
 
     if (this.state.email || this.state.phone) {
-      FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
+      if (this.state.email) {
+        this.props.subscribeGage(this.state.lid, "email", this.state.email)
+      }
+
+      if (this.state.phone) {
+        this.props.subscribeGage(this.state.lid, "sms", this.state.phone)
+      }
       this.props.showSnackbar("Your subscription has been submitted")
       this.props.setUserInfo(this.state.email, this.state.phone)
       this.handleCloseDialog()
@@ -91,13 +102,17 @@ class Subscribe extends React.Component {
                          name="phone"
                          value={ this.state.phone }/>
               <sub>
+                <small>{"*SMS charges may apply"}</small>
+              </sub>
+              <sub>
                 <small>{"Disclaimer: Flood gage alerts (or lack thereof) are in no way an indicator of safety or "
                   + "danger. Always use all available information resources during weather events."}</small>
               </sub>
             </DialogContent>
             <DialogActions>
               <Button ripple className="flood-form-button" type="submit" value="Submit">Submit</Button>
-              <Button ripple className="flood-form-button" type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
+              <Button ripple className="flood-form-button" type="button" value="Cancel"
+                onClick={ this.handleCloseDialog }>Cancel</Button>
             </DialogActions>
           </form>
         </Dialog>

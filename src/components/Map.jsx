@@ -65,12 +65,11 @@ export default class Map extends Component {
       // check the screen width and set the initial zoom to 5 if they are
       // on a phone, set it to 6 for all other devices
       this.props.initialGageStatus()
-      const initialZoom = document.documentElement.clientWidth < 768 ? 5 : 6
+      const initialZoom = window.innerWidth < 768 ? 5 : 6
       this.map = L.map(this.refs.map, {
         center: [31, -100],
         zoom: initialZoom,
-        minZoom: initialZoom,
-        maxBounds: [[21, -112.5], [41, -88]]
+        minZoom: initialZoom
       })
 
       this.map.zoomControl.setPosition('topright')
@@ -79,6 +78,8 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
       this.geolocateControl()
+
+      this.map.on('moveend', this.initializeMapBounds.bind(this))
     }, 0)
   }
 
@@ -181,6 +182,32 @@ export default class Map extends Component {
     }
 
     control.addTo(this.map)
+  }
+
+  //use a custom map bound functionality to restrict panning
+  //leaflet maxBounds and panInsideBounds functions are buggy and
+  //cause infinite pan loops when at awkward zoom levels
+  initializeMapBounds() {
+    const maxBounds = [[25.7, -107], [36.8, -93.2]]
+    const center = this.map.getCenter()
+    let newCenter = {lat: center.lat, lng: center.lng}
+    if (center.lat < maxBounds[0][0]) {
+      newCenter.lat = maxBounds[0][0]
+    }
+    if (center.lat > maxBounds[1][0]) {
+      newCenter.lat = maxBounds[1][0]
+    }
+    if (center.lng < maxBounds[0][1]) {
+      newCenter.lng = maxBounds[0][1]
+    }
+    if (center.lng > maxBounds[1][1]) {
+      newCenter.lng = maxBounds[1][1]
+    }
+    if (newCenter.lat !== center.lat || newCenter.lng !== center.lng) {
+      this.map.panTo(newCenter, {
+        animate: true
+      })
+    }
   }
 
   geolocateControl() {
