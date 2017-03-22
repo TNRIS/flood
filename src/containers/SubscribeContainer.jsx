@@ -8,7 +8,12 @@ import {
   showSnackbar
 } from '../actions/ToasterActions'
 
+import {
+  subscribeGage
+} from '../actions/SubscribeActions'
+
 import Subscribe from '../components/Subscribe'
+
 
 const mapStateToProps = (state) => {
   return {
@@ -30,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     showSnackbar: (toppings) => {
       dispatch(showSnackbar(toppings))
+    },
+    subscribeGage: (lid, protocol, endpoint) => {
+      dispatch(subscribeGage(lid, protocol, endpoint))
     }
   }
 }
