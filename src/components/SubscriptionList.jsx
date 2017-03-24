@@ -23,6 +23,7 @@ class SubscriptionList extends React.Component {
     addUnsubscribeToChangeList: React.PropTypes.func,
     allGageSubscriptions: React.PropTypes.array,
     allSubscriptions: React.PropTypes.array,
+    allSubscriptionChanges: React.PropTypes.array,
     clearSubscriptionList: React.PropTypes.func,
     email: React.PropTypes.string,
     gageInfo: React.PropTypes.object,
@@ -39,6 +40,9 @@ class SubscriptionList extends React.Component {
 
   constructor() {
     super()
+    this.state = {
+      showSaveButton: false
+    }
   }
 
   /**
@@ -142,6 +146,16 @@ class SubscriptionList extends React.Component {
       )
     }
 
+    const saveButton = () => {
+      if (this.props.allSubscriptionChanges.length > 0) {
+        return (
+          <Button ripple
+            className="flood-form-button"
+            onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
+        )
+      }
+    }
+
     if (this.props.isUpdating) {
       listContentDiv = <Spinner />
     }
@@ -175,10 +189,8 @@ class SubscriptionList extends React.Component {
           <Button ripple
             className="flood-form-button"
             style={{marginLeft: "10px"}}
-            onClick={this.props.clearSubscriptionList}>CLEAR</Button>
-          <Button ripple
-            className="flood-form-button"
-            onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
+            onClick={this.props.clearSubscriptionList}>BACK</Button>
+            {saveButton()}
         </div>
       )
     }

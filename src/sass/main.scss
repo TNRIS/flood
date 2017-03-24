@@ -706,3 +706,19 @@ span.mdl-list__item-secondary-action > i {
 .flood-form-button {
     color: $darker-blue-version2 !important;
 }
+
+.easy-button-button{
+  transition-duration: .3s;
+  position: relative;
+  border-radius: 4px;
+  border: solid 0px transparent; 
+}
+
+button.easy-button-button.leaflet-bar-part.location-on-active {
+    background-color: $accent-light-green;
+}
+
+button.easy-button-button.disabled {
+    height: 0;
+    padding: 0;
+}

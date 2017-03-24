@@ -43,7 +43,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     initialGageStatus: () => {
       dispatch(actions.initialGageStatus())
-    }
+    },
+    showSnackbar: (toppings) => {
+      dispatch(showSnackbar(toppings))
+    },
   }
 }
 

@@ -22,7 +22,8 @@ const mapStateToProps = (state) => {
     email: state.user.email,
     phone: state.user.phone,
     gageInfo: state.gageInfo,
-    isUpdating: state.subscriptionList.isUpdating
+    isUpdating: state.subscriptionList.isUpdating,
+    allSubscriptionChanges: state.subscriptionChanges.allSubscriptionChanges
   }
 }
 

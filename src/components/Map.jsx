@@ -19,6 +19,8 @@ import * as FloodAlerts from '../util/FloodAlerts'
 const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
+const defaultMarkerIcon = require('../images/ic_my_location_black_24dp_2x.png')
+const defaultMarkerIconShadow = require('../images/marker-shadow.png')
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
@@ -56,7 +58,8 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animationIcon: "play_arrow"
+      animationIcon: "play_arrow",
+      geolocateControl: "basic"
     }
   }
 
@@ -78,8 +81,52 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
       this.geolocateControl()
-
       this.map.on('moveend', this.initializeMapBounds.bind(this))
+
+      const defaultMarker = L.icon({
+        iconUrl: defaultMarkerIcon,
+        shadowUrl: "",
+        iconAnchor: [24, 24]
+      })
+
+      let geolocateCircle = null
+      let geolocateIcon = null
+
+      this.map
+        .on('locationfound', (e) => {
+          console.log(e.latlng)
+          if (geolocateCircle) {
+            this.map.removeLayer(geolocateCircle)
+          }
+          if (geolocateIcon) {
+            this.map.removeLayer(geolocateIcon)
+          }
+          geolocateIcon = L.marker(e.latlng, {
+            icon: defaultMarker
+          })
+          geolocateCircle = L.circleMarker(e.latlng, {
+            radius: 26,
+            color: "#265577",
+            fillColor: "#3473A2",
+            fillOpacity: 0.4
+          })
+          this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
+        })
+        .on('locationerror', () => {
+          this.props.showSnackbar(
+            "Error retrieving location. Please verify permission has been granted to your device or browser."
+          )
+        })
+        .on('zoomstart', () => {
+          if (this.map.hasLayer(geolocateCircle)) {
+            this.map.removeLayer(geolocateCircle)
+          }
+        })
+        .on('zoomend', () => {
+          if (geolocateCircle) {
+            this.map.addLayer(geolocateCircle)
+          }
+        })
     }, 0)
   }
 
@@ -212,18 +259,50 @@ export default class Map extends Component {
 
   geolocateControl() {
     const thisMap = this.map
+    const trackLocationButton = L.easyButton({
+      states: [{
+        stateName: 'location-off',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">location_off</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-on')
+          thisMap.locate({
+            setView: true,
+            enableHighAccuracy: true,
+            watch: true,
+            maximumAge: 60
+          })
+        }
+      }, {
+        stateName: 'location-on',
+        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">location_on</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-off')
+          thisMap.stopLocate()
+        }
+      }]
+    }).disable()
+
     const geolocateButton = L.easyButton({
-      position: 'topright',
       states: [{
         icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
         title: 'Find my location',
-        onClick: function(control) {
+        onClick: () => {
           thisMap.closePopup()
-          thisMap.locate({setView: true, enableHighAccuracy: true})
+          trackLocationButton.enable()
+          thisMap.locate({
+            setView: true,
+            enableHighAccuracy: true
+          })
         }
       }]
     })
-    geolocateButton.addTo(this.map)
+
+    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+      position: 'topright'
+    })
+    locateToolbar.addTo(thisMap)
   }
 
   toggleAnimation() {
