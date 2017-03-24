@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
@@ -16,8 +16,12 @@ const folders = {
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
-// Move favicon to dist directory
-fs.createReadStream(folders.src + "images/favicon.ico").pipe(fs.createWriteStream(folders.dist + "favicon.ico"))
+// Move icons to dist directory
+fs.mkdirsSync(folders.dist + "/icons")
+fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
+  if (err) return console.error(err)
+});
+// fs.createReadStream(folders.src + "images/icons").pipe(fs.createWriteStream(folders.dist + "/icons/"))
 
 //setup webpack plugins
 const plugins = []
