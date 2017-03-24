@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.blue-indigo.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
     
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="57x57" href="favicon.ico" />
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="72x72" href="favicon.ico" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="114x114" href="favicon.ico" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="144x144" href="favicon.ico" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="favicon.ico" />
-
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/icons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/icons/manifest.json">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/icons/favicon.ico">
+    <meta name="msapplication-config" content="/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
 
     {% if isProd %}
