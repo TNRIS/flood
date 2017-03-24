@@ -8,6 +8,16 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
     
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="favicon.ico" />
+
+
 
     {% if isProd %}
       <link rel="stylesheet" type="text/css" href="/assets/styles.css">
