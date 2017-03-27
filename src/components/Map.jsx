@@ -192,7 +192,6 @@ export default class Map extends Component {
     // const maxBounds = [[25.7, -107], [36.8, -93.2]]
     const maxBounds = [[23.5, -112.6], [41, -83]]
     const center = this.map.getCenter()
-    console.log(center)
     let newCenter = {lat: center.lat, lng: center.lng}
     if (center.lat < maxBounds[0][0]) {
       newCenter.lat = maxBounds[0][0]
