@@ -703,7 +703,7 @@ span.mdl-list__item-secondary-action > i {
     }
 }
 
-.flood-form-button {
+.flood-form-button:enabled {
     color: $darker-blue-version2 !important;
 }
 

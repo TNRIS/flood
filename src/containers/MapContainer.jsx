@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions'
+import { showSnackbar } from '../actions/ToasterActions'
 import { clearCenterAndZoom } from '../actions/SubscriptionChangeActions'
 import Map from '../components/Map'
 

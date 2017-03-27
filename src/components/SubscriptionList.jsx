@@ -1,6 +1,10 @@
 import React from 'react'
 import {
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   FABButton,
   Badge,
   Checkbox,
@@ -43,6 +47,9 @@ class SubscriptionList extends React.Component {
     this.state = {
       showSaveButton: false
     }
+    this.handleOpenConfirmDialog = this.handleOpenConfirmDialog.bind(this)
+    this.handleCloseConfirmDialog = this.handleCloseConfirmDialog.bind(this)
+    this.saveChanges = this.saveChanges.bind(this)
   }
 
   /**
@@ -71,6 +78,7 @@ class SubscriptionList extends React.Component {
   }
 
   saveChanges() {
+    this.handleCloseConfirmDialog()
     this.props.saveSubscriptionChanges()
   }
 
@@ -93,6 +101,18 @@ class SubscriptionList extends React.Component {
   zoomToGage(event, gageInfo) {
     console.log(gageInfo)
     this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
+  }
+  
+  handleOpenConfirmDialog() {
+    this.setState({
+      openConfirmDialog: true
+    })
+  }
+  
+  handleCloseConfirmDialog() {
+    this.setState({
+      openConfirmDialog: false
+    })
   }
 
   render() {
@@ -147,13 +167,39 @@ class SubscriptionList extends React.Component {
     }
 
     const saveButton = () => {
+      let save
       if (this.props.allSubscriptionChanges.length > 0) {
-        return (
+        save = (
           <Button ripple
             className="flood-form-button"
-            onClick={this.props.saveSubscriptionChanges}>SAVE CHANGES</Button>
+            onClick={this.handleOpenConfirmDialog}>SAVE CHANGES</Button>
         )
       }
+      else {
+        save = (
+          <Button ripple disabled
+            className="flood-form-button">SAVE CHANGES</Button>
+        )
+      }
+      return save
+    }
+    
+    const confirmDialog = () => {
+      console.log(this.state)
+      return (
+        <div>
+          <Dialog open={this.state.openConfirmDialog} onCancel={this.handleCloseConfirmDialog}>
+            <DialogTitle>Confirm Changes?</DialogTitle>
+            <DialogContent>
+              <p>Are you sure you want to save your changes?</p>
+            </DialogContent>
+            <DialogActions>
+              <Button type='button' onClick={this.saveChanges}>Confirm</Button>
+              <Button type='button' onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      )
     }
 
     if (this.props.isUpdating) {
@@ -191,6 +237,7 @@ class SubscriptionList extends React.Component {
             style={{marginLeft: "10px"}}
             onClick={this.props.clearSubscriptionList}>BACK</Button>
             {saveButton()}
+            {confirmDialog()}
         </div>
       )
     }

@@ -16,6 +16,8 @@ const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
 
+import GeolocationControl from './GeolocationControl'
+
 const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
@@ -80,7 +82,7 @@ export default class Map extends Component {
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
-      this.geolocateControl()
+      GeolocationControl(this.map)
       this.map.on('moveend', this.initializeMapBounds.bind(this))
 
       const defaultMarker = L.icon({
@@ -94,7 +96,7 @@ export default class Map extends Component {
 
       this.map
         .on('locationfound', (e) => {
-          console.log(e.latlng)
+          console.log(e)
           if (geolocateCircle) {
             this.map.removeLayer(geolocateCircle)
           }
@@ -104,15 +106,22 @@ export default class Map extends Component {
           geolocateIcon = L.marker(e.latlng, {
             icon: defaultMarker
           })
-          geolocateCircle = L.circleMarker(e.latlng, {
-            radius: 26,
+          geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
             fillOpacity: 0.4
           })
           this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
+
+          if (this.map._locateOptions && !this.map._locateOptions.watch) {
+            this.map.fitBounds(
+              geolocateCircle.getBounds()
+            )
+          }
+
         })
-        .on('locationerror', () => {
+        .on('locationerror', (err) => {
+          console.log(err)
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
@@ -219,7 +228,9 @@ export default class Map extends Component {
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.bing(keys.bingApiKey),
-      placeholder: "Search by City or Street Address"
+      placeholder: "Search by City or Street Address",
+      collapsed: false,
+      position: "topleft"
     })
 
     //override the default markGeocode method
@@ -255,54 +266,6 @@ export default class Map extends Component {
         animate: true
       })
     }
-  }
-
-  geolocateControl() {
-    const thisMap = this.map
-    const trackLocationButton = L.easyButton({
-      states: [{
-        stateName: 'location-off',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">location_off</i>',
-        title: 'Track my location',
-        onClick: (control) => {
-          control.state('location-on')
-          thisMap.locate({
-            setView: true,
-            enableHighAccuracy: true,
-            watch: true,
-            maximumAge: 60
-          })
-        }
-      }, {
-        stateName: 'location-on',
-        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">location_on</i>',
-        title: 'Track my location',
-        onClick: (control) => {
-          control.state('location-off')
-          thisMap.stopLocate()
-        }
-      }]
-    }).disable()
-
-    const geolocateButton = L.easyButton({
-      states: [{
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
-        title: 'Find my location',
-        onClick: () => {
-          thisMap.closePopup()
-          trackLocationButton.enable()
-          thisMap.locate({
-            setView: true,
-            enableHighAccuracy: true
-          })
-        }
-      }]
-    })
-
-    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
-      position: 'topright'
-    })
-    locateToolbar.addTo(thisMap)
   }
 
   toggleAnimation() {
