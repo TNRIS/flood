@@ -464,6 +464,34 @@ body {
     max-height: 100%;
     /* Ensure this isn't transparent on Firefox */
     background-color: white;
+
+    @media screen and (max-width: 500px) {
+      padding: 0;
+
+      .mdl-dialog__title {
+        padding: 10px 10px 0;
+        font-size: 1.5em;
+        text-align: center;
+      }
+
+      .mdl-dialog__content {
+        padding: 10px;
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+      }
+
+      .dialog-button-div {
+        font-size: 12px;
+
+        button {
+          padding: 0;
+        }
+      }
+    }
 }
 
 dialog.disclaimer h4 {
