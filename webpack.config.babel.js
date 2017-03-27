@@ -21,6 +21,9 @@ fs.mkdirsSync(folders.dist + "/icons")
 fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
   if (err) return console.error(err)
 });
+fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/flood-alert-legend.png", function (err) {
+  if (err) return console.error(err)
+});
 // fs.createReadStream(folders.src + "images/icons").pipe(fs.createWriteStream(folders.dist + "/icons/"))
 
 //setup webpack plugins
