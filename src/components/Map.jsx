@@ -77,6 +77,7 @@ export default class Map extends Component {
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
+      this.fullscreenControl()
       this.geolocateControl()
 
       this.map.on('moveend', this.initializeMapBounds.bind(this))
@@ -172,7 +173,9 @@ export default class Map extends Component {
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.bing(keys.bingApiKey),
-      placeholder: "Search by City or Street Address"
+      placeholder: "Search by City or Street Address",
+      collapsed: false,
+      position: "topleft"
     })
 
     //override the default markGeocode method
@@ -210,6 +213,37 @@ export default class Map extends Component {
         animate: true
       })
     }
+  }
+
+  toggleFullscreen() {
+    const element = document.getElementsByTagName("html")[0]
+    if (document.fullscreenEnabled || 
+        document.webkitIsFullScreen || 
+        document.mozFullScreen ||
+        document.msFullscreenEnabled) {
+      const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      req.call(document)
+    } else {
+      const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
+      req.call(element)
+    }
+  }
+
+  fullscreenControl() {
+    const thisMap = this.map
+    const toggleFullscreen = this.toggleFullscreen
+    const fullscreenButton = L.easyButton({
+      position: 'topright',
+      states: [{
+        icon: '<i class="material-icons fullscreen-icon">fullscreen</i>',
+        title: 'Toggle Fullscreen',
+        onClick: function(control) {
+          thisMap.closePopup()
+          toggleFullscreen()
+        }
+      }]
+    })
+    fullscreenButton.addTo(this.map)
   }
 
   geolocateControl() {
