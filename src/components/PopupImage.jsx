@@ -5,14 +5,15 @@ export default class PopupImage extends Component {
     src: PropTypes.string,
     link: PropTypes.string,
     updatePopup: PropTypes.func,
+    target: PropTypes.string,
   }
 
   render() {
-    const { src, link, updatePopup } = this.props
+    const { src, link, updatePopup, target } = this.props
 
     return (
       <div className="info__image">
-        <a href={link}>
+        <a href={link} target={target}>
           <img ref="image" src={src} onLoad={() => {updatePopup()}}  />
         </a>
       </div>

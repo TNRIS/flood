@@ -28,7 +28,7 @@ export default class LakeConditionsPopup extends Component {
           <PopupHeader>
             { full_name }
           </PopupHeader>
-          <PopupImage link={link_src} src={image_src} updatePopup={updatePopup} />
+          <PopupImage link={link_src} src={image_src} updatePopup={updatePopup} target="lake-conditions"/>
         </PopupContent>
       </div>
     )
