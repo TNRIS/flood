@@ -530,11 +530,17 @@ dialog.disclaimer h4 {
     /* Ensure this isn't transparent on Firefox */
     background-color: white;
     position: fixed;
+
+    .mdl-dialog__content {
+      padding: 10px;
+    }
 }
 
 dialog.subscribeDialog h4 {
     /* Reduce size to avoid line break in title */
     font-size: 1.5em;
+    text-align: center;
+    padding: 0;
 }
 
 .aboutDialog {

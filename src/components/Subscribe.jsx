@@ -58,12 +58,11 @@ class Subscribe extends React.Component {
     event.preventDefault()
 
     if (this.state.email || this.state.phone) {
-      if (this.state.email) {
-        this.props.subscribeGage(this.state.lid, "email", this.state.email)
-      }
-
       if (this.state.phone) {
         this.props.subscribeGage(this.state.lid, "sms", this.state.phone)
+      }
+      if (this.state.email) {
+        this.props.subscribeGage(this.state.lid, "email", this.state.email)
       }
       this.props.showSnackbar("Your subscription has been submitted")
       this.props.setUserInfo(this.state.email, this.state.phone)
@@ -80,16 +79,9 @@ class Subscribe extends React.Component {
         <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog }
         onCancel={ this.handleCloseDialog } >
           <DialogTitle className="subscribe-title">{ this.state.name } ({ this.state.lid })</DialogTitle>
-          <form className="subscribe-form" onSubmit={ this.handleSubmit }>
+          <form className="subscribe-form">
             <DialogContent>
-              <p>Subscribe to receive email and/or text alerts when this gage reaches elevated flood stages.</p>
-              <Textfield floatingLabel
-                         onChange={ this.handleChange }
-                         label="Email..."
-                         type="email"
-                         id="email"
-                         name="email"
-                         value= { this.state.email }/>
+              <p>Subscribe to receive text and/or email alerts when this gage reaches elevated flood stages.</p>
               <Textfield floatingLabel
                          onChange={ this.handleChange }
                          pattern="[0-9]*"
@@ -101,16 +93,20 @@ class Subscribe extends React.Component {
                          id="phone"
                          name="phone"
                          value={ this.state.phone }/>
+              <Textfield floatingLabel
+                         onChange={ this.handleChange }
+                         label="Email..."
+                         type="email"
+                         id="email"
+                         name="email"
+                         value= { this.state.email }/>
               <sub>
                 <small>{"*SMS charges may apply"}</small>
               </sub>
-              <sub>
-                <small>{"Disclaimer: Flood gage alerts (or lack thereof) are in no way an indicator of safety or "
-                  + "danger. Always use all available information resources during weather events."}</small>
-              </sub>
             </DialogContent>
             <DialogActions>
-              <Button ripple className="flood-form-button" type="submit" value="Submit">Submit</Button>
+              <Button ripple className="flood-form-button" type="button" value="Submit"
+                onClick={ this.handleSubmit }>Submit</Button>
               <Button ripple className="flood-form-button" type="button" value="Cancel"
                 onClick={ this.handleCloseDialog }>Cancel</Button>
             </DialogActions>
