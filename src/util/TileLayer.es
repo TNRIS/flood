@@ -38,6 +38,9 @@ export default class TileLayer extends Layer {
 
     //  This will set the layer order relative to the order set in CortoDBLayer.es
     this.layer.setZIndex(97)
+    if (this.refreshIntervalId != null) {
+      clearInterval(this.refreshIntervalId)
+    }
     this.refreshIntervalId = setInterval(() => this.refresh(), this.refreshTimeMs)
   }
 
