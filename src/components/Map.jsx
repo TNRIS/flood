@@ -8,7 +8,7 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
+    Button, Card, CardTitle, DataTable, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
 } from 'react-mdl'
 
 const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
@@ -102,14 +102,24 @@ export default class Map extends Component {
           if (geolocateIcon) {
             this.map.removeLayer(geolocateIcon)
           }
+
           geolocateIcon = L.marker(e.latlng, {
             icon: defaultMarker
           })
+
+          geolocateIcon.bindLabel(
+            `<h6>Approximate Location</h3>` +
+            `<p>Latitude: ${e.latitude.toPrecision(8)}</p>` +
+            `<p>Longitude: ${e.longitude.toPrecision(8)}</p>` +
+            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`
+          )
+
           geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
-            fillOpacity: 0.4
+            fillOpacity: 0.3
           })
+
           this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {

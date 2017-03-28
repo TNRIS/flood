@@ -2974,6 +2974,11 @@
         }
       }
     },
+    "leaflet.label": {
+      "version": "0.2.1",
+      "from": "leaflet/Leaflet.label#0.2.1",
+      "resolved": "git://github.com/leaflet/Leaflet.label.git#90ed880773bd64723621a666e74a4f6730aea41c"
+    },
     "levn": {
       "version": "0.2.5",
       "from": "levn@>=0.2.5 <0.3.0",
