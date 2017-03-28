@@ -329,9 +329,8 @@ export default class Map extends Component {
   betaNotice() {
     if (document.URL === 'http://map.texasflood.org/') {
       return "hide-beta"
-    } else {
-      return "betanotice"
     }
+    return "betanotice"
   }
 
   render() {
