@@ -66,10 +66,10 @@ body {
 }
 
 .nav__head {
-  background-image: url(../images/flood_bg.jpg);
+  // background-image: url(../images/flood_bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-color: #123469;
+  background-color: #222;
   color: white;
   font-weight: 300;
   padding-left: $nav-spacing-from-left-wide;
@@ -113,6 +113,12 @@ body {
     color: white;
     font-weight: inherit;
     text-decoration: none;
+  }
+
+  h4 {
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    margin: 5px 20px 0 20px;
   }
 
   .resources__links.mdl-navigation {
