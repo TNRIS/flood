@@ -5,7 +5,7 @@ import {
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
-import TWDBLogoImage from '../images/twdb_white.png'
+import TWDBLogoImage from '../images/logo_twdb.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
 
 
