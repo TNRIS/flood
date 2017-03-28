@@ -22,7 +22,6 @@ const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_my_location_black_24dp_2x.png')
-const defaultMarkerIconShadow = require('../images/marker-shadow.png')
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
