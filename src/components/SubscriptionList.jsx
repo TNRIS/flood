@@ -183,19 +183,19 @@ class SubscriptionList extends React.Component {
       }
       return save
     }
-    
+
     const confirmDialog = () => {
-      console.log(this.state)
       return (
         <div>
-          <Dialog open={this.state.openConfirmDialog} onCancel={this.handleCloseConfirmDialog}>
-            <DialogTitle>Confirm Changes?</DialogTitle>
+          <Dialog className="confirm-subscription-change"
+            open={this.state.openConfirmDialog} onCancel={this.handleCloseConfirmDialog}>
+            <DialogTitle className="subscribe-title">Confirm Changes</DialogTitle>
             <DialogContent>
-              <p>Are you sure you want to save your changes?</p>
+              <p>Are you sure you want to save your subscription changes?</p>
             </DialogContent>
-            <DialogActions>
-              <Button type='button' onClick={this.saveChanges}>Confirm</Button>
-              <Button type='button' onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+            <DialogActions fullWidth style={{float: "right", width: "100%"}}>
+              <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+              <Button type="button" onClick={this.saveChanges}>Confirm</Button>
             </DialogActions>
           </Dialog>
         </div>
