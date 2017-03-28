@@ -1,9 +1,9 @@
 
 /**
- * Leaflet 
+ * Leaflet
  * @param {[type]} leafletMap [description]
  */
-const GeolocationControl = (leafletMap) => {
+const geolocationControl = (leafletMap) => {
   const geolocationOptions = {
     watch: false,
     setView: false,
@@ -49,4 +49,4 @@ const GeolocationControl = (leafletMap) => {
   locateToolbar.addTo(leafletMap)
 }
 
-export default GeolocationControl
+export default geolocationControl

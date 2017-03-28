@@ -16,7 +16,7 @@ const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
 
-import GeolocationControl from './GeolocationControl'
+import geolocationControl from './GeolocationControl'
 
 const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
@@ -82,8 +82,7 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
       this.fullscreenControl()
-      this.geolocateControl()
-      GeolocationControl(this.map)
+      geolocationControl(this.map)
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
