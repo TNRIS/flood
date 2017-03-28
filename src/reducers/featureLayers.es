@@ -87,14 +87,6 @@ const initialState = {
       'active': false,
       'status': null,
     }
-    //TODO: Removed until Aeris subscription has been purchased
-    // since their advisory layers don't work under the dev plan
-    // {
-    //   'id': 'flood-alerts',
-    //   'text': 'Flood Alerts',
-    //   'type': 'flood-alerts',
-    //   'active': false,
-    // },
   ],
 }
 
