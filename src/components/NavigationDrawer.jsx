@@ -4,7 +4,7 @@ import { Drawer } from 'react-mdl'
 import Resources from './Resources'
 import NavigationContent from './NavigationContent'
 
-import TWDBLogoImage from '../images/twdb_white.png'
+import TWDBLogoImage from '../images/logo_twdb.png'
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
 
@@ -21,9 +21,6 @@ class  NavigationDrawer extends React.Component {
             <a href="http://texasflood.org">
               <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
             </a>
-          </div>
-          <div className="nav__subtitle">
-            Tools for Texans to track flood conditions
           </div>
         </div>
         <NavigationContent />
