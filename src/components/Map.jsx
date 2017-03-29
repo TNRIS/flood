@@ -16,8 +16,6 @@ const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
 
-import geolocationControl from './GeolocationControl'
-
 const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
@@ -129,6 +127,15 @@ export default class Map extends Component {
             )
           }
         })
+        // .on('contextmenu', (e) => {
+        //   const clickMarker = L.marker(e.latlng, {
+        //     icon: defaultMarker
+        //   }).bindLabel(
+        //     `<h6>Location</h3>` +
+        //     `<p>Latitude: ${e.latlng.lat.toPrecision(8)}</p>` +
+        //     `<p>Longitude: ${e.latlng.lng.toPrecision(8)}</p>`
+        //   , {noHide: true}).addTo(this.map)
+        // })
         .on('locationerror', (err) => {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
