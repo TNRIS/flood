@@ -92,6 +92,8 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "eslint": "https://registry.npmjs.org/eslint/-/eslint-1.10.3.tgz",
+    "eslint-plugin-react": "^3.16.1",
     "react-addons-test-utils": "^0.14.8"
   }
 }
