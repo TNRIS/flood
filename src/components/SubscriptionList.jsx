@@ -210,7 +210,7 @@ class SubscriptionList extends React.Component {
         <div>
           <Badge
           className="subscriptions-count-badge"
-          text={this.props.allSubscriptions.length}>Total Subscriptions</Badge>
+          text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">

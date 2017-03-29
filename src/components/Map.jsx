@@ -16,8 +16,6 @@ const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
 
-import geolocationControl from './GeolocationControl'
-
 const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
@@ -53,7 +51,8 @@ export default class Map extends Component {
     onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired
+    onMouseoverUTFGrid: PropTypes.func.isRequired,
+    showSnackbar: PropTypes.func
   }
 
   constructor(props) {
@@ -82,7 +81,7 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
       this.fullscreenControl()
-      geolocationControl(this.map)
+      this.geolocationControl()
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
@@ -102,14 +101,24 @@ export default class Map extends Component {
           if (geolocateIcon) {
             this.map.removeLayer(geolocateIcon)
           }
+
           geolocateIcon = L.marker(e.latlng, {
             icon: defaultMarker
           })
+
+          geolocateIcon.bindLabel(
+            `<h6>Approximate Location</h3>` +
+            `<p>Latitude: ${e.latitude.toPrecision(8)}</p>` +
+            `<p>Longitude: ${e.longitude.toPrecision(8)}</p>` +
+            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`
+          )
+
           geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
-            fillOpacity: 0.4
+            fillOpacity: 0.2
           })
+
           this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
@@ -117,10 +126,17 @@ export default class Map extends Component {
               geolocateCircle.getBounds()
             )
           }
-
         })
+        // .on('contextmenu', (e) => {
+        //   const clickMarker = L.marker(e.latlng, {
+        //     icon: defaultMarker
+        //   }).bindLabel(
+        //     `<h6>Location</h3>` +
+        //     `<p>Latitude: ${e.latlng.lat.toPrecision(8)}</p>` +
+        //     `<p>Longitude: ${e.latlng.lng.toPrecision(8)}</p>`
+        //   , {noHide: true}).addTo(this.map)
+        // })
         .on('locationerror', (err) => {
-          console.log(err)
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
@@ -283,6 +299,58 @@ export default class Map extends Component {
     }
   }
 
+  geolocationControl() {
+    const leafletMap = this.map
+    const showSnackbar = this.props.showSnackbar
+
+    const geolocationOptions = {
+      watch: false,
+      setView: false,
+      maximumAge: 10000,
+      enableHighAccuracy: true
+    }
+
+    const trackLocationButton = L.easyButton({
+      states: [{
+        stateName: 'location-off',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">location_off</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-on')
+          leafletMap.locate({...geolocationOptions, watch: true})
+          showSnackbar(
+            "Using the track location feature on a mobile device will consume additional battery and data.", 3000
+          )
+        }
+      }, {
+        stateName: 'location-on',
+        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">location_on</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-off')
+          leafletMap.stopLocate()
+        }
+      }]
+    }).disable()
+
+    const geolocateButton = L.easyButton({
+      states: [{
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
+        title: 'Find my location',
+        onClick: () => {
+          leafletMap.closePopup()
+          trackLocationButton.enable()
+          leafletMap.locate(geolocationOptions)
+        }
+      }]
+    })
+
+    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+      position: 'topright'
+    })
+    locateToolbar.addTo(leafletMap)
+  }
+
   fullscreenControl() {
     const thisMap = this.map
     const toggleFullscreen = this.toggleFullscreen
@@ -300,22 +368,6 @@ export default class Map extends Component {
     fullscreenButton.addTo(this.map)
   }
 
-  geolocateControl() {
-    const thisMap = this.map
-    const geolocateButton = L.easyButton({
-      position: 'topright',
-      states: [{
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
-        title: 'Find my location',
-        onClick: function(control) {
-          thisMap.closePopup()
-          thisMap.locate({setView: true, enableHighAccuracy: true})
-        }
-      }]
-    })
-    geolocateButton.addTo(this.map)
-  }
-
   toggleAnimation() {
     this.layerStore.get('animated-weather').toggleAnimation()
     if (this.layerStore.get('animated-weather').animate === true) {
@@ -329,9 +381,8 @@ export default class Map extends Component {
   betaNotice() {
     if (document.URL === 'http://map.texasflood.org/') {
       return "hide-beta"
-    } else {
-      return "betanotice"
     }
+    return "betanotice"
   }
 
   render() {
