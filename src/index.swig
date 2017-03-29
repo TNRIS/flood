@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.blue-indigo.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
     
-    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon.png">
+    <!-- this is the code from the realfavicongenerator.net. replace when updating the icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/icons/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/icons/manifest.json">
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#aed480">
     <link rel="shortcut icon" href="/icons/favicon.ico">
     <meta name="msapplication-config" content="/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">

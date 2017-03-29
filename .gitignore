@@ -39,3 +39,9 @@ jspm_packages
 /dist/*
 
 .idea/
+
+src/images/\.DS_Store
+
+src/\.DS_Store
+
+\.DS_Store
