@@ -18,12 +18,12 @@ export function hideSnackbar() {
  * @param  {string} toppings test to go in the snackbar
  * @return {object}          action
  */
-export function showSnackbar(toppings, timeout = 2750) {
+export function showSnackbar(toppings, timeout) {
   return {
     type: SHOW_SNACKBAR,
     payload: {
       snackbarText: toppings,
-      snackbarTimeout: timeout
+      snackbarTimeout: timeout ? timeout : 2750
     }
   }
 }

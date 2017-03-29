@@ -8,7 +8,7 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 import {
-    Button, Card, CardTitle, DataTable, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
+    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
 } from 'react-mdl'
 
 const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
@@ -53,7 +53,8 @@ export default class Map extends Component {
     onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
     onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired
+    onMouseoverUTFGrid: PropTypes.func.isRequired,
+    showSnackbar: PropTypes.func
   }
 
   constructor(props) {
@@ -82,7 +83,7 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.initializeGeocoderControl()
       this.fullscreenControl()
-      geolocationControl(this.map)
+      this.geolocationControl()
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
@@ -117,7 +118,7 @@ export default class Map extends Component {
           geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
-            fillOpacity: 0.3
+            fillOpacity: 0.2
           })
 
           this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
@@ -127,10 +128,8 @@ export default class Map extends Component {
               geolocateCircle.getBounds()
             )
           }
-
         })
         .on('locationerror', (err) => {
-          console.log(err)
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
@@ -293,6 +292,58 @@ export default class Map extends Component {
     }
   }
 
+  geolocationControl() {
+    const leafletMap = this.map
+    const showSnackbar = this.props.showSnackbar
+
+    const geolocationOptions = {
+      watch: false,
+      setView: false,
+      maximumAge: 10000,
+      enableHighAccuracy: true
+    }
+
+    const trackLocationButton = L.easyButton({
+      states: [{
+        stateName: 'location-off',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">location_off</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-on')
+          leafletMap.locate({...geolocationOptions, watch: true})
+          showSnackbar(
+            "Using the track location feature on a mobile device will consume additional battery and data.", 3000
+          )
+        }
+      }, {
+        stateName: 'location-on',
+        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">location_on</i>',
+        title: 'Track my location',
+        onClick: (control) => {
+          control.state('location-off')
+          leafletMap.stopLocate()
+        }
+      }]
+    }).disable()
+
+    const geolocateButton = L.easyButton({
+      states: [{
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
+        title: 'Find my location',
+        onClick: () => {
+          leafletMap.closePopup()
+          trackLocationButton.enable()
+          leafletMap.locate(geolocationOptions)
+        }
+      }]
+    })
+
+    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+      position: 'topright'
+    })
+    locateToolbar.addTo(leafletMap)
+  }
+
   fullscreenControl() {
     const thisMap = this.map
     const toggleFullscreen = this.toggleFullscreen
@@ -308,22 +359,6 @@ export default class Map extends Component {
       }]
     })
     fullscreenButton.addTo(this.map)
-  }
-
-  geolocateControl() {
-    const thisMap = this.map
-    const geolocateButton = L.easyButton({
-      position: 'topright',
-      states: [{
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
-        title: 'Find my location',
-        onClick: function(control) {
-          thisMap.closePopup()
-          thisMap.locate({setView: true, enableHighAccuracy: true})
-        }
-      }]
-    })
-    geolocateButton.addTo(this.map)
   }
 
   toggleAnimation() {
