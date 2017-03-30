@@ -102,17 +102,32 @@ class SubscriptionList extends React.Component {
     console.log(gageInfo)
     this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
   }
-  
+
   handleOpenConfirmDialog() {
     this.setState({
       openConfirmDialog: true
     })
   }
-  
+
   handleCloseConfirmDialog() {
     this.setState({
       openConfirmDialog: false
     })
+  }
+
+  setZoomButtonColor(sigstage) {
+    switch (sigstage) {
+      case 'no flooding':
+        return "zoom-no-flooding"
+      case 'action':
+        return "zoom-action"
+      case 'flood':
+        return "zoom-flood"
+      case "not defined":
+        return "zoom-not-defined"
+      default:
+        return "black"
+    }
   }
 
   render() {
@@ -216,6 +231,7 @@ class SubscriptionList extends React.Component {
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
                 <ListItemAction className="subscription-list-item__locateAction">
                   <IconButton mini name="room" title="Zoom to gage location"
+                              className={this.setZoomButtonColor(this.props.gageSubscriptionById[gageSubscriptionId].sigstage)}
                   onClick={(event) => {
                     this.zoomToGage(
                       event,

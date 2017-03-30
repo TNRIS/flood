@@ -11,7 +11,8 @@ const addGageSubscriptionEntry = (state, action) => {
     [action.payload.lid]: {
       ...state[action.payload.lid],
       [action.payload.protocol]: action.payload.id,
-      "lid": action.payload.lid
+      "lid": action.payload.lid,
+      "sigstage": action.payload.sigstage
     }
   })
 }

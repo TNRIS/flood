@@ -15,9 +15,10 @@ let nextSubscriptionId = 0
  * @param  {object} subscription the original subscription object as returned from Amazon
  * @param  {string} protocol     subscription protocol (email or sms)
  * @param  {string} endpoint     email or phone number the subscription is assigned to
+ * @param  {string} sigstage     significant flood stage of gage
  * @return {object}              action
  */
-export function addSubscriptionToSubscriptionList(lid, subscription, protocol, endpoint) {
+export function addSubscriptionToSubscriptionList(lid, subscription, protocol, endpoint, sigstage) {
   return {
     type: ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST,
     payload: {
@@ -25,7 +26,8 @@ export function addSubscriptionToSubscriptionList(lid, subscription, protocol, e
       lid,
       subscription,
       protocol,
-      endpoint
+      endpoint,
+      sigstage
     }
   }
 }

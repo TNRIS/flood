@@ -833,4 +833,63 @@ a.leaflet-disabled {
   font-size: small;
   font-style: italic;
   padding: 0 10px 0 10px;
+button.zoom-major {
+  color: #cc33ff
 }
+
+button.zoom-moderate {
+  color: #ff0000
+}
+
+button.zoom-flood {
+  color: #ff9900 !important;
+}
+
+button.zoom-action {
+  color: #ffff00 !important;
+}
+
+button.zoom-no-flooding {
+  color: #00ff00 !important;
+}
+
+button.zoom-not-defined {
+  color: #72afe9 !important;
+}
+
+
+    //[sigstage = 'major'] {
+    //  marker-fill: #cc33ff;
+    //}
+    //
+    //[sigstage = 'moderate'] {
+    //  marker-fill: #ff0000;
+    //}
+    //
+    //[sigstage = 'flood'] {
+    //  marker-fill: #ff9900;
+    //}
+    //
+    //[sigstage = 'action'] {
+    //  marker-fill: #ffff00;
+    //}
+    //
+    //[sigstage = 'no flooding'] {
+    //  marker-fill: #00ff00;
+    //}
+    //
+    //[sigstage = 'not defined'] {
+    //  marker-fill: #72afe9;
+    //}
+    //
+    //[sigstage = 'low'] {
+    //  marker-fill: #906320;
+    //}
+    //
+    //[status = 'observations not current'] {
+    //  marker-fill: #bdc2bb;
+    //}
+    //
+    //[status = 'out of service'] {
+    //  marker-fill: #666666;
+    //}
