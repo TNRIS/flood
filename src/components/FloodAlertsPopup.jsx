@@ -6,7 +6,7 @@ import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
 import PopupText from './PopupText'
 
-const icon = require('../images/flood_alert_white.png')
+const icon = require('../images/flood_alert_red.png')
 
 export default class FloodAlertsPopup extends Component {
   static propTypes = {

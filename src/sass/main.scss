@@ -259,7 +259,8 @@ body {
   .popup__title {
     position: absolute;
     width: 100%;
-    background-color: #ba1010;
+    // background-color: #ba1010;
+    background-color: #333;
   }
 
   .popup__title-text {
@@ -284,6 +285,8 @@ body {
     font-size: 1em;
     float: right;
     top: 4px;
+    border-left: 1px;
+    border-color: white;
   }
 
   // customize popup tip - give it a more narrow angle
@@ -348,7 +351,7 @@ body {
   flex-direction: column;
 
   padding-left: $nav-spacing-from-left-wide - 6;
-  
+
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
     padding-left: $nav-spacing-from-left-narrow - 2;
@@ -423,6 +426,7 @@ body {
 }
 
 .fullscreen-icon {
+  color: #222;
   position: relative;
   left: -5px;
 
@@ -433,13 +437,13 @@ body {
 }
 
 .geolocate-icon {
+  color: #222;
   position: relative;
-  top: 2px;
-  left: -1px;
+  left: -3px;
 
-  @media screen and (min-width: 1025px) {
-    top: 0;
-    left: -3px;
+  @media screen and (max-width: 1025px) {
+    top: 2px;
+    left: -1px;
   }
 }
 
@@ -776,7 +780,7 @@ span.mdl-list__item-secondary-action > i {
   transition-duration: .3s;
   position: relative;
   border-radius: 4px;
-  border: solid 0px transparent; 
+  border: solid 0px transparent;
 }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
@@ -799,7 +803,7 @@ div.leaflet-label {
     border-color: rgba(52, 115, 162, 0.6);
     margin: 0;
     padding: 0;
-    
+
     h6 {
         background-color: $lighter-blue-version2;
         color: white;
@@ -807,11 +811,19 @@ div.leaflet-label {
         margin: 0;
         padding: 4px 6px 4px 6px;
     }
-    
+
     p {
         margin: 0;
         padding: 0 6px 0 6px;
     }
+}
+
+.leaflet-bar a {
+  color: #333 !important;
+}
+
+a.leaflet-disabled {
+  color: #bbb !important;
 }
 
 .about-version-number {

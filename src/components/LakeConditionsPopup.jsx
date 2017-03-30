@@ -5,7 +5,7 @@ import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
 import PopupImage from './PopupImage'
 
-const icon = require('../images/boat_icon_white.png')
+const icon = require('../images/boat_icon_popup_title.png')
 
 export default class LakeConditionsPopup extends Component {
   static propTypes = {
