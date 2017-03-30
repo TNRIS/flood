@@ -35,6 +35,11 @@ if (isProd) {
   }))
 }
 
+plugins.push(new webpack.DefinePlugin({
+  VERSION: JSON.stringify(require("./package.json").version),
+  RELEASE: JSON.stringify(require("./package.json").release)
+}))
+
 export default {
   entry: `${folders.src}entry.jsx`,
   output: {
