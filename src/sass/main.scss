@@ -129,7 +129,7 @@ body {
 
       color: white;
       font-weight: 300;
-      font-size: 1.3em;
+      font-size: 1.2em;
       letter-spacing: 1.2px;
 
       @media screen and (max-width: $layout-drawer-width-threshold) {
@@ -800,21 +800,24 @@ dialog.confirm-subscription-change h4 {
 }
 
 div.leaflet-label {
-    border-color: rgba(52, 115, 162, 0.6);
+    background-color: white;
+    // border-color: rgba(52, 115, 162, 0.6);
+    border-style: none;
     margin: 0;
     padding: 0;
 
     h6 {
-        background-color: $lighter-blue-version2;
+        background-color: #333;
         color: white;
+        font-size: 1.3em;
         font-weight: 300;
         margin: 0;
-        padding: 4px 6px 4px 6px;
+        padding: 4px 10px 4px 10px;
     }
 
     p {
         margin: 0;
-        padding: 0 6px 0 6px;
+        padding: 2px 10px 2px 10px;
     }
 }
 
