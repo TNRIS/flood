@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { Button } from 'react-mdl'
 
-const floodGaugeIcon = require('../images/flood_gauge_white.png')
+const floodGaugeIcon = require('../images/flood_gauge_icon.png')
 
 const PopupTitle = class PopupTitle extends Component {
   constructor(props) {
