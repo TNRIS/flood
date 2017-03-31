@@ -29,8 +29,8 @@ export default class Popup extends Component {
     this.leafletPopup = L.popup({
       className: 'popup',
       closeButton: false,
+      offset: [0, 15],
       keepInView: true,
-      // offset: L.point(-15, -35),
       ...widths
     })
   }
@@ -59,7 +59,7 @@ export default class Popup extends Component {
       this.leafletPopup.openOn(leafletMap)
     }
 
-    if (this.leafletPopup.isOpen) {
+    if (this.leafletPopup._isOpen) {
       // this will ensure that only the popup for the topmost layer will
       // show when features are stacked at a clicked location
       if (position === prevProps.position) {
@@ -130,7 +130,7 @@ export default class Popup extends Component {
     const updates = this.calculatePopupWidth()
     objectAssign(this.leafletPopup.options, updates)
 
-    if (this.leafletPopup.isOpen) {
+    if (this.leafletPopup._isOpen) {
       this.leafletPopup.update()
     }
   }
