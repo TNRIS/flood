@@ -118,7 +118,13 @@ export default class Map extends Component {
             fillOpacity: 0.2
           })
 
-          this.map.addLayer(geolocateIcon).addLayer(geolocateCircle)
+          this.map.addLayer(geolocateIcon)
+
+          if (e.accuracy > 50) {
+            this.props.showSnackbar(
+              "Geolocation accuracy is low. For best results, use your device's GPS, if equipped.")
+          }
+          this.map.addLayer(geolocateCircle)
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
             this.map.fitBounds(
@@ -126,16 +132,7 @@ export default class Map extends Component {
             )
           }
         })
-        // .on('contextmenu', (e) => {
-        //   const clickMarker = L.marker(e.latlng, {
-        //     icon: defaultMarker
-        //   }).bindLabel(
-        //     `<h6>Location</h3>` +
-        //     `<p>Latitude: ${e.latlng.lat.toPrecision(8)}</p>` +
-        //     `<p>Longitude: ${e.latlng.lng.toPrecision(8)}</p>`
-        //   , {noHide: true}).addTo(this.map)
-        // })
-        .on('locationerror', (err) => {
+        .on('locationerror', () => {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
@@ -286,8 +283,8 @@ export default class Map extends Component {
 
   toggleFullscreen() {
     const element = document.getElementsByTagName("html")[0]
-    if (document.fullscreenEnabled || 
-        document.webkitIsFullScreen || 
+    if (document.fullscreenEnabled ||
+        document.webkitIsFullScreen ||
         document.mozFullScreen ||
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
