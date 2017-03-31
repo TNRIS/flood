@@ -67,7 +67,6 @@ export default class Map extends Component {
     setTimeout(() => {
       // check the screen width and set the initial zoom to 5 if they are
       // on a phone, set it to 6 for all other devices
-      this.props.initialGageStatus()
       const initialZoom = window.innerWidth < 768 ? 5 : 6
       this.map = L.map(this.refs.map, {
         center: [31, -100],

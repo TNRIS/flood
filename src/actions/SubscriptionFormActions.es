@@ -92,23 +92,10 @@ export function getUserSubscriptions(email, phone, nextToken) {
 
           if (gagePattern.test(topic)) {
             if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
-              const query = `SELECT sigstage FROM nws_ahps_gauges_texas WHERE lid = '${topic}'`
-              axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
-                .then(gageData => {
-                  gageData.data.rows.map(gage => {
-                    dispatch(addSubscriptionToSubscriptionList(topic, sub, "sms", endpoint, gage.sigstage))
-                  })
-                })
+              dispatch(addSubscriptionToSubscriptionList(topic, sub, "sms", endpoint))
             }
             if (email && endpoint === email) {
               dispatch(addSubscriptionToSubscriptionList(topic, sub, "email", endpoint))
-              const query = `SELECT sigstage FROM nws_ahps_gauges_texas WHERE lid = '${topic}'`
-              axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
-                .then(gageData => {
-                  gageData.data.rows.map(gage => {
-                    dispatch(addSubscriptionToSubscriptionList(topic, sub, "email", endpoint, gage.sigstage))
-                  })
-                })
             }
           }
           counter++

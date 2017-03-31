@@ -13,7 +13,7 @@ class SubscriptionForm extends Component {
     phone: PropTypes.string,
     getUserSubscriptions: PropTypes.func,
     isFetching: PropTypes.bool,
-    isUpdating: PropTypes.func,
+    isUpdating: PropTypes.bool,
     setUserInfo: PropTypes.func
   }
 

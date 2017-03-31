@@ -18,7 +18,7 @@ let nextSubscriptionId = 0
  * @param  {string} sigstage     significant flood stage of gage
  * @return {object}              action
  */
-export function addSubscriptionToSubscriptionList(lid, subscription, protocol, endpoint, sigstage) {
+export function addSubscriptionToSubscriptionList(lid, subscription, protocol, endpoint) {
   return {
     type: ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST,
     payload: {
@@ -26,8 +26,7 @@ export function addSubscriptionToSubscriptionList(lid, subscription, protocol, e
       lid,
       subscription,
       protocol,
-      endpoint,
-      sigstage
+      endpoint
     }
   }
 }

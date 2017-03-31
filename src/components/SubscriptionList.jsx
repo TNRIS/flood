@@ -52,31 +52,6 @@ class SubscriptionList extends React.Component {
     this.saveChanges = this.saveChanges.bind(this)
   }
 
-  /**
-   * Toggles the subscription and adds or removes changes to the subscription change queue
-   */
-  toggleSubscription(event, gsId, protocol) {
-    const gs = this.props.gageSubscriptionById[gsId]
-
-    if (event.target.checked) {
-      if (!gs.hasOwnProperty(protocol)) {
-        this.props.addSubscribeToChangeList(gs.lid, protocol)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
-      }
-    }
-    else {
-      if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
-        const sId = gs[protocol]
-        this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
-      }
-    }
-  }
-
   saveChanges() {
     this.handleCloseConfirmDialog()
     this.props.saveSubscriptionChanges()
@@ -137,6 +112,32 @@ class SubscriptionList extends React.Component {
         return 'zoom-out-of-service'
       default:
         return ''
+    }
+  }
+
+    /**
+   * Toggles the subscription and adds or removes changes to the subscription change queue
+   */
+  toggleSubscription(event, gsId, protocol) {
+    const gs = this.props.gageSubscriptionById[gsId]
+
+    if (event.target.checked) {
+      if (!gs.hasOwnProperty(protocol)) {
+        this.props.addSubscribeToChangeList(gs.lid, protocol)
+      }
+      else {
+        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
+      }
+    }
+    else {
+      console.log("unchecked")
+      if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
+        const sId = gs[protocol]
+        this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
+      }
+      else {
+        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
+      }
     }
   }
 
@@ -240,8 +241,13 @@ class SubscriptionList extends React.Component {
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
                 <ListItemAction className="subscription-list-item__locateAction">
-                  <IconButton mini name="room" title="Zoom to gage location"
-                              className={SubscriptionList.setZoomButtonColor(this.props.gageSubscriptionById[gageSubscriptionId].sigstage)}
+                  <IconButton
+                    mini name="room"
+                    title="Zoom to gage location"
+                    className={
+                      SubscriptionList.setZoomButtonColor(
+                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].sigstage
+                      )}
                   onClick={(event) => {
                     this.zoomToGage(
                       event,

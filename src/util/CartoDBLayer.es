@@ -3,6 +3,8 @@ import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
 import * as FloodAlerts from '../util/FloodAlerts'
+import { store } from '../store'
+import { retrieveGageStatus } from '../actions'
 import Layer from './Layer'
 
 function getLayer(options) {
@@ -35,7 +37,7 @@ function getLayer(options) {
 }
 
 export default class CartoDBLayer extends Layer {
-  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs=7200000}) {
+  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs = 7200000}) {
     super({id, map, handlers})
 
     this.account = account
@@ -52,6 +54,7 @@ export default class CartoDBLayer extends Layer {
 
   update() {
     this.setStatus('updating')
+    store.dispatch(retrieveGageStatus())
 
     return getLayer({account: this.account, cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {

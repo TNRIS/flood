@@ -51,14 +51,19 @@ export const setGageInit = (initState) => {
 
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
-export function initialGageStatus() {
+export function retrieveGageStatus() {
   return (dispatch) => {
-    const query = `SELECT lid, name, latitude, longitude FROM nws_ahps_gauges_texas`
+    const query = `SELECT lid, name, sigstage, latitude, longitude FROM nws_ahps_gauges_texas`
     return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
       .then(({data}) => {
         const formatState = data.rows.map((gage) => {
           const obj = {}
-          obj[gage.lid] = {"name": gage.name, "latitude": gage.latitude, "longitude": gage.longitude}
+          obj[gage.lid] = {
+            "name": gage.name,
+            "sigstage": gage.sigstage,
+            "latitude": gage.latitude,
+            "longitude": gage.longitude
+          }
           return obj
         })
         const initState = R.mergeAll(formatState)
