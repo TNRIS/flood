@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Button, Spinner, Textfield } from 'react-mdl'
 
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
@@ -6,12 +6,15 @@ import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 /** Form for entering user info and updating current subscriptions */
 class SubscriptionForm extends Component {
   static propTypes = {
-    allSubscriptions: React.PropTypes.array,
-    clearSubscriptionList: React.PropTypes.func,
-    currentSubscriptions: React.PropTypes.object,
-    getUserSubscriptions: React.PropTypes.func,
-    isFetching: React.PropTypes.bool,
-    setUserInfo: React.PropTypes.func
+    allSubscriptions: PropTypes.array,
+    clearSubscriptionList: PropTypes.func,
+    currentSubscriptions: PropTypes.object,
+    email: PropTypes.string,
+    phone: PropTypes.string,
+    getUserSubscriptions: PropTypes.func,
+    isFetching: PropTypes.bool,
+    isUpdating: PropTypes.func,
+    setUserInfo: PropTypes.func
   }
 
   constructor(props) {
@@ -20,8 +23,8 @@ class SubscriptionForm extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
   }
-  
-  componentDidMount() {
+
+  componentWillMount() {
     this.setState({
       email: this.props.email,
       phone: this.props.phone
@@ -37,7 +40,6 @@ class SubscriptionForm extends Component {
       })
     }
   }
-  
 
   /**
    * Watches for changes on the html inputs
@@ -63,12 +65,15 @@ class SubscriptionForm extends Component {
 
   render() {
     let subscriptionManagerContent
+    let searchButtonDisabled
+
+    searchButtonDisabled = (this.state.email.length === 0 && this.state.phone.length === 0)
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.allSubscriptions.length > 0 && !this.props.isFetching && !this.props.isUpdating) {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
     }
-    else if (this.props.isFetching || this.props.isUpdating){
+    else if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
         <Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>
       )
@@ -95,7 +100,7 @@ class SubscriptionForm extends Component {
                        id="phone"
                        name="phone"
                        value= { this.state.phone }/>
-            <Button ripple
+            <Button ripple disabled={searchButtonDisabled}
             className="flood-form-button"
             type="submit"
             value="Submit"

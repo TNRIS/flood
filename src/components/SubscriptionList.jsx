@@ -115,18 +115,28 @@ class SubscriptionList extends React.Component {
     })
   }
 
-  setZoomButtonColor(sigstage) {
+  static setZoomButtonColor(sigstage) {
     switch (sigstage) {
-      case 'no flooding':
-        return "zoom-no-flooding"
-      case 'action':
-        return "zoom-action"
+      case 'major':
+        return "zoom-major"
+      case 'moderate':
+        return "zoom-moderate"
       case 'flood':
         return "zoom-flood"
-      case "not defined":
-        return "zoom-not-defined"
+      case 'action':
+        return 'zoom-action'
+      case 'no flooding':
+        return 'zoom-no-flooding'
+      case 'not defined':
+        return 'zoom-not-defined'
+      case 'low':
+        return 'zoom-low'
+      case 'observations not current':
+        return 'zoom-observations-not-current'
+      case 'out of service':
+        return 'zoom-out-of-service'
       default:
-        return "black"
+        return ''
     }
   }
 
@@ -231,7 +241,7 @@ class SubscriptionList extends React.Component {
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
                 <ListItemAction className="subscription-list-item__locateAction">
                   <IconButton mini name="room" title="Zoom to gage location"
-                              className={this.setZoomButtonColor(this.props.gageSubscriptionById[gageSubscriptionId].sigstage)}
+                              className={SubscriptionList.setZoomButtonColor(this.props.gageSubscriptionById[gageSubscriptionId].sigstage)}
                   onClick={(event) => {
                     this.zoomToGage(
                       event,
