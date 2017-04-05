@@ -20,7 +20,8 @@ const Resources = () => {
                         title="After a Flood"
                         href="http://www.twdb.texas.gov/flood/prep/after.asp" target="after"/>
           <AboutLinkContainer />
-          <ResourceLink text="Contact Us" href={contactLink} target="_top"/>
+          <ResourceLink text="Contact Us" 
+                        href={contactLink} target="_top"/>
         </Navigation>
       </div>
   )
