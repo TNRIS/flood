@@ -28,6 +28,17 @@ body {
   .mdl-layout__drawer {
     box-shadow: 0 0px 8px rgba(0,0,0,0.65);
 
+    h2 {
+      background: #e2ffc0;
+      border-bottom: 1px solid #AED480;
+      font-size: 16px;
+      line-height: normal;
+      margin: 0;
+      padding: 10px 10px 5px 10px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
     // override mdl white border
     border-right: none;
 
@@ -116,9 +127,11 @@ body {
   }
 
   h4 {
+    border-bottom: 1px solid #5ec4ff;
+    color: #5ec4ff;
     font-size: 14px;
-    border-bottom: 1px solid #ccc;
-    margin: 5px 20px 0 20px;
+    margin: 10px 20px 0 20px;
+    text-transform: uppercase;
   }
 
   .resources__links.mdl-navigation {
