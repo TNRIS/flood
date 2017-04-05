@@ -236,7 +236,7 @@ export default class Map extends Component {
       layer.bringToBack()
     })
 
-    layers['OpenStreetMap'].addTo(this.map)
+    layers['Mapbox Outdoors'].addTo(this.map)
   }
 
   initializeGeocoderControl() {
@@ -264,7 +264,7 @@ export default class Map extends Component {
     // const maxBounds = [[25.7, -107], [36.8, -93.2]]
     const maxBounds = [[23.5, -112.6], [41, -83]]
     const center = this.map.getCenter()
-    let newCenter = {lat: center.lat, lng: center.lng}
+    const newCenter = {lat: center.lat, lng: center.lng}
     if (center.lat < maxBounds[0][0]) {
       newCenter.lat = maxBounds[0][0]
     }
@@ -286,8 +286,8 @@ export default class Map extends Component {
 
   toggleFullscreen() {
     const element = document.getElementsByTagName("html")[0]
-    if (document.fullscreenEnabled || 
-        document.webkitIsFullScreen || 
+    if (document.fullscreenEnabled ||
+        document.webkitIsFullScreen ||
         document.mozFullScreen ||
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
@@ -400,6 +400,7 @@ export default class Map extends Component {
     return (
       <div className="map">
         <div ref="map" className="map--full">
+          <a href="http://mapbox.com/about/maps" className="mapbox-wordmark" target="_blank">Mapbox</a>
           <div className="weatherTimestamp">
             <p>{this.displayedTimestamp}</p>
           </div>

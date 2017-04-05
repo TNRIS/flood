@@ -6,6 +6,15 @@ import * as types from '../actions/types'
 const initialState = {
   layers: [
     {
+      'id': 'mapbox-outdoors',
+      'text': 'Mapbox Outdoors',
+      'type': 'tile',
+      'url': 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidC1mYWwiLCJhIjoiY2lnMnFqNDN0MWVseXVrbTVoanRtMnQ5cyJ9.Dej5tFgaK38wrj6a4HVSxA',
+      'options': {
+        'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
+      }
+    },
+    {
       'id': 'osm',
       'text': 'OpenStreetMap',
       'type': 'tile',

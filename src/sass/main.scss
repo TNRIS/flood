@@ -1,9 +1,10 @@
-$lighter-blue: #39aad2;
-$darker-blue: #2c88a9;
+$lighter-blue-version1: #39aad2;
+$darker-blue-version1: #2c88a9;
 $twdb-blue: #3f556d;
 
-$darker-blue-version2: #265577;
-$lighter-blue-version2: #3473A2;
+$gray20: #333;
+$darker-blue: #265577;
+$lighter-blue: #3473A2;
 $accent-dark-green: #92C553;
 $accent-light-green: #AED480;
 
@@ -59,7 +60,7 @@ body {
   }
 
   .mdl-layout__drawer-button {
-    background-color: $lighter-blue-version2;
+    background-color: $lighter-blue;
     margin: 20px 0 0 0;
 
     i {
@@ -117,7 +118,7 @@ body {
 
 .resources {
   flex-grow: 1;
-  background-color: #3473A2;
+  background-color: $lighter-blue;
   color: white;
 
   a {
@@ -150,8 +151,8 @@ body {
       }
 
       &:hover {
-        // background-color: lighten($lighter-blue, 12%);
-        background-color: #265577;
+        // background-color: lighten($lighter-blue-version1, 12%);
+        background-color: $darker-blue;
       }
     }
   }
@@ -163,7 +164,7 @@ body {
   background-image: url(../images/planning_bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-color: $lighter-blue;
+  background-color: $lighter-blue-version1;
   min-height: 124px;
   padding-bottom: 10px;
 }
@@ -184,7 +185,7 @@ body {
 
 .footer {
   min-height: 50px;
-  background-color: #265577;
+  background-color: $darker-blue;
   color: white;
 
   position: relative;
@@ -273,7 +274,7 @@ body {
     position: absolute;
     width: 100%;
     // background-color: #ba1010;
-    background-color: #333;
+    background-color: $gray20;
   }
 
   .popup__title-text {
@@ -356,7 +357,7 @@ body {
 
 .feature-layer__link {
   min-height: 40px;
-  border-bottom: 1px solid #AED480;
+  border-bottom: 1px solid $accent-light-green;
 }
 
 .feature-layer__link.mdl-navigation__link {
@@ -608,7 +609,7 @@ dialog.subscribeDialog h4 {
       padding-bottom: 24px;
 
       .terms-agree-button:hover {
-        background-color: $lighter-blue-version2;
+        background-color: $lighter-blue;
       }
     }
 
@@ -681,7 +682,7 @@ div.dialog-button-div {
 
   .terms-agree-button {
     color: white !important;
-    background-color: $lighter-blue-version2;
+    background-color: $lighter-blue;
     border-radius: 0;
     width: 100%;
     font-size: 90%;
@@ -739,12 +740,12 @@ span.mdl-list__item-secondary-content.subscription-list-item__locateAction > spa
     margin: 0;
 
     button {
-        background-color: $lighter-blue-version2 !important;
+        background-color: $lighter-blue !important;
         box-shadow: none;
         color: white;
 
         &:hover {
-            background-color: $darker-blue-version2 !important;
+            background-color: $darker-blue !important;
         }
 
         span {
@@ -779,14 +780,14 @@ span.mdl-list__item-secondary-action > i {
 // }
 
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
-    border: 2px solid $lighter-blue-version2 !important;
+    border: 2px solid $lighter-blue !important;
     .mdl-checkbox__tick-outline {
-        background-color: $lighter-blue-version2 !important;
+        background-color: $lighter-blue !important;
     }
 }
 
 .flood-form-button:enabled {
-    color: $darker-blue-version2 !important;
+    color: $darker-blue !important;
 }
 
 .easy-button-button{
@@ -820,7 +821,7 @@ div.leaflet-label {
     padding: 0;
 
     h6 {
-        background-color: #333;
+        background-color: $gray20;
         color: white;
         font-size: 1.3em;
         font-weight: 300;
@@ -835,7 +836,7 @@ div.leaflet-label {
 }
 
 .leaflet-bar a {
-  color: #333 !important;
+  color: $gray20 !important;
 }
 
 a.leaflet-disabled {
@@ -866,7 +867,7 @@ div.leaflet-label {
     padding: 0;
 
     h6 {
-        background-color: #333;
+        background-color: $gray20;
         color: white;
         font-size: 1.3em;
         font-weight: 300;
@@ -881,7 +882,7 @@ div.leaflet-label {
 }
 
 .leaflet-bar a {
-  color: #333 !important;
+  color: $gray20 !important;
 }
 
 a.leaflet-disabled {
@@ -931,4 +932,22 @@ button.zoom-observations-not-current {
 
 button.zoom-out-of-service {
   color: #666666 !important;
+}
+
+.mapbox-wordmark {
+  position: absolute;
+  display: block;
+  height: 20px;
+  width: 65px;
+  left: 10px;
+  bottom: 10px;
+  text-indent: -9999px;
+  z-index: 99999;
+  overflow: hidden;
+
+  /* `background-image` contains the Mapbox wordmark */
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAoCAMAAAAFWtJHAAAAwFBMVEUAAAAAAAAAAABtbW0AAAAAAAAAAAAAAAAAAAAAAAClpaUAAADp6ekAAAD5+fna2toAAAAMDAzv7+/Nzc0AAAA2Njb8/Pz9/f3T09MAAAAAAAD7+/sAAAArKyuxsbH39/fs7OwbGxuIiIjz8/N8fHyenp7u7u74+PgAAAC8vLxWVlbx8fF1dXXl5eVcXFyUlJTQ0NDFxcVCQkLAwMC4uLj19fXo6OjW1tarq6ve3t77+/vi4uL6+vrKysrNzc3///8w7gSSAAAAP3RSTlMAOQNdPSYBPywKexLLGPCxNEHXnzFL+v2nGwf1IEiE6dBFad9jd9PuLo1V2mDDV3Cjl06SiuXIq4C3973ym6BQMVUPAAAEXElEQVR4Ae2WCVP6OBiH05L0l1IqrVbkKHJ54I0oHn+PfP9vtUle0z/YdhbH2XVnd58ZnRJIeHiPJOx//mH4vQSAN+8FjAhFxgHIaPvJeZ99hxwEElon5iAQbj85Y98g8ODwjEOMAvGFyeE3FEKgodTBqj0BJGN9DhyNd5Ta3ean9QEopfaA+LsKhnEKRExqg4FSP6Og7oEkAjBWnxSCgBX4xF+kcLoPcOBQrSv0e5kH7s1j37jECQieCTPiFGxL5VHw2zQWCeeJiPt6kjRQw0XSkIdVChf67xGa4alSnZlT6HEQ8CK9ANbhvXUF9xlDkBfTuHDWScgC9+z5FQpPI12TlwC6+sV7ixR8CUMKiwjm2GQeOQWHMGuHGdbnObJAwCEqFJpNU5H6uaPUaEIKiQfg+PHk1+u4OwW9PlWW2ctbA4BHCtp+cNK+H8Jos4gDmC5ar4Nx9waaG/2B13NgDqS7+vm2RgEtEws82P+kwIHhs/pgkQKcFIhfd7CogtGNjYMHTLpurD0ERbYFw4JaD3GlQuNAL/JEsSAF4HqlCnaHACk4WhOn4OgCkMD5hSpYNYDJTD8Y46n+jsE1kPhVCuR6QBXhFK7MUOu9O6b1SWF3b+/9ZVWMGOlu93E8UDaAhgc7bfH+0DHqKXCkHzoNDFfU+zxiVQrUC9QXTuHYtKpN59OA3IxCG4b7jh6ZFuVockaNTW09mkJzOaPU49a6mE9cAchZpQJNpUWcwgV9r6FJswsFKrITp2B5pMBMdnS0z2HZNy2+BNKxSZxZfglkrFYBJxQnpzA5sN/HheR2aFQoZBLAi149dQoyAYYjW0hHlHguBAdMcR0DuDZ5omevX6+AI8qcU7ikKT3GBHCnXwydgmCC0tRwCnGQ2Wp6Be71yNIWfQSkOl9vAI1SBCNWrwC01RROgX7BuT2HI4r7tFAw086p/NwZEdOEa7R1uAFuNmQPuKAEAjYNQ0CyeoUEWHYBnpQVQgpvc0Ph+gsKlAnKg1+vEHsw5LKciLKCAJobiWBzYFGbCKpHqkZZrxBFHEASyFI59vJPCskcwNVGOWZAOqsrR+pKbaNeAMT1CixMEtlnsqopNxUMzVJT3tY35aXZm6a6Y9QhwMN6BUJWbE1lhbMO1WehkO7poO0sK7em9MJGxp1XSbC1gtugzzSLQmGsX7VntJGSwsPZ2d2z3bIPKzdoOp3Wzqt8G4XyMVUoFIxLx1S7+piaHtCvR3FeRVsq0GFdp9C5TbGpcNqsPqyHKxcfd14h21KhuLKUFU4f3osrC7F6uV3WXFnadL7wyAPeKDXw2RoJCO5GY4DouYvb/gepVXheLoewzPseQG9N/vzilrMIjoStE3++zvle4eSurw7XEe76ynI4aq+v7lEyt1x5awiFlFLQbHKIpabnM3eJLym4Szzzc/du7SU+zOXv9UNpECH7IoH/gecURPlN9vdQpeD47yhIFNX0U0QgvID9nENm+yxk/xb+AGAjNfRZuk9qAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 65px 20px;
 }
