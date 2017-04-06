@@ -440,6 +440,7 @@ body {
 }
 
 .fullscreen-icon {
+  cursor: pointer;
   color: #222;
   position: relative;
   left: -5px;
@@ -451,9 +452,10 @@ body {
 }
 
 .geolocate-icon {
+  cursor: pointer;
   color: #222;
   position: relative;
-  left: -3px;
+  left: -4px;
 
   @media screen and (max-width: 1025px) {
     top: 2px;
