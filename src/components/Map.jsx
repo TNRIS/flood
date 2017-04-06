@@ -59,7 +59,8 @@ export default class Map extends Component {
     super(props)
     this.state = {
       animationIcon: "play_arrow",
-      geolocateControl: "basic"
+      geolocateControl: "basic",
+      mapboxWordmarkClass: "hide-mapbox-wordmark"
     }
   }
 
@@ -234,6 +235,12 @@ export default class Map extends Component {
     layerControl.setPosition('bottomright').addTo(this.map)
     this.map.on('baselayerchange', ({ layer }) => {
       layer.bringToBack()
+      if (layer.options.mapbox) {
+        this.setState({mapboxWordmarkClass: "mapbox-wordmark"})
+      }
+      else {
+        this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
+      }
     })
 
     layers['Mapbox Outdoors'].addTo(this.map)
@@ -400,7 +407,7 @@ export default class Map extends Component {
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <a href="http://mapbox.com/about/maps" className="mapbox-wordmark" target="_blank">Mapbox</a>
+          <a href="http://mapbox.com/about/maps" className={this.state.mapboxWordmarkClass} target="_blank">Mapbox</a>
           <div className="weatherTimestamp">
             <p>{this.displayedTimestamp}</p>
           </div>
