@@ -59,7 +59,8 @@ export default class Map extends Component {
     super(props)
     this.state = {
       animationIcon: "play_arrow",
-      geolocateControl: "basic"
+      geolocateControl: "basic",
+      mapboxWordmarkClass: "hide-mapbox-wordmark"
     }
   }
 
@@ -231,9 +232,15 @@ export default class Map extends Component {
     layerControl.setPosition('bottomright').addTo(this.map)
     this.map.on('baselayerchange', ({ layer }) => {
       layer.bringToBack()
+      if (layer.options.mapbox) {
+        this.setState({mapboxWordmarkClass: "mapbox-wordmark"})
+      }
+      else {
+        this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
+      }
     })
 
-    layers['OpenStreetMap'].addTo(this.map)
+    layers['Mapbox Outdoors'].addTo(this.map)
   }
 
   initializeGeocoderControl() {
@@ -261,7 +268,7 @@ export default class Map extends Component {
     // const maxBounds = [[25.7, -107], [36.8, -93.2]]
     const maxBounds = [[23.5, -112.6], [41, -83]]
     const center = this.map.getCenter()
-    let newCenter = {lat: center.lat, lng: center.lng}
+    const newCenter = {lat: center.lat, lng: center.lng}
     if (center.lat < maxBounds[0][0]) {
       newCenter.lat = maxBounds[0][0]
     }
@@ -397,6 +404,7 @@ export default class Map extends Component {
     return (
       <div className="map">
         <div ref="map" className="map--full">
+          <a href="http://mapbox.com/about/maps" className={this.state.mapboxWordmarkClass} target="_blank">Mapbox</a>
           <div className="weatherTimestamp">
             <p>{this.displayedTimestamp}</p>
           </div>

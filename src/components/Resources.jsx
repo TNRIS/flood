@@ -8,16 +8,20 @@ const Resources = () => {
   const contactLink = "mailto:tnrisdatasupport@twdb.texas.gov?subject=TexasFlood.org Version: " + VERSION
   return (
       <div className="resources">
-        <h4 className="resources__header">More Resources</h4>
+        <h4 className="resources__header">Flood Resources</h4>
         <Navigation className="resources__links">
-          <ResourceLink text="Preparing Before Flood"
+          <ResourceLink text="Preparing"
+                        title="Before a Flood"
                         href="http://www.twdb.texas.gov/flood/prep/before.asp" target="before"/>
-          <ResourceLink text="Being Safe During Flood"
+          <ResourceLink text="Staying Safe"
+                        title="During a Flood"
                         href="http://www.twdb.texas.gov/flood/prep/during.asp" target="during"/>
-          <ResourceLink text="Recovering After Flood"
+          <ResourceLink text="Recovering"
+                        title="After a Flood"
                         href="http://www.twdb.texas.gov/flood/prep/after.asp" target="after"/>
           <AboutLinkContainer />
-          <ResourceLink text="Contact Us" href={contactLink} target="_top"/>
+          <ResourceLink text="Contact Us" 
+                        href={contactLink} target="_top"/>
         </Navigation>
       </div>
   )
