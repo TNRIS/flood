@@ -77,8 +77,6 @@ export default class CartoDBLayer extends Layer {
           utfGridLayer.on('click', (gridData) => {
             this.handlers.onClickUTFGrid(this.id, gridData)
           })
-          utfGridLayer.on('mouseover', this.handlers.onMouseoverUTFGrid)
-          utfGridLayer.on('mouseout', this.handlers.onMouseoutUTFGrid)
 
           this.utfGridLayer = utfGridLayer
         }
