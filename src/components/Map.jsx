@@ -1,6 +1,7 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
+import {  hashHistory } from 'react-router'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -20,6 +21,8 @@ const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_my_location_black_24dp_2x.png')
+
+import axios from 'axios'
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
@@ -65,14 +68,11 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      // check the screen width and set the initial zoom to 5 if they are
-      // on a phone, set it to 6 for all other devices
-      const initialZoom = window.innerWidth < 768 ? 5 : 6
+    const initMap = (options) => {
       this.map = L.map(this.refs.map, {
-        center: [31, -100],
-        zoom: initialZoom,
-        minZoom: initialZoom
+        center: [options.latitude, options.longitude],
+        zoom: options.zoom,
+        minZoom: window.innerWidth < 768 ? 5 : 6
       })
 
       this.map.zoomControl.setPosition('topright')
@@ -108,8 +108,8 @@ export default class Map extends Component {
 
           geolocateIcon.bindLabel(
             `<h6>Approximate Location</h3>` +
-            `<p>Latitude: ${e.latitude.toPrecision(8)}</p>` +
-            `<p>Longitude: ${e.longitude.toPrecision(8)}</p>` +
+            `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
+            `<p>Longitude: ${e.longitude.toPrecision(7)}</p>` +
             `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`
           )
 
@@ -138,6 +138,14 @@ export default class Map extends Component {
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
         })
+        .on('moveend', () => {
+          const center = this.map.getCenter()
+          const zoom =  this.map.getZoom()
+          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+        })
+        .on('popupclose', () => {
+          // this.props.removeAllPopups()
+        })
         .on('zoomstart', () => {
           if (this.map.hasLayer(geolocateCircle)) {
             this.map.removeLayer(geolocateCircle)
@@ -148,8 +156,50 @@ export default class Map extends Component {
             this.map.addLayer(geolocateCircle)
           }
         })
+    }
+
+    setTimeout(() => {
+      const getZoom = () => {
+        if (this.props.initialCenter.zoom && this.props.initialCenter.zoom.match(/\d*\z+/)) {
+          return this.props.initialCenter.zoom.replace(/z$/, "")
+        }
+        return window.innerWidth < 768 ? 5 : 6
+      }
+
+      const initView = {
+        latitude: this.props.initialCenter.lat || 31,
+        longitude: this.props.initialCenter.lng || -100,
+        zoom: getZoom()
+      }
+      if (this.props.hasOwnProperty("gageCenter") && this.props.gageCenter.lid) {
+        const upperLid = this.props.gageCenter.lid.toUpperCase()
+        const query = (
+          `SELECT latitude, longitude FROM nws_ahps_gauges_texas WHERE lid = '${upperLid}'`
+        )
+        axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
+          .then(({data}) => {
+            if (data.rows.length === 0) {
+              this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
+              this.props.hashHistory.push("")
+              return initMap(initView)
+            }
+            data.rows.map((gage) => {
+              initView.latitude = gage.latitude
+              initView.longitude = gage.longitude
+              initView.zoom = 13
+            })
+            initMap(initView)
+          })
+      }
+      else {
+        if (!this.props.initialCenter) {
+          this.props.hashHistory.push("")
+        }
+        initMap(initView)
+      }
     }, 0)
   }
+
 
   componentWillUpdate(nextProps) {
     // only trigger show() and hide() on feature layers when the set of active
@@ -305,6 +355,7 @@ export default class Map extends Component {
   geolocationControl() {
     const leafletMap = this.map
     const showSnackbar = this.props.showSnackbar
+    const removeAllPopups = this.props.removeAllPopups
 
     const geolocationOptions = {
       watch: false,
@@ -320,6 +371,7 @@ export default class Map extends Component {
         title: 'Track my location',
         onClick: (control) => {
           control.state('location-on')
+          leafletMap.closePopup()
           leafletMap.locate({...geolocationOptions, watch: true})
           showSnackbar(
             "Using the track location feature on a mobile device will consume additional battery and data.", 3000

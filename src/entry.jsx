@@ -1,10 +1,14 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
+import { Router, Route, hashHistory } from 'react-router'
 
-import App from './components/App'
+import AppContainer from './containers/AppContainer'
 
 import { store } from './store'
+import {
+  setCenterAndZoom
+} from './actions/SubscriptionChangeActions'
 
 import './sass/main.scss'
 
@@ -30,8 +34,24 @@ import './vendor/leaflet.label.css'
 // Promise polyfill
 require('es6-promise').polyfill()
 
-render((
+let lastPath = ""
+
+hashHistory.listen((ev) => {
+  if (ev.action === "POP" && ev.pathname !== lastPath) {
+    // store.dispatch(setCenterAndZoom(32, -105, 12))
+  }
+  lastPath = ev.pathname
+})
+
+render(
   <Provider store={store}>
-    <App />
-  </Provider>
-), document.getElementById('reactApp'))
+    <Router history={hashHistory}>
+      <Route path="/" component={AppContainer}>
+        <Route path="gage/:lid" component={AppContainer}/>
+        <Route path="map/@:lat,:lng,:zoom" component={AppContainer}/>
+        <Route path="/*" component={AppContainer}/>
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('reactApp')
+)

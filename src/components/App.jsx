@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
@@ -11,19 +11,39 @@ import ToasterContainer from '../containers/ToasterContainer'
 
 ga.pageview(window.location.pathname)
 
-const App = () => (
-  <div>
-    <Disclaimer />
-    <SubscribeContainer />
-    <AboutContainer />
-    <Layout fixedDrawer style={{background: 'white'}}>
-      <NavigationDrawer/>
-      <Content>
-        <MapContainer />
-      </Content>
-      <ToasterContainer />
-    </Layout>
-  </div>
-)
 
-export default App
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    // if (this.props.gage) {
+    //   const gageinfo = this.props.gageInfo[this.props.gage.toUpperCase()]
+    //   this.props.setCenterAndZoom(gageinfo.latitude, gageinfo.longitude, 13)
+    // }
+
+    return (
+      <div>
+        <Disclaimer />
+        <SubscribeContainer />
+        <AboutContainer />
+        <Layout fixedDrawer style={{background: 'white'}}>
+          <NavigationDrawer/>
+          <Content>
+            <MapContainer
+              initialCenter={{
+                lat: this.props.params.lat || null,
+                lng: this.props.params.lng || null,
+                zoom: this.props.params.zoom || null
+              }}
+              gageCenter={{
+                lid: this.props.params.lid || null
+              }} />
+          </Content>
+          <ToasterContainer />
+        </Layout>
+      </div>
+    )
+  }
+}
