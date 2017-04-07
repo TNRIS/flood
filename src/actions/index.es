@@ -27,8 +27,6 @@ export const setBaseLayer = (id) => {
   }
 }
 
-export const setPopup = createAction(types.SET_POPUP, data => data)
-
 export const setFeatureLayer = (id) => {
   return (dispatch) => {
     dispatch(setPopup())

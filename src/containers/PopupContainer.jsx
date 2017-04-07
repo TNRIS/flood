@@ -7,6 +7,7 @@ const mapStateToProps = (state) => {
   const props = {
     popupInfo: state.map.popup,
     browser: state.browser,
+    popup: state.map.popup
   }
 
   if (state.map.popup && state.map.popup.data) {

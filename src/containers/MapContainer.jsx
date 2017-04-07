@@ -1,8 +1,15 @@
 import { connect } from 'react-redux'
 
+import {
+  clearCenterAndZoom,
+  clearPopup,
+  setCenterAndZoom,
+  setPopup
+} from '../actions/MapActions'
+
 import * as actions from '../actions'
+
 import { showSnackbar } from '../actions/ToasterActions'
-import { clearCenterAndZoom } from '../actions/SubscriptionChangeActions'
 import Map from '../components/Map'
 
 const mapStateToProps = (state) => {
@@ -17,10 +24,11 @@ const mapDispatchToProps = (dispatch) => {
   function clickHandler(id, data) {
     // This allows the poups to open when multiple layers are turned on
     if (data.data) {
+      console.log(data.data)
       const payload = {}
       payload.id = id
       payload.data = data
-      dispatch(actions.setPopup(payload))
+      dispatch(setPopup(payload))
     }
   }
 
@@ -30,12 +38,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     onClickAlerts: clickHandler,
     onClickUTFGrid: clickHandler,
-    onMouseoutUTFGrid: () => {
-      dispatch(actions.hoverOverMapClickable())
-    },
-    onMouseoverUTFGrid: (data) => {
-      dispatch(actions.hoverOverMapClickable(data))
-    },
     updateTimestamp: (timestamp) => {
       dispatch(actions.updateTimestamp(timestamp))
     },

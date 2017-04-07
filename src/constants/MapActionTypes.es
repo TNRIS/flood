@@ -1,0 +1,4 @@
+export const CLEAR_CENTER_AND_ZOOM = 'CLEAR_CENTER_AND_ZOOM'
+export const CLEAR_POPUP = 'CLEAR_POPUP'
+export const SET_CENTER_AND_ZOOM = 'SET_CENTER_AND_ZOOM'
+export const SET_POPUP = 'SET_POPUP'

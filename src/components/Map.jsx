@@ -53,8 +53,6 @@ export default class Map extends Component {
     onLayerStatusChange: PropTypes.func.isRequired,
     onClickAlerts: PropTypes.func.isRequired,
     onClickUTFGrid: PropTypes.func.isRequired,
-    onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired,
     showSnackbar: PropTypes.func
   }
 

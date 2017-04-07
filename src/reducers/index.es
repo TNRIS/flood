@@ -15,6 +15,7 @@ import { toaster } from './toaster'
 import user from './user'
 import aboutDialog from './aboutDialog'
 
+
 export const rootReducer = combineReducers({
   baseLayers: baseLayers,
   featureLayers: featureLayers,
