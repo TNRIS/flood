@@ -2,10 +2,13 @@ import { connect } from 'react-redux'
 
 import {
   clearCenterAndZoom,
-  clearPopup,
   setCenterAndZoom,
-  setPopup
 } from '../actions/MapActions'
+
+import {
+  clearPopup,
+  setPopup
+} from '../actions/PopupActions'
 
 import * as actions from '../actions'
 
@@ -24,11 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   function clickHandler(id, data) {
     // This allows the poups to open when multiple layers are turned on
     if (data.data) {
-      console.log(data.data)
-      const payload = {}
-      payload.id = id
-      payload.data = data
-      dispatch(setPopup(payload))
+      dispatch(setPopup({id, data: data.data}))
     }
   }
 

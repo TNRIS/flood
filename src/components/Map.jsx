@@ -8,9 +8,7 @@ import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
-import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon
-} from 'react-mdl'
+import { FABButton, Icon } from 'react-mdl'
 
 const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')

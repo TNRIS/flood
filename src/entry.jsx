@@ -6,10 +6,6 @@ import { Router, Route, hashHistory } from 'react-router'
 import AppContainer from './containers/AppContainer'
 
 import { store } from './store'
-import {
-  setCenterAndZoom
-} from './actions/SubscriptionChangeActions'
-
 import './sass/main.scss'
 
 // leaflet css and assets

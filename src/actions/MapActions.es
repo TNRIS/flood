@@ -1,10 +1,6 @@
-import { createAction } from 'redux-actions'
-
 import {
   CLEAR_CENTER_AND_ZOOM,
-  CLEAR_POPUP,
-  SET_CENTER_AND_ZOOM,
-  SET_POPUP
+  SET_CENTER_AND_ZOOM
 } from '../constants/MapActionTypes'
 
 /**
@@ -14,12 +10,6 @@ import {
 export function clearCenterAndZoom() {
   return {
     type: CLEAR_CENTER_AND_ZOOM
-  }
-}
-
-export function clearPopup() {
-  return {
-    type: CLEAR_POPUP
   }
 }
 
@@ -36,15 +26,5 @@ export function setCenterAndZoom(lat, lng, zoom) {
     lat,
     lng,
     zoom
-  }
-}
-
-export function setPopup(data) {
-  return {
-    type: SET_POPUP,
-    payload: {
-      id: data.id,
-      data: data.data
-    }
   }
 }

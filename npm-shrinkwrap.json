@@ -123,9 +123,9 @@
       "resolved": "https://registry.npmjs.org/arrify/-/arrify-1.0.1.tgz"
     },
     "asap": {
-      "version": "2.0.3",
+      "version": "2.0.5",
       "from": "asap@>=2.0.3 <2.1.0",
-      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
     },
     "asn1": {
       "version": "0.2.3",
@@ -4558,6 +4558,47 @@
         }
       }
     },
+    "react-router": {
+      "version": "3.0.3",
+      "from": "react-router@3.0.3",
+      "resolved": "https://registry.npmjs.org/react-router/-/react-router-3.0.3.tgz",
+      "dependencies": {
+        "history": {
+          "version": "3.3.0",
+          "from": "history@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/history/-/history-3.3.0.tgz"
+        },
+        "hoist-non-react-statics": {
+          "version": "1.2.0",
+          "from": "hoist-non-react-statics@>=1.2.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz"
+        },
+        "js-tokens": {
+          "version": "3.0.1",
+          "from": "js-tokens@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-3.0.1.tgz"
+        },
+        "loose-envify": {
+          "version": "1.3.1",
+          "from": "loose-envify@>=1.3.1 <2.0.0",
+          "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.3.1.tgz"
+        },
+        "object-assign": {
+          "version": "4.1.1",
+          "from": "object-assign@>=4.1.0 <5.0.0"
+        },
+        "query-string": {
+          "version": "4.3.2",
+          "from": "query-string@>=4.2.2 <5.0.0",
+          "resolved": "https://registry.npmjs.org/query-string/-/query-string-4.3.2.tgz"
+        },
+        "warning": {
+          "version": "3.0.0",
+          "from": "warning@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/warning/-/warning-3.0.0.tgz"
+        }
+      }
+    },
     "react-transform-catch-errors": {
       "version": "1.0.2",
       "from": "react-transform-catch-errors@>=1.0.2 <2.0.0",
@@ -5214,9 +5255,8 @@
       "resolved": "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
     },
     "ua-parser-js": {
-      "version": "0.7.10",
-      "from": "ua-parser-js@>=0.7.9 <0.8.0",
-      "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.10.tgz"
+      "version": "0.7.12",
+      "from": "ua-parser-js@>=0.7.9 <0.8.0"
     },
     "uglify-js": {
       "version": "2.6.2",

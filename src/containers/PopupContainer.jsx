@@ -4,19 +4,11 @@ import Popup from '../components/Popup'
 import * as actions from '../actions'
 
 const mapStateToProps = (state) => {
-  const props = {
-    popupInfo: state.map.popup,
+  return {
     browser: state.browser,
-    popup: state.map.popup
+    gageInfo: state.gageInfo,
+    popup: state.popup
   }
-
-  if (state.map.popup && state.map.popup.data) {
-    props.position = state.map.popup.data.latlng
-    props.data = state.map.popup.data.data
-    props.layerId = state.map.popup.id
-  }
-
-  return props
 }
 
 const mapDispatchToProps = (dispatch) => {
