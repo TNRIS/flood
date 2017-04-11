@@ -3,7 +3,10 @@ import React, { Component, PropTypes } from 'react'
 import PopupTitle from './PopupTitle'
 import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
-import PopupImage from './PopupImage'
+import PopupImageContainer from '../containers/PopupImageContainer'
+
+import { store } from '../store'
+import {Provider} from 'react-redux'
 
 const icon = require('../images/boat_icon_popup_title.png')
 
@@ -28,7 +31,9 @@ export default class LakeConditionsPopup extends Component {
           <PopupHeader>
             { full_name }
           </PopupHeader>
-          <PopupImage link={link_src} src={image_src} updatePopup={updatePopup} target="lake-conditions"/>
+          <Provider store={store}>
+            <PopupImageContainer link={link_src} src={image_src} updatePopup={updatePopup} target="lake-conditions"/>
+          </Provider>
         </PopupContent>
       </div>
     )

@@ -45,7 +45,7 @@ export default class AerisAlertsLayer extends AerisTileLayer {
                 latlng: latlng,
               }
             }
-            this.handlers.onClickAlerts(this.id, alertData)
+            this.handlers.onClickAlerts(this.id, alertData, latlng, event)
           })
       }
     })

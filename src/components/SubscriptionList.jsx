@@ -74,7 +74,6 @@ class SubscriptionList extends React.Component {
    * Method to set the map center and zoom to a gage location
    */
   zoomToGage(event, gageInfo) {
-    console.log(gageInfo)
     this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
   }
 

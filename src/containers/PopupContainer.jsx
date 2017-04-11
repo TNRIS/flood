@@ -2,24 +2,31 @@ import { connect } from 'react-redux'
 
 import Popup from '../components/Popup'
 import * as actions from '../actions'
+import {
+  clearPopup,
+  popupImageLoadAttempt,
+  popupImageLoadSuccess
+} from '../actions/PopupActions'
 
 const mapStateToProps = (state) => {
-  const props = {
-    popupInfo: state.map.popup,
+  return {
     browser: state.browser,
+    gageInfo: state.gageInfo,
+    popupData: state.popupData
   }
-
-  if (state.map.popup && state.map.popup.data) {
-    props.position = state.map.popup.data.latlng
-    props.data = state.map.popup.data.data
-    props.layerId = state.map.popup.id
-  }
-
-  return props
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearPopup: () => {
+      dispatch(clearPopup())
+    },
+    popupImageLoadAttempt: () => {
+      dispatch(popupImageLoadAttempt())
+    },
+    popupImageLoadSuccess: () => {
+      dispatch(popupImageLoadSuccess())
+    },
     setLidAndName: (lid, name) => {
       dispatch(actions.setLidAndName(lid, name))
     }

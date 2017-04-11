@@ -14,6 +14,7 @@ import { gageSubscriptionById, allGageSubscriptions }  from './gageSubscription'
 import { toaster } from './toaster'
 import user from './user'
 import aboutDialog from './aboutDialog'
+import popupData from './popupData'
 
 export const rootReducer = combineReducers({
   baseLayers: baseLayers,
@@ -39,5 +40,6 @@ export const rootReducer = combineReducers({
   }),
   user,
   aboutDialog: aboutDialog,
-  toaster
+  toaster,
+  popupData
 })
