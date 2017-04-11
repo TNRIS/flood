@@ -1,6 +1,4 @@
-import objectAssign from 'object-assign'
 import ReactDOM from 'react-dom'
-import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
 import L from 'leaflet'
 import FloodAlertsPopup from './FloodAlertsPopup'
@@ -12,12 +10,15 @@ export default class Popup extends Component {
   static propTypes = {
     gageInfo: PropTypes.object,
     leafletMap: PropTypes.object,
-    popup: PropTypes.object,
+    popupData: PropTypes.object,
     position: PropTypes.object,
     data: PropTypes.object,
     layerId: PropTypes.string,
     browser: PropTypes.object,
-    setLidAndName: PropTypes.func
+    setLidAndName: PropTypes.func,
+    popupImageLoadAttempt: PropTypes.func,
+    popupImageLoadSuccess: PropTypes.func,
+    clearPopup: PropTypes.func
   }
 
   constructor() {
@@ -25,117 +26,74 @@ export default class Popup extends Component {
   }
 
   componentDidMount() {
-    const widths = this.calculatePopupWidth()
-
     this.leafletPopup = L.popup({
       className: 'popup',
       closeButton: false,
-      offset: [0, 15],
-      keepInView: true,
-      ...widths
+      maxheight: 600,
+      keepInView: true
     })
   }
 
   componentDidUpdate(prevProps) {
-    // should only happen the first time after map has initialized
-    if ( !prevProps.leafletMap && this.props.leafletMap ) {
-      this.updatePopupSize()
+    const {gageInfo, popupData, leafletMap} = this.props
+
+    if ( !prevProps.leafletMap && leafletMap ) {
+      leafletMap
+        .on('popupclose', () => {
+          this.removePopupContent()
+          this.props.clearPopup()
+        })
+        .on('popupopen', () => {
+          this.updatePopupSize()
+        })
+    }
+
+    if (popupData.imageLoaded === true) {
+      return
     }
 
     if (this.leafletPopup && prevProps !== this.props) {
-      if (this.props.leafletMap && !this.props.popup) {
-        return ReactDOM.unmountComponentAtNode(this.leafletPopup._contentNode)
-      }
-      if (this.props.popup && this.props.popup.id === "ahps-flood") {
-        const lid = this.props.popup.data.lid
-        const gage = this.props.gageInfo[lid]
-        this.leafletPopup.setLatLng([gage.latitude, gage.longitude])
+      this.props.popupImageLoadAttempt()
+      switch (popupData.id) {
+        case 'ahps-flood':
+          const lid = popupData.data.lid
+          const gage = gageInfo[lid]
+          this.leafletPopup.setLatLng([gage.latitude, gage.longitude])
+          return this.showPopop()
 
-        this.leafletPopup.openOn(this.props.leafletMap)
-        this.renderPopupContent()
+        case 'flood-alerts':
+          this.leafletPopup.setLatLng(popupData.clickLocation)
+          this.props.popupImageLoadSuccess()
+          return this.showPopop()
+
+        case 'reservoir-conditions':
+          this.leafletPopup.setLatLng(popupData.clickLocation)
+          return this.showPopop()
+
+        default:
+          return null
       }
     }
-    // console.log(this.leafletPopup)
-    // const position = [32, -105]
-    // if ( this.props.leafletMap && ((!position || !this.props.data) || !R.equals(data, prevProps.data)) ) {
-    //   this.props.leafletMap.closePopup(this.leafletPopup)
-    // }
-    //
-    // // should only happen the first time after map has initialized
-    // if ( !prevProps.leafletMap && this.props.leafletMap ) {
-    //   this.updatePopupSize()
-    // }
-    //
-    // if (prevProps.browser.width !== this.props.browser.width || prevProps.browser.height !== this.props.browser.height) {
-    //   this.updatePopupSize()
-    // }
-    //
-    // if (position !== prevProps.position) {
-    //   this.leafletPopup.setLatLng([32, -105])
-    // }
-    //
-    // if (this.props.popup.data) {
-    //   this.leafletPopup.openOn(this.props.leafletMap)
-    // }
-    //
-    // if (this.leafletPopup._isOpen) {
-    //   // this will ensure that only the popup for the topmost layer will
-    //   // show when features are stacked at a clicked location
-    //   if (position === prevProps.position) {
-    //     switch (this.props.popup.id) {
-    //       case "ahps-flood":
-    //         this.renderPopupContent()
-    //         break
-    //       case "reservoir-conditions":
-    //         if (prevProps.layerId !== "ahps-flood") {
-    //           this.renderPopupContent()
-    //         }
-    //         break
-    //       case "flood-alerts":
-    //         if (prevProps.layerId !== "ahps-flood") {
-    //           if (prevProps.layerId !== "reservoir-conditions") {
-    //             this.renderPopupContent()
-    //           }
-    //         }
-    //         break
-    //       default:
-    //         null
-    //     }
-    //   }
-    //   else {
-    //     this.renderPopupContent()
-    //   }
-    // }
   }
 
   getPopupContent() {
-    const { data, id } = this.props.popup
-    const popupWidth = this.calculatePopupWidth()
+    const { data, id } = this.props.popupData
     switch (id) {
       case 'ahps-flood':
         this.props.setLidAndName(data.lid, data.name)
         return (
-          <FloodGaugePopup {...data} popupWidth={popupWidth} updatePopup={() => {this.leafletPopup.update()}} />
+          <FloodGaugePopup {...data} updatePopup={() => {this.leafletPopup.update()}} />
         )
       case 'reservoir-conditions':
         return (
-          <LakeConditionsPopup {...data} popupWidth={popupWidth} updatePopup={() => {this.leafletPopup.update()}} />
+          <LakeConditionsPopup {...data} updatePopup={() => {this.leafletPopup.update()}} />
         )
       case 'flood-alerts':
         return (
-          <FloodAlertsPopup {...data} popupWidth={popupWidth} updatePopup={() => {this.updatePopupSize()}} />
+          <FloodAlertsPopup {...data} updatePopup={() => {this.updatePopupSize()}} />
         )
       default:
         return null
-    }
-  }
-
-  calculatePopupWidth() {
-    const { leafletMap } = this.props
-    return {
-      maxWidth: leafletMap ? leafletMap.getSize().x * 0.9 : 500,
-      minWidth: leafletMap ? Math.max(300, Math.min(leafletMap.getSize().x * 0.5, 599)) : 270,
-      // maxHeight: leafletMap ? leafletMap.getSize().y * 0.8 : 500,
     }
   }
 
@@ -146,13 +104,26 @@ export default class Popup extends Component {
   }
 
   updatePopupSize() {
-    const updates = this.calculatePopupWidth()
-    objectAssign(this.leafletPopup.options, updates)
+    const {leafletMap} = this.props
 
-    if (this.leafletPopup._isOpen) {
-      this.leafletPopup.update()
-    }
+    this.leafletPopup.update(
+          this.leafletPopup.options = {
+            ...this.leafletPopup.options,
+            minWidth: (() => {
+              const mapWidth = leafletMap.getSize().x
+              if (mapWidth > 600) {
+                return 600
+              }
+              return 0.90 * mapWidth
+            })()
+          })
   }
+
+  showPopop() {
+    this.leafletPopup.openOn(this.props.leafletMap)
+    this.renderPopupContent()
+  }
+
 
   renderPopupContent() {
     const content = this.getPopupContent()
@@ -162,9 +133,6 @@ export default class Popup extends Component {
         this.leafletPopup._contentNode
       )
       this.leafletPopup.update()
-    }
-    else {
-      this.removePopupContent()
     }
   }
 

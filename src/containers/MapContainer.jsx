@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
+import L from 'leaflet'
 
 import {
   clearCenterAndZoom,
-  setCenterAndZoom,
 } from '../actions/MapActions'
 
 import {
-  clearPopup,
   setPopup
 } from '../actions/PopupActions'
 
@@ -14,6 +13,8 @@ import * as actions from '../actions'
 
 import { showSnackbar } from '../actions/ToasterActions'
 import Map from '../components/Map'
+
+let prevClickEvent = null
 
 const mapStateToProps = (state) => {
   return {
@@ -24,10 +25,12 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  function clickHandler(id, data) {
-    // This allows the poups to open when multiple layers are turned on
+  function clickHandler(id, data, clickLocation, event) {
     if (data.data) {
-      dispatch(setPopup({id, data: data.data}))
+      if ((!prevClickEvent || prevClickEvent.timeStamp !== event.originalEvent.timeStamp) && data.data) {
+        dispatch(setPopup({id, data: data.data, clickLocation}))
+      }
+      prevClickEvent = event.originalEvent
     }
   }
 

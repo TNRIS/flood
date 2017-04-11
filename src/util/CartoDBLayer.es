@@ -2,7 +2,6 @@ import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
-import * as FloodAlerts from '../util/FloodAlerts'
 import { store } from '../store'
 import { retrieveGageStatus } from '../actions'
 import Layer from './Layer'
@@ -74,8 +73,8 @@ export default class CartoDBLayer extends Layer {
             useJsonP: false
           })
 
-          utfGridLayer.on('click', (gridData) => {
-            this.handlers.onClickUTFGrid(this.id, gridData)
+          utfGridLayer.on('click', (event) => {
+            this.handlers.onClickUTFGrid(this.id, event, event.latlng, event)
           })
 
           this.utfGridLayer = utfGridLayer

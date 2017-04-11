@@ -9,9 +9,12 @@ import {
   addSubscribeToChangeList,
   addUnsubscribeToChangeList,
   saveSubscriptionChanges,
-  unqueueChangeFromChangeList,
-  setCenterAndZoom
+  unqueueChangeFromChangeList
 } from '../actions/SubscriptionChangeActions'
+
+import {
+  setCenterAndZoom
+} from '../actions/MapActions'
 
 const mapStateToProps = (state) => {
   return {

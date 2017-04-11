@@ -3,6 +3,8 @@ import R from 'ramda'
 
 import { createAction } from 'redux-actions'
 
+import { setPopup } from './PopupActions'
+
 import * as types from './types'
 
 export const layerStatusChange = (id, status) => {
@@ -29,7 +31,7 @@ export const setBaseLayer = (id) => {
 
 export const setFeatureLayer = (id) => {
   return (dispatch) => {
-    dispatch(setPopup())
+    // dispatch(setPopup(id))
 
     dispatch({
       type: types.SET_FEATURE_LAYER,

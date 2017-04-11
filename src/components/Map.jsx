@@ -10,12 +10,6 @@ import LayerStore from '../util/LayerStore'
 import PopupContainer from '../containers/PopupContainer'
 import { FABButton, Icon } from 'react-mdl'
 
-const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
-const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
-import objectAssign from 'object-assign'
-import * as FloodAlerts from '../util/FloodAlerts'
-
-const playArrow = require('../images/play_arrow.png')
 const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_my_location_black_24dp_2x.png')
@@ -152,6 +146,10 @@ export default class Map extends Component {
             this.map.addLayer(geolocateCircle)
           }
         })
+        .on('click', (e) => {
+          L.DomEvent.preventDefault(e)
+          L.DomEvent.stopPropagation(e)
+        })
     }
 
     setTimeout(() => {
@@ -225,7 +223,8 @@ export default class Map extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
       this.map.closePopup()
-      this.map.setView([this.props.map.mapCenterLat, this.props.map.mapCenterLng], this.props.map.zoomLevel)
+      const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
+      this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
   }
