@@ -139,16 +139,6 @@ class About extends React.Component {
                 Close
                 </Button>
           </DialogActions>
-          <div className="footer">
-              <div className="footer__wrapper">
-              <a className="footer__tnris-logo" href="http://www.tnris.org">
-                <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
-              </a>
-                <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
-                  <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
-                </a>
-              </div>
-          </div>
         </Dialog>
       </div>
     )

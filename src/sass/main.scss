@@ -26,6 +26,10 @@ body {
     font-family: 'Open Sans', sans-serif;
   }
 
+  .mdl-layout {
+    background-color: $gray20;
+  }
+
   .mdl-layout__drawer {
     box-shadow: 0 0px 8px rgba(0,0,0,0.65);
 
@@ -59,14 +63,56 @@ body {
     padding-bottom: 0px;
   }
 
+  .mdl-layout__header {
+    min-height: 40px !important;
+
+    .mdl-layout__header-row {
+      height: 40px;
+      padding: 0;
+
+      .header__title {
+        height: 40px;
+        margin-left: auto;
+        margin-right: auto;
+
+        img {
+          height: 30px;
+          margin-top: 5px;
+        }
+      }
+
+      .header__navigation {
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+
   .mdl-layout__drawer-button {
-    background-color: $lighter-blue;
-    margin: 20px 0 0 0;
+    background-color: inherit;
+    margin: 0 0 0 0;
+    height: 40px;
 
     i {
       color: #ffffff;
       font-size: 34px;
-      margin: 7px 0 0 -2px;
+      margin: 3px 0 0 -2px;
+    }
+  }
+
+  .mdl-mini-footer {
+    min-height: 50px;
+    padding: 0;
+    background-color: inherit;
+
+    .mdl-mini-footer__left-section {
+      padding-top: 5px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .mdl-mini-footer__link-list li:last-child {
+      margin-right: 0;
     }
   }
 }
@@ -965,6 +1011,57 @@ button.zoom-out-of-service {
 
 .hide-mapbox-wordmark {
   display: none;
+}
+
+.leaflet-right {
+  width: 100%;
+}
+
+.showGeocoder {
+  // display: none;
+  visibility: visible !important;
+}
+
+.leaflet-control-geocoder {
+  visibility: hidden;
+  width: 100%;
+  margin: 0 !important;
+  height: 40px;
+  box-shadow: none !important;
+
+  .leaflet-control-geocoder-icon {
+    display: none !important;
+    height: 40px;
+    margin: 0;
+    float: left;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .leaflet-control-geocoder-form > input {
+    height: 40px;
+    padding-left: 20px;
+  }
+
+  .leaflet-control-geocoder-alternatives {
+    width: inherit;
+    background-color: inherit;
+    margin-top: -2px;
+  }
+
+  .leaflet-control-geocoder-alternatives li {
+    border: none;
+  }
+}
+
+.leaflet-bar {
+  border-radius: 0 !important;
+}
+
+.leaflet-control-layers {
+  border-radius: 0 !important;
 }
 
 label.hide-disclaimer-checkbox {
