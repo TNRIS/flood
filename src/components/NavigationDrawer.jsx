@@ -5,7 +5,6 @@ import Resources from './Resources'
 import NavigationContent from './NavigationContent'
 
 import TWDBLogoImage from '../images/logo_twdb.png'
-import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
 
 class  NavigationDrawer extends React.Component {
@@ -16,13 +15,6 @@ class  NavigationDrawer extends React.Component {
   render() {
     return (
       <Drawer className="nav">
-        <div className="nav__head">
-          <div className="nav__title">
-            <a href="http://texasflood.org">
-              <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
-            </a>
-          </div>
-        </div>
         <NavigationContent />
         <Resources />
         <div className="footer">

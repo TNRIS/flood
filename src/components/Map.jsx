@@ -75,11 +75,11 @@ export default class Map extends Component {
         minZoom: initialZoom
       })
 
+      this.initializeGeocoderControl()
       this.map.zoomControl.setPosition('topright')
       this.map.attributionControl.setPrefix('Data Sourced From')
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
-      this.initializeGeocoderControl()
       this.fullscreenControl()
       this.geolocationControl()
 
@@ -235,12 +235,8 @@ export default class Map extends Component {
     layerControl.setPosition('bottomright').addTo(this.map)
     this.map.on('baselayerchange', ({ layer }) => {
       layer.bringToBack()
-      if (layer.options.mapbox) {
-        this.setState({mapboxWordmarkClass: "mapbox-wordmark"})
-      }
-      else {
-        this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
-      }
+      layer.options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
+                             this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
     })
 
     layers['Mapbox Outdoors'].addTo(this.map)
@@ -251,7 +247,7 @@ export default class Map extends Component {
       geocoder: L.Control.Geocoder.bing(keys.bingApiKey),
       placeholder: "Search by City or Street Address",
       collapsed: false,
-      position: "topleft"
+      position: "topright"
     })
 
     //override the default markGeocode method
@@ -261,6 +257,7 @@ export default class Map extends Component {
     }
 
     control.addTo(this.map)
+    control.getContainer().id = "geocoder"
   }
 
   //use a custom map bound functionality to restrict panning

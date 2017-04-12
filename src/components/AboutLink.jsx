@@ -12,7 +12,7 @@ const AboutLink = class AboutLink extends Component {
   render() {
 	  return (
 	    <a className="mdl-navigation__link resources__link" href="#" onClick={this.props.showAbout}>
-	      About This Application
+	      about
 	    </a>
 	  )
   }

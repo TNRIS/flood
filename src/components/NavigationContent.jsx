@@ -28,22 +28,20 @@ class NavigationToggle extends Component {
     if (navigationContent === 'layers') {
       content = (
         <div>
-          <h2><i className="material-icons">layers</i> Map Layers</h2>
           <FeatureLayerChooserContainer/>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationUnsubscribe}><i className="material-icons">add_alert</i> Manage Alerts</Button>
+          onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
         </div>
       )
     }
     else {
       content = (
         <div>
-          <h2><i className="material-icons">add_alert</i> Manage Alerts</h2>
           <SubscriptionFormContainer/>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationLayers}><i className="material-icons">layers</i> Map Layers</Button>
+          onClick={this.handleSetNavigationLayers}>Map Layers</Button>
         </div>
       )
     }
