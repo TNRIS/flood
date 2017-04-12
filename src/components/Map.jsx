@@ -12,7 +12,9 @@ import { FABButton, Icon } from 'react-mdl'
 
 const pause = require('../images/pause.png')
 
-const defaultMarkerIcon = require('../images/ic_my_location_black_24dp_2x.png')
+const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
+const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
+const gpsNotFixedIcon = require("../images/ic_gps_not_fixed_black_18dp_2x.png")
 
 import axios from 'axios'
 
@@ -75,51 +77,70 @@ export default class Map extends Component {
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
-        shadowUrl: "",
-        iconAnchor: [24, 24]
+        iconAnchor: [24, 44]
       })
 
-      let geolocateCircle = null
-      let geolocateIcon = null
+      const watchLocationMarker = L.icon({
+        iconUrl: gpsFixedIcon,
+        iconAnchor: [18, 20]
+      })
+
+      this.geolocateCircle = null
+      this.geolocateIcon = null
 
       this.map
         .on('locationfound', (e) => {
-          console.log(e)
-          if (geolocateCircle) {
-            this.map.removeLayer(geolocateCircle)
+          if (this.geolocateCircle) {
+            this.map.removeLayer(this.geolocateCircle)
           }
-          if (geolocateIcon) {
-            this.map.removeLayer(geolocateIcon)
+          if (this.geolocateIcon) {
+            this.map.removeLayer(this.geolocateIcon)
           }
 
-          geolocateIcon = L.marker(e.latlng, {
-            icon: defaultMarker
-          })
+          if (this.map._locateOptions && !this.map._locateOptions.watch) {
+            this.geolocateIcon = L.marker(e.latlng, {
+              icon: defaultMarker
+            })
+          }
+          else {
+            this.geolocateIcon = L.marker(e.latlng, {
+              icon: watchLocationMarker
+            })
+          }
 
-          geolocateIcon.bindLabel(
+          const click = () => {
+            console.log("click")
+          }
+
+          this.geolocateIcon.bindPopup(
             `<h6>Approximate Location</h3>` +
             `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
             `<p>Longitude: ${e.longitude.toPrecision(7)}</p>` +
-            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`
+            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`,
+            {
+              className: 'geolocation-popup',
+              closeButton: false
+            }
           )
 
-          geolocateCircle = L.circle(e.latlng, e.accuracy, {
+          this.geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
-            fillOpacity: 0.2
+            fillOpacity: 0.1,
+            stroke: false
           })
 
-          this.map.addLayer(geolocateIcon)
+          this.map.addLayer(this.geolocateIcon)
 
           if (e.accuracy > 50) {
             this.props.showSnackbar(
               "Geolocation accuracy is low. For best results, use your device's GPS, if equipped.")
           }
-          this.map.addLayer(geolocateCircle)
+          this.map.addLayer(this.geolocateCircle)
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
             this.map.fitBounds(
-              geolocateCircle.getBounds()
+              this.geolocateCircle.getBounds()
             )
           }
         })
@@ -137,13 +158,13 @@ export default class Map extends Component {
           // this.props.removeAllPopups()
         })
         .on('zoomstart', () => {
-          if (this.map.hasLayer(geolocateCircle)) {
-            this.map.removeLayer(geolocateCircle)
+          if (this.map.hasLayer(this.geolocateCircle)) {
+            this.map.removeLayer(this.geolocateCircle)
           }
         })
         .on('zoomend', () => {
-          if (geolocateCircle) {
-            this.map.addLayer(geolocateCircle)
+          if (this.geolocateCircle) {
+            this.map.addLayer(this.geolocateCircle)
           }
         })
         .on('click', (e) => {
@@ -362,7 +383,7 @@ export default class Map extends Component {
     const trackLocationButton = L.easyButton({
       states: [{
         stateName: 'location-off',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">location_off</i>',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">gps_not_fixed</i>',
         title: 'Track my location',
         onClick: (control) => {
           control.state('location-on')
@@ -374,7 +395,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'location-on',
-        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">location_on</i>',
+        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
         title: 'Track my location',
         onClick: (control) => {
           control.state('location-off')
@@ -385,7 +406,7 @@ export default class Map extends Component {
 
     const geolocateButton = L.easyButton({
       states: [{
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">my_location</i>',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">person_pin_circle</i>',
         title: 'Find my location',
         onClick: () => {
           leafletMap.closePopup()

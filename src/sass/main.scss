@@ -263,7 +263,7 @@ body {
 
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
-    border-radius: 0px;
+    border-radius: 0;
 
     .leaflet-popup-content {
       margin: 0 0 0 0;
@@ -803,6 +803,10 @@ button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
 }
 
+button.easy-button-button.leaflet-bar-part.location-tools-on-active {
+  background-color: $accent-light-green;
+}
+
 button.easy-button-button.disabled {
     height: 0;
     padding: 0;
@@ -815,27 +819,27 @@ dialog.confirm-subscription-change h4 {
     padding: 0;
 }
 
-div.leaflet-label {
-    background-color: white;
-    // border-color: rgba(52, 115, 162, 0.6);
-    border-style: none;
-    margin: 0;
-    padding: 0;
-
-    h6 {
-        background-color: $gray20;
-        color: white;
-        font-size: 1.3em;
-        font-weight: 300;
-        margin: 0;
-        padding: 4px 10px 4px 10px;
-    }
-
-    p {
-        margin: 0;
-        padding: 2px 10px 2px 10px;
-    }
-}
+//div.leaflet-label {
+//    background-color: white;
+//    // border-color: rgba(52, 115, 162, 0.6);
+//    border-style: none;
+//    margin: 0;
+//    padding: 0;
+//
+//    h6 {
+//        background-color: $gray20;
+//        color: white;
+//        font-size: 1.3em;
+//        font-weight: 300;
+//        margin: 0;
+//        padding: 4px 10px 4px 10px;
+//    }
+//
+//    p {
+//        margin: 0;
+//        padding: 2px 10px 2px 10px;
+//    }
+//}
 
 .leaflet-bar a {
   color: $gray20 !important;
@@ -861,26 +865,31 @@ dialog.confirm-subscription-change h4 {
     padding: 0;
 }
 
-div.leaflet-label {
-    background-color: white;
+div.leaflet-popup-content-wrapper {
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 0;
+  }
+  .geolocation-popup & {
     // border-color: rgba(52, 115, 162, 0.6);
-    border-style: none;
+    border-radius: 0 !important;
     margin: 0;
     padding: 0;
 
     h6 {
-        background-color: $gray20;
-        color: white;
-        font-size: 1.3em;
-        font-weight: 300;
-        margin: 0;
-        padding: 4px 10px 4px 10px;
+      background-color: $gray20;
+      color: white;
+      font-size: 1.3em;
+      font-weight: 300;
+      margin: 0;
+      padding: 4px 10px 4px 10px;
     }
 
     p {
-        margin: 0;
-        padding: 2px 10px 2px 10px;
+      margin: 0;
+      padding: 2px 10px 2px 10px;
     }
+  }
 }
 
 .leaflet-bar a {

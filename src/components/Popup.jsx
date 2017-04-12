@@ -111,7 +111,16 @@ export default class Popup extends Component {
             ...this.leafletPopup.options,
             minWidth: (() => {
               const mapWidth = leafletMap.getSize().x
-              if (mapWidth > 600) {
+              if (mapWidth > 800) {
+                if (this.props.popupData.id === 'reservoir-conditions') {
+                  return 800
+                }
+                return 600
+              }
+              else if (mapWidth > 600) {
+                if (this.props.popupData.id === 'reservoir-conditions') {
+                  return 0.90 * mapWidth
+                }
                 return 600
               }
               return 0.90 * mapWidth
