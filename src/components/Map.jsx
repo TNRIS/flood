@@ -8,7 +8,9 @@ import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
-import { FABButton, Icon } from 'react-mdl'
+import {
+    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon, IconButton, Menu, MenuItem
+} from 'react-mdl'
 
 const pause = require('../images/pause.png')
 
@@ -69,11 +71,11 @@ export default class Map extends Component {
       })
 
       this.initializeGeocoderControl()
-      this.map.zoomControl.setPosition('topright')
-      this.map.attributionControl.setPrefix('Data Sourced From')
-      this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
-      this.fullscreenControl()
+      this.map.zoomControl.setPosition('bottomright')
+      // this.map.attributionControl.setPrefix('Data Sourced From')
+      this.initializeLayerStore(this.props, this.map)
+      // this.fullscreenControl()
       this.geolocationControl()
 
       const defaultMarker = L.icon({
@@ -414,27 +416,28 @@ export default class Map extends Component {
       }]
     })
 
-    this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
       position: 'bottomright'
-    }).addTo(leafletMap)
+    })
+    locateToolbar.addTo(leafletMap)
   }
 
-  fullscreenControl() {
-    const thisMap = this.map
-    const toggleFullscreen = this.toggleFullscreen
-    const fullscreenButton = L.easyButton({
-      position: 'bottomright',
-      states: [{
-        icon: '<i class="material-icons fullscreen-icon">fullscreen</i>',
-        title: 'Toggle Fullscreen',
-        onClick: function(control) {
-          thisMap.closePopup()
-          toggleFullscreen()
-        }
-      }]
-    })
-    fullscreenButton.addTo(this.map)
-  }
+  // fullscreenControl() {
+  //   const thisMap = this.map
+  //   const toggleFullscreen = this.toggleFullscreen
+  //   const fullscreenButton = L.easyButton({
+  //     position: 'topright',
+  //     states: [{
+  //       icon: '<i class="material-icons fullscreen-icon">fullscreen</i>',
+  //       title: 'Toggle Fullscreen',
+  //       onClick: function(control) {
+  //         thisMap.closePopup()
+  //         toggleFullscreen()
+  //       }
+  //     }]
+  //   })
+  //   fullscreenButton.addTo(this.map)
+  // }
 
   toggleAnimation() {
     this.layerStore.get('animated-weather').toggleAnimation()
@@ -476,9 +479,9 @@ export default class Map extends Component {
           <div className="animateRadar">
             {radarInfo}
           </div>
-          <div id="betanotice" className={this.betaNotice()}>
+          {/* <div id="betanotice" className={this.betaNotice()}>
             <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
-          </div>
+          </div> */}
           <PopupContainer leafletMap={this.map} />
         </div>
       </div>

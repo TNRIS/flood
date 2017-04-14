@@ -1,10 +1,8 @@
 import React from 'react'
 
-const ContactLink = ({ text, href, title, target }) => {
+const ContactLink = ({ text, href, target }) => {
   return (
-    <a className="mdl-navigation__link resources__link" href={href} target={target}>
-      {text} &nbsp; <strong>{title}</strong>
-    </a>
+    <a className="mdl-navigation__link resources__link" href={href} target={target}>{text}</a>
   )
 }
 
