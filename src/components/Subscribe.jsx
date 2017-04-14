@@ -83,6 +83,7 @@ class Subscribe extends React.Component {
             <DialogContent>
               <p>Subscribe to receive text and/or email alerts when this gage reaches elevated flood stages.</p>
               <Textfield floatingLabel
+                         autofocus="false"
                          onChange={ this.handleChange }
                          pattern="[0-9]*"
                          minLength={10}

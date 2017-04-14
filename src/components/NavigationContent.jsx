@@ -8,46 +8,40 @@ import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
 class NavigationToggle extends Component {
   constructor(props) {
     super(props)
-    this.state = {navigationContent: 'layers'}
+    this.state = {navigationContent: 'layers',
+                  showFeatureLayerChooser: true,
+                  showSubscriptionForm: false
+                 }
     this.handleSetNavigationUnsubscribe = this.handleSetNavigationUnsubscribe.bind(this)
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
   }
 
   handleSetNavigationUnsubscribe() {
     this.setState({navigationContent: 'unsubscribe'})
+    this.setState({showSubscriptionForm: !this.state.showSubscriptionForm})
   }
 
   handleSetNavigationLayers() {
     this.setState({navigationContent: 'layers'})
+    this.setState({showFeatureLayerChooser: !this.state.showFeatureLayerChooser})
   }
 
   render() {
-    const navigationContent = this.state.navigationContent
-    let content
-
-    if (navigationContent === 'layers') {
-      content = (
+    return (
+      <div>
         <div>
-          <FeatureLayerChooserContainer/>
-          <Button ripple
-          className="toggle-navigation-content"
-          onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
-        </div>
-      )
-    }
-    else {
-      content = (
-        <div>
-          <SubscriptionFormContainer/>
           <Button ripple
           className="toggle-navigation-content"
           onClick={this.handleSetNavigationLayers}>Map Layers</Button>
+          { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
-      )
-    }
-
-    return (
-      content
+        <div>
+          <Button ripple
+          className="toggle-navigation-content"
+          onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
+          { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
+        </div>
+      </div>
     )
   }
 }

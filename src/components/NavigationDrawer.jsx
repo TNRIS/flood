@@ -15,6 +15,13 @@ class  NavigationDrawer extends React.Component {
   render() {
     return (
       <Drawer className="nav">
+        <div className="nav__head">
+          {/* <div className="nav__title">
+            <a href="http://texasflood.org">
+              TexasFlood Information Viewer
+            </a>
+          </div> */}
+        </div>
         <NavigationContent />
         <Resources />
         <div className="footer">
