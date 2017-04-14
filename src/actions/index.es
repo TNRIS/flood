@@ -53,7 +53,7 @@ export const setGageInit = (initState) => {
 //with the current stage of all flood gauges
 export function retrieveGageStatus() {
   return (dispatch) => {
-    const query = `SELECT lid, name, sigstage, latitude, longitude FROM nws_ahps_gauges_texas`
+    const query = `SELECT lid, name, sigstage, latitude, longitude FROM nws_ahps_gauges_texas_develop`
     return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
       .then(({data}) => {
         const formatState = data.rows.map((gage) => {
