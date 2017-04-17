@@ -40,7 +40,7 @@ export default class TileLayer extends Layer {
     //  This will set the visible layer order relative to
     //  the order set in CartoDBLayer.es and AnimatedWeatherLayer.es
     this.layer.setZIndex(97)
-    if (this.refreshIntervalId != null) {
+    if (this.refreshIntervalId !== null) {
       clearInterval(this.refreshIntervalId)
     }
     this.refreshIntervalId = setInterval(() => this.refresh(), this.refreshTimeMs)

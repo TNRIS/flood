@@ -87,7 +87,7 @@ export default class AnimatedWeatherLayer extends Layer {
     else {
       const setVisible = (layer) => {
         if (!this.map.hasLayer(layer)) {
-          layer.addTo(this.map).bringToFront()
+          layer.addTo(this.map)
         }
         //  This will set the visible layer order relative to
         //  the order set in CartoDBLayer.es and TileLayer.es

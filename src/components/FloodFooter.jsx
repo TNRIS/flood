@@ -15,12 +15,6 @@ class FloodFooter extends React.Component {
     this.toggleFullscreen = this.toggleFullscreen.bind(this)
   }
 
-  componentDidMount() {
-  }
-
-  componentWillReceiveProps(nextProps) {
-  }
-
   toggleFullscreen() {
     const element = document.getElementsByTagName("html")[0]
     if (document.fullscreenEnabled ||
