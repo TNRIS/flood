@@ -82,6 +82,7 @@ class Disclaimer extends React.Component {
                 I have read and agree to these terms
                 </Button>
             <Checkbox
+              className="hide-disclaimer-checkbox"
               label="Do not show again"
               onChange={updateDisclaimerAcceptance}
             />
