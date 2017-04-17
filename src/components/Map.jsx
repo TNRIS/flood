@@ -251,6 +251,9 @@ export default class Map extends Component {
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
+    if (Object.keys(this.props.popupData).length === 0) {
+      this.map.closePopup()
+    }
   }
 
   setActiveFeatureLayers(props) {

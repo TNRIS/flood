@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import FloodGaugePopupTitleContainer from '../containers/FloodGaugePopupTitleContainer'
+import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
 import PopupImageContainer from '../containers/PopupImageContainer'
@@ -8,6 +8,8 @@ import PopupImageContainer from '../containers/PopupImageContainer'
 import { store } from '../store'
 import {Provider} from 'react-redux'
 
+
+const icon = require('../images/flood_gauge_icon.png')
 
 export default class FloodGaugePopup extends Component {
   static propTypes = {
@@ -25,7 +27,7 @@ export default class FloodGaugePopup extends Component {
     return (
       <div className="flood-gage-popup">
         <Provider store={store}>
-          <FloodGaugePopupTitleContainer />
+          <PopupTitleContainer icon={icon} title="Flood Gage" />
         </Provider>
         <PopupContent>
           <PopupHeader>
