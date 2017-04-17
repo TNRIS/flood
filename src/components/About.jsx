@@ -26,9 +26,7 @@ class About extends React.Component {
       <div className="about__wrapper">
         <Dialog ref="about" className="aboutDialog" open={this.props.openDialog}>
           <DialogTitle>About
-            <p className="about-version-number">
-              v{VERSION} - {RELEASE}
-            </p>
+            <p className="about-version-number">v{VERSION}</p>
           </DialogTitle>
           <DialogContent>
             <h4>Legal Review and Disclaimer</h4>

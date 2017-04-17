@@ -55,7 +55,8 @@ export default class Map extends Component {
     this.state = {
       animationIcon: "play_arrow",
       geolocateControl: "basic",
-      mapboxWordmarkClass: "hide-mapbox-wordmark"
+      mapboxWordmarkClass: "hide-mapbox-wordmark",
+      locateToolbar: null
     }
   }
 
@@ -77,7 +78,8 @@ export default class Map extends Component {
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
-        iconAnchor: [24, 44]
+        iconAnchor: [24, 44],
+        popupAnchor: [0, -44]
       })
 
       const watchLocationMarker = L.icon({
@@ -108,10 +110,6 @@ export default class Map extends Component {
             })
           }
 
-          const click = () => {
-            console.log("click")
-          }
-
           this.geolocateIcon.bindPopup(
             `<h6>Approximate Location</h3>` +
             `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
@@ -123,6 +121,12 @@ export default class Map extends Component {
             }
           )
 
+          this.geolocateIcon.on('contextmenu', () => {
+            this.locateToolbar._buttons[1].state('location-off')
+            this.map.stopLocate()
+            this.map.removeLayer(this.geolocateIcon)
+          })
+
           this.geolocateCircle = L.circle(e.latlng, e.accuracy, {
             color: "#265577",
             fillColor: "#3473A2",
@@ -132,16 +136,13 @@ export default class Map extends Component {
 
           this.map.addLayer(this.geolocateIcon)
 
-          if (e.accuracy > 50) {
-            this.props.showSnackbar(
-              "Geolocation accuracy is low. For best results, use your device's GPS, if equipped.")
-          }
-          this.map.addLayer(this.geolocateCircle)
+          // this.map.addLayer(this.geolocateCircle)
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
-            this.map.fitBounds(
-              this.geolocateCircle.getBounds()
-            )
+            // this.map.fitBounds(
+            //   this.geolocateCircle.getBounds()
+            // )
+            this.map.setView(e.latlng, 16)
           }
         })
         .on('locationerror', () => {
@@ -158,14 +159,14 @@ export default class Map extends Component {
           // this.props.removeAllPopups()
         })
         .on('zoomstart', () => {
-          if (this.map.hasLayer(this.geolocateCircle)) {
-            this.map.removeLayer(this.geolocateCircle)
-          }
+          // if (this.map.hasLayer(this.geolocateCircle)) {
+          //   this.map.removeLayer(this.geolocateCircle)
+          // }
         })
         .on('zoomend', () => {
-          if (this.geolocateCircle) {
-            this.map.addLayer(this.geolocateCircle)
-          }
+          // if (this.geolocateCircle) {
+          //   this.map.addLayer(this.geolocateCircle)
+          // }
         })
         .on('click', (e) => {
           L.DomEvent.preventDefault(e)
@@ -416,10 +417,9 @@ export default class Map extends Component {
       }]
     })
 
-    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+    this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
       position: 'topright'
-    })
-    locateToolbar.addTo(leafletMap)
+    }).addTo(leafletMap)
   }
 
   fullscreenControl() {
