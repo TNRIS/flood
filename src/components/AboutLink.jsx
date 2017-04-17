@@ -10,11 +10,11 @@ const AboutLink = class AboutLink extends Component {
   }
 
   render() {
-	  return (
-	    <a className="mdl-navigation__link resources__link" href="#" onClick={this.props.showAbout}>
-	      about
-	    </a>
-	  )
+    return (
+      <a className="mdl-navigation__link resources__link" href="#" onClick={this.props.showAbout}>
+        About
+      </a>
+    )
   }
 }
 

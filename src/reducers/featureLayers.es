@@ -41,30 +41,6 @@ const initialState = {
       'status': null,
     },
     {
-      'id': 'animated-weather',
-      'text': 'Weather Radar',
-      'icon': weatherIcon,
-      'legend': weatherLegend,
-      'type': 'animated-weather',
-      'active': false,
-      'status': null,
-      'displayedTimestamp': '',
-    },
-    {
-      'id': 'flood-alerts',
-      'text': 'Weather Alerts',
-      'icon': floodAlertIcon,
-      'legend': floodAlertLegend,
-      'type': 'aeris-alerts',
-      'options': {
-        'code': 'alerts',
-        'refreshTimeMs': 60000, // 1 minute
-        'opacity': 0.7
-      },
-      'active': false,
-      'status': null,
-    },
-    {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
       'icon': lakeIcon,
@@ -86,6 +62,30 @@ const initialState = {
       },
       'active': false,
       'status': null,
+    },
+    {
+      'id': 'flood-alerts',
+      'text': 'Weather Alerts',
+      'icon': floodAlertIcon,
+      'legend': floodAlertLegend,
+      'type': 'aeris-alerts',
+      'options': {
+        'code': 'alerts',
+        'refreshTimeMs': 60000, // 1 minute
+        'opacity': 0.7
+      },
+      'active': false,
+      'status': null,
+    },
+    {
+      'id': 'animated-weather',
+      'text': 'Weather Radar',
+      'icon': weatherIcon,
+      'legend': weatherLegend,
+      'type': 'animated-weather',
+      'active': false,
+      'status': null,
+      'displayedTimestamp': '',
     }
   ],
 }
