@@ -1,15 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
+    Button, Checkbox, Dialog, DialogTitle, DialogContent, DialogActions
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
 
 class Disclaimer extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {
+      openDialog: true
+    }
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
   }
@@ -23,9 +25,18 @@ class Disclaimer extends React.Component {
   }
 
   handleOpenDialog() {
-    this.setState({
-      openDialog: true
-    });
+    const ls = window.localStorage
+
+    if (ls.hasOwnProperty('texasFloodDisclaimer') && ls.texasFloodDisclaimer === VERSION) {
+      this.setState({
+        openDialog: false
+      })
+    }
+    else {
+      this.setState({
+        openDialog: true
+      })
+    }
   }
 
   handleCloseDialog() {
@@ -35,6 +46,15 @@ class Disclaimer extends React.Component {
   }
 
   render() {
+    const updateDisclaimerAcceptance = (e) => {
+      if (e.target.checked) {
+        window.localStorage.setItem('texasFloodDisclaimer', VERSION)
+      }
+      else if (!e.target.checked) {
+        window.localStorage.removeItem('texasFloodDisclaimer')
+      }
+    }
+
     return (
       <div className='disclaimer__wrapper'>
         <Dialog ref='disclaimer' className='disclaimer' open={this.state.openDialog}>
@@ -61,6 +81,10 @@ class Disclaimer extends React.Component {
                 <Button colored className="terms-agree-button" type='button' onClick={this.handleCloseDialog}>
                 I have read and agree to these terms
                 </Button>
+            <Checkbox
+              label="Do not show again"
+              onChange={updateDisclaimerAcceptance}
+            />
           </DialogActions>
         </Dialog>
       </div>
