@@ -68,7 +68,7 @@ export default class Map extends Component {
         minZoom: window.innerWidth < 768 ? 5 : 6
       })
 
-      this.map.zoomControl.setPosition('topright')
+      this.map.zoomControl.setPosition('bottomright')
       this.map.attributionControl.setPrefix('Data Sourced From')
       this.initializeLayerStore(this.props, this.map)
       this.initializeBasemapLayers()
@@ -296,7 +296,7 @@ export default class Map extends Component {
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
     const layerControl = L.control.layers(layers)
-    layerControl.setPosition('bottomright').addTo(this.map)
+    layerControl.setPosition('topright').addTo(this.map)
     this.map.on('baselayerchange', ({ layer }) => {
       layer.bringToBack()
       if (layer.options.mapbox) {
@@ -418,7 +418,7 @@ export default class Map extends Component {
     })
 
     this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
-      position: 'topright'
+      position: 'bottomright'
     }).addTo(leafletMap)
   }
 
@@ -426,7 +426,7 @@ export default class Map extends Component {
     const thisMap = this.map
     const toggleFullscreen = this.toggleFullscreen
     const fullscreenButton = L.easyButton({
-      position: 'topright',
+      position: 'bottomright',
       states: [{
         icon: '<i class="material-icons fullscreen-icon">fullscreen</i>',
         title: 'Toggle Fullscreen',
