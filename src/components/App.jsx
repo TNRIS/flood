@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
@@ -12,23 +12,6 @@ import FloodHeader from './FloodHeader'
 import FloodFooter from './FloodFooter'
 
 ga.pageview(window.location.pathname)
-
-const App = () => (
-  <div>
-    <Disclaimer />
-    <SubscribeContainer />
-    <AboutContainer />
-    <Layout fixedHeader>
-      <FloodHeader />
-      <NavigationDrawer />
-      <Content>
-        <MapContainer />
-      </Content>
-      <FloodFooter />
-      <ToasterContainer />
-    </Layout>
-  </div>
-)
 
 export default class App extends Component {
   constructor(props) {
@@ -46,7 +29,8 @@ export default class App extends Component {
         <Disclaimer />
         <SubscribeContainer />
         <AboutContainer />
-        <Layout fixedDrawer style={{background: 'white'}}>
+        <Layout fixedHeader>
+          <FloodHeader />
           <NavigationDrawer/>
           <Content>
             <MapContainer
@@ -59,6 +43,7 @@ export default class App extends Component {
                 lid: this.props.params.lid || null
               }} />
           </Content>
+          <FloodFooter />
           <ToasterContainer />
         </Layout>
       </div>

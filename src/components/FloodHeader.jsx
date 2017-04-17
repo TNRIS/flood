@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { Header, Navigation } from 'react-mdl'
 
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
