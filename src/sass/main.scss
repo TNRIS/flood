@@ -966,3 +966,15 @@ button.zoom-out-of-service {
 .hide-mapbox-wordmark {
   display: none;
 }
+
+label.hide-disclaimer-checkbox {
+  color: gray;
+  margin-top: 10px;
+
+  span {
+    font-size: 12px;
+    font-style: italic;
+    line-height: 18px;
+    margin-bottom: 0;
+  }
+}
