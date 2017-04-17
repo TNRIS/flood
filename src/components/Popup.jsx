@@ -5,6 +5,9 @@ import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
+import {  hashHistory } from 'react-router'
+import axios from 'axios'
+
 
 export default class Popup extends Component {
   static propTypes = {
@@ -58,7 +61,8 @@ export default class Popup extends Component {
         case 'ahps-flood':
           const lid = popupData.data.lid
           const gage = gageInfo[lid]
-          this.leafletPopup.setLatLng([gage.latitude, gage.longitude])
+          this.leafletPopup.setLatLng(this.retrieveGageLocation(lid))
+          hashHistory.push(`/gage/${lid.toLowerCase()}`)
           return this.showPopop()
 
         case 'flood-alerts':
@@ -95,6 +99,20 @@ export default class Popup extends Component {
       default:
         return null
     }
+  }
+
+  retrieveGageLocation(lid) {
+    const gage = this.props.gageInfo[lid]
+
+    if (gage) {
+      return L.latLng(gage.latitude, gage.longitude)
+    }
+    const query = `SELECT latitude, longitude FROM nws_ahps_gauges_texas_develop WHERE lid = '${lid}'`
+    axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`).then(({data}) => {
+      data.rows.map((gageData) => {
+        return L.latLng(gageData.latitude, gageData.longitude)
+      })
+    })
   }
 
   removePopupContent() {
