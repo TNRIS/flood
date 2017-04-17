@@ -8,48 +8,45 @@ import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
 class NavigationToggle extends Component {
   constructor(props) {
     super(props)
-    this.state = {navigationContent: 'layers'}
+    this.state = {navigationContent: 'layers',
+                  showFeatureLayerChooser: true,
+                  showSubscriptionForm: false
+                 }
     this.handleSetNavigationUnsubscribe = this.handleSetNavigationUnsubscribe.bind(this)
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
   }
 
   handleSetNavigationUnsubscribe() {
     this.setState({navigationContent: 'unsubscribe'})
+    this.setState({showSubscriptionForm: !this.state.showSubscriptionForm})
   }
 
   handleSetNavigationLayers() {
     this.setState({navigationContent: 'layers'})
+    this.setState({showFeatureLayerChooser: !this.state.showFeatureLayerChooser})
   }
 
   render() {
-    const navigationContent = this.state.navigationContent
-    let content
-
-    if (navigationContent === 'layers') {
-      content = (
-        <div>
-          <h2><i className="material-icons">layers</i> Map Layers</h2>
-          <FeatureLayerChooserContainer/>
-          <Button ripple
-          className="toggle-navigation-content"
-          onClick={this.handleSetNavigationUnsubscribe}><i className="material-icons">add_alert</i> Manage Alerts</Button>
-        </div>
-      )
-    }
-    else {
-      content = (
-        <div>
-          <h2><i className="material-icons">add_alert</i> Manage Alerts</h2>
-          <SubscriptionFormContainer/>
-          <Button ripple
-          className="toggle-navigation-content"
-          onClick={this.handleSetNavigationLayers}><i className="material-icons">layers</i> Map Layers</Button>
-        </div>
-      )
-    }
-
     return (
-      content
+      <div>
+        <div>
+          <Button ripple
+          className="toggle-navigation-content"
+          onClick={this.handleSetNavigationLayers}>Map Layers</Button>
+          { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
+        </div>
+        <div>
+          <Button ripple
+          className="toggle-navigation-content"
+          onClick={this.handleSetNavigationLayers}>Basemaps</Button>
+        </div>
+        <div>
+          <Button ripple
+          className="toggle-navigation-content"
+          onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
+          { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
+        </div>
+      </div>
     )
   }
 }
