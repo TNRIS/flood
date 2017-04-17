@@ -84,7 +84,8 @@ export default class CartoDBLayer extends Layer {
           this.map.removeLayer(previousTileLayer)
           this.map.addLayer(this.tileLayer)
 
-          //  This will set the visible layer order relative to the order set in TileLayer.es
+          //  This will set the visible layer order relative to
+          //  the order set in TileLayer.es and AnimatedWeatherLayer.es
           switch (this.id) {
             case "ahps-flood":
               this.tileLayer.setZIndex(99)
