@@ -155,6 +155,7 @@ export default class Map extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    console.log(this.props.featureLayers)
     // only trigger show() and hide() on feature layers when the set of active
     // layers has changed, or an active layer has had a status change
     const activeFeatureLayerBools = (props) => {

@@ -87,15 +87,18 @@ export default class AnimatedWeatherLayer extends Layer {
     else {
       const setVisible = (layer) => {
         if (!this.map.hasLayer(layer)) {
-          layer.addTo(this.map).bringToFront()
+          layer.addTo(this.map)
         }
+        //  This will set the visible layer order relative to
+        //  the order set in TileLayer.es and CartoDBLayer.es
+        layer.setZIndex(96)
         layer.setOpacity(0.8)
       }
 
       const setTimestamp = (time) => {
         const t = time
         const m = t.substr(4, 2) - 1
-        const date = new Date(Date.UTC(t.substr(0, 4), m, t.substr(6, 2), t.substr(8, 2), t.substr(10, 2)));
+        const date = new Date(Date.UTC(t.substr(0, 4), m, t.substr(6, 2), t.substr(8, 2), t.substr(10, 2)))
         this.handlers.updateTimestamp(date.toLocaleString())
       }
 
@@ -141,7 +144,6 @@ export default class AnimatedWeatherLayer extends Layer {
 
           cycleWeatherLayer()
         }
-
       }
     }
   }

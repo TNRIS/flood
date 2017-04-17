@@ -22,14 +22,12 @@ class FloodHeader extends React.Component {
     }, 0)
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-  // This is a hack to replace the mdl-layout__drawer-button icon from the standard hamburger menu icon to the chat icon for our use.
-  // This is not usually a good way to do this but as MDL has provided no other way outside of editing the CSS directly .... viola...
+  // This is a hack to replace the mdl-layout__drawer-button icon from
+  // the chevron_right icon to the hamburger menu icon for our use.
+  // This is not usually a good way to do this but as MDL has provided
+  // no other way outside of editing the CSS directly .... viola...
   changeIcon() {
     const _db = document.querySelector('.mdl-layout__drawer-button i')
-    console.log(_db)
     if (_db) {
       _db.textContent = 'menu'
     }
