@@ -15,6 +15,16 @@ const initialState = {
         'mapbox': true
       }
     },
+    {
+      'id': 'mapbox-satellite-streets',
+      'text': 'Mapbox Satellite Streets',
+      'type': 'tile',
+      'url': 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
+      'options': {
+        'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+        'mapbox': true
+      }
+    },
     // {
     //   'id': 'osm',
     //   'text': 'OpenStreetMap',

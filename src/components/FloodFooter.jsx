@@ -36,7 +36,7 @@ class FloodFooter extends React.Component {
         <FooterSection>
           <FooterLinkList>
             <div style={{position: 'relative'}}>
-              <a href="#" name="more_vert" id="footer-context-menu">resources</a>
+              <a href="#" name="more_vert" id="footer-context-menu">Resources</a>
               <Menu className="footer-context-menu" target="footer-context-menu" valign="top" align="left" ripple>
                 <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">before a flood</a></MenuItem>
                 <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">during a flood</a></MenuItem>
@@ -44,10 +44,10 @@ class FloodFooter extends React.Component {
               </Menu>
             </div>
             <AboutLinkContainer />
-            <ContactLink text="contact"
+            <ContactLink text="Contact"
                           href={contactLink}
                           target="_top" />
-            <a href="#" onClick={this.toggleFullscreen}>fullscreen</a>
+            <a href="#" onClick={this.toggleFullscreen}>Fullscreen</a>
           </FooterLinkList>
         </FooterSection>
       </Footer>
