@@ -181,7 +181,7 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       return (
-        <ListItemAction info="SMS" title={this.tooltipMessage("phone")}>
+        <ListItemAction info="Text" title={this.tooltipMessage("phone")}>
           <Checkbox ripple
           name="textsms"
           disabled={this.props.phone.length < 1}
