@@ -30,7 +30,8 @@ const mapStateToProps = (state) => {
     phone: state.user.phone,
     gageInfo: state.gageInfo,
     isUpdating: state.subscriptionList.isUpdating,
-    allSubscriptionChanges: state.subscriptionChanges.allSubscriptionChanges
+    allSubscriptionChanges: state.subscriptionChanges.allSubscriptionChanges,
+    browser: state.browser
   }
 }
 

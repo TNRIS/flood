@@ -38,11 +38,6 @@ class NavigationToggle extends Component {
         <div>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationLayers}>Basemaps</Button>
-        </div>
-        <div>
-          <Button ripple
-          className="toggle-navigation-content"
           onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>

@@ -31,10 +31,6 @@ body {
     background-color: $gray20;
   }
 
-  .mdl-layout__content {
-    z-index: auto;
-  }
-
   .mdl-layout__drawer {
     box-shadow: 0 0px 8px rgba(0,0,0,0.65);
 
@@ -754,10 +750,11 @@ dialog.subscribeDialog h4 {
     margin: 0;
     color: white;
     text-shadow:
-    -1px -1px 0 #666666,
-    1px -1px 0 #666666,
-    -1px 1px 0 #666666,
-    1px 1px 0 #666666;
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
   }
   z-index: 6;
   position: absolute;
@@ -773,6 +770,15 @@ dialog.subscribeDialog h4 {
   left: 10px;
   bottom: 25px;
   padding: 4px;
+
+  .mdl-button--fab {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+
+    .material-icons.md-dark {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
 }
 
 .betanotice {
@@ -1075,7 +1081,7 @@ button.zoom-out-of-service {
   right: 45px;
   bottom: 15px;
   text-indent: -9999px;
-  z-index: 99999;
+  z-index: 4;
   overflow: hidden;
 
   /* `background-image` contains the Mapbox wordmark */
@@ -1116,9 +1122,14 @@ button.zoom-out-of-service {
     border-bottom-right-radius: 0 !important;
   }
 
-  .leaflet-control-geocoder-form > input {
-    height: 40px;
-    padding-left: 20px;
+  .leaflet-control-geocoder-form {
+    width: 100%;
+
+    input {
+      height: 40px;
+      padding-left: 20px;
+      width: 100%;
+    }
   }
 
   .leaflet-control-geocoder-alternatives {
@@ -1154,5 +1165,17 @@ label.hide-disclaimer-checkbox {
 
 .leaflet-control-attribution {
   font-size: 8px !important;
-  z-index: 1;
+}
+
+.leaflet-bottom.leaflet-right {
+  z-index: 4;
+}
+
+.leaflet-top.leaflet-right {
+  z-index: 4;
+}
+
+.mdl-snackbar {
+  z-index: 10 !important;
+  background-color: #4F85AE !important;
 }

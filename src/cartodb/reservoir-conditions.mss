@@ -1,9 +1,9 @@
-@colorNope: #ecf2f9;
-@color00: #3399FF;
-@color20: #4deaea;
-@color40: #FFFF99;
-@color60: #FFCC33;
-@color80: #D73027;
+@colorNope: #3399FE;
+@color00: #FCFB6B;
+@color20: #FED32E;
+@color40: #FE8204;
+@color60: #FB5114;
+@color80: #FE0000;
 
 
 #reservoir_flood_conditions {
@@ -13,7 +13,10 @@
   // order is important here - draw outline first then the fill on top
 
   ::outline-glow {
-    line-width: 7;
+    [zoom <= 7] {
+      line-width: 3;
+    }
+    line-width: 5;
     line-opacity: .9;
     line-join: round;
     line-cap: round;
@@ -30,9 +33,9 @@
   }
   ::outline {
     [zoom <= 7] {
-      line-width: .2;
+      line-width: .5;
     }
-    line-width: .5;
+    line-width: .7;
     line-opacity: 1;
   }
 
@@ -47,12 +50,12 @@
     }
     ::outline-glow {
       line-opacity: 1;
-      line-width: 7;
+      line-width: 5;
       line-color: lighten(@colorNope, 20);
     }
     ::outline-glow-two {
       line-opacity: .9;
-      line-width: 5;
+      line-width: 2;
       line-color: darken(@colorNope, 10);
     }
   }
@@ -61,10 +64,15 @@
       polygon-fill: @color00;
     }
     ::outline {
-      line-color: darken(@color00, 20);
+      line-color: darken(@color00, 30);
     }
     ::outline-glow {
       line-color: lighten(@color00, 24);
+    }
+    ::outline-glow-two {
+      line-opacity: .9;
+      line-width: 2;
+      line-color: darken(@color00, 10);
     }
 
   }

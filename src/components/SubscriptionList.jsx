@@ -36,7 +36,8 @@ class SubscriptionList extends React.Component {
     setCenterAndZoom: React.PropTypes.func,
     setPopup: React.PropTypes.func,
     subscriptions: React.PropTypes.object,
-    unqueueChangeFromChangeList: React.PropTypes.func
+    unqueueChangeFromChangeList: React.PropTypes.func,
+    browser: React.PropTypes.object
   }
 
   constructor() {
