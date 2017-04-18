@@ -39,7 +39,8 @@ class SubscriptionList extends React.Component {
     saveSubscriptionChanges: React.PropTypes.func,
     setCenterAndZoom: React.PropTypes.func,
     subscriptions: React.PropTypes.object,
-    unqueueChangeFromChangeList: React.PropTypes.func
+    unqueueChangeFromChangeList: React.PropTypes.func,
+    browser: React.PropTypes.object
   }
 
   constructor() {
@@ -75,6 +76,11 @@ class SubscriptionList extends React.Component {
    */
   zoomToGage(event, gageInfo) {
     this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
+
+    if (this.props.browser.width < 700) {
+      const layout = document.querySelector('.mdl-layout')
+      layout.MaterialLayout.toggleDrawer()
+    }
   }
 
   handleOpenConfirmDialog() {
