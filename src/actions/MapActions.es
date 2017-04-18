@@ -3,6 +3,13 @@ import {
   SET_CENTER_AND_ZOOM
 } from '../constants/MapActionTypes'
 
+import {
+  setPopup
+} from './PopupActions'
+
+
+let prevClickEvent = null
+
 /**
  * Emit action to reset the map's state to a null center and zoom
  * @return {object} action
@@ -10,6 +17,17 @@ import {
 export function clearCenterAndZoom() {
   return {
     type: CLEAR_CENTER_AND_ZOOM
+  }
+}
+
+export function mapClickHandler(id, data, clickLocation, event) {
+  return (dispatch) => {
+    if (data.data) {
+      if ((!prevClickEvent || prevClickEvent.timeStamp !== event.originalEvent.timeStamp) && data.data) {
+        dispatch(setPopup({id, data: data.data, clickLocation}))
+      }
+      prevClickEvent = event.originalEvent
+    }
   }
 }
 
