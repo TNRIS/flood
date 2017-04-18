@@ -149,9 +149,11 @@ export default class Map extends Component {
           )
         })
         .on('moveend', () => {
-          const center = this.map.getCenter()
-          const zoom =  this.map.getZoom()
-          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          if (!this.props.popupData.hasOwnProperty('id') || this.props.popupData.id !== "ahps-flood") {
+            const center = this.map.getCenter()
+            const zoom =  this.map.getZoom()
+            hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          }
         })
         .on('popupclose', () => {
           // this.props.removeAllPopups()
