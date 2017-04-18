@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
+import { hashHistory } from 'react-router'
 import R from 'ramda'
-import {  hashHistory } from 'react-router'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
@@ -151,24 +151,14 @@ export default class Map extends Component {
           )
         })
         .on('moveend', () => {
-          if (!this.props.popupData.hasOwnProperty('id') || this.props.popupData.id !== "ahps-flood") {
+          if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
             const center = this.map.getCenter()
             const zoom =  this.map.getZoom()
             hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
           }
-        })
-        .on('popupclose', () => {
-          // this.props.removeAllPopups()
-        })
-        .on('zoomstart', () => {
-          // if (this.map.hasLayer(this.geolocateCircle)) {
-          //   this.map.removeLayer(this.geolocateCircle)
-          // }
-        })
-        .on('zoomend', () => {
-          // if (this.geolocateCircle) {
-          //   this.map.addLayer(this.geolocateCircle)
-          // }
+          else {
+            hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+          }
         })
         .on('click', (e) => {
           L.DomEvent.preventDefault(e)
@@ -198,7 +188,7 @@ export default class Map extends Component {
           .then(({data}) => {
             if (data.rows.length === 0) {
               this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
-              this.props.hashHistory.push("")
+              hashHistory.push("")
               return initMap(initView)
             }
             data.rows.map((gage) => {
@@ -217,14 +207,12 @@ export default class Map extends Component {
                 },
                 clickLocation: L.latLng(gage.latitude, gage.longitude)
               })
-
-              console.log("popup set")
             })
           })
       }
       else {
         if (!this.props.initialCenter) {
-          this.props.hashHistory.push("")
+          hashHistory.push("")
         }
         initMap(initView)
       }
@@ -258,12 +246,11 @@ export default class Map extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
-      this.map.closePopup()
       const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
-    if (Object.keys(this.props.popupData).length === 0) {
+    if (!this.props.popupData) {
       this.map.closePopup()
     }
   }
@@ -386,7 +373,6 @@ export default class Map extends Component {
   geolocationControl() {
     const leafletMap = this.map
     const showSnackbar = this.props.showSnackbar
-    const removeAllPopups = this.props.removeAllPopups
 
     const geolocationOptions = {
       watch: false,

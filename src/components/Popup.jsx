@@ -6,7 +6,6 @@ import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
 import {  hashHistory } from 'react-router'
-import axios from 'axios'
 
 
 export default class Popup extends Component {
@@ -33,7 +32,7 @@ export default class Popup extends Component {
       className: 'popup',
       closeButton: false,
       maxheight: 600,
-      keepInView: true
+      keepInView: false
     })
   }
 

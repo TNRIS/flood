@@ -16,6 +16,10 @@ import {
   setCenterAndZoom
 } from '../actions/MapActions'
 
+import {
+  setPopup
+} from '../actions/PopupActions'
+
 const mapStateToProps = (state) => {
   return {
     gageSubscriptionById: state.gageSubscriptions.gageSubscriptionById,
@@ -40,6 +44,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     saveSubscriptionChanges: () => {
       dispatch(saveSubscriptionChanges())
+    },
+    setPopup: (popupData) => {
+      dispatch(setPopup(popupData))
     },
     clearSubscriptionList: () => {
       dispatch(clearSubscriptionList())
