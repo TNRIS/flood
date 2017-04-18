@@ -47,8 +47,6 @@ export default class Map extends Component {
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer)
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
-    onClickAlerts: PropTypes.func.isRequired,
-    onClickUTFGrid: PropTypes.func.isRequired,
     showSnackbar: PropTypes.func
   }
 
@@ -153,9 +151,11 @@ export default class Map extends Component {
           )
         })
         .on('moveend', () => {
-          const center = this.map.getCenter()
-          const zoom =  this.map.getZoom()
-          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          if (!this.props.popupData.hasOwnProperty('id') || this.props.popupData.id !== "ahps-flood") {
+            const center = this.map.getCenter()
+            const zoom =  this.map.getZoom()
+            hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          }
         })
         .on('popupclose', () => {
           // this.props.removeAllPopups()
@@ -192,7 +192,7 @@ export default class Map extends Component {
       if (this.props.hasOwnProperty("gageCenter") && this.props.gageCenter.lid) {
         const upperLid = this.props.gageCenter.lid.toUpperCase()
         const query = (
-          `SELECT latitude, longitude FROM nws_ahps_gauges_texas WHERE lid = '${upperLid}'`
+          `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas_develop WHERE lid = '${upperLid}'`
         )
         axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
           .then(({data}) => {
@@ -205,8 +205,21 @@ export default class Map extends Component {
               initView.latitude = gage.latitude
               initView.longitude = gage.longitude
               initView.zoom = 13
+
+              initMap(initView)
+
+              this.props.setPopup({
+                id: 'ahps-flood',
+                data: {
+                  name: gage.name,
+                  wfo: gage.wfo,
+                  lid: this.props.gageCenter.lid
+                },
+                clickLocation: L.latLng(gage.latitude, gage.longitude)
+              })
+
+              console.log("popup set")
             })
-            initMap(initView)
           })
       }
       else {
@@ -217,7 +230,6 @@ export default class Map extends Component {
       }
     }, 0)
   }
-
 
   componentWillUpdate(nextProps) {
     // only trigger show() and hide() on feature layers when the set of active

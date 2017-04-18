@@ -4,6 +4,7 @@ import L from 'leaflet'
 import objectAssign from 'object-assign'
 import { store } from '../store'
 import { retrieveGageStatus } from '../actions'
+import { mapClickHandler } from '../actions/MapActions'
 import Layer from './Layer'
 
 function getLayer(options) {
@@ -74,7 +75,7 @@ export default class CartoDBLayer extends Layer {
           })
 
           utfGridLayer.on('click', (event) => {
-            this.handlers.onClickUTFGrid(this.id, event, event.latlng, event)
+            store.dispatch(mapClickHandler(this.id, event, event.latlng, event))
           })
 
           this.utfGridLayer = utfGridLayer

@@ -5,6 +5,9 @@ import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
+import {  hashHistory } from 'react-router'
+import axios from 'axios'
+
 
 export default class Popup extends Component {
   static propTypes = {
@@ -37,6 +40,8 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const {gageInfo, popupData, leafletMap} = this.props
 
+    console.log(this.props)
+
     if ( !prevProps.leafletMap && leafletMap ) {
       leafletMap
         .on('popupclose', () => {
@@ -57,8 +62,11 @@ export default class Popup extends Component {
       switch (popupData.id) {
         case 'ahps-flood':
           const lid = popupData.data.lid
-          const gage = gageInfo[lid]
-          this.leafletPopup.setLatLng([gage.latitude, gage.longitude])
+
+          const gage = this.props.gageInfo[lid]
+          const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
+          this.leafletPopup.setLatLng(popupLocation)
+          hashHistory.push(`/gage/${lid.toLowerCase()}`)
           return this.showPopop()
 
         case 'flood-alerts':
