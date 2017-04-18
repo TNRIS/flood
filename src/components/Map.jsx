@@ -431,10 +431,10 @@ export default class Map extends Component {
       }]
     })
 
-    const locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+    this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
       position: 'bottomright'
     })
-    locateToolbar.addTo(leafletMap)
+    this.locateToolbar.addTo(leafletMap)
   }
 
   // fullscreenControl() {

@@ -40,8 +40,6 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const {gageInfo, popupData, leafletMap} = this.props
 
-    console.log(this.props)
-
     if ( !prevProps.leafletMap && leafletMap ) {
       leafletMap
         .on('popupclose', () => {
@@ -63,7 +61,7 @@ export default class Popup extends Component {
         case 'ahps-flood':
           const lid = popupData.data.lid
 
-          const gage = this.props.gageInfo[lid]
+          const gage = gageInfo[lid]
           const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
           this.leafletPopup.setLatLng(popupLocation)
           hashHistory.push(`/gage/${lid.toLowerCase()}`)
