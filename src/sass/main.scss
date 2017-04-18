@@ -31,10 +31,6 @@ body {
     background-color: $gray20;
   }
 
-  .mdl-layout__content {
-    z-index: auto;
-  }
-
   .mdl-layout__drawer {
     box-shadow: 0 0px 8px rgba(0,0,0,0.65);
 
@@ -1075,7 +1071,7 @@ button.zoom-out-of-service {
   right: 45px;
   bottom: 15px;
   text-indent: -9999px;
-  z-index: 99999;
+  z-index: 4;
   overflow: hidden;
 
   /* `background-image` contains the Mapbox wordmark */
@@ -1116,9 +1112,14 @@ button.zoom-out-of-service {
     border-bottom-right-radius: 0 !important;
   }
 
-  .leaflet-control-geocoder-form > input {
-    height: 40px;
-    padding-left: 20px;
+  .leaflet-control-geocoder-form {
+    width: 100%;
+
+    input {
+      height: 40px;
+      padding-left: 20px;
+      width: 100%;
+    }
   }
 
   .leaflet-control-geocoder-alternatives {
@@ -1154,5 +1155,17 @@ label.hide-disclaimer-checkbox {
 
 .leaflet-control-attribution {
   font-size: 8px !important;
-  z-index: 1;
+}
+
+.leaflet-bottom.leaflet-right {
+  z-index: 4;
+}
+
+.leaflet-top.leaflet-right {
+  z-index: 4;
+}
+
+.mdl-snackbar {
+  z-index: 10 !important;
+  background-color: #4F85AE !important;
 }
