@@ -205,6 +205,18 @@ export default class Map extends Component {
               initView.zoom = 13
 
               initMap(initView)
+
+              this.props.setPopup({
+                id: 'ahps-flood',
+                data: {
+                  name: gage.name,
+                  wfo: gage.wfo,
+                  lid: this.props.gageCenter.lid
+                },
+                clickLocation: L.latLng(gage.latitude, gage.longitude)
+              })
+
+              console.log("popup set")
             })
           })
       }

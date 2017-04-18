@@ -40,6 +40,8 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const {gageInfo, popupData, leafletMap} = this.props
 
+    console.log(this.props)
+
     if ( !prevProps.leafletMap && leafletMap ) {
       leafletMap
         .on('popupclose', () => {
@@ -60,8 +62,10 @@ export default class Popup extends Component {
       switch (popupData.id) {
         case 'ahps-flood':
           const lid = popupData.data.lid
-          const gage = gageInfo[lid]
-          this.leafletPopup.setLatLng(this.retrieveGageLocation(lid))
+
+          const gage = this.props.gageInfo[lid]
+          const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
+          this.leafletPopup.setLatLng(popupLocation)
           hashHistory.push(`/gage/${lid.toLowerCase()}`)
           return this.showPopop()
 
@@ -99,20 +103,6 @@ export default class Popup extends Component {
       default:
         return null
     }
-  }
-
-  retrieveGageLocation(lid) {
-    const gage = this.props.gageInfo[lid]
-
-    if (gage) {
-      return L.latLng(gage.latitude, gage.longitude)
-    }
-    const query = `SELECT latitude, longitude FROM nws_ahps_gauges_texas_develop WHERE lid = '${lid}'`
-    axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`).then(({data}) => {
-      data.rows.map((gageData) => {
-        return L.latLng(gageData.latitude, gageData.longitude)
-      })
-    })
   }
 
   removePopupContent() {
