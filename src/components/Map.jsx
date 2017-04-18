@@ -150,7 +150,7 @@ export default class Map extends Component {
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
         })
-        .on('moveend', () => {
+        .on('zoomend dragend', () => {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
             const center = this.map.getCenter()
             const zoom =  this.map.getZoom()
@@ -249,9 +249,6 @@ export default class Map extends Component {
       const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
-    }
-    if (!this.props.popupData) {
-      this.map.closePopup()
     }
   }
 

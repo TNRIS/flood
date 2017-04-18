@@ -37,6 +37,12 @@ class FloodHeader extends React.Component {
     geocoderControl.classList.toggle("showGeocoder")
   }
 
+  toggleSidebar () {
+    const layout = document.querySelector('.mdl-layout')
+    // layout.MaterialLayout.toggleDrawer()
+    layout.classList.toggle("mdl-layout--fixed-header")
+  }
+
   render() {
     return (
       <Header transparent style={{color: 'white'}}>
@@ -45,6 +51,7 @@ class FloodHeader extends React.Component {
             <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
+        <button style={{left: "300px"}} onClick={this.toggleSidebar}>TOGGLE</button>
         <Navigation className="header__navigation">
           <a href="#"
              onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>

@@ -32,7 +32,7 @@ export default class Popup extends Component {
       className: 'popup',
       closeButton: false,
       maxheight: 600,
-      keepInView: false
+      keepInView: true
     })
   }
 
@@ -43,7 +43,7 @@ export default class Popup extends Component {
       leafletMap
         .on('popupclose', () => {
           this.removePopupContent()
-          this.props.clearPopup()
+          // this.props.clearPopup()
         })
         .on('popupopen', () => {
           this.updatePopupSize()

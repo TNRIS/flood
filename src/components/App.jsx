@@ -29,20 +29,20 @@ export default class App extends Component {
         <Disclaimer />
         <SubscribeContainer />
         <AboutContainer />
-        <Layout fixedHeader>
+        <Layout>
           <FloodHeader />
-          <NavigationDrawer/>
-          <Content>
-            <MapContainer
-              initialCenter={{
-                lat: this.props.params.lat || null,
-                lng: this.props.params.lng || null,
-                zoom: this.props.params.zoom || null
-              }}
-              gageCenter={{
-                lid: this.props.params.lid || null
-              }} />
-          </Content>
+            <NavigationDrawer/>
+            <Content>
+              <MapContainer
+                initialCenter={{
+                  lat: this.props.params.lat || null,
+                  lng: this.props.params.lng || null,
+                  zoom: this.props.params.zoom || null
+                }}
+                gageCenter={{
+                  lid: this.props.params.lid || null
+                }} />
+            </Content>
           <FloodFooter />
           <ToasterContainer />
         </Layout>
