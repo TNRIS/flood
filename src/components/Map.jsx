@@ -248,8 +248,9 @@ export default class Map extends Component {
       this.setActiveFeatureLayers(nextProps)
     }
 
-    if (nextProps.featureLayers.layers[1]['active'] === true) {
-      this.displayedTimestamp = nextProps.featureLayers.layers[1]['displayedTimestamp']
+    const lyrs = nextProps.featureLayers.layers
+    if (lyrs[lyrs.length - 1]['active'] === true) {
+      this.displayedTimestamp = lyrs[lyrs.length - 1]['displayedTimestamp']
     }
     else {
       this.displayedTimestamp = ''

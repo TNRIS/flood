@@ -750,10 +750,11 @@ dialog.subscribeDialog h4 {
     margin: 0;
     color: white;
     text-shadow:
-    -1px -1px 0 #666666,
-    1px -1px 0 #666666,
-    -1px 1px 0 #666666,
-    1px 1px 0 #666666;
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
   }
   z-index: 6;
   position: absolute;
@@ -769,6 +770,15 @@ dialog.subscribeDialog h4 {
   left: 10px;
   bottom: 25px;
   padding: 4px;
+
+  .mdl-button--fab {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+
+    .material-icons.md-dark {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
 }
 
 .betanotice {
