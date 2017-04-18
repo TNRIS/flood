@@ -13,6 +13,7 @@ $nav-spacing-from-left-narrow: 6px;
 $nav-spacing-from-left-wide: 16px;
 $nav-icon-wrapper-width: 50px;
 $nav-spacing-from-left-narrow-link: $nav-spacing-from-left-narrow + $nav-icon-wrapper-width + ($nav-spacing-from-left-narrow - 2);
+$popup-icons-width-threshold: 370px !default;
 
 body {
   width: 100%;
@@ -387,13 +388,38 @@ body {
     margin: 6px 14px 6px 14px;
   }
 
-  .subscribe-button {
-    font-size: 1em;
-    float: right;
-    top: 4px;
-    border-left: 1px;
-    border-color: white;
+  .mdl-button {
+    min-width: 0;
   }
+
+    .popup__close {
+      float: right;
+      height: 42px;
+
+      @media screen and (max-width: $popup-icons-width-threshold) {
+        padding: 0 6px 0 0;
+        width: 32px;
+
+        .material-icons.material-icons {
+          font-size: 1.5em;
+        }
+      }
+
+      i {
+        margin-top: -4px;
+      }
+    }
+
+    .subscribe-button {
+      font-size: 1em;
+      float: right;
+      height: 42px;
+      border-left: 1px;
+      border-color: white;
+      @media screen and (max-width: $popup-icons-width-threshold) {
+        padding: 0 8px;
+      }
+    }
 
   //// customize popup tip - give it a more narrow angle
   //.leaflet-popup-content-wrapper, .leaflet-popup-tip {

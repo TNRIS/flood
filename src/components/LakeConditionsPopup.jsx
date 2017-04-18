@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
+import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupTitle from './PopupTitle'
 import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
@@ -26,7 +27,9 @@ export default class LakeConditionsPopup extends Component {
 
     return (
       <div className="popup__container--lake" >
-        <PopupTitle icon={icon} title="Lake Conditions" />
+        <Provider store={store}>
+          <PopupTitleContainer icon={icon} title="Lake Conditions" />
+        </Provider>
         <PopupContent>
           <PopupHeader>
             { full_name }

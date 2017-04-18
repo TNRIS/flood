@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { Button } from 'react-mdl'
-
-const floodGaugeIcon = require('../images/flood_gauge_icon.png')
+import { Button, Icon } from 'react-mdl'
 
 const PopupTitle = class PopupTitle extends Component {
   constructor(props) {
@@ -17,17 +15,18 @@ const PopupTitle = class PopupTitle extends Component {
         <span className="popup__title-text">
           { this.props.title }
         </span>
+        <Button className="popup__close mdl-color-text--white" onClick={this.props.clearPopup}>
+          <Icon
+              name="clear"
+              className="material-icons"
+          />
+        </Button>
           {this.props.title == "Flood Gage" &&
             <Button className="subscribe-button mdl-color-text--white" onClick={this.props.showSubscribe}>Subscribe</Button>
           }
       </div>
     );
   }
-}
-
-PopupTitle.defaultProps = {
-  icon: floodGaugeIcon,
-  title: "Flood Gage"
 }
 
 export default PopupTitle

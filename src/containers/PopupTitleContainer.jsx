@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions'
+import { clearPopup } from '../actions//PopupActions'
 import PopupTitle from '../components/PopupTitle'
 
 const mapStateToProps = (state) => {
@@ -11,13 +12,16 @@ const mapDispatchToProps = (dispatch) => {
   return {
     showSubscribe: () => {
       dispatch(actions.showSubscribeDialog())
+    },
+    clearPopup: () => {
+      dispatch(clearPopup())
     }
   }
 }
 
-const FloodGaugePopupTitleContainer = connect(
+const PopupTitleContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(PopupTitle)
 
-export default FloodGaugePopupTitleContainer
+export default PopupTitleContainer
