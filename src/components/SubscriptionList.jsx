@@ -82,6 +82,11 @@ class SubscriptionList extends React.Component {
       },
       clickLocation: L.latLng(gageInfo.latitude, gageInfo.longitude)
     })
+
+    if (this.props.browser.width < 700) { 
+      const layout = document.querySelector('.mdl-layout') 
+      layout.MaterialLayout.toggleDrawer() 
+    }
   }
 
   handleOpenConfirmDialog() {
