@@ -43,7 +43,7 @@ export default class Popup extends Component {
       leafletMap
         .on('popupclose', () => {
           this.removePopupContent()
-          // this.props.clearPopup()
+          this.props.clearPopup()
         })
         .on('popupopen', () => {
           this.updatePopupSize()
