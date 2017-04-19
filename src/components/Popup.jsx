@@ -44,6 +44,10 @@ export default class Popup extends Component {
         .on('popupclose', () => {
           this.removePopupContent()
           this.props.clearPopup()
+
+          const center = leafletMap.getCenter()
+          const zoom =  leafletMap.getZoom()
+          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
         })
         .on('popupopen', () => {
           this.updatePopupSize()
