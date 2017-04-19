@@ -6,7 +6,6 @@ import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
 import {  hashHistory } from 'react-router'
-import axios from 'axios'
 
 
 export default class Popup extends Component {
@@ -44,7 +43,7 @@ export default class Popup extends Component {
       leafletMap
         .on('popupclose', () => {
           this.removePopupContent()
-          this.props.clearPopup()
+          // this.props.clearPopup()
         })
         .on('popupopen', () => {
           this.updatePopupSize()

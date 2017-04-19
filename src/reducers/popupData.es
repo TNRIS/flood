@@ -9,7 +9,10 @@ export default function popupData(state = {}, action) {
     case CLEAR_POPUP:
       return {}
     case POPUP_IMAGE_LOAD_SUCCESS:
-      return {...state, imageLoaded: true}
+      if (state.id) {
+        return {...state, imageLoaded: true}
+      }
+      return {}
     case SET_POPUP:
       return {...action.payload, imageLoaded: false}
     default:

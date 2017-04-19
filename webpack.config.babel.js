@@ -69,7 +69,7 @@ export default {
           : 'style!css',
       },
       {
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(jpg|png|gif|ico)$/,
         loader: 'url-loader?limit=65536'
       },
       {

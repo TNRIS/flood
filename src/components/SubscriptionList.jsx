@@ -5,19 +5,15 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  FABButton,
   Badge,
   Checkbox,
   Icon,
   IconButton,
-  IconToggle,
   List,
   ListItem,
   ListItemContent,
   ListItemAction,
-  Spinner,
-  Switch,
-  Tooltip
+  Spinner
 } from 'react-mdl'
 
 
@@ -38,8 +34,10 @@ class SubscriptionList extends React.Component {
     phone: React.PropTypes.string,
     saveSubscriptionChanges: React.PropTypes.func,
     setCenterAndZoom: React.PropTypes.func,
+    setPopup: React.PropTypes.func,
     subscriptions: React.PropTypes.object,
-    unqueueChangeFromChangeList: React.PropTypes.func
+    unqueueChangeFromChangeList: React.PropTypes.func,
+    browser: React.PropTypes.object
   }
 
   constructor() {
@@ -73,8 +71,22 @@ class SubscriptionList extends React.Component {
   /**
    * Method to set the map center and zoom to a gage location
    */
-  zoomToGage(event, gageInfo) {
-    this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 12)
+  zoomToGage(event, lid, gageInfo) {
+    this.props.setCenterAndZoom(gageInfo.latitude, gageInfo.longitude, 10)
+    this.props.setPopup({
+      id: "ahps-flood",
+      data: {
+        lid: lid,
+        wfo: gageInfo.wfo,
+        name: gageInfo.name
+      },
+      clickLocation: L.latLng(gageInfo.latitude, gageInfo.longitude)
+    })
+
+    if (this.props.browser.width < 700) { 
+      const layout = document.querySelector('.mdl-layout') 
+      layout.MaterialLayout.toggleDrawer() 
+    }
   }
 
   handleOpenConfirmDialog() {
@@ -129,7 +141,6 @@ class SubscriptionList extends React.Component {
       }
     }
     else {
-      console.log("unchecked")
       if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
         const sId = gs[protocol]
         this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
@@ -250,6 +261,7 @@ class SubscriptionList extends React.Component {
                   onClick={(event) => {
                     this.zoomToGage(
                       event,
+                      this.props.gageSubscriptionById[gageSubscriptionId].lid,
                       this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
                     )}
                   }/>

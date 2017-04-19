@@ -8,7 +8,7 @@ import Disclaimer from '../components/Disclaimer'
 import SubscribeContainer from '../containers/SubscribeContainer'
 import AboutContainer from '../containers/AboutContainer'
 import ToasterContainer from '../containers/ToasterContainer'
-import FloodHeader from './FloodHeader'
+import FloodHeaderContainer from '../containers/FloodHeaderContainer'
 import FloodFooter from './FloodFooter'
 
 ga.pageview(window.location.pathname)
@@ -30,9 +30,9 @@ export default class App extends Component {
         <SubscribeContainer />
         <AboutContainer />
         <Layout fixedHeader>
-          <FloodHeader />
-          <NavigationDrawer/>
-          <Content>
+          <FloodHeaderContainer />
+            <NavigationDrawer/>
+            <Content>
             <MapContainer
               initialCenter={{
                 lat: this.props.params.lat || null,
@@ -42,7 +42,7 @@ export default class App extends Component {
               gageCenter={{
                 lid: this.props.params.lid || null
               }} />
-          </Content>
+            </Content>
           <FloodFooter />
           <ToasterContainer />
         </Layout>
