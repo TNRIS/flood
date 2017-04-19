@@ -2,7 +2,7 @@ import React from 'react'
 import { Header, Navigation } from 'react-mdl'
 
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
-
+import TexasFloodIconImage from '../images/icons/favicon.ico'
 
 class FloodHeader extends React.Component {
   static propTypes = {
@@ -38,11 +38,12 @@ class FloodHeader extends React.Component {
   }
 
   render() {
+    const imgSource = this.props.browser.width < 500 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
       <Header transparent style={{color: 'white'}}>
         <div className="header__title">
           <a href="http://texasflood.org" target="_blank">
-            <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
+            <img src={imgSource} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
         <Navigation className="header__navigation">
