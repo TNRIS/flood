@@ -39,7 +39,7 @@ class  NavigationDrawer extends React.Component {
             </a>
           </div> */}
         </div>
-        <NavigationContent />
+        <NavigationContent navContentInitState={this.props.navContentInitState} />
         <Resources />
         <div className="footer">
           <div className="footer__wrapper">

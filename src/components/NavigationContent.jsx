@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon } from 'react-mdl'
+import { Button } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
@@ -8,10 +8,12 @@ import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
 class NavigationToggle extends Component {
   constructor(props) {
     super(props)
-    this.state = {navigationContent: 'layers',
-                  showFeatureLayerChooser: true,
-                  showSubscriptionForm: false
-                 }
+    this.state = {
+      navigationContent: 'layers',
+      showFeatureLayerChooser: this.props.navContentInitState.showFeatureLayerChooser,
+      showSubscriptionForm: this.props.navContentInitState.showSubscriptionForm
+    }
+
     this.handleSetNavigationUnsubscribe = this.handleSetNavigationUnsubscribe.bind(this)
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
   }

@@ -19,10 +19,18 @@ export default class App extends Component {
   }
 
   render() {
-    // if (this.props.gage) {
-    //   const gageinfo = this.props.gageInfo[this.props.gage.toUpperCase()]
-    //   this.props.setCenterAndZoom(gageinfo.latitude, gageinfo.longitude, 13)
-    // }
+    const navContentInitState = () => {
+      if (this.props.location.pathname === '/subscriptions') {
+        return {
+          showFeatureLayerChooser: false,
+          showSubscriptionForm: true
+        }
+      }
+      return {
+        showFeatureLayerChooser: true,
+        showSubscriptionForm: false
+      }
+    }
 
     return (
       <div>
@@ -31,7 +39,9 @@ export default class App extends Component {
         <AboutContainer />
         <Layout fixedHeader>
           <FloodHeaderContainer />
-            <NavigationDrawer/>
+            <NavigationDrawer
+              navContentInitState={navContentInitState()}
+            />
             <Content>
             <MapContainer
               initialCenter={{

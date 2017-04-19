@@ -37,7 +37,8 @@ if (isProd) {
 
 plugins.push(new webpack.DefinePlugin({
   VERSION: JSON.stringify(require("./package.json").version),
-  RELEASE: JSON.stringify(require("./package.json").release)
+  RELEASE: JSON.stringify(require("./package.json").release),
+  SITE_URL: JSON.stringify(require("./package.json").site_url)
 }))
 
 export default {
