@@ -116,6 +116,7 @@ body {
   }
 
   .mdl-mini-footer {
+    z-index: 2;
     min-height: 50px;
     padding: 0;
     background-color: inherit;
@@ -1127,6 +1128,7 @@ button.zoom-out-of-service {
     width: 100%;
 
     input {
+      font-size: 150%;
       height: 40px;
       padding-left: 20px;
       width: 100%;

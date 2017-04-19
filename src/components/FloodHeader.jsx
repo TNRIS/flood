@@ -15,7 +15,6 @@ class FloodHeader extends React.Component {
     this.state = {}
     this.changeIcon = this.changeIcon.bind(this)
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
-    this.handleShowLeafletControlLayers = this.handleShowLeafletControlLayers.bind(this)
   }
 
   componentDidMount() {
@@ -36,13 +35,8 @@ class FloodHeader extends React.Component {
   }
 
   handleShowGeocoder() {
-    const geocoderControl = document.getElementById("geocoder")
+    const geocoderControl = document.querySelector(".leaflet-control-geocoder")
     geocoderControl.classList.toggle("showGeocoder")
-  }
-
-  handleShowLeafletControlLayers() {
-    const leafletControlLayers = document.getElementsByClassName("leaflet-control-layers")
-    leafletControlLayers[0].classList.toggle("showLeafletControlLayers")
   }
 
   render() {
