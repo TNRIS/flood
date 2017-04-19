@@ -55,7 +55,7 @@ export default class Map extends Component {
     this.state = {
       animationIcon: "play_arrow",
       geolocateControl: "basic",
-      mapboxWordmarkClass: "hide-mapbox-wordmark",
+      mapboxWordmarkClass: "mapbox-wordmark",
       locateToolbar: null
     }
   }
@@ -247,10 +247,16 @@ export default class Map extends Component {
     const basemaps = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.id, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
-    if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
-      basemaps[nextProps.baseLayers.active].addTo(this.map)
+
+    const activeBaseLayer = this.props.baseLayers.active
+
+    const nextActiveBaseLayer = nextProps.baseLayers.active
+    if (activeBaseLayer !== nextActiveBaseLayer) {
+      basemaps[nextActiveBaseLayer].addTo(this.map)
+      basemaps[nextActiveBaseLayer].options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
+                                                     this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
       this.map.eachLayer((layer) => {
-        if (layer.options.layerId === this.props.baseLayers.active) {
+        if (layer.options.layerId === activeBaseLayer) {
           this.map.removeLayer(layer)
         }
       })
@@ -325,7 +331,7 @@ export default class Map extends Component {
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
-      geocoder: L.Control.Geocoder.bing(keys.bingApiKey),
+      geocoder: L.Control.Geocoder.Bing(keys.bingApiKey),
       placeholder: "Search by City or Street Address",
       collapsed: false,
       position: "topright"
