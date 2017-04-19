@@ -1,6 +1,8 @@
 import React from 'react'
 import { Header, Navigation } from 'react-mdl'
 
+import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
+
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 import TexasFloodIconImage from '../images/icons/favicon.ico'
 
@@ -33,7 +35,7 @@ class FloodHeader extends React.Component {
   }
 
   handleShowGeocoder() {
-    const geocoderControl = document.getElementById("geocoder")
+    const geocoderControl = document.querySelector(".leaflet-control-geocoder")
     geocoderControl.classList.toggle("showGeocoder")
   }
 
@@ -48,6 +50,11 @@ class FloodHeader extends React.Component {
         </div>
         <Navigation className="header__navigation">
           <a href="#"
+            id="basemap-context-menu"
+            title="Basemaps"><i className="material-icons">layers</i></a>
+          <BaseLayerMenuContainer />
+          <a href="#"
+            title="Search"
              onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>
         </Navigation>
       </Header>

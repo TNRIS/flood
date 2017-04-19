@@ -243,6 +243,18 @@ export default class Map extends Component {
     else {
       this.displayedTimestamp = ''
     }
+
+    const basemaps = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
+      [propBaseLayer.id, leafletLayerForPropBaseLayer(propBaseLayer)]
+    ))
+    if (this.props.baseLayers.active !== nextProps.baseLayers.active) {
+      basemaps[nextProps.baseLayers.active].addTo(this.map)
+      this.map.eachLayer((layer) => {
+        if (layer.options.layerId === this.props.baseLayers.active) {
+          this.map.removeLayer(layer)
+        }
+      })
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -251,9 +263,9 @@ export default class Map extends Component {
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
-    if (Object.keys(this.props.popupData).length === 0) { 
-      this.map.closePopup() 
-    } 
+    if (Object.keys(this.props.popupData).length === 0) {
+      this.map.closePopup()
+    }
   }
 
   setActiveFeatureLayers(props) {
@@ -300,15 +312,15 @@ export default class Map extends Component {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
-    const layerControl = L.control.layers(layers)
-    layerControl.setPosition('topright').addTo(this.map)
-    this.map.on('baselayerchange', ({ layer }) => {
-      layer.bringToBack()
-      layer.options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
-                             this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
-    })
-
     layers['Mapbox Outdoors'].addTo(this.map)
+    // original leaflet control to select basemaps
+    // const layerControl = L.control.layers(layers, null, {collapsed: false})
+    // layerControl.setPosition('topright').addTo(this.map)
+    // this.map.on('baselayerchange', ({ layer }) => {
+    //   layer.bringToBack()
+    //   layer.options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
+    //                          this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
+    // })
   }
 
   initializeGeocoderControl() {
@@ -326,7 +338,6 @@ export default class Map extends Component {
     }
 
     control.addTo(this.map)
-    control.getContainer().id = "geocoder"
   }
 
   //use a custom map bound functionality to restrict panning

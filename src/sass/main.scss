@@ -116,6 +116,7 @@ body {
   }
 
   .mdl-mini-footer {
+    z-index: 2;
     min-height: 50px;
     padding: 0;
     background-color: inherit;
@@ -338,6 +339,7 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background-color: #222 !important;
 }
 
 .map__cursor--pointer {
@@ -1126,6 +1128,7 @@ button.zoom-out-of-service {
     width: 100%;
 
     input {
+      font-size: 150%;
       height: 40px;
       padding-left: 20px;
       width: 100%;
@@ -1148,7 +1151,13 @@ button.zoom-out-of-service {
 }
 
 .leaflet-control-layers {
+  visibility: hidden;
   border-radius: 0 !important;
+  // right: 30px;
+}
+
+.showLeafletControlLayers {
+  visibility: visible;
 }
 
 label.hide-disclaimer-checkbox {
