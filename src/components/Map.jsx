@@ -473,12 +473,12 @@ export default class Map extends Component {
     let radarInfo
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
-                   <FABButton mini onClick={() => {this.toggleAnimation()}}>
-                   <Icon
-                        name={this.state.animationIcon}
-                        className="material-icons md-dark"
-                   />
-                   </FABButton>
+        <FABButton mini onClick={() => {this.toggleAnimation()}}>
+        <Icon
+            name={this.state.animationIcon}
+            className="material-icons md-dark"
+        />
+        </FABButton>
       )
     }
 
