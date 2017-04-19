@@ -403,19 +403,19 @@ export default class Map extends Component {
       states: [{
         stateName: 'location-off',
         icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">gps_not_fixed</i>',
-        title: 'Track my location',
+        title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
           leafletMap.closePopup()
           leafletMap.locate({...geolocationOptions, watch: true})
           showSnackbar(
-            "Using the track location feature on a mobile device will consume additional battery and data.", 3000
+            "Using the follow location feature on a mobile device will consume additional battery and data.", 3000
           )
         }
       }, {
         stateName: 'location-on',
         icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
-        title: 'Follow my location',
+        title: 'Stop following my location',
         onClick: (control) => {
           control.state('location-off')
           leafletMap.stopLocate()
