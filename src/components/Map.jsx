@@ -415,7 +415,7 @@ export default class Map extends Component {
       }, {
         stateName: 'location-on',
         icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
-        title: 'Track my location',
+        title: 'Follow my location',
         onClick: (control) => {
           control.state('location-off')
           leafletMap.stopLocate()
