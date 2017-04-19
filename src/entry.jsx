@@ -43,9 +43,10 @@ render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={AppContainer}>
-        <Route path="gage/:lid" component={AppContainer}/>
-        <Route path="map/@:lat,:lng,:zoom" component={AppContainer}/>
-        <Route path="/*" component={AppContainer}/>
+        <Route path="gage/:lid" component={AppContainer} />
+        <Route path="map/@:lat,:lng,:zoom" component={AppContainer} />
+        <Route path="subscriptions/" component={AppContainer} />
+        <Route path="/*" component={AppContainer} />
       </Route>
     </Router>
   </Provider>,
