@@ -38,9 +38,9 @@ class FloodFooter extends React.Component {
             <div style={{position: 'relative'}}>
               <a href="#" name="more_vert" id="footer-context-menu">Resources</a>
               <Menu className="footer-context-menu" target="footer-context-menu" valign="top" align="left" ripple>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">before a flood</a></MenuItem>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">during a flood</a></MenuItem>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">after a flood</a></MenuItem>
+                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></MenuItem>
+                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">Being Safe During a Flood</a></MenuItem>
+                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">Recovering After a Flood</a></MenuItem>
               </Menu>
             </div>
             <AboutLinkContainer />
