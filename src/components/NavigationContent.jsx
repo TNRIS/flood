@@ -40,7 +40,7 @@ class NavigationToggle extends Component {
         <div>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationUnsubscribe}>Manage Alerts</Button>
+          onClick={this.handleSetNavigationUnsubscribe}>MY GAGE ALERTS</Button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
       </div>
