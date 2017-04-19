@@ -8,6 +8,11 @@ const PopupTitle = class PopupTitle extends Component {
     this.state = {}
   }
 
+  closePopup() {
+    const map = this.props.leafletMap
+    map.closePopup()
+  }
+
   render() {
     return (
       <div className="popup__title">
@@ -15,7 +20,7 @@ const PopupTitle = class PopupTitle extends Component {
         <span className="popup__title-text">
           { this.props.title }
         </span>
-        <Button className="popup__close mdl-color-text--white" onClick={this.props.clearPopup}>
+        <Button className="popup__close mdl-color-text--white" onClick={this.closePopup.bind(this)}>
           <Icon
               name="clear"
               className="material-icons"

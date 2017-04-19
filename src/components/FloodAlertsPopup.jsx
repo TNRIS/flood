@@ -15,6 +15,7 @@ const icon = require('../images/flood_alert_red.png')
 export default class FloodAlertsPopup extends Component {
   static propTypes = {
     response: PropTypes.array,
+    leafletMap: PropTypes.object,
     updatePopup: PropTypes.func,
   }
 
@@ -28,7 +29,7 @@ export default class FloodAlertsPopup extends Component {
     return (
       <div>
         <Provider store={store}>
-          <PopupTitleContainer icon={icon} title="Weather Alert" />
+          <PopupTitleContainer icon={icon} title="Weather Alert" leafletMap={this.props.leafletMap}/>
         </Provider>
         <PopupContent>
           {response.map(({ details }) => {

@@ -15,6 +15,7 @@ export default class LakeConditionsPopup extends Component {
   static propTypes = {
     full_name: PropTypes.string,
     lake_url_name: PropTypes.string,
+    leafletMap: PropTypes.object,
     updatePopup: PropTypes.func,
   }
 
@@ -28,7 +29,7 @@ export default class LakeConditionsPopup extends Component {
     return (
       <div className="popup__container--lake" >
         <Provider store={store}>
-          <PopupTitleContainer icon={icon} title="Lake Conditions" />
+          <PopupTitleContainer icon={icon} title="Lake Conditions" leafletMap={this.props.leafletMap}/>
         </Provider>
         <PopupContent>
           <PopupHeader>
