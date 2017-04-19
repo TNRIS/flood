@@ -12,7 +12,8 @@ const initialState = {
       'url': 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
       'options': {
         'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-        'mapbox': true
+        'mapbox': true,
+        'layerId': 'mapbox-outdoors'
       }
     },
     {
@@ -22,53 +23,8 @@ const initialState = {
       'url': 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
       'options': {
         'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-        'mapbox': true
-      }
-    },
-    // {
-    //   'id': 'osm',
-    //   'text': 'OpenStreetMap',
-    //   'type': 'tile',
-    //   'url': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    //   'options': {
-    //     'attribution': '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    //   }
-    // },
-    // {
-    //   'id': 'positron',
-    //   'text': 'Positron',
-    //   'type': 'tile',
-    //   'url': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-    //   'options': {
-    //     'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    //   }
-    // },
-    // {
-    //   'id': 'dark-matter',
-    //   'text': 'Dark Matter',
-    //   'type': 'tile',
-    //   'url': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
-    //   // 'url': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-    //   'options': {
-    //     'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    //   }
-    // },
-    // {
-    //   'id': 'bing-road',
-    //   'text': 'Bing Road',
-    //   'type': 'bing',
-    //   'options': {
-    //     'type': 'Road'
-    //   }
-    // },
-    {
-      'id': 'mapbox-satellite-streets',
-      'text': 'Mapbox Satellite Streets',
-      'type': 'tile',
-      'url': 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
-      'options': {
-        'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-        'mapbox': true
+        'mapbox': true,
+        'layerId': 'mapbox-satellite-streets'
       }
     },
     // {
@@ -112,7 +68,8 @@ const initialState = {
       'text': 'Bing Aerial',
       'type': 'bing',
       'options': {
-        'type': 'Aerial'
+        'type': 'Aerial',
+        'layerId': 'bing-aerial'
       }
     },
     {
@@ -121,6 +78,7 @@ const initialState = {
       'type': 'wmts',
       'url': 'https://txgi.tnris.org/login/path/spoon-java-neuron-nebula/wmts/',
       'options': {
+        'layerId': 'tx-goog',
         'layer': 'texas',
         'style': 'default',
         'tilematrixSet': '0to20',
@@ -132,7 +90,8 @@ const initialState = {
       }
     }
   ],
-  active: 'mapbox-outdoors'
+  active: 'mapbox-outdoors',
+  target: 'basemap-context-menu'
 }
 
 export default function baseLayers(state = initialState, action) {

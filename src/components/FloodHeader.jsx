@@ -1,6 +1,8 @@
 import React from 'react'
 import { Header, Navigation } from 'react-mdl'
 
+import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
+
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
 
 
@@ -13,6 +15,7 @@ class FloodHeader extends React.Component {
     this.state = {}
     this.changeIcon = this.changeIcon.bind(this)
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
+    this.handleShowLeafletControlLayers = this.handleShowLeafletControlLayers.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +40,11 @@ class FloodHeader extends React.Component {
     geocoderControl.classList.toggle("showGeocoder")
   }
 
+  handleShowLeafletControlLayers() {
+    const leafletControlLayers = document.getElementsByClassName("leaflet-control-layers")
+    leafletControlLayers[0].classList.toggle("showLeafletControlLayers")
+  }
+
   render() {
     return (
       <Header transparent style={{color: 'white'}}>
@@ -47,6 +55,11 @@ class FloodHeader extends React.Component {
         </div>
         <Navigation className="header__navigation">
           <a href="#"
+            id="basemap-context-menu"
+            title="Basemaps"><i className="material-icons">layers</i></a>
+          <BaseLayerMenuContainer />
+          <a href="#"
+            title="Search"
              onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>
         </Navigation>
       </Header>

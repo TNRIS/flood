@@ -338,6 +338,7 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background-color: #222 !important;
 }
 
 .map__cursor--pointer {
@@ -1138,7 +1139,13 @@ button.zoom-out-of-service {
 }
 
 .leaflet-control-layers {
+  visibility: hidden;
   border-radius: 0 !important;
+  // right: 30px;
+}
+
+.showLeafletControlLayers {
+  visibility: visible;
 }
 
 label.hide-disclaimer-checkbox {
