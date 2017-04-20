@@ -4,6 +4,7 @@ import { Footer, FooterSection, FooterLinkList, IconButton, Menu, MenuItem } fro
 
 import AboutLinkContainer from '../containers/AboutLinkContainer'
 import ContactLink from './ContactLink'
+import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
 class FloodFooter extends React.Component {
   static propTypes = {
@@ -11,7 +12,7 @@ class FloodFooter extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {fullscreenIcon: "fullscreen"}
     this.toggleFullscreen = this.toggleFullscreen.bind(this)
   }
 
@@ -23,9 +24,11 @@ class FloodFooter extends React.Component {
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
       req.call(document)
+      this.setState({fullscreenIcon: "fullscreen"})
     } else {
       const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
       req.call(element)
+      this.setState({fullscreenIcon: "fullscreen_exit"})
     }
   }
 
@@ -33,6 +36,10 @@ class FloodFooter extends React.Component {
     const contactLink = "mailto:tnrisdatasupport@twdb.texas.gov?subject=TexasFlood.org Version: " + VERSION
     return (
       <Footer size="mini">
+        <a href="#"
+          id="basemap-context-menu"
+          title="Basemaps"><i className="material-icons">satellite</i></a>
+        <BaseLayerMenuContainer />
         <FooterSection>
           <FooterLinkList>
             <div style={{position: 'relative'}}>
@@ -47,9 +54,14 @@ class FloodFooter extends React.Component {
             <ContactLink text="Contact"
                           href={contactLink}
                           target="_top" />
-            <a href="#" onClick={this.toggleFullscreen}>Fullscreen</a>
           </FooterLinkList>
         </FooterSection>
+        <a href="#"
+          title="Fullscreen"
+          className="fullscreenButton"
+          onClick={this.toggleFullscreen}>
+          <i className="material-icons">{this.state.fullscreenIcon}</i>
+        </a>
       </Footer>
     )
   }

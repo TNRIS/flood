@@ -37,7 +37,7 @@ export default class App extends Component {
         <Disclaimer />
         <SubscribeContainer />
         <AboutContainer />
-        <Layout fixedHeader>
+        <Layout fixedHeader fixedDrawer>
           <FloodHeaderContainer />
             <NavigationDrawer
               navContentInitState={navContentInitState()}

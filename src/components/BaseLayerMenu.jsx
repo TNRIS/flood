@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import CustomPropTypes from '../CustomPropTypes'
 
 const BaseLayerMenu = ({ baseLayers, activeBaseId, onLayerClick, target }) => (
-  <Menu target={target} valign="bottom" align="right">
+  <Menu target={target} valign="top" align="left">
     {baseLayers.map(layer => (
       <MenuItem
         key={layer.id}

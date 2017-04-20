@@ -40,7 +40,7 @@ class FloodHeader extends React.Component {
   }
 
   render() {
-    const imgSource = this.props.browser.width < 500 ? TexasFloodIconImage : TexasFloodLogoImage
+    const imgSource = this.props.browser.width < 375 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
       <Header transparent style={{color: 'white'}}>
         <div className="header__title">
@@ -49,10 +49,10 @@ class FloodHeader extends React.Component {
           </a>
         </div>
         <Navigation className="header__navigation">
-          <a href="#"
+          {/* <a href="#"
             id="basemap-context-menu"
-            title="Basemaps"><i className="material-icons">layers</i></a>
-          <BaseLayerMenuContainer />
+            title="Basemaps"><i className="material-icons">satellite</i></a>
+          <BaseLayerMenuContainer /> */}
           <a href="#"
             title="Search"
              onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>
