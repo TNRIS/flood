@@ -5,6 +5,9 @@ import { Footer, FooterSection, FooterLinkList, IconButton, Menu, MenuItem } fro
 import AboutLinkContainer from '../containers/AboutLinkContainer'
 import ContactLink from './ContactLink'
 
+import TWDBLogoImage from '../images/logo_twdb.png'
+import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
+
 class FloodFooter extends React.Component {
   static propTypes = {
   }
@@ -33,6 +36,16 @@ class FloodFooter extends React.Component {
     const contactLink = "mailto:tnrisdatasupport@twdb.texas.gov?subject=TexasFlood.org Version: " + VERSION
     return (
       <Footer size="mini">
+        <div className="footer__logos">
+          <div className="footer__wrapper">
+            <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
+              <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
+            </a>
+            <a className="footer__tnris-logo" href="http://www.tnris.org">
+              <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
+            </a>
+          </div>
+        </div>
         <FooterSection>
           <FooterLinkList>
             <div style={{position: 'relative'}}>
