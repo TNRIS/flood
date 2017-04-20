@@ -9,14 +9,14 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions, FABButton, Icon, IconButton, Menu, MenuItem
+    FABButton, Icon
 } from 'react-mdl'
 
 const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
 const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
-const gpsNotFixedIcon = require("../images/ic_gps_not_fixed_black_18dp_2x.png")
+// const gpsNotFixedIcon = require("../images/ic_gps_not_fixed_black_18dp_2x.png")
 
 import axios from 'axios'
 
@@ -123,6 +123,8 @@ export default class Map extends Component {
 
           this.geolocateIcon.on('contextmenu', () => {
             this.locateToolbar._buttons[1].state('location-off')
+            this.locateToolbar._buttons[1].disable()
+            this.locateToolbar._buttons[0].state('zoom-to-location')
             this.map.stopLocate()
             this.map.removeLayer(this.geolocateIcon)
           })
@@ -269,9 +271,6 @@ export default class Map extends Component {
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
-    // if (Object.keys(this.props.popupData).length === 0) {
-    //   this.map.closePopup()
-    // }
   }
 
   setActiveFeatureLayers(props) {
@@ -403,19 +402,19 @@ export default class Map extends Component {
       states: [{
         stateName: 'location-off',
         icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">gps_not_fixed</i>',
-        title: 'Track my location',
+        title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
           leafletMap.closePopup()
           leafletMap.locate({...geolocationOptions, watch: true})
           showSnackbar(
-            "Using the track location feature on a mobile device will consume additional battery and data.", 3000
+            "Using the follow location feature on a mobile device will consume additional battery and data.", 3000
           )
         }
       }, {
         stateName: 'location-on',
         icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
-        title: 'Follow my location',
+        title: 'Stop following my location',
         onClick: (control) => {
           control.state('location-off')
           leafletMap.stopLocate()
@@ -424,13 +423,27 @@ export default class Map extends Component {
     }).disable()
 
     const geolocateButton = L.easyButton({
+      type: 'animate',
       states: [{
+        stateName: 'zoom-to-location',
         icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">person_pin_circle</i>',
         title: 'Find my location',
-        onClick: () => {
+        onClick: (control) => {
+          control.state("reset-geolocation-tools")
           leafletMap.closePopup()
           trackLocationButton.enable()
           leafletMap.locate(geolocationOptions)
+        }
+      }, {
+        stateName: 'reset-geolocation-tools',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">clear</i>',
+        title: 'Reset geolocation tools',
+        onClick: (control) => {
+          control.state("zoom-to-location")
+          leafletMap.removeLayer(this.geolocateIcon)
+          leafletMap.stopLocate()
+          trackLocationButton.state('location-off')
+          trackLocationButton.disable()
         }
       }]
     })
