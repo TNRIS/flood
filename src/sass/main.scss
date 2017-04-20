@@ -1204,3 +1204,30 @@ label.hide-disclaimer-checkbox {
   z-index: 10 !important;
   background-color: #4F85AE !important;
 }
+
+.state-reset-geolocation-tools,
+.state-zoom-to-location {
+  transition-duration: .5s;
+  transform: scaleY(0);
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+  right: -3px !important;
+}
+
+.state-reset-geolocation-tools {
+  transform-origin: 50% 0;
+}
+
+.state-zoom-to-location {
+  transform-origin: 50% 100%;
+}
+
+.state-reset-geolocation-tools.reset-geolocation-tools-active{
+  transform: scaleY(1);
+}
+
+.state-zoom-to-location.zoom-to-location-active{
+  transform: scaleY(1);
+}
