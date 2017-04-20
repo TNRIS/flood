@@ -39,12 +39,9 @@ export default class Popup extends Component {
   componentDidUpdate(prevProps) {
     const { gageInfo, popupData, leafletMap } = this.props
 
-    console.log(popupData)
-
     if ( !prevProps.leafletMap && leafletMap ) {
       leafletMap
         .on('popupclose', () => {
-          console.log("popup closed")
           this.removePopupContent()
           this.props.clearPopup()
 
