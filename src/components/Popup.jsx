@@ -37,7 +37,7 @@ export default class Popup extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {gageInfo, popupData, leafletMap} = this.props
+    const { gageInfo, popupData, leafletMap } = this.props
 
     if ( !prevProps.leafletMap && leafletMap ) {
       leafletMap

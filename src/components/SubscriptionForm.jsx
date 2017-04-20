@@ -81,7 +81,8 @@ class SubscriptionForm extends Component {
     else {
       subscriptionManagerContent = (
         <form onSubmit={ this.handleSearch } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Enter your phone number and email to manage your current subscriptions.</p>
+            <p>Click on a flood gage to subscribe to receive alerts.</p>
+            <p>Enter your phone number or email to manage your current subscriptions.</p>
             <Textfield floatingLabel
                        onChange={ this.handleChange }
                        label="Email..."
