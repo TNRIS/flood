@@ -1007,7 +1007,7 @@ span.mdl-list__item-secondary-action > i {
 .easy-button-button{
   transition-duration: .3s;
   position: relative;
-  border-radius: 4px;
+  // border-radius: 4px;
   border: solid 0px transparent;
 }
 
@@ -1020,8 +1020,8 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 }
 
 button.easy-button-button.disabled {
-    height: 0;
-    padding: 0;
+    // height: 0;
+    // padding: 0;
 }
 
 dialog.confirm-subscription-change h4 {
@@ -1297,11 +1297,11 @@ label.hide-disclaimer-checkbox {
 }
 
 .state-reset-geolocation-tools {
-  transform-origin: 50% 0;
+  transform-origin: 0 50%;
 }
 
 .state-zoom-to-location {
-  transform-origin: 50% 100%;
+  transform-origin: 100% 50%;
 }
 
 .state-reset-geolocation-tools.reset-geolocation-tools-active{
