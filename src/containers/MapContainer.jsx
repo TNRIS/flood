@@ -10,6 +10,7 @@ import { showSnackbar } from '../actions/ToasterActions'
 import Map from '../components/Map'
 
 import {
+  clearPopup,
   setPopup
 } from '../actions/PopupActions'
 
@@ -25,6 +26,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearPopup: () => {
+      dispatch(clearPopup())
+    },
     onLayerStatusChange: (id, status) => {
       dispatch(actions.layerStatusChange(id, status))
     },
