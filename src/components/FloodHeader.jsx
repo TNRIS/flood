@@ -49,10 +49,10 @@ class FloodHeader extends React.Component {
           </a>
         </div>
         <Navigation className="header__navigation">
-          {/* <a href="#"
+          <a href="#"
             id="basemap-context-menu"
             title="Basemaps"><i className="material-icons">satellite</i></a>
-          <BaseLayerMenuContainer /> */}
+          <BaseLayerMenuContainer />
           <a href="#"
             title="Search"
              onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>

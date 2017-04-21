@@ -4,7 +4,6 @@ import { Footer, FooterSection, FooterLinkList, IconButton, Menu, MenuItem } fro
 
 import AboutLinkContainer from '../containers/AboutLinkContainer'
 import ContactLink from './ContactLink'
-import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
 import TWDBLogoImage from '../images/logo_twdb.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_bg.gif'
@@ -49,10 +48,6 @@ class FloodFooter extends React.Component {
             </a>
           </div>
         </div>
-        <a href="#"
-          id="basemap-context-menu"
-          title="Basemaps"><i className="material-icons">satellite</i></a>
-        <BaseLayerMenuContainer />
         <FooterSection>
           <FooterLinkList>
             <div style={{position: 'relative'}}>

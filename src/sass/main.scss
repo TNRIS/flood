@@ -21,8 +21,8 @@ body {
   height: 100%;
 }
 
-.mdl-layout__drawer::-webkit-scrollbar { 
-  display: none; 
+.mdl-layout__drawer::-webkit-scrollbar {
+  display: none;
 }
 
 .flood-viewer {
@@ -77,21 +77,6 @@ body {
     }
   }
 
-  // .mdl-layout__drawer-button {
-  //   background-color: inherit;
-  //   margin: 0 0 0 0;
-  //   height: 40px;
-
-  //   i {
-  //     color: #ffffff;
-  //     font-size: 34px;
-  //     margin-left: auto;
-  //     position: relative;
-  //     top: 50%;
-  //     transform: translateY(-50%);
-  //   }
-  // }
-
   .popup .leaflet-popup-content-wrapper {
     padding-bottom: 0px;
   }
@@ -145,16 +130,24 @@ body {
 
         .mdl-navigation__link {
           line-height: 40px;
-          padding: 0 10px 0 10px;
+          padding: 0 10px 0 20px;
 
           i {
             font-size: 28px;
           }
         }
-      }
 
-      ul {
-        min-width: 100px;
+        #basemap-context-menu {
+          padding-right: 0;
+        }
+
+        .mdl-menu__container {
+          top: 55px !important;
+        }
+
+        ul {
+          min-width: 100px;
+        }
       }
     }
   }
@@ -182,7 +175,6 @@ body {
 
     .mdl-mini-footer__left-section {
       margin: auto;
-
     }
 
     .mdl-mini-footer__link-list {
@@ -207,38 +199,18 @@ body {
     }
 
     .fullscreenButton {
+      position: absolute;
       color: white;
-      margin-right: 10px;
+      right:10px;
+      top: 50%;
+      transform: translateY(-50%);
+
 
       i {
         font-size: 28px;
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
+        vertical-align: middle;
       }
     }
-
-    #basemap-context-menu {
-      color: white;
-      margin-left: 315px;
-      bottom: 55px !important;
-
-      @media screen and (max-width: 600px) {
-        margin-left: 10px;
-      }
-
-      i {
-        font-size: 28px;
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
-    //
-    // .footer-context-menu-item:hover {
-    //   background-color: #444;
-    //   color: white;
-    // }
   }
 }
 
