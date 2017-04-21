@@ -40,7 +40,7 @@ class FloodHeader extends React.Component {
   }
 
   render() {
-    const imgSource = this.props.browser.width < 500 ? TexasFloodIconImage : TexasFloodLogoImage
+    const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
       <Header transparent style={{color: 'white'}}>
         <div className="header__title">

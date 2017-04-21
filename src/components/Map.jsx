@@ -44,7 +44,8 @@ function leafletLayerForPropBaseLayer(propBaseLayer) {
 export default class Map extends Component {
   static propTypes = {
     baseLayers: PropTypes.shape({
-      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer)
+      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
+      active: PropTypes.string
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
     showSnackbar: PropTypes.func
