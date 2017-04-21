@@ -349,7 +349,12 @@ export default class Map extends Component {
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.nominatim({
-          geocodingQueryParams: {countrycodes: 'us'}
+          geocodingQueryParams: {
+            countrycodes: 'us',
+            state: "Texas",
+            viewbox: [-115.02685546875, 39.740986355883564, -84.70458984375, 23.563987128451217],
+            bounded: 1
+          }
       }),
       placeholder: "Search by City or Street Address",
       collapsed: false,

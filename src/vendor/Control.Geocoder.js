@@ -285,13 +285,11 @@ module.exports = {
 		},
 
 		geocode : function (query, cb, context) {
-			console.log(query);
 			Util.jsonp('//dev.virtualearth.net/REST/v1/Locations', {
 				query: query,
 				c: "en-US",
 				key : this.key
 			}, function(data) {
-				console.log(data);
 				var results = [];
 				if( data.resourceSets.length > 0 ){
 					for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
@@ -702,15 +700,19 @@ module.exports = {
 				if (a.road || a.building) {
 					parts.push('{building} {road} {house_number}');
 				}
+				
+				if (a.river) {
+					parts.push('{river} {county}')
+				}
 
 				if (a.city || a.town || a.village) {
 					parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '') +
 						'">{postcode} {city} {town} {village}</span>');
 				}
 
-				if (a.state || a.country) {
+				if (a.state) {
 					parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '') +
-						'">{state} {country}</span>');
+						'">{state}</span>');
 				}
 
 				return Util.template(parts.join('<br/>'), a, true);
@@ -1041,7 +1043,6 @@ module.exports = {
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
 		script.src = url + L.Util.getParamString(params);
-		console.log(script.src)
 		script.id = callbackId;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},
