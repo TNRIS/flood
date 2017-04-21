@@ -10,7 +10,7 @@ class Disclaimer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      openDialog: true
+      openDialog: false
     }
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);

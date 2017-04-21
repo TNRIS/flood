@@ -237,7 +237,7 @@ export default class Map extends Component {
         }
         initMap(initView)
       }
-    }, 0)
+    }, 1000)
   }
 
   componentWillUpdate(nextProps) {
