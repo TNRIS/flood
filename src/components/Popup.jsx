@@ -19,8 +19,7 @@ export default class Popup extends Component {
     browser: PropTypes.object,
     setLidAndName: PropTypes.func,
     popupImageLoadAttempt: PropTypes.func,
-    popupImageLoadSuccess: PropTypes.func,
-    clearPopup: PropTypes.func
+    popupImageLoadSuccess: PropTypes.func
   }
 
   constructor() {
@@ -36,30 +35,14 @@ export default class Popup extends Component {
     })
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props !== nextProps
+  }
+
   componentDidUpdate(prevProps) {
-    const { gageInfo, popupData, leafletMap } = this.props
+    const { gageInfo, popupData } = this.props
 
-    if ( !prevProps.leafletMap && leafletMap ) {
-      leafletMap
-        .on('popupclose', () => {
-          this.removePopupContent()
-          this.props.clearPopup()
-
-          const center = leafletMap.getCenter()
-          const zoom =  leafletMap.getZoom()
-          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
-        })
-        .on('popupopen', () => {
-          this.updatePopupSize()
-        })
-    }
-
-    if (popupData.imageLoaded === true) {
-      return
-    }
-
-    if (this.leafletPopup && prevProps !== this.props) {
-      this.props.popupImageLoadAttempt()
+    if (this.leafletPopup && prevProps.popupData !== this.props.popupData) {
       switch (popupData.id) {
         case 'ahps-flood':
           const lid = popupData.data.lid
@@ -72,7 +55,6 @@ export default class Popup extends Component {
 
         case 'flood-alerts':
           this.leafletPopup.setLatLng(popupData.clickLocation)
-          this.props.popupImageLoadSuccess()
           return this.showPopop()
 
         case 'reservoir-conditions':
@@ -91,24 +73,24 @@ export default class Popup extends Component {
       case 'ahps-flood':
         this.props.setLidAndName(data.lid, data.name)
         return (
-          <FloodGaugePopup {...data} updatePopup={() => {this.leafletPopup.update()}} leafletMap={this.props.leafletMap}/>
+          <FloodGaugePopup {...data}
+          updatePopup={() => {this.leafletPopup.update()}}
+          leafletMap={this.props.leafletMap}/>
         )
       case 'reservoir-conditions':
         return (
-          <LakeConditionsPopup {...data} updatePopup={() => {this.leafletPopup.update()}}  leafletMap={this.props.leafletMap}/>
+          <LakeConditionsPopup {...data}
+          updatePopup={() => {this.leafletPopup.update()}}
+          leafletMap={this.props.leafletMap}/>
         )
       case 'flood-alerts':
         return (
-          <FloodAlertsPopup {...data} updatePopup={() => {this.updatePopupSize()}}  leafletMap={this.props.leafletMap}/>
+          <FloodAlertsPopup {...data}
+          updatePopup={() => {this.updatePopupSize()}}
+          leafletMap={this.props.leafletMap}/>
         )
       default:
         return null
-    }
-  }
-
-  removePopupContent() {
-    if (this.leafletPopup._contentNode) {
-      ReactDOM.unmountComponentAtNode(this.leafletPopup._contentNode)
     }
   }
 
@@ -140,6 +122,7 @@ export default class Popup extends Component {
   showPopop() {
     this.leafletPopup.openOn(this.props.leafletMap)
     this.renderPopupContent()
+    this.updatePopupSize()
   }
 
 

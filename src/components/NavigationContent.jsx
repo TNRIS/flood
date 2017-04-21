@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'react-mdl'
+import { Button, Icon } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
@@ -34,13 +34,23 @@ class NavigationToggle extends Component {
         <div>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationLayers}>Map Layers</Button>
+          onClick={this.handleSetNavigationLayers}>
+          <Icon
+              name="layers"
+              className="layers"
+          />
+          Map Layers</Button>
           { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
         <div>
           <Button ripple
           className="toggle-navigation-content"
-          onClick={this.handleSetNavigationUnsubscribe}>MY GAGE ALERTS</Button>
+          onClick={this.handleSetNavigationUnsubscribe}>
+          <Icon
+              name="add_alert"
+              className="add-alert"
+          />
+          MY GAGE ALERTS</Button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
       </div>
