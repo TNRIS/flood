@@ -54,19 +54,27 @@ module.exports = {
 			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
 			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
 			    form = this._form = L.DomUtil.create('form', className + '-form', container),
-			    input;
+			    input,
+			    clearDiv,
+			    clear;
 
 			icon.innerHTML = '&nbsp;';
 			icon.href = 'javascript:void(0);';
 			this._map = map;
 			this._container = container;
-			input = this._input = L.DomUtil.create('input');
+			input = this._input = L.DomUtil.create('input', 'leaflet-control-geocoder-input');
 			input.type = 'text';
 			input.placeholder = this.options.placeholder;
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			//L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
 			//L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
+
+			clearDiv = L.DomUtil.create('div', "leaflet-control-geocoder-clear-input");
+			clear = this._clear = L.DomUtil.create('i', "material-icons clear-icon md-dark");
+			clear.innerHTML = "clear";
+			clearDiv.appendChild(clear);
+			L.DomEvent.addListener(clearDiv, 'click', this._clearInput, this);
 
 			this._errorElement = document.createElement('div');
 			this._errorElement.className = className + '-form-no-error';
@@ -75,6 +83,7 @@ module.exports = {
 			this._alts = L.DomUtil.create('ul', className + '-alternatives leaflet-control-geocoder-alternatives-minimized');
 
 			form.appendChild(input);
+			form.appendChild(clearDiv);
 			this._container.appendChild(this._errorElement);
 			container.appendChild(this._alts);
 
@@ -250,6 +259,12 @@ module.exports = {
 				}
 			}
 			return true;
+		},
+
+		_clearInput: function (event) {
+			L.DomEvent.preventDefault(event);
+			this._clearResults();
+			this._input.value = "";
 		}
 	}),
 	factory: function(options) {
@@ -270,10 +285,13 @@ module.exports = {
 		},
 
 		geocode : function (query, cb, context) {
+			console.log(query);
 			Util.jsonp('//dev.virtualearth.net/REST/v1/Locations', {
 				query: query,
+				c: "en-US",
 				key : this.key
 			}, function(data) {
+				console.log(data);
 				var results = [];
 				if( data.resourceSets.length > 0 ){
 					for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
@@ -1023,6 +1041,7 @@ module.exports = {
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
 		script.src = url + L.Util.getParamString(params);
+		console.log(script.src)
 		script.id = callbackId;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	},

@@ -330,7 +330,9 @@ export default class Map extends Component {
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
-      geocoder: L.Control.Geocoder.Bing(keys.bingApiKey),
+      geocoder: L.Control.Geocoder.nominatim({
+          geocodingQueryParams: {countrycodes: 'us'}
+      }),
       placeholder: "Search by City or Street Address",
       collapsed: false,
       position: "topright"
