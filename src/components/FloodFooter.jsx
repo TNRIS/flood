@@ -14,7 +14,7 @@ class FloodFooter extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {fullscreenIcon: "fullscreen"}
     this.toggleFullscreen = this.toggleFullscreen.bind(this)
   }
 
@@ -26,9 +26,11 @@ class FloodFooter extends React.Component {
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
       req.call(document)
+      this.setState({fullscreenIcon: "fullscreen"})
     } else {
       const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
       req.call(element)
+      this.setState({fullscreenIcon: "fullscreen_exit"})
     }
   }
 
@@ -60,9 +62,14 @@ class FloodFooter extends React.Component {
             <ContactLink text="Contact"
                           href={contactLink}
                           target="_top" />
-            <a href="#" onClick={this.toggleFullscreen}>Fullscreen</a>
           </FooterLinkList>
         </FooterSection>
+        <a href="#"
+          title="Fullscreen"
+          className="fullscreenButton"
+          onClick={this.toggleFullscreen}>
+          <i className="material-icons">{this.state.fullscreenIcon}</i>
+        </a>
       </Footer>
     )
   }

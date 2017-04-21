@@ -317,7 +317,7 @@ export default class Map extends Component {
     const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
-    layers['Mapbox Outdoors'].addTo(this.map)
+    layers['Streets'].addTo(this.map)
     // original leaflet control to select basemaps
     // const layerControl = L.control.layers(layers, null, {collapsed: false})
     // layerControl.setPosition('topright').addTo(this.map)

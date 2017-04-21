@@ -7,7 +7,7 @@ const initialState = {
   layers: [
     {
       'id': 'mapbox-outdoors',
-      'text': 'Mapbox Outdoors',
+      'text': 'Streets',
       'type': 'tile',
       'url': 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
       'options': {
@@ -16,17 +16,17 @@ const initialState = {
         'layerId': 'mapbox-outdoors'
       }
     },
-    {
-      'id': 'mapbox-satellite-streets',
-      'text': 'Mapbox Satellite Streets',
-      'type': 'tile',
-      'url': 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
-      'options': {
-        'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-        'mapbox': true,
-        'layerId': 'mapbox-satellite-streets'
-      }
-    },
+    // {
+    //   'id': 'mapbox-satellite-streets',
+    //   'text': 'Hybrid',
+    //   'type': 'tile',
+    //   'url': 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG5yaXMtZmxvb2QiLCJhIjoiY2oxZ2l6OHhpMDAzMDJxbzg3M3VnN21keiJ9.IjrmkyUuvk5UYP9DmRffuA',
+    //   'options': {
+    //     'attribution': '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+    //     'mapbox': true,
+    //     'layerId': 'mapbox-satellite-streets'
+    //   }
+    // },
     // {
     //   'id': 'osm',
     //   'text': 'OpenStreetMap',
@@ -63,18 +63,27 @@ const initialState = {
     //     'type': 'Road'
     //   }
     // },
+    // {
+    //   'id': 'bing-aerial',
+    //   'text': 'Bing Aerial',
+    //   'type': 'bing',
+    //   'options': {
+    //     'type': 'Aerial',
+    //     'layerId': 'bing-aerial'
+    //   }
+    // },
     {
-      'id': 'bing-aerial',
-      'text': 'Bing Aerial',
+      'id': 'bing-hybrid',
+      'text': 'Hybrid',
       'type': 'bing',
       'options': {
-        'type': 'Aerial',
-        'layerId': 'bing-aerial'
+        'type': 'AerialWithLabels',
+        'layerId': 'bing-hybrid'
       }
     },
     {
       'id': 'tx-goog',
-      'text': 'Texas Imagery Service',
+      'text': 'Satellite',
       'type': 'wmts',
       'url': 'https://txgi.tnris.org/login/path/spoon-java-neuron-nebula/wmts/',
       'options': {
