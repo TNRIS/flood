@@ -1,5 +1,6 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { hashHistory } from 'react-router'
 import R from 'ramda'
 
@@ -89,6 +90,7 @@ export default class Map extends Component {
 
       this.geolocateCircle = null
       this.geolocateIcon = null
+      this.popupContentNode = null
 
       this.map
         .on('locationfound', (e) => {
@@ -161,6 +163,22 @@ export default class Map extends Component {
           else {
             hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
           }
+        })
+        .on('popupopen', () => {
+          const popupContent = document.getElementsByClassName('leaflet-popup-content')
+
+          this.popupContentNode = popupContent.length > 0 ? popupContent[0] : null
+        })
+        .on('popupclose', () => {
+          this.props.clearPopup()
+
+          if (this.popupContentNode) {
+            ReactDOM.unmountComponentAtNode(this.popupContentNode)
+          }
+
+          const center = this.map.getCenter()
+          const zoom =  this.map.getZoom()
+          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
         })
         .on('click', (e) => {
           L.DomEvent.preventDefault(e)
