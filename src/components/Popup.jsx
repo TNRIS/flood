@@ -83,15 +83,21 @@ export default class Popup extends Component {
       case 'ahps-flood':
         this.props.setLidAndName(data.lid, data.name)
         return (
-          <FloodGaugePopup {...data} updatePopup={() => {this.leafletPopup.update()}} leafletMap={this.props.leafletMap}/>
+          <FloodGaugePopup {...data}
+          updatePopup={() => {this.leafletPopup.update()}}
+          leafletMap={this.props.leafletMap}/>
         )
       case 'reservoir-conditions':
         return (
-          <LakeConditionsPopup {...data} updatePopup={() => {this.leafletPopup.update()}}  leafletMap={this.props.leafletMap}/>
+          <LakeConditionsPopup {...data}
+          updatePopup={() => {this.leafletPopup.update()}}
+          leafletMap={this.props.leafletMap}/>
         )
       case 'flood-alerts':
         return (
-          <FloodAlertsPopup {...data} updatePopup={() => {this.updatePopupSize()}}  leafletMap={this.props.leafletMap}/>
+          <FloodAlertsPopup {...data}
+          updatePopup={() => {this.updatePopupSize()}}
+          leafletMap={this.props.leafletMap}/>
         )
       default:
         return null
