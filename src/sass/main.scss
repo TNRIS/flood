@@ -15,7 +15,8 @@ $nav-spacing-from-left-narrow: 6px;
 $nav-spacing-from-left-wide: 16px;
 $nav-icon-wrapper-width: 50px;
 $nav-spacing-from-left-narrow-link: $nav-spacing-from-left-narrow + $nav-icon-wrapper-width + ($nav-spacing-from-left-narrow - 2);
-$popup-icons-width-threshold: 370px !default;
+$popup-icons-width-threshold: 400px !default;
+$iphone-five-width-threshold: 325px !default;
 
 body {
   width: 100%;
@@ -53,6 +54,16 @@ body {
 
     // override mdl white border
     border-right: none;
+
+    .mdl-button {
+      .material-icons {
+        padding-right: 5px;
+      }
+
+      .material-icons.add-alert {
+        padding-bottom: 2px;
+      }
+    }
 
     // override mdl default for padding
     .mdl-navigation .mdl-navigation__link {
@@ -471,6 +482,14 @@ body {
       border-color: white;
       @media screen and (max-width: $popup-icons-width-threshold) {
         padding: 0 8px;
+      }
+      @media screen and (max-width: $iphone-five-width-threshold) {
+        padding: 0 6px;
+      }
+
+      .material-icons {
+        padding-right: 5px;
+        padding-bottom: 3px;
       }
     }
 
