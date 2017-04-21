@@ -19,8 +19,7 @@ export default class Popup extends Component {
     browser: PropTypes.object,
     setLidAndName: PropTypes.func,
     popupImageLoadAttempt: PropTypes.func,
-    popupImageLoadSuccess: PropTypes.func,
-    clearPopup: PropTypes.func
+    popupImageLoadSuccess: PropTypes.func
   }
 
   constructor() {
@@ -36,22 +35,14 @@ export default class Popup extends Component {
     })
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props !== nextProps
+  }
+
   componentDidUpdate(prevProps) {
-    const { gageInfo, popupData, leafletMap } = this.props
+    const { gageInfo, popupData } = this.props
 
-    if ( !prevProps.leafletMap && leafletMap ) {
-      leafletMap
-        .on('popupopen', () => {
-          this.updatePopupSize()
-        })
-    }
-
-    if (popupData.imageLoaded === true) {
-      return
-    }
-
-    if (this.leafletPopup && prevProps !== this.props) {
-      this.props.popupImageLoadAttempt()
+    if (this.leafletPopup && prevProps.popupData !== this.props.popupData) {
       switch (popupData.id) {
         case 'ahps-flood':
           const lid = popupData.data.lid
@@ -64,7 +55,6 @@ export default class Popup extends Component {
 
         case 'flood-alerts':
           this.leafletPopup.setLatLng(popupData.clickLocation)
-          this.props.popupImageLoadSuccess()
           return this.showPopop()
 
         case 'reservoir-conditions':
@@ -132,6 +122,7 @@ export default class Popup extends Component {
   showPopop() {
     this.leafletPopup.openOn(this.props.leafletMap)
     this.renderPopupContent()
+    this.updatePopupSize()
   }
 
 
