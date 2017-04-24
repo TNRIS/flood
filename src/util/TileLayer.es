@@ -47,6 +47,8 @@ export default class TileLayer extends Layer {
   }
 
   hide() {
+    this.map.closePopup()
+
     if (this.refreshIntervalId) {
       clearInterval(this.refreshIntervalId)
       this.refreshIntervalId = null
