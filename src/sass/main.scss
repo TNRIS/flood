@@ -1265,6 +1265,14 @@ button.zoom-out-of-service {
 
 .leaflet-bar {
   border-radius: 0 !important;
+
+  button {
+    border-radius: 0 !important;
+  }
+
+  a {
+    border-radius: 0 !important;
+  }
 }
 
 .leaflet-control-layers {
