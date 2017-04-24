@@ -3,7 +3,7 @@ import { Header, Navigation } from 'react-mdl'
 
 import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
-import TexasFloodLogoImage from '../images/texas_flood_logo_transparent.png'
+import TexasFloodLogoImage from '../images/texas_flood_logo_transparent_300x42.png'
 import TexasFloodIconImage from '../images/icons/favicon.ico'
 
 class FloodHeader extends React.Component {

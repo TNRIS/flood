@@ -15,7 +15,7 @@ const lakeIcon = require('../images/boat_icon.png')
 const lakeLegend = require('../images/reservoir-conditions-legend.png')
 const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
-const weatherLegend = require('../images/animated-weather-legend.png')
+const weatherLegend = require('../images/animated-weather-legend_800x450.png')
 
 const initialState = {
   layers: [
