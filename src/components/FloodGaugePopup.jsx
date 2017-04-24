@@ -37,21 +37,21 @@ export default class FloodGaugePopup extends Component {
     const hydrographImage = `https://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
     const gaugeLink = `https://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
     
-    const shareUrl = `https://www.${SITE_URL}/#/gages/${lid}`
+    const shareUrl = `https://${SITE_URL}/#/gage/${lid}`
 
     const currentStore = store.getState()
     let shareTitle
     if (currentStore.gageInfo && currentStore.gageInfo[lid]) {
       const gageInfo = currentStore.gageInfo[lid]
       if (["action", "flood", "moderate", "major"].indexOf(gageInfo.sigstage) !== -1) {
-        shareTitle = `${name} (${lid.toUpperCase()}) - Status: ${gageInfo.sigstage.toUpperCase()} at ${gageInfo.stage} feet`
+        shareTitle = `@TexasFloodOrg ${name} (${lid.toUpperCase()}) - Status: ${gageInfo.sigstage.toUpperCase()} at ${gageInfo.stage} feet`
       }
       else {
-        shareTitle = `${name} (${lid.toUpperCase()}) - Stage: ${gageInfo.stage} feet`
+        shareTitle = `@TexasFloodOrg ${name} (${lid.toUpperCase()}) - Stage: ${gageInfo.stage} feet`
       }
     }
     else {
-      shareTitle = `${name} (${lid.toUpperCase()})`
+      shareTitle = `@TexasFloodOrg ${name} (${lid.toUpperCase()})`
     }
 
     return (
