@@ -1340,3 +1340,14 @@ label.hide-disclaimer-checkbox {
 .state-zoom-to-location.zoom-to-location-active{
   transform: scaleY(1);
 }
+
+.shareBar {
+    background-color: #333;
+    max-height: 26px;
+    min-height: 26px;
+    padding: 6px 14px 6px 14px;
+}
+
+.share-button {
+    float: right;
+}
