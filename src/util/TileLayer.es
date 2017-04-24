@@ -3,6 +3,8 @@ import L from 'leaflet'
 import keys from '../keys'
 import Layer from './Layer'
 
+import { store } from '../store'
+
 //TODO: advisory map layers requires an Aeris subscription - they are not available under the development plan
 export default class TileLayer extends Layer {
   constructor({ refreshTimeMs, layerUrl, ...options }) {
@@ -40,14 +42,17 @@ export default class TileLayer extends Layer {
     //  This will set the visible layer order relative to
     //  the order set in CartoDBLayer.es and AnimatedWeatherLayer.es
     this.layer.setZIndex(97)
-    if (this.refreshIntervalId != null) {
+    if (this.refreshIntervalId !== null) {
       clearInterval(this.refreshIntervalId)
     }
     this.refreshIntervalId = setInterval(() => this.refresh(), this.refreshTimeMs)
   }
 
   hide() {
-    this.map.closePopup()
+    const popupData = store.getState().popupData
+    if (this.id && popupData.id && this.id === popupData.id) {
+      this.map.closePopup()
+    }
 
     if (this.refreshIntervalId) {
       clearInterval(this.refreshIntervalId)

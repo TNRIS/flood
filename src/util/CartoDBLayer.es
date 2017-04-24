@@ -136,7 +136,12 @@ export default class CartoDBLayer extends Layer {
   }
 
   hide() {
-    this.map.closePopup()
+    const popupData = store.getState().popupData
+    if (popupData.id) {
+      if (popupData.id === this.id) {
+        this.map.closePopup()
+      }
+    }
 
     if (this.tileLayer && this.map.hasLayer(this.tileLayer)) {
       this.map.removeLayer(this.tileLayer)
