@@ -702,7 +702,7 @@ module.exports = {
 				}
 				
 				if (a.river) {
-					parts.push('{river} {county}')
+					parts.push('{river}, {county}')
 				}
 
 				if (a.city || a.town || a.village) {
