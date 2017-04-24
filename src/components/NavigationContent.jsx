@@ -47,7 +47,7 @@ class NavigationToggle extends Component {
           className="toggle-navigation-content"
           onClick={this.handleSetNavigationUnsubscribe}>
           <Icon
-              name="add_alert"
+              name="notifications_active"
               className="add-alert"
           />
           MY GAGE ALERTS</Button>
