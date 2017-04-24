@@ -1,5 +1,5 @@
 {
-    "name": "Texas Flood",
+    "name": "Texas Flood Viewer",
     "icons": [
         {
             "src": "/icons/android-chrome-192x192.png",
@@ -12,7 +12,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#333333",
+    "background_color": "#333333",
     "display": "standalone"
 }
