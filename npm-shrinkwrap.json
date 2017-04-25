@@ -4488,9 +4488,9 @@
       }
     },
     "react": {
-      "version": "0.14.8",
+      "version": "0.14.9",
       "from": "react@>=0.14.7 <0.15.0",
-      "resolved": "https://registry.npmjs.org/react/-/react-0.14.8.tgz"
+      "resolved": "https://registry.npmjs.org/react/-/react-0.14.9.tgz"
     },
     "react-addons-pure-render-mixin": {
       "version": "0.14.8",
