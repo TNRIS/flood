@@ -5,13 +5,20 @@ import {
   SET_POPUP
 } from '../constants/PopupActionTypes'
 
-
+/**
+ * Clears the popup content from the redux store
+ * @return {object} action type
+ */
 export function clearPopup() {
   return {
     type: CLEAR_POPUP
   }
 }
 
+/**
+ * Attempt to load the image into the popup
+ * @return {object} load attempt marking the popupData.loaded property false
+ */
 export function popupImageLoadAttempt() {
   return {
     type: POPUP_IMAGE_LOAD_ATTEMPT,
@@ -21,6 +28,10 @@ export function popupImageLoadAttempt() {
   }
 }
 
+/**
+ * Action when popup image was successfully loaded
+ * @return {object} load success marking the popupData.loaded property true
+ */
 export function popupImageLoadSuccess() {
   return {
     type: POPUP_IMAGE_LOAD_SUCCESS,
@@ -30,6 +41,10 @@ export function popupImageLoadSuccess() {
   }
 }
 
+/**
+ * Action to set popup content in the Redux store
+ * @param {object} popupData object describing the popup content
+ */
 export function setPopup(popupData) {
   const {id, data, clickLocation} = popupData
   return {

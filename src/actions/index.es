@@ -1,10 +1,6 @@
 import axios from 'axios'
 import R from 'ramda'
 
-import { createAction } from 'redux-actions'
-
-import { setPopup } from './PopupActions'
-
 import * as types from './types'
 
 export const layerStatusChange = (id, status) => {
@@ -30,22 +26,16 @@ export const setBaseLayer = (id) => {
 }
 
 export const setFeatureLayer = (id) => {
-  return (dispatch) => {
-    // dispatch(setPopup(id))
-
-    dispatch({
-      type: types.SET_FEATURE_LAYER,
-      id
-    })
+  return {
+    type: types.SET_FEATURE_LAYER,
+    id
   }
 }
 
 export const setGageInit = (initState) => {
-  return (dispatch) => {
-    dispatch({
-      type: types.SET_GAGE_INIT,
-      initState
-    })
+  return {
+    type: types.SET_GAGE_INIT,
+    initState
   }
 }
 

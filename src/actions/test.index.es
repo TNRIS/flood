@@ -3,6 +3,14 @@ import expect from 'expect'
 import * as types from './types'
 import * as actions from './'
 
+import {
+  SET_POPUP
+} from '../constants/PopupActionTypes'
+
+import {
+  setPopup
+} from './PopupActions'
+
 describe('actions', () => {
   it('should create an action to change layer status', () => {
     const id = 'hi'
@@ -44,23 +52,5 @@ describe('actions', () => {
       id
     }
     expect(actions.setFeatureLayer(id)).toEqual(expectedAction)
-  })
-
-  it('should create an action for setting a popup when defined', () => {
-    const data = {'test': 'foo'}
-
-    const expectedAction = {
-      type: types.SET_POPUP,
-      payload: data
-    }
-    expect(actions.setPopup(data)).toEqual(expectedAction)
-  })
-
-  it('should create an action for setting a popup when undefined', () => {
-    const expectedAction = {
-      type: types.SET_POPUP,
-      payload: undefined
-    }
-    expect(actions.setPopup()).toEqual(expectedAction)
   })
 })
