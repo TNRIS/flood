@@ -275,11 +275,11 @@ class SubscriptionList extends React.Component {
               </ListItem>
             )}
           </List>
+          {saveButton()}
           <Button ripple
             className="flood-form-button"
             style={{marginLeft: "10px"}}
             onClick={this.props.clearSubscriptionList}>BACK</Button>
-            {saveButton()}
             {confirmDialog()}
         </div>
       )

@@ -427,7 +427,7 @@ export default class Map extends Component {
     const trackLocationButton = L.easyButton({
       states: [{
         stateName: 'location-off',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">gps_not_fixed</i>',
+        icon: '<i class="material-icons track-location-icon" style="font-size: 22px;">gps_not_fixed</i>',
         title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
@@ -439,7 +439,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'location-on',
-        icon: '<i class="material-icons geolocate-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
+        icon: '<i class="material-icons track-location-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
         title: 'Stop following my location',
         onClick: (control) => {
           control.state('location-off')

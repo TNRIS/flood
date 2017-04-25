@@ -637,30 +637,6 @@ body {
   font-weight: bold;
 }
 
-.fullscreen-icon {
-  cursor: pointer;
-  color: #222;
-  position: relative;
-  left: -5px;
-
-  @media screen and (max-width: 1025px) {
-    top: 2px;
-    left: -3px;
-  }
-}
-
-.geolocate-icon {
-  cursor: pointer;
-  color: #222;
-  position: relative;
-  left: -3px;
-
-  @media screen and (max-width: 1025px) {
-    top: 2px;
-    left: -1px;
-  }
-}
-
 /* Material Icon additional rules. */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
@@ -1004,13 +980,6 @@ span.mdl-list__item-secondary-action > i {
     color: $darker-blue !important;
 }
 
-.easy-button-button{
-  transition-duration: .3s;
-  position: relative;
-  // border-radius: 4px;
-  border: solid 0px transparent;
-}
-
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
 }
@@ -1053,9 +1022,9 @@ dialog.confirm-subscription-change h4 {
 //    }
 //}
 
-.leaflet-bar a {
-  color: $gray20 !important;
-}
+// .leaflet-bar a {
+//   color: $gray20 !important;
+// }
 
 a.leaflet-disabled {
   color: #bbb !important;
@@ -1104,8 +1073,17 @@ div.leaflet-popup-content-wrapper {
   }
 }
 
-.leaflet-bar a {
-  color: $gray20 !important;
+.leaflet-bar {
+  border-radius: 0 !important;
+
+  button {
+    border-radius: 0 !important;
+  }
+
+  a {
+    border-radius: 0 !important;
+    color: $gray20 !important;
+  }
 }
 
 a.leaflet-disabled {
@@ -1314,6 +1292,26 @@ label.hide-disclaimer-checkbox {
   background-color: #4F85AE !important;
 }
 
+.easy-button-button{
+  transition-duration: .3s;
+  position: relative;
+  border: solid 0px transparent;
+  padding: 0;
+}
+
+.state-location-on,
+.state-location-off {
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+
+  .track-location-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
+}
+
 .state-reset-geolocation-tools,
 .state-zoom-to-location {
   transition-duration: .5s;
@@ -1322,7 +1320,11 @@ label.hide-disclaimer-checkbox {
   display: block;
   top: 2px;
   width: 100%;
-  right: -3px !important;
+
+  .geolocate-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
 }
 
 .state-reset-geolocation-tools {
