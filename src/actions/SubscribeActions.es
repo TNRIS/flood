@@ -18,7 +18,7 @@ export function confirmSubscription(phoneNumber, lid) {
     const confirm = {
       PhoneNumber: phoneNumber,
       Message: `You have subscribed to the ${lid} flood gage.` +
-        ` Visit ` + SITE_URL + `/subscriptions to manage your flood gage subscriptions.`
+        ` Visit ` + SITE_URL + `/#/subscriptions to manage your flood gage subscriptions.`
     }
     sns.publish(confirm).promise().catch(err => dispatch(sendErrorReport(err)))
   }

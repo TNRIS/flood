@@ -7,7 +7,7 @@ import {
 } from '../actions/SubscriptionChangeActions'
 
 const mapStateToProps = (state) => {
-  return {}
+  return {browser: state.browser}
 }
 
 const mapDispatchToProps = (dispatch) => {

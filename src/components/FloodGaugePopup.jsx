@@ -69,9 +69,9 @@ export default class FloodGaugePopup extends Component {
           </Provider>
           <div className="shareBar">
             <TwitterShareButton 
-              url={shareUrl} 
+              url={shareUrl}
               title={shareTitle}
-              className="share-button" 
+              className="share-button"
               hashtags={["TexasFlood"]}>
               <TwitterIcon size={26} round />
             </TwitterShareButton>

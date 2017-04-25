@@ -40,7 +40,7 @@ export default class App extends Component {
         <Layout fixedDrawer fixedHeader>
           <FloodHeaderContainer />
             <NavigationDrawer
-              navContentInitState={navContentInitState()}
+              navContentInitState={navContentInitState()} browser={this.props.browser}
             />
             <Content>
             <MapContainer

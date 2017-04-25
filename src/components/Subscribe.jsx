@@ -59,10 +59,10 @@ class Subscribe extends React.Component {
 
     if (this.state.email || this.state.phone) {
       if (this.state.phone) {
-        this.props.subscribeGage(this.state.lid, "sms", this.state.phone)
+        this.props.subscribeGage(this.state.lid.toUpperCase(), "sms", this.state.phone)
       }
       if (this.state.email) {
-        this.props.subscribeGage(this.state.lid, "email", this.state.email)
+        this.props.subscribeGage(this.state.lid.toUpperCase(), "email", this.state.email)
       }
       this.props.showSnackbar("Your subscription has been submitted")
       this.props.setUserInfo(this.state.email, this.state.phone)
