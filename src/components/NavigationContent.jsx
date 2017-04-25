@@ -18,6 +18,17 @@ class NavigationToggle extends Component {
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
   }
 
+  componentDidMount() {
+    if (this.state.showSubscriptionForm == true && this.props.browser.width < 1025) {
+      const drawer = document.querySelector('.mdl-layout__drawer')
+      drawer.classList.add('is-visible')
+      setTimeout(function () {
+        const obfuscator = document.querySelector('.mdl-layout__obfuscator')
+        obfuscator.classList.add('is-visible')
+      }, 100)
+    }
+  }
+
   handleSetNavigationUnsubscribe() {
     this.setState({navigationContent: 'unsubscribe'})
     this.setState({showSubscriptionForm: !this.state.showSubscriptionForm})
