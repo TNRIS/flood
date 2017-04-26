@@ -882,6 +882,7 @@ button.toggle-navigation-content {
     border: 0;
     border-color:  $accent-light-green;
     border-radius: 0;
+    border-bottom: 1px solid #E4E4E4;
     height: 56px;
     width: 100%;
     // text-transform: capitalize;
@@ -893,6 +894,10 @@ button.toggle-navigation-content {
         color: bla;
         background-color: $accent-dark-green;
     }
+}
+
+button.toggle-navigation-content.bottom-nav-button {
+  border-bottom: $accent-light-green;
 }
 
 .subscription-list-item {
