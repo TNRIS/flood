@@ -1141,7 +1141,7 @@ button.zoom-out-of-service {
   height: 15px;
   width: 45px;
   right: 50px;
-  bottom: 25px;
+  bottom: 30px;
   text-indent: -9999px;
   z-index: 4;
   overflow: hidden;
@@ -1266,6 +1266,7 @@ button.zoom-out-of-service {
 label.hide-disclaimer-checkbox {
   color: gray;
   margin-top: 10px;
+  width: auto;
 
   span {
     font-size: 12px;
