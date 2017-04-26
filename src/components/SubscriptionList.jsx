@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import {
   Button,
   Dialog,
@@ -6,6 +7,10 @@ import {
   DialogContent,
   DialogActions,
   Badge,
+  Card,
+  CardText,
+  CardActions,
+  CardTitle,
   Checkbox,
   Icon,
   IconButton,
@@ -15,6 +20,26 @@ import {
   ListItemAction,
   Spinner
 } from 'react-mdl'
+
+import Modal from 'react-modal'
+import saveImage from '../images/save.png'
+
+const reactModalStyle = {
+  overlay: {
+    backgroundColor   : 'rgba(0, 0, 0, 0.50)'
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    padding: 0,
+    transform: 'translate(-50%, -50%)',
+    border: null,
+    borderRadius: null
+  }
+}
 
 
 class SubscriptionList extends React.Component {
@@ -220,10 +245,8 @@ class SubscriptionList extends React.Component {
       return save
     }
 
-    const confirmDialog = () => {
-      return (
-        <div>
-          <Dialog className="confirm-subscription-change"
+    this.confirmDialog = (
+          <Dialog className="confirm-subscription-change" ref={(ref) => confirmDialog = ref}
             open={this.state.openConfirmDialog} onCancel={this.handleCloseConfirmDialog}>
             <DialogTitle className="subscribe-title">Confirm Changes</DialogTitle>
             <DialogContent>
@@ -234,9 +257,7 @@ class SubscriptionList extends React.Component {
               <Button type="button" onClick={this.saveChanges}>Confirm</Button>
             </DialogActions>
           </Dialog>
-        </div>
       )
-    }
 
     if (this.props.isUpdating) {
       listContentDiv = <Spinner />
@@ -280,7 +301,20 @@ class SubscriptionList extends React.Component {
             className="flood-form-button"
             style={{marginLeft: "10px"}}
             onClick={this.props.clearSubscriptionList}>BACK</Button>
-            {confirmDialog()}
+
+            <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
+              <Card>
+                <CardTitle><i className="material-icons" style={{float: "right"}}>save</i>
+                Save Changes?
+                </CardTitle>
+                <CardText>Are you sure you want to save your changes?</CardText>
+                <CardActions>
+                  <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+                  <Button type="button" onClick={this.saveChanges}>Confirm</Button>
+                </CardActions>
+              </Card>
+            </Modal>
+
         </div>
       )
     }
