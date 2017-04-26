@@ -976,9 +976,9 @@ span.mdl-list__item-secondary-action > i {
   float: right;
 }
 
-.flood-form-button:enabled {
-    color: $darker-blue !important;
-}
+// .flood-form-button:enabled {
+//     color: $darker-blue !important;
+// }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
@@ -1367,6 +1367,7 @@ body > div.ReactModalPortal > div {
 .mdl-card {
     border-radius: 0 0 0 0 !important;
     font-family: 'Open Sans', sans-serif !important;
+    min-height: 180px !important;
 }
 
 div.mdl-card__title {
@@ -1379,4 +1380,11 @@ div.mdl-card__title {
     span {
         padding-left: 6px;
     }
+}
+
+.mdl-card__actions {
+  button {
+    float: right;
+    // color: $darker-blue !important;
+  }
 }
