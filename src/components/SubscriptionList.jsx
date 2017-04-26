@@ -22,7 +22,6 @@ import {
 } from 'react-mdl'
 
 import Modal from 'react-modal'
-import saveImage from '../images/save.png'
 
 const reactModalStyle = {
   overlay: {
@@ -304,7 +303,7 @@ class SubscriptionList extends React.Component {
 
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
-                <CardTitle><i className="material-icons" style={{float: "right"}}>save</i>
+                <CardTitle><i className="material-icons">save</i>
                 Save Changes?
                 </CardTitle>
                 <CardText>Are you sure you want to save your changes?</CardText>
