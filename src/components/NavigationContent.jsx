@@ -55,7 +55,7 @@ class NavigationToggle extends Component {
         </div>
         <div>
           <Button ripple
-          className="toggle-navigation-content"
+          className="toggle-navigation-content bottom-nav-button"
           onClick={this.handleSetNavigationUnsubscribe}>
           <Icon
               name="notifications_active"
