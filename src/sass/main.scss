@@ -1354,4 +1354,8 @@ label.hide-disclaimer-checkbox {
 .share-button {
     float: right;
     cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+      float: none;
+    }
 }
