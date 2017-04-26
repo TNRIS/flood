@@ -1354,3 +1354,24 @@ label.hide-disclaimer-checkbox {
     float: right;
     cursor: pointer;
 }
+
+body > div.ReactModalPortal > div {
+    z-index: 10000000 !important;
+}
+
+.mdl-card {
+    border-radius: 0 0 0 0 !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+div.mdl-card__title {
+    background-color: #333;
+    border-radius: 0 0 0 0 !important;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+
+    span {
+        padding-left: 6px;
+    }
+}
