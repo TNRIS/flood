@@ -6,7 +6,7 @@ import {
 } from '../SubscribeActions'
 
 
-describe('SubscribeActions', () => {
+describe('actions: SubscribeActions', () => {
   const samplePhone = '0118 999 881 999 119 725 3'
   const sampleLid = 'UDET2'
 

@@ -8,7 +8,7 @@ import {
   setUserInfo
 } from '../UserInfoActions'
 
-describe('UserInfoActions', () => {
+describe('actions: UserInfoActions', () => {
   const sampleEmail = 'moss@renholmindustries.com'
   const samplePhone = '0118 999 881 999 119 725 3'
 

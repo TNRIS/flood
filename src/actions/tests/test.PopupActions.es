@@ -15,7 +15,7 @@ import {
 } from '../PopupActions'
 
 
-describe('PopupActions', () => {
+describe('actions: PopupActions', () => {
   it('should create an action to remove popup content', () => {
     const expectedAction = {
       type: CLEAR_POPUP
