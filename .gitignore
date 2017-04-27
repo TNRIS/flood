@@ -45,3 +45,5 @@ src/images/\.DS_Store
 src/\.DS_Store
 
 \.DS_Store
+
+load_test*
