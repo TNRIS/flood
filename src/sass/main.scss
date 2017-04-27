@@ -882,6 +882,7 @@ button.toggle-navigation-content {
     border: 0;
     border-color:  $accent-light-green;
     border-radius: 0;
+    border-bottom: 1px solid #E4E4E4;
     height: 56px;
     width: 100%;
     // text-transform: capitalize;
@@ -893,6 +894,10 @@ button.toggle-navigation-content {
         color: bla;
         background-color: $accent-dark-green;
     }
+}
+
+button.toggle-navigation-content.bottom-nav-button {
+  border-bottom: $accent-light-green;
 }
 
 .subscription-list-item {
@@ -976,9 +981,9 @@ span.mdl-list__item-secondary-action > i {
   float: right;
 }
 
-.flood-form-button:enabled {
-    color: $darker-blue !important;
-}
+// .flood-form-button:enabled {
+//     color: $darker-blue !important;
+// }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
@@ -1266,7 +1271,7 @@ button.zoom-out-of-service {
 label.hide-disclaimer-checkbox {
   color: gray;
   margin-top: 10px;
-  width: auto;
+  width: 95%;
 
   span {
     font-size: 12px;
@@ -1367,6 +1372,7 @@ body > div.ReactModalPortal > div {
 .mdl-card {
     border-radius: 0 0 0 0 !important;
     font-family: 'Open Sans', sans-serif !important;
+    min-height: 180px !important;
 }
 
 div.mdl-card__title {
@@ -1379,4 +1385,11 @@ div.mdl-card__title {
     span {
         padding-left: 6px;
     }
+}
+
+.mdl-card__actions {
+  button {
+    float: right;
+    // color: $darker-blue !important;
+  }
 }

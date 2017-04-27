@@ -308,8 +308,8 @@ class SubscriptionList extends React.Component {
                 </CardTitle>
                 <CardText>Are you sure you want to save your changes?</CardText>
                 <CardActions>
-                  <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
                   <Button type="button" onClick={this.saveChanges}>Confirm</Button>
+                  <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
                 </CardActions>
               </Card>
             </Modal>
