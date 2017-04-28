@@ -154,7 +154,6 @@ export default class Map extends Component {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
-          this.locateToolbar._buttons[0].state('zoom-to-location')
         })
         .on('zoomend dragend', () => {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
@@ -538,9 +537,6 @@ export default class Map extends Component {
           <div className="animateRadar">
             {radarInfo}
           </div>
-          {/* <div id="betanotice" className={this.betaNotice()}>
-            <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
-          </div> */}
           <PopupContainer leafletMap={this.map} />
         </div>
       </div>
