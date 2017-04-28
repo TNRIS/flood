@@ -58,7 +58,7 @@ class Disclaimer extends React.Component {
     return (
       <div className='disclaimer__wrapper'>
         <Dialog ref='disclaimer' className='disclaimer' open={this.state.openDialog}>
-          <DialogTitle>Legal Review and Disclaimer</DialogTitle>
+          <DialogTitle className="disclaimer-title">Legal Review and Disclaimer</DialogTitle>
           <DialogContent>
             <p>
             The intent of the TexasFlood.org flood viewer is to assist
