@@ -76,7 +76,7 @@ class Disclaimer extends React.Component {
             please contact us at
             <a href="https://tnris.org/contact/"> https://tnris.org/contact/</a>
             </p>
-            <h5>Warning: </h5>
+            <h5>Warning</h5>
             <p>This application is currently in beta.
             For the official version, visit:
             <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
