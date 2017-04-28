@@ -11,7 +11,7 @@ import {
 } from '../ToasterActions'
 
 
-describe('ToasterActions', () => {
+describe('actions: ToasterActions', () => {
   const sampleText = "Toast with yesterday's Jam"
   const sampleTimeout = 2000
   const defaultTimeout = 2750

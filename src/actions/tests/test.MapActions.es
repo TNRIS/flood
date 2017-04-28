@@ -11,7 +11,7 @@ import {
   setCenterAndZoom
 } from '../MapActions'
 
-describe('MapActions', () => {
+describe('actions: MapActions', () => {
   const sampleLat = 30.33081
   const sampleLng = -97.70691
   const sampleZoom = 12

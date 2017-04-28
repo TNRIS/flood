@@ -106,7 +106,9 @@ export function getUserSubscriptions(email, phone, nextToken) {
             else {
               dispatch(getSubscriptionsSuccess())
               if (getState().subscriptions.allSubscriptions.length === 0) {
-                dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
+                dispatch(
+                  showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications.")
+                )
               }
             }
           }

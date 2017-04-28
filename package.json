@@ -23,8 +23,11 @@
   },
   "author": "TNRIS",
   "contributors": [
+    "Adam Breznicky",
     "Andy Wilson",
-    "James Seppi"
+    "David Hickman",
+    "James Seppi",
+    "Jason Kleinert"
   ],
   "license": "MIT",
   "bugs": {
@@ -97,8 +100,12 @@
     "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
+    "aws-sdk-mock": "^1.7.0",
+    "babel-preset-react-native": "^1.9.1",
+    "enzyme": "^2.8.2",
     "eslint": "https://registry.npmjs.org/eslint/-/eslint-1.10.3.tgz",
     "eslint-plugin-react": "^3.16.1",
-    "react-addons-test-utils": "^0.14.8"
+    "react-addons-test-utils": "^0.14.8",
+    "react-dom": "^0.14.9"
   }
 }
