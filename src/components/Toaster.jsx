@@ -8,7 +8,10 @@ class Toaster extends React.Component {
   static propTypes = {
     hideSnackbar: React.PropTypes.func,
     isSnackbarActive: React.PropTypes.bool,
-    snackbarText: React.PropTypes.string,
+    snackbarText: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.object
+    ]),
     snackbarTimeout: React.PropTypes.number
   }
 

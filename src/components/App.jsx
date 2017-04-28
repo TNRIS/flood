@@ -18,6 +18,11 @@ export default class App extends Component {
     super(props)
   }
 
+componentDidMount() {
+  this.props.showSnackbar(<p><strong>Warning: </strong>This application is currently in beta. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>,
+                          8000)
+}
+
   render() {
     const navContentInitState = () => {
       if (this.props.location.pathname === '/subscriptions') {
