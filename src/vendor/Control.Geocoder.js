@@ -264,7 +264,10 @@ module.exports = {
 		_clearInput: function (event) {
 			L.DomEvent.preventDefault(event);
 			this._clearResults();
-			this._input.value = "";
+			if (!this._input.value) {
+				L.DomUtil.removeClass(this._container, "showGeocoder")
+			} else {
+				this._input.value = ""}
 		}
 	}),
 	factory: function(options) {
@@ -700,7 +703,7 @@ module.exports = {
 				if (a.road || a.building) {
 					parts.push('{building} {road} {house_number}');
 				}
-				
+
 				if (a.river) {
 					parts.push('{river}, {county}')
 				}
