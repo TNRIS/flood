@@ -1218,8 +1218,8 @@ button.zoom-out-of-service {
     .leaflet-control-geocoder-input {
       font-size: 150%;
       height: 40px;
-      padding-left: 2%;
-      width: 87%;
+      padding: 0 0 0 2%;
+      width: 88%;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
         width: 93%;
@@ -1230,11 +1230,11 @@ button.zoom-out-of-service {
       float: right;
       cursor: pointer;
       height: 100%;
-      width: 9%;
+      width: 10%;
       text-align: center;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
-        width: 4%;
+        width: 5%;
       }
 
       .material-icons.clear-icon {
