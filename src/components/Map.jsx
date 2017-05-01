@@ -21,6 +21,14 @@ const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
 
 import axios from 'axios'
 
+// RICHARD FLOOD DEMO VARIABLES
+const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
+const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
+const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
+import objectAssign from 'object-assign'
+import { demoSendAlert } from '../actions/SubscribeActions.es'
+// END OF RICHARD DEMO CODE
+
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
 
@@ -474,11 +482,73 @@ export default class Map extends Component {
       }]
     })
 
-    this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+    // Richard's Demo Fake-Flood Button
+    const demoButton = L.easyButton({
+      states: [{
+        stateName: 'simulate-flood',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">pool</i>',
+        title: 'Simulate Flood',
+        onClick: (control) => {
+          control.state("reset-data")
+          this.simulateFlood(leafletMap, demoSQL, true)
+        }
+      }, {
+        stateName: 'reset-data',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">undo</i>',
+        title: 'Reset data',
+        onClick: (control) => {
+          control.state("simulate-flood")
+          this.simulateFlood(leafletMap, SQL, false)
+        }
+      }]
+    })
+    // END OF RICHARD DEMO CODE
+
+    this.locateToolbar = L.easyBar([demoButton, geolocateButton, trackLocationButton], {
       position: 'bottomright'
     })
     this.locateToolbar.addTo(leafletMap)
   }
+
+  // Richard's Demo Fake-Flood Button
+  simulateFlood(map, sqlFile, notify) {
+    const newProps = objectAssign({}, this.props, {
+        featureLayers: { layers:
+          this.props.featureLayers.layers.map((layer) => {
+            if (layer.id == 'ahps-flood') {
+              return objectAssign({}, layer, {
+                options: {
+                  'refreshTimeMs': 300000, // 5 minutes
+                  'account': 'tnris-flood',
+                  'sql': sqlFile,
+                  'interactivity': [
+                    'lid',
+                    'name',
+                    'wfo',
+                  ],
+                  'cartocss': floodCartoCSS,
+                  'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+                }
+              })
+            } else {
+              return objectAssign({}, layer)
+            }
+          })
+        }
+    });
+    this.layerStore = null;
+    this.map.eachLayer((layer)  => {
+        const gageLayerExt = layer._url.includes('json')
+        if (gageLayerExt) {
+            this.map.removeLayer(layer)
+        }
+    })
+    this.initializeLayerStore(newProps, this.map);
+    if (notify) {
+      demoSendAlert()
+    }
+  }
+  // END OF RICHARD DEMO CODE
 
   // fullscreenControl() {
   //   const thisMap = this.map

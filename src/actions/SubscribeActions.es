@@ -39,7 +39,8 @@ export function subscribeGage(lid, protocol, endpoint) {
     const sns = new AWS.SNS()
 
     const topicParams = {
-      Name: lid
+      // Name: lid
+      Name: 'flood-demo-temp'
     }
 
     // Create the topic, function is impotent so will create or return the existing topic
@@ -62,3 +63,18 @@ export function subscribeGage(lid, protocol, endpoint) {
       .catch((err) => dispatch(sendErrorReport(err)))
   }
 }
+
+// Richard's Demo Fake-Flood Button
+export function demoSendAlert() {
+  const AWS = window.AWS
+  window.AWS.config.update(keys.awsConfig)
+  const sns = new AWS.SNS()
+
+  const confirm = {
+    TopicArn: keys.SNS_TOPIC_ARN_BASE + "flood-demo-temp",
+    Message: 'West Fork San Jacinto River near Humble has entered a major flood stage level. ' +
+            'Info: http://bit.ly/2pYQpP7 My Alerts: http://bit.ly/myAlerts'
+  }
+  sns.publish(confirm).promise().catch(err => dispatch(sendErrorReport(err)))
+}
+// END OF RICHARD DEMO CODE
