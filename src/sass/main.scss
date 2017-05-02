@@ -500,31 +500,6 @@ body {
         padding-bottom: 3px;
       }
     }
-
-  //// customize popup tip - give it a more narrow angle
-  //.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  //  background: white;
-  //  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-  //}
-  //
-  //.leaflet-popup-tip-container {
-  //  width: 70px;
-  //  height: 70px;
-  //}
-  //
-  //.leaflet-popup-tip {
-  //  width: 55px;
-  //  height: 55px;
-  //  margin: -30px 0px 0px 6px;
-  //  padding: 1px;
-  //
-  //  $popup-tip-transform: rotate(45deg) skew(20deg, 20deg);
-  //  -webkit-transform: $popup-tip-transform;
-  //  -moz-transform: $popup-tip-transform;
-  //  -ms-transform: $popup-tip-transform;
-  //  -o-transform: $popup-tip-transform;
-  //  transform: $popup-tip-transform;
-  //}
 }
 
 .info__name {
@@ -674,36 +649,60 @@ body {
   vertical-align: middle;
 }
 
+.disclaimer-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 80%;
+  overflow-y: auto;
+  background-color: white;
+}
+
 .disclaimer {
-    /* Override default which is too narrow */
-    width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
+  width: 30em !important;
+
+    .disclaimer-text {
+      width: 100%;
+    }
 
     .disclaimer-title {
-      color: $gray20;
+
+      h2 {
+        color: $gray20;
+        font-size: 1.5em;
+        font-weight: 400;
+      }
+    }
+
+    button {
+      color: #fff!important;
+      background-color: $lighter-blue;
+      border-radius: 0;
+      width: 100%;
+      font-size: 90%;
+    }
+
+    button:hover {
+      background-color: $darker-blue;
     }
 
     @media screen and (max-width: 500px) {
+      width: 18em !important;
       padding: 0;
 
-      .mdl-dialog__title {
-        padding: 10px 10px 0;
-        font-size: 1.5em;
-        text-align: center;
+      .disclaimer-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
       }
 
-      .mdl-dialog__content {
+      .disclaimer-text {
         padding: 10px;
 
         p {
@@ -713,19 +712,14 @@ body {
         }
       }
 
-      .dialog-button-div {
-        font-size: 12px;
+      .disclaimer-button-div {
+        font-size: 11px;
 
         button {
           padding: 0;
         }
       }
     }
-}
-
-dialog.disclaimer h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 2em;
 }
 
 .subscribeDialog {
@@ -1401,7 +1395,7 @@ body > div.ReactModalPortal > div {
     min-height: 180px !important;
 }
 
-div.mdl-card__title {
+div.confirm-modal-title {
     background-color: #333;
     border-radius: 0 0 0 0 !important;
     height: 42px;
@@ -1413,7 +1407,7 @@ div.mdl-card__title {
     }
 }
 
-.mdl-card__actions {
+.confirm-modal-actions {
   button {
     float: right;
     // color: $darker-blue !important;

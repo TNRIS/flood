@@ -303,11 +303,11 @@ class SubscriptionList extends React.Component {
 
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
-                <CardTitle><i className="material-icons">save</i>
+                <CardTitle className="confirm-modal-title"><i className="material-icons">save</i>
                 Save Changes?
                 </CardTitle>
                 <CardText>Are you sure you want to save your changes?</CardText>
-                <CardActions>
+                <CardActions className="confirm-modal-actions">
                   <Button type="button" onClick={this.saveChanges}>Confirm</Button>
                   <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
                 </CardActions>
