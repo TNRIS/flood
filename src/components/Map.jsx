@@ -345,25 +345,17 @@ export default class Map extends Component {
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
     layers['Streets'].addTo(this.map)
-    // original leaflet control to select basemaps
-    // const layerControl = L.control.layers(layers, null, {collapsed: false})
-    // layerControl.setPosition('topright').addTo(this.map)
-    // this.map.on('baselayerchange', ({ layer }) => {
-    //   layer.bringToBack()
-    //   layer.options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
-    //                          this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
-    // })
   }
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.nominatim({
-          geocodingQueryParams: {
-            countrycodes: 'us',
-            state: "Texas",
-            viewbox: [-115.02685546875, 39.740986355883564, -84.70458984375, 23.563987128451217],
-            bounded: 1
-          }
+        geocodingQueryParams: {
+          countrycodes: 'us',
+          state: "Texas",
+          viewbox: [-115.02685546875, 39.740986355883564, -84.70458984375, 23.563987128451217],
+          bounded: 1
+        }
       }),
       placeholder: "Search by City or Street Address",
       collapsed: false,
@@ -404,20 +396,6 @@ export default class Map extends Component {
       this.map.panTo(newCenter, {
         animate: true
       })
-    }
-  }
-
-  toggleFullscreen() {
-    const element = document.getElementsByTagName("html")[0]
-    if (document.fullscreenEnabled ||
-        document.webkitIsFullScreen ||
-        document.mozFullScreen ||
-        document.msFullscreenEnabled) {
-      const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-      req.call(document)
-    } else {
-      const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
-      req.call(element)
     }
   }
 
