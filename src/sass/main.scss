@@ -689,8 +689,8 @@ body {
       font-size: 90%;
     }
 
-    button:hover {
-      background-color: $darker-blue;
+    button:hover, button:active, button:focus {
+      background-color: $darker-blue !important;
     }
 
     @media screen and (max-width: 500px) {

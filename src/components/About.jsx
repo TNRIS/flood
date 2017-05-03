@@ -37,7 +37,7 @@ class About extends React.Component {
             to the Texas Water Development Board (TWDB) by its data contributors. The information
             may not be represented in real-time and should not be considered as exact conditions
             in your area. Neither the State of Texas nor the Texas Water Development Board (TWDB)
-            assumes any legal liabality or responsibility or makes any guarantees or warranties
+            assumes any legal liability or responsibility or makes any guarantees or warranties
             as to the accuracy, completeness, or suitability of the information for any purpose.
             If you have any questions, please contact us at
             <a href="https://tnris.org/contact/" target="_blank"> https://tnris.org/contact/</a>
