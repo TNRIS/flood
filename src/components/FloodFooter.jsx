@@ -37,7 +37,6 @@ class FloodFooter extends React.Component {
 
   handleShowFullscreenToggle() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera
-    console.log(userAgent)
     const fullscreenButtonClass = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream ?
       "hideFullscreenButton" : "fullscreenButton"
     return fullscreenButtonClass
