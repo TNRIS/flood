@@ -19,7 +19,7 @@ export default class App extends Component {
   }
 
 componentDidMount() {
-  this.props.showSnackbar(<p><strong>Warning: </strong>This application is currently in beta. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>,
+  this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>,
                           5000)
 }
 
