@@ -6,7 +6,7 @@ import {
     CardTitle,
     CardText,
     CardActions
-    } from 'react-mdl'
+} from 'react-mdl'
 
 import Modal from 'react-modal'
 
