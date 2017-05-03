@@ -218,6 +218,10 @@ body {
       }
     }
 
+    .hideFullscreenButton {
+      display: none;
+    }
+
     .fullscreenButton {
       position: absolute;
       color: white;
