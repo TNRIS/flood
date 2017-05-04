@@ -185,10 +185,10 @@ export default class Map extends Component {
           const zoom =  this.map.getZoom()
           const southwest = L.latLng(30.263042706097306, -97.75079011917114)
           const northeast = L.latLng(30.26316780672294, -97.75057554244995)
-          const bounds = L.latLngBounds(southwest, northeast);
+          const bounds = L.latLngBounds(southwest, northeast)
           const contains = bounds.contains(e.latlng)
           if (contains == true && zoom == 18) {
-            window.open('https://youtu.be/KC5H9P4F5Uk', '_stevieVaughan');
+            window.open('https://youtu.be/KC5H9P4F5Uk', '_stevieVaughan')
           }
         })
         .on('click', (e) => {
