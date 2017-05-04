@@ -672,11 +672,16 @@ body {
   border: none;
   border-radius: 0;
   max-height: 91%;
+  max-width: 35em;
   overflow-y: auto;
   background-color: white;
 
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
   .disclaimer {
-    width: 30em !important;
+    width: 100% !important;
 
     .disclaimer-title {
 
@@ -724,7 +729,7 @@ body {
     }
 
     @media screen and (max-width: 500px) {
-      width: 18em !important;
+      width: 100% !important;
       padding: 0;
 
       .disclaimer-title {
@@ -798,8 +803,13 @@ dialog.subscribeDialog h4 {
   border: none;
   border-radius: 0;
   max-height: 91%;
+  max-width: 45em;
   overflow-y: auto;
   background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
 
   .about-version-number {
     color: $gray20;
@@ -811,7 +821,7 @@ dialog.subscribeDialog h4 {
   }
 
   .about {
-    width: 40em !important;
+    width: 100% !important;
 
     .about-title {
       padding-top: 0;
@@ -865,11 +875,12 @@ dialog.subscribeDialog h4 {
       .about__logos {
         margin: auto;
         height: 40px;
-        padding: 0 0 0 10px;
+        padding: 0 0 0 40px;
 
         @media screen and (max-width: 767px) {
           height: 35px;
           text-align: center;
+          padding: 0;
         }
       }
 
@@ -920,7 +931,7 @@ dialog.subscribeDialog h4 {
     }
 
     @media screen and (max-width: 500px) {
-      width: 18em !important;
+      width: 100% !important;
       padding: 0;
 
       .about-title {
@@ -942,6 +953,10 @@ dialog.subscribeDialog h4 {
 
         .about-disclaimer-text {
           font-size: 12px;
+        }
+
+        .data-sources-list {
+          margin-bottom: 16px;
         }
       }
 
