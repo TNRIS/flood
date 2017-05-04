@@ -671,7 +671,7 @@ body {
   padding: 10px;
   border: none;
   border-radius: 0;
-  max-height: 88%;
+  max-height: 91%;
   overflow-y: auto;
   background-color: white;
 
@@ -797,7 +797,7 @@ dialog.subscribeDialog h4 {
   padding: 10px;
   border: none;
   border-radius: 0;
-  max-height: 88%;
+  max-height: 91%;
   overflow-y: auto;
   background-color: white;
 
@@ -834,7 +834,7 @@ dialog.subscribeDialog h4 {
       color: $gray20;
 
       h5 {
-        margin-top: 20px;
+        margin-top: 15px;
         margin-bottom: 5px;
       }
 
@@ -843,7 +843,7 @@ dialog.subscribeDialog h4 {
       }
 
       .about-disclaimer-text {
-        font-size: 12px;
+        font-size: 14px;
       }
 
       .data-sources-list {
@@ -859,16 +859,17 @@ dialog.subscribeDialog h4 {
       .about-developed-by {
         font-size: 12px;
         margin: 0;
+        padding-top: 10px;
       }
 
       .about__logos {
         margin: auto;
         height: 40px;
-        padding: 10px 0 0 10px;
+        padding: 0 0 0 10px;
 
         @media screen and (max-width: 767px) {
           height: 35px;
-          padding: 10px 0 20px 10px;
+          text-align: center;
         }
       }
 
@@ -937,6 +938,10 @@ dialog.subscribeDialog h4 {
           font-size: 12px;
           line-height: 18px;
           margin-bottom: 0;
+        }
+
+        .about-disclaimer-text {
+          font-size: 12px;
         }
       }
 
