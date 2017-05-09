@@ -18,6 +18,7 @@ import axios from 'axios'
 import AWS from 'aws-sdk'
 import keys from '../keys'
 import { AuthenticationDetails, CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js' 
+import { CognitoSyncManager } from 'amazon-cognito-js'
 
 /**
  * Action that clears all subscription data from the app store
@@ -99,33 +100,147 @@ export function getUserSubscriptions(email, phone, nextToken) {
                 IdentityPoolId : keys.awsConfig.identityPoolId, // your identity pool id here 
                 Logins : logins 
             }); 
+            var idToken = result.getIdToken().getJwtToken() 
+            AWS.config.credentials.get(function() {
+                    var cognitosync = new AWS.CognitoSync();
+                    var params = {
+                      DatasetName: 'texasflood', /* required */
+                      IdentityId: AWS.config.credentials.identityId, /* required */
+                      IdentityPoolId: keys.awsConfig.identityPoolId
+                    };
+                    cognitosync.listRecords(params, function(err, data) {
+                      if (err) {console.log(err, err.stack)} // an error occurred
+                      else    { console.log(data)
+                        var params = {
+                            DatasetName: 'texasflood', /* required */
+                            IdentityId: AWS.config.credentials.identityId, /* required */
+                            IdentityPoolId: keys.awsConfig.identityPoolId,
+                            SyncSessionToken: data.SyncSessionToken,
+                            RecordPatches: [
+                              {
+                                Key: 'third', /* required */
+                                Op: "replace", /* required */
+                                SyncCount: 0, /* required */
+                                Value: 'testerz'
+                              }
+                            ]
+                          }
+                          console.log(params)
+                          cognitosync.updateRecords(params, function(err, data) {
+                            if (err) console.log(err, err.stack); // an error occurred
+                            else     console.log(data);           // successful response
+                          });         // successful response
+                        }
+                    });
+                    
  
-            // Instantiate aws sdk service objects now that the credentials have been updated. 
-            // example: var s3 = new AWS.S3(); 
-            // AWS.config.update({accessKeyId: 'anything', secretAccessKey: 'anything', sessionToken: token}) 
+                    // const client = new AWS.CognitoSyncManager()
+                    // client.openOrCreateDataset('texasflood', function(err, dataset) {
+                    //           console.log(dataset)
+                    //            // <!-- Read Records -->
+                    //           // dataset.get('newLid', function(err, value) {
+                    //           //   console.log('myRecord: ' + value);
+                    //           // });
+
+                    //           // <!-- Write Records -->
+                    //           const object = {email: "something@somewhere.com", phone: "7894522837"}
+                    //           dataset.put('atbt2.email', object, function(err, record) {
+                    //             console.log(err);
+                    //           });
+                    //           // dataset.put('atbt2.phone', 'arn:blach:topic:unique_id2', function(err, record) {
+                    //           //   console.log(record);
+                    //           // });
+                    //           // dataset.put('hmmt3.phone', 'arn:blach:topic:unique_id3', function(err, record) {
+                    //           //   console.log(record);
+                    //           // });
+
+                    //           // <!-- Delete Records -->
+                    //           // dataset.remove('oldKey', function(err, record) {
+                    //           //   if (!err) { console.log('success'); }
+                    //           // });
+
+                    //           dataset.synchronize({
+
+                    //             onSuccess: function(dataset, newRecords) {
+                    //                console.log(dataset)
+                    //             },
+
+                    //             onFailure: function(err) {
+                    //                console.log(err)
+                    //             },
+
+                    //             onConflict: function(dataset, conflicts, callback) {
+
+                    //                var resolved = [];
+
+                    //                for (var i=0; i<conflicts.length; i++) {
+
+                    //                   // Take remote version.
+                    //                   resolved.push(conflicts[i].resolveWithRemoteRecord());
+
+                    //                   // Or... take local version.
+                    //                   // resolved.push(conflicts[i].resolveWithLocalRecord());
+
+                    //                   // Or... use custom logic.
+                    //                   // var newValue = conflicts[i].getRemoteRecord().getValue() + conflicts[i].getLocalRecord().getValue();
+                    //                   // resolved.push(conflicts[i].resolveWithValue(newValue);
+
+                    //                }
+
+                    //                dataset.resolve(resolved, function() {
+                    //                   return callback(true);
+                    //                });
+
+                    //                // Or... callback false to stop the synchronization process.
+                    //                // return callback(false);
+
+                    //             },
+
+                    //             onDatasetDeleted: function(dataset, datasetName, callback) {
+
+                    //                // Return true to delete the local copy of the dataset.
+                    //                // Return false to handle deleted datasets outsid ethe synchronization callback.
+
+                    //                return callback(true);
+
+                    //             },
+
+                    //             onDatasetsMerged: function(dataset, datasetNames, callback) {
+
+                    //                // Return true to continue the synchronization process.
+                    //                // Return false to handle dataset merges outside the synchroniziation callback.
+
+                    //                return callback(false);
+
+                    //             }
+
+                    //           });
+                    // })
+            });
+            
  
  
             // AWS.config.credentials.refresh(function () { 
-              const sns = new AWS.SNS() 
-              const topicParams = { 
-                Name: "ATBT2" 
-              } 
-              sns.createTopic(topicParams).promise() 
-                    .then((data) => { 
-                      const subscriptionParams = { 
-                        TopicArn: data.TopicArn, 
-                        Protocol: "sms", 
-                        Endpoint: `+15555555555`
-                      } 
-                      sns.subscribe(subscriptionParams).promise().then( 
-                        () => { 
-                          if (subscriptionParams.Protocol === 'sms') { 
-                            console.log(`You have subscribed to the ${lid} flood gage.`) 
-                          } 
-                        }) 
-                        .catch(err => console.log(err)) 
-                    }) 
-                    .catch((err) => console.log(err)) 
+              // const sns = new AWS.SNS() 
+              // const topicParams = { 
+              //   Name: "ATBT2" 
+              // } 
+              // sns.createTopic(topicParams).promise() 
+              //       .then((data) => { 
+              //         const subscriptionParams = { 
+              //           TopicArn: data.TopicArn, 
+              //           Protocol: "sms", 
+              //           Endpoint: `+15555555555`
+              //         } 
+              //         sns.subscribe(subscriptionParams).promise().then( 
+              //           () => { 
+              //             if (subscriptionParams.Protocol === 'sms') { 
+              //               console.log(`You have subscribed to the ${lid} flood gage.`) 
+              //             } 
+              //           }) 
+              //           .catch(err => console.log(err)) 
+              //       }) 
+              //       .catch((err) => console.log(err)) 
             // }) 
             // const nextToken = null 
             // sns.listSubscriptions({NextToken: nextToken}, (err, data) => { 
