@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions'
-import {
-  setUserInfo
-} from '../actions/UserInfoActions'
+
 import {
   showSnackbar
 } from '../actions/ToasterActions'
@@ -29,9 +27,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideSubscribe: () => {
       dispatch(actions.hideSubscribeDialog())
-    },
-    setUserInfo: (email, phone) => {
-      dispatch(setUserInfo(email, phone))
     },
     showSnackbar: (toppings) => {
       dispatch(showSnackbar(toppings))

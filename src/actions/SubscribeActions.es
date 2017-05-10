@@ -32,7 +32,7 @@ export function confirmSubscription(phoneNumber, lid) {
  * @return {promise}         AWS SDK promise
  */
 export function subscribeGage(lid, protocol, endpoint) {
-  return dispatch => {
+  return (dispatch, getState) => {
     //create aws connection object
     const AWS = window.AWS
     window.AWS.config.update(keys.awsConfig)
