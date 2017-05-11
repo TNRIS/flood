@@ -7,16 +7,27 @@ import keys from '../keys'
 const initialState = {
   layers: [
     {
-      'id': 'mapbox-outdoors',
+      'id': 'esri-world-streetmap',
       'text': 'Streets',
       'type': 'tile',
-      'url': `https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=${keys.mapboxAccessToken}`,
+      'url': `https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}`,
       'options': {
-        'attribution': '&copy; <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-        'mapbox': true,
-        'layerId': 'mapbox-outdoors'
+        'attribution': 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+        'mapbox': false,
+        'layerId': 'esri-world-streetmap'
       }
     },
+    // {
+    //   'id': 'mapbox-outdoors',
+    //   'text': 'notStreets',
+    //   'type': 'tile',
+    //   'url': `https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=${keys.mapboxAccessToken}`,
+    //   'options': {
+    //     'attribution': '&copy; <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+    //     'mapbox': true,
+    //     'layerId': 'mapbox-outdoors'
+    //   }
+    // },
     // {
     //   'id': 'mapbox-satellite-streets',
     //   'text': 'Hybrid',
@@ -100,7 +111,7 @@ const initialState = {
       }
     }
   ],
-  active: 'mapbox-outdoors',
+  active: 'esri-world-streetmap',
   target: 'basemap-context-menu'
 }
 
