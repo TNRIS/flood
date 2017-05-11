@@ -15,7 +15,7 @@ import {
 } from './ToasterActions'
 
 import axios from 'axios'
-import AWS from 'aws-sdk/dist/aws-sdk'
+import AWS from 'aws-sdk'
 import keys from '../keys'
 
 /**
@@ -68,12 +68,11 @@ export function getSubscriptionsSuccess() {
  * @param  {string} nextToken token for the next API call if there are still more records to retrieve
  */
 export function getUserSubscriptions(email, phone, nextToken) {
-  const WINDOW_AWS = window.AWS
-  WINDOW_AWS.config.update(keys.awsConfig)
-  const sns = new WINDOW_AWS.SNS()
-
   return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
+    const WINDOW_AWS = window.AWS
+    const sns = new WINDOW_AWS.SNS()
+
     return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
       if (err) {
         dispatch(getSubscriptionsError(err))

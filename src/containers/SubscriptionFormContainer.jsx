@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/SubscriptionFormActions'
-import { setUserInfo } from '../actions/UserInfoActions'
+import { userLogin, loginSuccessful } from '../actions/UserActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
 import { clearSubscriptionList }  from '../actions/SubscriptionListActions'
@@ -37,6 +37,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     subscriptionFormUpdated: () => {
       dispatch(actions.subscriptionFormUpdated(email, phone))
+    },
+    userLogin: (username, password) => {
+      dispatch(userLogin(username, password))
     }
   }
 }

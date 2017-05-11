@@ -8,6 +8,7 @@
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --hot --inline --config webpack.config.babel.js",
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.babel.js",
+    "build": "webpack",
     "dist": "NODE_ENV=production bash -c 'npm run clean && npm run webpack'",
     "clean": "rm -rf ./dist/*",
     "test": "export NODE_ENV=testing|| set NODE_ENV=testing && NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.es\" --compilers js:babel-register,null:test/null-compiler",
@@ -35,6 +36,8 @@
   },
   "homepage": "https://github.com/tnris/flood",
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.16.0",
+    "amazon-cognito-js": "^1.1.0",
     "assets-webpack-plugin": "^3.2.0",
     "autoprefixer-loader": "^3.2.0",
     "aws-sdk": "^2.7.16",
@@ -66,7 +69,6 @@
     "jsdom": "^8.3.0",
     "leaflet": "^0.7.7",
     "leaflet-easybutton": "^1.3.2",
-    "leaflet.label": "github:leaflet/Leaflet.label#0.2.1",
     "mocha": "^2.4.5",
     "node-sass": "^3.3.3",
     "nodemon": "^1.4.1",
@@ -105,7 +107,9 @@
     "enzyme": "^2.8.2",
     "eslint": "https://registry.npmjs.org/eslint/-/eslint-1.10.3.tgz",
     "eslint-plugin-react": "^3.16.1",
+    "json-loader": "^0.5.4",
     "react-addons-test-utils": "^0.14.8",
-    "react-dom": "^0.14.9"
+    "react-dom": "^0.14.9",
+    "webpack": "^1.15.0"
   }
 }
