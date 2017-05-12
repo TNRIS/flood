@@ -2,7 +2,8 @@ import {
   LOGIN_ATTEMPT,
   LOGIN_FAILED,
   LOGIN_SUCCESSFUL,
-  NEW_PASSWORD_REQUIRED
+  NEW_PASSWORD_REQUIRED,
+  SET_SYNC_SESSION_TOKEN
 } from '../constants/UserActionTypes'
 
 const initialState = {
@@ -29,6 +30,8 @@ export default function user(state = initialState, action) {
       return {...state, ...action.payload, authentication: 0}
     case NEW_PASSWORD_REQUIRED:
       return {...state, ...action.payload, authentication: 20}
+    case SET_SYNC_SESSION_TOKEN:
+      return {...state, ...action.payload}
     default:
       return state
   }

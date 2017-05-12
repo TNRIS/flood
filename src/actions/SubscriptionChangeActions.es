@@ -104,6 +104,12 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
   }
 }
 
+export function removeSubscriptionFromUserDataset() {
+  return (dispatch) => {
+    console.log("Removing subscription")
+  }
+}
+
 /**
  * Iterates through the queue of subscription changes and sends a subscribe or unsubscribe request to Amazon
  * based on the action of the change in the queue.
@@ -124,7 +130,6 @@ export function saveSubscriptionChanges() {
         const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
 
         const WINDOW_AWS = window.AWS
-        WINDOW_AWS.config.update(keys.awsConfig)
         const sns = new WINDOW_AWS.SNS()
 
         const promiseQueue = []
@@ -140,10 +145,15 @@ export function saveSubscriptionChanges() {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
               const subscriptionArn = subscription.SubscriptionArn
               promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
-                .then((data) => dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId)))
-                .catch((err) => dispatch(updateSubscriptionsError(err))
-              )
-            )}
+                .then((data) => {
+                  dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+                  // dispatch(removeSubscriptionFromUserDataset(subscriptionArn))
+                })
+                .catch((err) => {
+                  console.log(err)
+                  dispatch(updateSubscriptionsError(err))
+                })
+              )}
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
@@ -160,7 +170,7 @@ export function saveSubscriptionChanges() {
         // Execute promise queue containing the subscription update operations.
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
-          dispatch(getUserSubscriptions(user.email, user.phone, ""))
+          // dispatch(getUserSubscriptions(user.email, user.phone, ""))
         }).catch(err => dispatch(sendErrorReport(err)))
       }
 

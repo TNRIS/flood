@@ -64,8 +64,6 @@ class SubscriptionForm extends Component {
     event.preventDefault()
     console.log(event)
     this.props.userLogin(this.state.username, this.state.password)
-    // this.props.setUserInfo(this.state.email, this.state.phone)
-    // this.props.getUserSubscriptions(this.state.email, this.state.phone, this.state.nextToken)
   }
 
   render() {

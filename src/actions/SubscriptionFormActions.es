@@ -14,6 +14,10 @@ import {
   showSnackbar
 } from './ToasterActions'
 
+import {
+  setSyncSessionToken
+} from './UserActions'
+
 import axios from 'axios'
 import AWS from 'aws-sdk'
 import keys from '../keys'
@@ -67,38 +71,36 @@ export function getSubscriptionsSuccess() {
  * @param  {string} phone     user's phone number
  * @param  {string} nextToken token for the next API call if there are still more records to retrieve
  */
-export function getUserSubscriptions(email, phone, nextToken) {
+export function getUserSubscriptions(idToken, nextToken) {
   return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
     const WINDOW_AWS = window.AWS
     const sns = new WINDOW_AWS.SNS()
 
-    return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
-      if (err) {
-        dispatch(getSubscriptionsError(err))
-      }
-      if (data) {
+    const params = {
+      DatasetName: 'texasflood',
+      IdentityId: window.AWS.config.credentials.params.IdentityId,
+      IdentityPoolId: keys.awsConfig.IdentityPoolId
+    }
+
+    const cognitoSync = new window.AWS.CognitoSync()
+    return cognitoSync.listRecords(params, (err, data) => {
+      if (err) console.log(err)
+      else {
         let counter = 0
-        // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
+        console.log(data)
+        dispatch(setSyncSessionToken(data.SyncSessionToken))
+
         if (!nextToken) {
           dispatch(clearSubscriptionList())
         }
-        const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
-        // Iterate through the records
-        data.Subscriptions.forEach((sub) => {
-          const endpoint = sub.Endpoint
-          const topic = sub.TopicArn.split(":").pop()
-
-          if (gagePattern.test(topic)) {
-            if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
-              dispatch(addSubscriptionToSubscriptionList(topic, sub, "sms", endpoint))
-            }
-            if (email && endpoint === email) {
-              dispatch(addSubscriptionToSubscriptionList(topic, sub, "email", endpoint))
-            }
+        data.Records.forEach(sub => {
+          counter ++
+          if (sub.Value) {
+            const subData = JSON.parse(sub.Value)
+            dispatch(addSubscriptionToSubscriptionList(subData.lid, subData, subData.protocol, subData.endpoint))
           }
-          counter++
-          if (counter === data.Subscriptions.length) {
+          if (counter === data.Records.length) {
             if (data.NextToken) {
               dispatch(getUserSubscriptions(email, phone, data.NextToken))
             }
@@ -114,5 +116,47 @@ export function getUserSubscriptions(email, phone, nextToken) {
         })
       }
     })
+
+    // return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
+    //   if (err) {
+    //     dispatch(getSubscriptionsError(err))
+    //   }
+    //   if (data) {
+    //     let counter = 0
+    //     // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
+    //     if (!nextToken) {
+    //       dispatch(clearSubscriptionList())
+    //     }
+    //     const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
+    //     // Iterate through the records
+    //     data.Subscriptions.forEach((sub) => {
+    //       const endpoint = sub.Endpoint
+    //       const topic = sub.TopicArn.split(":").pop()
+    //
+    //       if (gagePattern.test(topic)) {
+    //         if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
+    //           dispatch(addSubscriptionToSubscriptionList(topic, sub, "sms", endpoint))
+    //         }
+    //         if (email && endpoint === email) {
+    //           dispatch(addSubscriptionToSubscriptionList(topic, sub, "email", endpoint))
+    //         }
+    //       }
+    //       counter++
+    //       if (counter === data.Subscriptions.length) {
+    //         if (data.NextToken) {
+    //           dispatch(getUserSubscriptions(email, phone, data.NextToken))
+    //         }
+    //         else {
+    //           dispatch(getSubscriptionsSuccess())
+    //           if (getState().subscriptions.allSubscriptions.length === 0) {
+    //             dispatch(
+    //               showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications.")
+    //             )
+    //           }
+    //         }
+    //       }
+    //     })
+    //   }
+    // })
   }
 }

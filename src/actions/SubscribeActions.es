@@ -1,8 +1,33 @@
 import AWS from 'aws-sdk/dist/aws-sdk'
+
 import keys from '../keys'
 
 import { showSnackbar } from './ToasterActions'
 import { sendErrorReport } from './StevieActions'
+
+export function addSubscriptionToUserDataset(subscriptionData) {
+  return (dispatch, getState) => {
+    const params = {
+      DatasetName: 'texasflood',
+      IdentityId: window.AWS.config.credentials.params.IdentityId,
+      IdentityPoolId: keys.awsConfig.IdentityPoolId,
+      SyncSessionToken: getState().user.SyncSessionToken,
+      RecordPatches: [{
+        Key: subscriptionData.subscriptionArn,
+        Op: "replace",
+        SyncCount: 0,
+        Value: JSON.stringify(subscriptionData)
+      }]
+    }
+    const cognitoSync = new window.AWS.CognitoSync()
+    cognitoSync.updateRecords(params, (err, data) => {
+      if (err) console.log(err)
+      else {
+        console.log(data)
+      }
+    })
+  }
+}
 
 /**
  * Function confirms to the user that they have subscribed to a gage via sms
@@ -35,7 +60,7 @@ export function subscribeGage(lid, protocol, endpoint) {
   return (dispatch, getState) => {
     //create aws connection object
     const AWS = window.AWS
-    window.AWS.config.update(keys.awsConfig)
+    // window.AWS.config.update(keys.awsConfig)
     const sns = new AWS.SNS()
 
     const topicParams = {
@@ -51,14 +76,22 @@ export function subscribeGage(lid, protocol, endpoint) {
           Endpoint: protocol === 'sms' ? `+1${endpoint}` : endpoint
         }
         return sns.subscribe(subscriptionParams).promise().then(
-          () => {
+          (data) => {
+            console.log(data)
             if (subscriptionParams.Protocol === 'sms') {
               dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
               dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
             }
+            dispatch(addSubscriptionToUserDataset({lid, protocol, endpoint, subscriptionArn: data.SubscriptionArn}))
           })
-          .catch(err => dispatch(sendErrorReport(err)))
+          .catch((err) => {
+            console.log(err)
+            // dispatch(sendErrorReport(err))
+          })
       })
-      .catch((err) => dispatch(sendErrorReport(err)))
+      .catch((err) => {
+        console.log(err)
+        // dispatch(sendErrorReport(err))
+      })
   }
 }

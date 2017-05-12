@@ -6,6 +6,7 @@ import {
   CognitoUserAttribute,
   CognitoUser } from 'amazon-cognito-identity-js'
 
+import { getUserSubscriptions } from './SubscriptionFormActions'
 
 import keys from '../keys'
 
@@ -17,7 +18,8 @@ import {
   LOGIN_ATTEMPT,
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
-  NEW_PASSWORD_REQUIRED } from '../constants/UserActionTypes'
+  NEW_PASSWORD_REQUIRED,
+  SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
 
 export function loginAttempt() {
@@ -47,9 +49,19 @@ export function newPasswordRequired(username) {
   }
 }
 
+export function setSyncSessionToken(token) {
+  return {
+    type: SET_SYNC_SESSION_TOKEN,
+    payload: {
+      SyncSessionToken: token
+    }
+  }
+}
+
 export function userLogin(username, password) {
   return (dispatch) => {
     dispatch(loginAttempt())
+    AWS.config.update({region: 'us-east-1'})
 
     const authenticationData = {
       Username: username,
@@ -58,8 +70,8 @@ export function userLogin(username, password) {
     const authenticationDetails = new AWS.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData)
 
     const poolData = {
-      UserPoolId: 'us-east-1_3LyfiOdWZ',
-      ClientId: '602n2i4g3loov3mnml95gdpoad'
+      UserPoolId: keys.awsConfig.UserPoolId,
+      ClientId: keys.awsConfig.ClientId
     }
     const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
     const userData = {
@@ -72,11 +84,14 @@ export function userLogin(username, password) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         let userData
 
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        window.AWS.config.update({region: 'us-east-1'})
+        window.AWS.config.credentials = new AWS.CognitoIdentityCredentials({
           IdentityPoolId: keys.awsConfig.IdentityPoolId,
           Logins: {
             [keys.awsConfig.logins.cognito.identityProviderName]: result.getIdToken().getJwtToken()
           }
+        }, {
+          region: 'us-east-1'
         })
         // Use the AWS service
         cognitoUser.getUserAttributes((err, att) => {
@@ -90,6 +105,8 @@ export function userLogin(username, password) {
             userData = {...user}
           }
           dispatch(loginSuccessful(username, {...result, ...userData}))
+          console.log(result)
+          dispatch(getUserSubscriptions(result.getIdToken(), ""))
         })
       },
       newPasswordRequired: (userAttributes) => {
