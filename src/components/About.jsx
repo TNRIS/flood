@@ -44,13 +44,14 @@ class About extends React.Component {
             <CardText className="about-text">
               <h5>Disclaimer</h5>
               <p className="about-disclaimer-text">
-              The data presented in this viewer is the best available information provided
-              to the Texas Water Development Board (TWDB) by its data contributors. The information
-              may not be represented in real-time and should not be considered as exact conditions
-              in your area. Neither the State of Texas nor the Texas Water Development Board (TWDB)
-              assumes any legal liability or responsibility or makes any guarantees or warranties
-              as to the accuracy, completeness, or suitability of the information for any purpose.
-              If you have any questions, please contact us at
+              The data and information presented in this viewer is the best available
+              information provided to the Texas Water Development Board (TWDB) by its
+              data contributors. The information may not be represented in real-time
+              and should not be considered as exact conditions in your area. Neither
+              the State of Texas nor the Texas Water Development Board (TWDB) assumes
+              any legal liability or responsibility or makes any guarantees or warranties
+              as to the accuracy, completeness, or suitability of the information for
+              any purpose. If you have any questions, please contact us at
               <a href="https://tnris.org/contact/" target="_blank"> https://tnris.org/contact/</a>
               </p>
               <h5 className="data-sources">Data Sources</h5>
