@@ -3,12 +3,14 @@ import objectAssign from 'object-assign'
 import {
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_SUCCESS} from '../constants/SubscriptionFormActionTypes'
+  GET_SUBSCRIPTIONS_SUCCESS,
+  DISPLAY_FORM} from '../constants/SubscriptionFormActionTypes'
 
 const initialState = {
   error: null,
   isFetching: false,
-  nextToken: null
+  nextToken: null,
+  displayForm: "login"
 }
 
 /**
@@ -34,6 +36,10 @@ export default function subscriptionForm(state = initialState, action) {
         error: null,
         isFetching: false,
         nextToken: null
+      })
+    case DISPLAY_FORM:
+      return objectAssign({}, state, {
+        displayForm: action.form
       })
     default:
       return state

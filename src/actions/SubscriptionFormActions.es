@@ -2,7 +2,8 @@ import {
   CLEAR_SUBSCRIPTIONS,
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_SUCCESS
+  GET_SUBSCRIPTIONS_SUCCESS,
+  DISPLAY_FORM
 } from '../constants/SubscriptionFormActionTypes'
 
 import {
@@ -21,6 +22,16 @@ import {
 import axios from 'axios'
 import AWS from 'aws-sdk'
 import keys from '../keys'
+
+/**
+ * Extend the Array object with a contains method
+ */
+Array.prototype.contains = (waldo) => {
+  for (i in this) {
+    if (this[i] === waldo) return true
+  }
+  return false
+}
 
 /**
  * Action that clears all subscription data from the app store
@@ -74,89 +85,69 @@ export function getSubscriptionsSuccess() {
 export function getUserSubscriptions(idToken, nextToken) {
   return (dispatch, getState) => {
     dispatch(getSubscriptionsAttempt())
-    const WINDOW_AWS = window.AWS
-    const sns = new WINDOW_AWS.SNS()
 
     const params = {
-      DatasetName: 'texasflood',
       IdentityId: window.AWS.config.credentials.params.IdentityId,
       IdentityPoolId: keys.awsConfig.IdentityPoolId
     }
 
     const cognitoSync = new window.AWS.CognitoSync()
-    return cognitoSync.listRecords(params, (err, data) => {
-      if (err) console.log(err)
-      else {
-        let counter = 0
-        console.log(data)
-        dispatch(setSyncSessionToken(data.SyncSessionToken))
 
-        if (!nextToken) {
-          dispatch(clearSubscriptionList())
-        }
-        data.Records.forEach(sub => {
-          counter ++
-          if (sub.Value) {
-            const subData = JSON.parse(sub.Value)
-            dispatch(addSubscriptionToSubscriptionList(subData.lid, subData, subData.protocol, subData.endpoint))
-          }
-          if (counter === data.Records.length) {
-            if (data.NextToken) {
-              dispatch(getUserSubscriptions(email, phone, data.NextToken))
-            }
+    return cognitoSync.listDatasets(params, (err, data) => {
+      if (err) {
+        console.log(err)
+      }
+      else {
+        if (data.Datasets.contains('texasflood')) {
+          params.dataset = 'texasflood'
+
+          cognitoSync.listRecords(params, (err, data) => {
+            if (err) console.log(err)
             else {
-              dispatch(getSubscriptionsSuccess())
-              if (getState().subscriptions.allSubscriptions.length === 0) {
-                dispatch(
-                  showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications.")
-                )
+              let counter = 0
+              dispatch(setSyncSessionToken(data.SyncSessionToken))
+              if (!nextToken) {
+                dispatch(clearSubscriptionList())
               }
+              data.Records.forEach(sub => {
+                counter ++
+                if (sub.Value) {
+                  const subData = JSON.parse(sub.Value)
+                  dispatch(addSubscriptionToSubscriptionList(subData.lid, subData, subData.protocol, subData.endpoint))
+                }
+                if (counter === data.Records.length) {
+                  if (data.NextToken) {
+                    dispatch(getUserSubscriptions(email, phone, data.NextToken))
+                  }
+                  else {
+                    dispatch(getSubscriptionsSuccess())
+                    if (getState().subscriptions.allSubscriptions.length === 0) {
+                      dispatch(showSnackbar(
+                          "No subscriptions found. Click a gage to subscribe and start receiving notifications."
+                        ))
+                    }
+                  }
+                }
+              })
             }
-          }
-        })
+          })
+        }
+        else {
+          dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
+        }
       }
     })
+  }
+}
 
-    // return sns.listSubscriptions({NextToken: nextToken}, (err, data) => {
-    //   if (err) {
-    //     dispatch(getSubscriptionsError(err))
-    //   }
-    //   if (data) {
-    //     let counter = 0
-    //     // Get the current state of subscriptions in the app, set a regex for filtering, and define a default record
-    //     if (!nextToken) {
-    //       dispatch(clearSubscriptionList())
-    //     }
-    //     const gagePattern = new RegExp("^([A-Z]{4}[0-9])$")
-    //     // Iterate through the records
-    //     data.Subscriptions.forEach((sub) => {
-    //       const endpoint = sub.Endpoint
-    //       const topic = sub.TopicArn.split(":").pop()
-    //
-    //       if (gagePattern.test(topic)) {
-    //         if (phone && (endpoint === ("+1" + phone) || endpoint === phone)) {
-    //           dispatch(addSubscriptionToSubscriptionList(topic, sub, "sms", endpoint))
-    //         }
-    //         if (email && endpoint === email) {
-    //           dispatch(addSubscriptionToSubscriptionList(topic, sub, "email", endpoint))
-    //         }
-    //       }
-    //       counter++
-    //       if (counter === data.Subscriptions.length) {
-    //         if (data.NextToken) {
-    //           dispatch(getUserSubscriptions(email, phone, data.NextToken))
-    //         }
-    //         else {
-    //           dispatch(getSubscriptionsSuccess())
-    //           if (getState().subscriptions.allSubscriptions.length === 0) {
-    //             dispatch(
-    //               showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications.")
-    //             )
-    //           }
-    //         }
-    //       }
-    //     })
-    //   }
-    // })
+/**
+ * Action for swapping between the sign up and login forms
+ * @param  {string} form     form to display. valid values: login, signUp, verify
+ * @return {object} action
+ */
+export function swapDisplayForm(form) {
+  return {
+    type: DISPLAY_FORM,
+    form
   }
 }

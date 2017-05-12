@@ -7,7 +7,9 @@ import { sendErrorReport } from './StevieActions'
 
 export function addSubscriptionToUserDataset(subscriptionData) {
   return (dispatch, getState) => {
+    console.log(window.AWS.config)
     const params = {
+      region: 'us-east-1',
       DatasetName: 'texasflood',
       IdentityId: window.AWS.config.credentials.params.IdentityId,
       IdentityPoolId: keys.awsConfig.IdentityPoolId,
