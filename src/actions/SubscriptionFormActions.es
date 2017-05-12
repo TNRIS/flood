@@ -2,7 +2,8 @@ import {
   CLEAR_SUBSCRIPTIONS,
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
-  GET_SUBSCRIPTIONS_SUCCESS
+  GET_SUBSCRIPTIONS_SUCCESS,
+  DISPLAY_FORM
 } from '../constants/SubscriptionFormActionTypes'
 
 import {
@@ -114,5 +115,17 @@ export function getUserSubscriptions(email, phone, nextToken) {
         })
       }
     })
+  }
+}
+
+/**
+ * Action for swapping between the sign up and login forms
+ * @param  {string} form     form to display. valid values: login, signUp, verify
+ * @return {object} action
+ */
+export function swapDisplayForm(form) {
+  return {
+    type: DISPLAY_FORM,
+    form
   }
 }
