@@ -57,7 +57,7 @@ export default class Map extends Component {
     this.state = {
       animationIcon: "play_arrow",
       geolocateControl: "basic",
-      mapboxWordmarkClass: "mapbox-wordmark",
+      mapboxWordmarkClass: "hide-mapbox-wordmark",
       locateToolbar: null
     }
   }
@@ -195,7 +195,7 @@ export default class Map extends Component {
           L.DomEvent.preventDefault(e)
           L.DomEvent.stopPropagation(e)
         })
-        
+
 
     }
 

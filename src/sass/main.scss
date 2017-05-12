@@ -199,7 +199,10 @@ body {
 
     .mdl-mini-footer__link-list {
       position: relative;
-      // left: 28px;
+
+      a:focus {
+        outline: none;
+      }
     }
 
     .mdl-mini-footer__link-list li:last-child {
@@ -653,6 +656,10 @@ body {
   vertical-align: middle;
 }
 
+.disclaimer-modal:focus {
+  outline: none;
+}
+
 .disclaimer-modal {
   position: absolute;
   top: 50%;
@@ -664,17 +671,17 @@ body {
   padding: 10px;
   border: none;
   border-radius: 0;
-  max-height: 88%;
+  max-height: 91%;
+  max-width: 35em;
   overflow-y: auto;
   background-color: white;
-}
 
-.disclaimer {
-  width: 30em !important;
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
 
-    .disclaimer-text {
-      width: 100%;
-    }
+  .disclaimer {
+    width: 100% !important;
 
     .disclaimer-title {
 
@@ -683,6 +690,30 @@ body {
         font-size: 1.5em;
         font-weight: 400;
       }
+    }
+
+    .disclaimer-text {
+      color: $gray20;
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      h5 {
+        margin-top: 20px;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      a {
+        color: $lighter-blue;
+      }
+    }
+
+    .disclaimer-button-div {
+      padding: 5px;
     }
 
     button {
@@ -698,7 +729,7 @@ body {
     }
 
     @media screen and (max-width: 500px) {
-      width: 18em !important;
+      width: 100% !important;
       padding: 0;
 
       .disclaimer-title {
@@ -724,148 +755,220 @@ body {
         }
       }
     }
+  }
 }
 
 .subscribeDialog {
-    /* Override default which is too narrow */
-    // width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
-    position: fixed;
+  /* Override default which is too narrow */
+  // width: 85% !important;
+  /* Limit width for readability */
+  max-width: 35em;
+  /* Center vertically - also set left for Firefox */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+  /* Scrollbar to allow text viewing and input access on small screens */
+  overflow-y: auto !important;
+  /* Allow the scrollbar to work without forcing it on */
+  max-height: 100%;
+  /* Ensure this isn't transparent on Firefox */
+  background-color: white;
+  position: fixed;
 
-    .mdl-dialog__content {
-      padding: 10px;
-    }
+  .mdl-dialog__content {
+    padding: 10px;
+  }
 }
 
 dialog.subscribeDialog h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 1.5em;
-    text-align: center;
-    padding: 0;
+  /* Reduce size to avoid line break in title */
+  font-size: 1.5em;
+  text-align: center;
+  padding: 0;
 }
 
-.aboutDialog {
-    /* Override default which is too narrow */
-    width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em !important;
-    margin-left: 0;
-    margin-right: 0;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 90%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
-    position: fixed;
-    padding: 0;
+.about-modal:focus {
+  outline: none;
+}
 
-    h4 {
-      /* Reduce size to avoid line break in title */
-      margin-top: 0;
-    }
+.about-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
 
-    .about-version-number {
-      color: $gray20;
-      float: right;
-      font-size: x-small;
-      font-style: italic;
-      padding-right: 10px;
-      padding-top: 3px;
-    }
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .about-version-number {
+    color: $gray20;
+    float: right;
+    font-size: x-small;
+    font-style: italic;
+    padding-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .about {
+    width: 100% !important;
 
     .about-title {
-      font-size: 2.5em;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      img {
+        height: 38px;
+      }
+
+      h2 {
+        color: $gray20;
+        font-size: 1.6em;
+        font-weight: 400;
+      }
+    }
+
+    .about-text {
+      width: 100%;
+      padding-top: 0;
       color: $gray20;
-    }
 
-    .about-viewer-details-link {
-      margin: 50px 0 50px 0;
-    }
-
-    .about-developed-by {
-      font-size: 12px;
-      margin: 0;
-    }
-
-    .about__logos {
-      margin: auto;
-      height: 40px;
-      padding: 10px 0 20px 10px;
-
-      @media screen and (max-width: 767px) {
-        height: 35px;
-        padding: 10px 0 20px 10px;
+      h5 {
+        margin-top: 15px;
+        margin-bottom: 5px;
       }
-    }
 
-    .about__twdb-logo {
+      a {
+        color: $lighter-blue;
+      }
 
-      img {
-        position: relative;
-        padding-right: 10px;
-        max-height: 40px;
-        height: auto;
+      .about-disclaimer-text {
+        font-size: 14px;
+      }
+
+      .data-sources-list {
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .about-viewer-details-link {
+        margin: 10px 0 10px 0;
+      }
+
+      .about-developed-by {
+        font-size: 12px;
+        margin: 0;
+        padding-top: 10px;
+      }
+
+      .about__logos {
+        margin: auto;
+        height: 40px;
+        padding: 0 0 0 40px;
 
         @media screen and (max-width: 767px) {
-          max-height: 35px;
-          padding-right: 7px;
+          height: 35px;
+          text-align: center;
+          padding: 0;
+        }
+      }
+
+      .about__twdb-logo {
+
+        img {
+          position: relative;
+          padding-right: 10px;
+          max-height: 40px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+            padding-right: 7px;
+          }
+        }
+      }
+
+      .about__tnris-logo {
+
+        img {
+          position: relative;
+          margin-left: auto;
+          max-height: 37px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+          }
         }
       }
     }
 
-    .about__tnris-logo {
+    .about-button-div {
+      padding: 5px;
 
-      img {
-        position: relative;
-        margin-left: auto;
-        max-height: 37px;
-        height: auto;
-
-        @media screen and (max-width: 767px) {
-          max-height: 35px;
-        }
-      }
-    }
-
-    .dialog-button-div {
-      padding-left: 24px;
-      padding-right: 24px;
-      padding-bottom: 24px;
-
-      .terms-agree-button:hover {
+      button {
+        color: #fff!important;
         background-color: $lighter-blue;
+        border-radius: 0;
+        width: 100%;
+        font-size: 90%;
+      }
+
+      button:hover, button:active, button:focus {
+        background-color: $darker-blue !important;
       }
     }
 
-    .footer {
-      text-align: center;
-      background-color: rgba(0, 0, 0, 0);
+    @media screen and (max-width: 500px) {
+      width: 100% !important;
+      padding: 0;
 
-      .footer__wrapper {
-        display: inline-block;
-        border-radius: 10px;
-        background-color: $accent-light-green;
-        padding-left: 15px;
-        padding-right: 15px;
+      .about-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
+
+        img {
+          height: 30px;
+        }
+      }
+
+      .about-text {
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+
+        .about-disclaimer-text {
+          font-size: 12px;
+        }
+
+        .data-sources-list {
+          margin-bottom: 16px;
+        }
+      }
+
+      .about-button-div {
+        font-size: 11px;
+
+        button {
+          padding: 0;
+        }
       }
     }
-
+  }
 }
 
 .weatherTimestamp {
