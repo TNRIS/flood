@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/SubscriptionFormActions'
-import { userLogin, loginSuccessful, userSignUp, userVerify } from '../actions/UserActions'
+import {
+  userLogin, 
+  loginSuccessful,
+  userSignUp,
+  userVerify,
+  resendVerificationCode } from '../actions/UserActions'
 import { showSnackbar } from '../actions/ToasterActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
@@ -16,6 +21,7 @@ const mapStateToProps = (state) => {
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
     phone: state.user.phone,
+    username: state.user.username,
     isUpdating: state.subscriptionList.isUpdating,
     displayForm: state.subscriptionForm.displayForm
   }
@@ -40,11 +46,11 @@ const mapDispatchToProps = (dispatch) => {
     subscriptionFormUpdated: () => {
       dispatch(actions.subscriptionFormUpdated(email, phone))
     },
-    userLogin: (username, password) => {
-      dispatch(userLogin(username, password))
-    },
     swapDisplayForm: (form) => {
       dispatch(actions.swapDisplayForm(form))
+    },
+    userLogin: (username, password) => {
+      dispatch(userLogin(username, password))
     },
     userSignUp: (username, password, phone, email) => {
       dispatch(userSignUp(username, password, phone, email))
@@ -52,9 +58,13 @@ const mapDispatchToProps = (dispatch) => {
     userVerify: (username, verificationCode) => {
       dispatch(userVerify(username, verificationCode))
     },
+    resendVerificationCode: (username) => {
+      dispatch(resendVerificationCode(username))
+    },
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
-    }
+    },
+
   }
 }
 
