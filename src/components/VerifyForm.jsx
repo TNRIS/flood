@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Spinner, Textfield } from 'react-mdl'
 
-/** Form for entering user info and updating current subscriptions */
+/** Form for verifying a newly created account */
 class VerifyForm extends Component {
   static propTypes = {
     username: PropTypes.string,
+    phone: PropTypes.string,
     userVerify: PropTypes.func
   }
 
@@ -30,7 +31,7 @@ class VerifyForm extends Component {
   }
 
   /**
-   * Creates an account for the user in the user pool
+   * Verifies the account in the user pool so the user is now authorized
    * @param {object} event - event fired when the SIGN UP button is clicked
    */
   handleVerification(event) {
@@ -42,7 +43,7 @@ class VerifyForm extends Component {
     
     return (
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>You have been sent a verification code via text message.</p>
+            <p>A verification code has been sent to {this.props.phone} via text message.</p>
             <p>Please enter your 6 digit verification code below to confirm your account.</p>
             <Textfield floatingLabel
                        pattern="[0-9]*"

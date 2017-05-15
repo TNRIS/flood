@@ -5,6 +5,8 @@ import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import VerifyForm from './VerifyForm'
+import ForgotPasswordForm from './ForgotPasswordForm'
+import NewPasswordForm from './NewPasswordForm'
 
 /** Form for entering user info and updating current subscriptions */
 class SubscriptionForm extends Component {
@@ -56,10 +58,15 @@ class SubscriptionForm extends Component {
         <LoginForm userLogin={this.props.userLogin}/>
       )
       formSwapper = (
+        <div>
         <p className="form__swapper">
           <span>Don&#39;t have an account? </span>
           <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
         </p>
+        <p className="form__swapper">
+          <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot Password</a>
+        </p>
+        </div>
       )
     }
     else if (this.props.displayForm == "signUp") {
@@ -75,12 +82,30 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm == "verify") {
       subscriptionManagerContent = (
-        <VerifyForm username={this.props.username} userVerify={this.props.userVerify}/>
+        <VerifyForm username={this.props.username} phone={this.props.phone} userVerify={this.props.userVerify}/>
       )
       formSwapper = (
         <p className="form__swapper">
           <span>Having trouble? </span>
           <a href="#" onClick={ () => this.props.resendVerificationCode(this.props.username) }>Resend Verification Code</a>
+        </p>
+      )
+    }
+    else if (this.props.displayForm == "forgotPassword") {
+      subscriptionManagerContent = (
+        <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
+      )
+      formSwapper = (
+        <p className="form__swapper">
+        </p>
+      )
+    }
+    else if (this.props.displayForm == "newPassword") {
+      subscriptionManagerContent = (
+        <NewPasswordForm username={this.props.username} newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
+      )
+      formSwapper = (
+        <p className="form__swapper">
         </p>
       )
     }
