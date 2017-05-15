@@ -8,7 +8,13 @@ export default {
   awsConfig: {
     accessKeyId: "<AWS ACCESS KEY ID>",
     secretAccessKey: "<AWS SECRET ACCESS KEY>",
-    region: "<REGION>"
+    region: "<REGION>",
+    UserPoolId: '<COGNITO USER POOL ID>',
+    ClientId: '<COGNITO APP CLIENT ID>',
+    identityPoolId: '<COGNITO IDENTITY POOL ID>',
+    logins: {
+      'cognito-idp.us-east-1.amazonaws.com/<COGNITO USER POOL ID>' : ""
+    }
   },
   mapboxAccessToken: "<MAPBOX ACCESS TOKEN",
   //topic base includes entire aws arn until the specific topic name. keep last colon.
