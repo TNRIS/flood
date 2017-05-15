@@ -1,24 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Spinner, Textfield } from 'react-mdl'
 
-/** Form for creating a new user account and beginning the verification process */
-class SignupForm extends Component {
+/** Form for entering a new password and updating current user profile */
+class NewPasswordForm extends Component {
   static propTypes = {
-    userSignUp: PropTypes.func
+    username: PropTypes.string
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      phone: '',
-      email: '',
+      verificationCode: '',
       password: '',
       confirmPassword: ''
-      
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleNewPassword = this.handleNewPassword.bind(this)
   }
 
   /**
@@ -33,21 +30,12 @@ class SignupForm extends Component {
     this.setState(nextState)
   }
 
-
   /**
-   * Creates an account for the user in the user pool and sends a verification code.
-   * @param {object} event - event fired when the SIGN UP button is clicked
+   * Submits the form information with the username to change the account password
+   * @param {object} event - event fired when the SUBMIT button is clicked
    */
-  handleSignUp(event) {
+  handleNewPassword(event) {
     event.preventDefault()
-    if (this.state.username == '') {
-      this.props.showSnackbar("Please enter a username")
-      return
-    }
-    if (this.state.phone == '') {
-      this.props.showSnackbar("Please enter your phone number")
-      return
-    }
     if (this.state.password == '') {
       this.props.showSnackbar("Please enter a password")
       return
@@ -60,42 +48,26 @@ class SignupForm extends Component {
       })
       return
     }
-    if (confirm(`Is ${this.state.phone} your correct phone number?`)) {
-      this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
-    } else {return}
+    this.props.newPassword(this.props.username, this.state.verificationCode, this.state.password)
   }
 
   render() {
-
+    
     return (
-        <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account to begin subscribing to flood gages.</p>
-            <p>Receive text message alerts when gages enter flood stages.</p>
-            <Textfield floatingLabel
-                       label="Username"
-                       type="username"
-                       id="username"
-                       name="username"
-                       onChange={this.handleChange}
-                       value={this.state.username}/>
+        <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
+            <p>A verification code has been sent to {this.props.username} via text message.</p>
+            <p>Please enter your 6 digit verification code and new password below.</p>
             <Textfield floatingLabel
                        pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Phone Number"
+                       minLength={6}
+                       maxLength={6}
+                       error="6 digits required"
+                       label="Verification Code"
                        type="tel"
-                       id="phone"
-                       name="phone"
+                       id="verificationCode"
+                       name="verificationCode"
                        onChange={this.handleChange}
-                       value={this.state.phone}/>
-            <Textfield floatingLabel
-                       label="Email"
-                       type="email"
-                       id="email"
-                       name="email"
-                       onChange={this.handleChange}
-                       value={this.state.email}/>
+                       value={this.state.verificationCode}/>
             <Textfield floatingLabel
                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
                        minLength={8}
@@ -119,10 +91,10 @@ class SignupForm extends Component {
               className="flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>SIGN UP</Button>
+              style={{marginRight: "10px", marginBottom: "16px"}}>SUBMIT</Button>
         </form>
     )
   }
 }
 
-export default SignupForm
+export default NewPasswordForm

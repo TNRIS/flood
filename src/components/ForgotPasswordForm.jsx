@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { Button, Textfield } from 'react-mdl'
 
 
-/** Form for entering user info and updating current subscriptions */
-class LoginForm extends Component {
+/** Form for resetting a forgotten password */
+class ForgotPasswordForm extends Component {
   static propTypes = {
     userLogin: PropTypes.func
   }
@@ -18,12 +18,12 @@ class LoginForm extends Component {
       phoneDisabled: false
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleSearch = this.handleSearch.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
 
   /**
-   * Watches for changes on the html inputs
+   * Watches for changes on the html inputs and toggles the username/phone number inputs
    * @param {object} event - event fired when the SEARCH button is clicked
    */
   handleChange(event) {
@@ -60,17 +60,17 @@ class LoginForm extends Component {
   }
 
   /**
-   * Sets the user info in the store and searches for the user's subscriptions
-   * @param {object} event - event fired when the SEARCH button is clicked
+   * Sends a verification code to the submitted username for resetting the account password
+   * @param {object} event - event fired when the SUBMIT button is clicked
    */
-  handleSearch(event) {
+  handleSubmit(event) {
     event.preventDefault()
     if (this.state.username != '' && this.state.phone == '') {
-      this.props.userLogin(this.state.username, this.state.password)
+      this.props.forgotPassword(this.state.username)
     }
     else if (this.state.username == '' && this.state.phone != '') {
       const formattedPhone = `+1${this.state.phone}`
-      this.props.userLogin(formattedPhone, this.state.password)
+      this.props.forgotPassword(formattedPhone)
     }
   }
 
@@ -132,25 +132,17 @@ class LoginForm extends Component {
     }
 
     return (
-        <form onSubmit={ this.handleSearch } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Click on a flood gage and subscribe to receive alerts.</p>
-            <p>Enter your username or phone number with your password to manage your current subscriptions.</p>
+        <form onSubmit={ this.handleSubmit } style={{marginRight: "10px", marginLeft: "10px"}}>
+            <p>Enter your username or phone number to change your password.</p>
             {inputs}
-            <Textfield floatingLabel
-                       label="Password"
-                       type="password"
-                       id="password"
-                       name="password"
-                       onChange={this.handleChange}
-                       value={this.state.password}/>
             <Button ripple
               className="flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>LOGIN</Button>
+              style={{marginRight: "10px"}}>SUBMIT</Button>
         </form>
     )
   }
 }
 
-export default LoginForm
+export default ForgotPasswordForm

@@ -6,7 +6,9 @@ import {
   loginSuccessful,
   userSignUp,
   userVerify,
-  resendVerificationCode } from '../actions/UserActions'
+  resendVerificationCode,
+  forgotPassword,
+  newPassword } from '../actions/UserActions'
 import { showSnackbar } from '../actions/ToasterActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
@@ -60,6 +62,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     resendVerificationCode: (username) => {
       dispatch(resendVerificationCode(username))
+    },
+    forgotPassword: (username) => {
+      dispatch(forgotPassword(username))
+    },
+    newPassword: (username, verificationCode, password) => {
+      dispatch(newPassword(username, verificationCode, password))
     },
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
