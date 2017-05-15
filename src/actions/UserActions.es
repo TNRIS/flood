@@ -19,6 +19,7 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
+  VERIFICATION_REQUIRED,
   SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
 import { swapDisplayForm } from './SubscriptionFormActions'
@@ -49,6 +50,13 @@ export function loginSuccessful(username, userAuth) {
 export function newPasswordRequired(username) {
   return {
     type: NEW_PASSWORD_REQUIRED,
+    username
+  }
+}
+
+export function verificationRequired(username) {
+  return {
+    type: VERIFICATION_REQUIRED,
     username
   }
 }
@@ -97,6 +105,7 @@ export function userLogin(username, password) {
         }, {
           region: 'us-east-1'
         })
+        console.log('creds')
         // Use the AWS service
         cognitoUser.getUserAttributes((err, att) => {
           if (err) console.log(err)
@@ -106,10 +115,12 @@ export function userLogin(username, password) {
               console.log(att[i])
               user[att[i].Name] = att[i].Value
             }
+
+            console.log(userData)
             userData = {...user}
           }
           dispatch(loginSuccessful(username, {...result, ...userData}))
-          console.log(result)
+          console.log("hdhd")
           dispatch(getUserSubscriptions(result.getIdToken(), ""))
         })
       },
@@ -172,6 +183,7 @@ export function userSignUp(username, password, phone, email) {
         }
         // const cognitoUser = result.user
         // console.log('user name is ' + cognitoUser.getUsername());
+        dispatch(verificationRequired(username))
         dispatch(swapDisplayForm('verify'))
     })
   }
@@ -203,6 +215,38 @@ export function userVerify(username, verificationCode) {
             }
             return
         }
+        console.log('call result: ' + result)
+    })
+  }
+}
+
+export function resendVerificationCode(username) {
+  return (dispatch) => {
+    // dispatch(loginAttempt())
+
+    const poolData = {
+      UserPoolId: keys.awsConfig.UserPoolId,
+      ClientId: keys.awsConfig.ClientId
+    }
+    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
+    const userData = {
+      Username: username,
+      Pool: userPool
+    }
+
+    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
+    return cognitoUser.resendConfirmationCode(function(err, result) {
+        if (err) {
+            if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
+              dispatch(showSnackbar("Incorrect validation code. Please try again."))
+            }
+            else {
+              dispatch(sendErrorReport(err))
+              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+            }
+            return
+        }
+        dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
         console.log('call result: ' + result)
     })
   }
