@@ -3,6 +3,7 @@ import {
   LOGIN_FAILED,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
+  VERIFICATION_REQUIRED,
   SET_SYNC_SESSION_TOKEN
 } from '../constants/UserActionTypes'
 
@@ -16,6 +17,7 @@ const initialState = {
  * 0 - Successful
  * 10 - Attempting Login
  * 20 - New Password Required
+ * 25 - Verification Required
  * 99 - Failed
  * 100 - Unauthenticated
  */
@@ -30,6 +32,10 @@ export default function user(state = initialState, action) {
       return {...state, ...action.payload, authentication: 0}
     case NEW_PASSWORD_REQUIRED:
       return {...state, ...action.payload, authentication: 20}
+    case VERIFICATION_REQUIRED:
+      return {...state, ...action.payload, authentication: 25,
+                                           username: action.username,
+                                           phone: action.phone}
     case SET_SYNC_SESSION_TOKEN:
       return {...state, ...action.payload}
     default:

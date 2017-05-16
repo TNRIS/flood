@@ -19,6 +19,7 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
+  VERIFICATION_REQUIRED,
   SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
 import { swapDisplayForm } from './SubscriptionFormActions'
@@ -51,6 +52,14 @@ export function newPasswordRequired(username) {
   return {
     type: NEW_PASSWORD_REQUIRED,
     username
+  }
+}
+
+export function verificationRequired(username, phone) {
+  return {
+    type: VERIFICATION_REQUIRED,
+    username,
+    phone
   }
 }
 
@@ -119,8 +128,10 @@ export function userSignUp(username, password, phone, email) {
             }
             return
         }
+        console.log(result)
         // const cognitoUser = result.user
         // console.log('user name is ' + cognitoUser.getUsername());
+        dispatch(verificationRequired(username, phone))
         dispatch(swapDisplayForm('verify'))
     })
   }
@@ -141,7 +152,52 @@ export function userVerify(username, verificationCode) {
     }
 
     const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.confirmRegistration(verificationCode, true, function(err, result) {
+    return cognitoUser.confirmRegistration(verificationCode, false, function(err, result) {
+        if (err) {
+            if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
+              dispatch(showSnackbar("Incorrect validation code. Please try again."))
+            }
+            else if (err == "AliasExistsException: An account with the phone_number already exists.") {
+              dispatch(swapDisplayForm('login'))
+              dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
+              cognitoUser.authenticateUser()
+              cognitoUser.deleteUser(function(err, result) {
+                  if (err) {
+                      alert(err)
+                      console.log(err)
+                  }
+                  console.log('call result: ' + result);
+              })
+            }
+            else {
+              // alert(err)
+              // console.log(err)
+              dispatch(sendErrorReport(err))
+              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+            }
+            return
+        }
+        console.log('call result: ' + result)
+    })
+  }
+}
+
+export function resendVerificationCode(username) {
+  return (dispatch) => {
+    // dispatch(loginAttempt())
+
+    const poolData = {
+      UserPoolId: keys.awsConfig.UserPoolId,
+      ClientId: keys.awsConfig.ClientId
+    }
+    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
+    const userData = {
+      Username: username,
+      Pool: userPool
+    }
+
+    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
+    return cognitoUser.resendConfirmationCode(function(err, result) {
         if (err) {
             if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
@@ -152,7 +208,85 @@ export function userVerify(username, verificationCode) {
             }
             return
         }
+        dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
         console.log('call result: ' + result)
     })
   }
+}
+
+export function forgotPassword(username) {
+  return (dispatch) => {
+
+    const poolData = {
+      UserPoolId: keys.awsConfig.UserPoolId,
+      ClientId: keys.awsConfig.ClientId
+    }
+    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
+    const userData = {
+      Username: username,
+      Pool: userPool
+    }
+
+    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
+    return cognitoUser.forgotPassword({
+        onSuccess: function () {
+            dispatch(showSnackbar("Your password has been reset."))
+        },
+        onFailure: function(err) {
+            if (err == "UserNotFoundException: Username/client id combination not found.") {
+              dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
+            }
+            else {
+              dispatch(sendErrorReport(err))
+              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+            }
+            return
+        },
+        //Optional automatic callback
+        inputVerificationCode: function(data) {
+            dispatch(showSnackbar('Code sent to: ' + username))
+            dispatch(verificationRequired(username, ""))
+            dispatch(swapDisplayForm('newPassword'))
+        }
+    })
+  }
+
+}
+
+export function newPassword(username, verificationCode, password) {
+  return (dispatch) => {
+
+    const poolData = {
+      UserPoolId: keys.awsConfig.UserPoolId,
+      ClientId: keys.awsConfig.ClientId
+    }
+    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
+    const userData = {
+      Username: username,
+      Pool: userPool
+    }
+
+    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
+    return cognitoUser.confirmPassword(verificationCode, password, {
+        onSuccess: function () {
+            dispatch(showSnackbar("Your password has been reset."))
+        },
+        onFailure: function(err) {
+            alert(err)
+            console.log(err)
+            if (err == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
+              dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
+            }
+            else if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
+              dispatch(showSnackbar("Incorrect validation code. Please try again."))
+            }
+            else {
+              dispatch(sendErrorReport(err))
+              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+            }
+            return
+        }
+    })
+  }
+
 }
