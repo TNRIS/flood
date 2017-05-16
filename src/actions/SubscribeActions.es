@@ -1,33 +1,12 @@
-import AWS from 'aws-sdk/dist/aws-sdk'
-
-import keys from '../keys'
-
 import { showSnackbar } from './ToasterActions'
 import { sendErrorReport } from './StevieActions'
 
+import FloodAppUser from '../util/User'
+
+
 export function addSubscriptionToUserDataset(subscriptionData) {
-  return (dispatch, getState) => {
-    console.log(window.AWS.config)
-    const params = {
-      region: 'us-east-1',
-      DatasetName: 'texasflood',
-      IdentityId: window.AWS.config.credentials.params.IdentityId,
-      IdentityPoolId: keys.awsConfig.IdentityPoolId,
-      SyncSessionToken: getState().user.SyncSessionToken,
-      RecordPatches: [{
-        Key: subscriptionData.subscriptionArn,
-        Op: "replace",
-        SyncCount: 0,
-        Value: JSON.stringify(subscriptionData)
-      }]
-    }
-    const cognitoSync = new window.AWS.CognitoSync()
-    cognitoSync.updateRecords(params, (err, data) => {
-      if (err) console.log(err)
-      else {
-        console.log(data)
-      }
-    })
+  return (dispatch) => {
+    FloodAppUser.subscribe(subscriptionData)
   }
 }
 
@@ -38,9 +17,7 @@ export function addSubscriptionToUserDataset(subscriptionData) {
  */
 export function confirmSubscription(phoneNumber, lid) {
   return dispatch => {
-    const AWS = window.AWS
-    AWS.config.update(keys.awsConfig)
-    const sns = new AWS.SNS()
+    const sns = new FloodAppUser.AWS.SNS()
 
     const confirm = {
       PhoneNumber: phoneNumber,
@@ -60,10 +37,8 @@ export function confirmSubscription(phoneNumber, lid) {
  */
 export function subscribeGage(lid, protocol, endpoint) {
   return (dispatch, getState) => {
-    //create aws connection object
-    const AWS = window.AWS
     // window.AWS.config.update(keys.awsConfig)
-    const sns = new AWS.SNS()
+    const sns = new FloodAppUser.AWS.SNS()
 
     const topicParams = {
       Name: lid

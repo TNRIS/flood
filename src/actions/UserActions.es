@@ -1,10 +1,10 @@
-
-import AWS from 'aws-sdk'
-
-import {
-  CognitoUserPool,
-  CognitoUserAttribute,
-  CognitoUser } from 'amazon-cognito-identity-js'
+//
+// import AWS from 'aws-sdk'
+//
+// import {
+//   CognitoUserPool,
+//   CognitoUserAttribute,
+//   CognitoUser } from 'amazon-cognito-identity-js'
 
 import { getUserSubscriptions } from './SubscriptionFormActions'
 
@@ -25,6 +25,7 @@ import { swapDisplayForm } from './SubscriptionFormActions'
 
 import { sendErrorReport } from './StevieActions'
 
+import FloodAppUser from '../util/User'
 
 export function loginAttempt() {
   return {
@@ -65,65 +66,13 @@ export function setSyncSessionToken(token) {
 export function userLogin(username, password) {
   return (dispatch) => {
     dispatch(loginAttempt())
-    AWS.config.update({region: 'us-east-1'})
+    FloodAppUser.setCognitoUser({Username: username, Password: password})
 
-    const authenticationData = {
-      Username: username,
-      Password: password,
-    }
-    const authenticationDetails = new AWS.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData)
-
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: authenticationData.Username,
-      Pool: userPool
-    }
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (result) => {
+    return FloodAppUser.authenticate((result) => {
+      if (result === 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
-        let userData
-
-        window.AWS.config.update({region: 'us-east-1'})
-        window.AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: keys.awsConfig.IdentityPoolId,
-          Logins: {
-            [keys.awsConfig.logins.cognito.identityProviderName]: result.getIdToken().getJwtToken()
-          }
-        }, {
-          region: 'us-east-1'
-        })
-        // Use the AWS service
-        cognitoUser.getUserAttributes((err, att) => {
-          if (err) console.log(err)
-          else {
-            const user = {}
-            for (let i = 0; i < att.length; i++) {
-              console.log(att[i])
-              user[att[i].Name] = att[i].Value
-            }
-            userData = {...user}
-          }
-          dispatch(loginSuccessful(username, {...result, ...userData}))
-          console.log(result)
-          dispatch(getUserSubscriptions(result.getIdToken(), ""))
-        })
-      },
-      newPasswordRequired: (userAttributes) => {
-        delete userAttributes.email_verified
-        delete userAttributes.phone_number_verified
-
-        // dispatch new password required and show new password dialog
-        dispatch(newPasswordRequired(username))
-        cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this)
-      },
-      onFailure: (err) => {
-        dispatch(showSnackbar(err))
-        dispatch(loginError(err))
+        dispatch(loginSuccessful(username, {...result, ...FloodAppUser.userData, FloodAppUser}))
+        dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
       }
     })
   }

@@ -20,18 +20,10 @@ import {
 } from './UserActions'
 
 import axios from 'axios'
-import AWS from 'aws-sdk'
-import keys from '../keys'
+// import AWS from 'aws-sdk'
+// import keys from '../keys'
 
-/**
- * Extend the Array object with a contains method
- */
-Array.prototype.contains = (waldo) => {
-  for (i in this) {
-    if (this[i] === waldo) return true
-  }
-  return false
-}
+import FloodAppUser from '../util/User'
 
 /**
  * Action that clears all subscription data from the app store
@@ -82,59 +74,35 @@ export function getSubscriptionsSuccess() {
  * @param  {string} phone     user's phone number
  * @param  {string} nextToken token for the next API call if there are still more records to retrieve
  */
-export function getUserSubscriptions(idToken, nextToken) {
-  return (dispatch, getState) => {
+export function getUserSubscriptions() {
+  return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
-
-    const params = {
-      IdentityId: window.AWS.config.credentials.params.IdentityId,
-      IdentityPoolId: keys.awsConfig.IdentityPoolId
-    }
-
-    const cognitoSync = new window.AWS.CognitoSync()
-
-    return cognitoSync.listDatasets(params, (err, data) => {
-      if (err) {
-        console.log(err)
+    return FloodAppUser.checkForSubscriptions((records) => {
+      if (records.length === 0) {
+        // No subscriptions found
+        dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
       }
       else {
-        if (data.Datasets.contains('texasflood')) {
-          params.dataset = 'texasflood'
+        // clear the existing list of subscriptions
+        dispatch(clearSubscriptionList())
 
-          cognitoSync.listRecords(params, (err, data) => {
-            if (err) console.log(err)
-            else {
-              let counter = 0
-              dispatch(setSyncSessionToken(data.SyncSessionToken))
-              if (!nextToken) {
-                dispatch(clearSubscriptionList())
-              }
-              data.Records.forEach(sub => {
-                counter ++
-                if (sub.Value) {
-                  const subData = JSON.parse(sub.Value)
-                  dispatch(addSubscriptionToSubscriptionList(subData.lid, subData, subData.protocol, subData.endpoint))
-                }
-                if (counter === data.Records.length) {
-                  if (data.NextToken) {
-                    dispatch(getUserSubscriptions(email, phone, data.NextToken))
-                  }
-                  else {
-                    dispatch(getSubscriptionsSuccess())
-                    if (getState().subscriptions.allSubscriptions.length === 0) {
-                      dispatch(showSnackbar(
-                          "No subscriptions found. Click a gage to subscribe and start receiving notifications."
-                        ))
-                    }
-                  }
-                }
-              })
-            }
-          })
-        }
-        else {
-          dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
-        }
+        // set counter to zero to iterate new list of subscriptions
+        let counter = 0
+        records.forEach(subscription => {
+          console.log(subscription)
+          counter++
+          if (subscription.Value) {
+            const subscriptionData = JSON.parse(subscription.Value)
+            dispatch(
+              addSubscriptionToSubscriptionList(
+                subscriptionData.lid, subscriptionData, subscriptionData.protocol, subscriptionData.endpoint
+              )
+            )
+          }
+          if (counter === records.length) {
+            dispatch(getSubscriptionsSuccess())
+          }
+        })
       }
     })
   }

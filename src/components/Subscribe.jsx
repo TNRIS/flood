@@ -65,7 +65,7 @@ class Subscribe extends React.Component {
         this.props.subscribeGage(this.state.lid.toUpperCase(), "email", this.state.email)
       }
       this.props.showSnackbar("Your subscription has been submitted")
-      this.props.setUserInfo(this.state.email, this.state.phone)
+      // this.props.setUserInfo(this.state.email, this.state.phone)
       this.handleCloseDialog()
     }
     else {

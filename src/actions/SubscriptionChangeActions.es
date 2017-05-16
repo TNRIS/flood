@@ -28,8 +28,7 @@ import {
   sendErrorReport
 } from './StevieActions'
 
-import AWS from 'aws-sdk/dist/aws-sdk'
-import keys from '../keys'
+import FloodAppUser from '../util/User'
 
 /**
  * SUBSCRIBE action on the queue of subscription changes
@@ -129,8 +128,7 @@ export function saveSubscriptionChanges() {
         const user = currentState.user
         const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
 
-        const WINDOW_AWS = window.AWS
-        const sns = new WINDOW_AWS.SNS()
+        const sns = new FloodAppUser.AWS.SNS()
 
         const promiseQueue = []
 
@@ -143,11 +141,11 @@ export function saveSubscriptionChanges() {
             // Process unsubscribe requests
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
-              const subscriptionArn = subscription.SubscriptionArn
+              const subscriptionArn = subscription.subscriptionArn
               promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
                 .then((data) => {
                   dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
-                  // dispatch(removeSubscriptionFromUserDataset(subscriptionArn))
+                  FloodAppUser.unsubscribe(subscriptionArn)
                 })
                 .catch((err) => {
                   console.log(err)
