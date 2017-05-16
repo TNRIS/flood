@@ -6,8 +6,6 @@ export default {
   aerisApiId: "<AERIS API ID>",
   aerisApiSecret: "<AERIS API SECRET>",
   awsConfig: {
-    accessKeyId: "<Access Key ID>",
-    secretAccessKey: "<Secret Access Key>",
     region: "<Region>",
     UserPoolId: "<User Pool ID>",
     ClientId: "<Client ID>",
