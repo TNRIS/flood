@@ -74,6 +74,7 @@ class AppUser {
               user[att[i].Name] = att[i].Value
             }
             this.userData = {...user}
+            console.log(this.userData)
           }
         })
         return callback(0)
