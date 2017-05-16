@@ -33,7 +33,9 @@ export default function user(state = initialState, action) {
     case NEW_PASSWORD_REQUIRED:
       return {...state, ...action.payload, authentication: 20}
     case VERIFICATION_REQUIRED:
-      return {...state, ...action.payload, authentication: 25, username: action.username, phone: action.phone}
+      return {...state, ...action.payload, authentication: 25,
+                                           username: action.username,
+                                           phone: action.phone}
     case SET_SYNC_SESSION_TOKEN:
       return {...state, ...action.payload}
     default:
