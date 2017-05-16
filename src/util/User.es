@@ -63,6 +63,7 @@ class AppUser {
         }, {
           region: 'us-east-1'
         })
+
         this.identityId = this.credentials.params.IdentityId
         this.AWS.config.credentials = this.credentials
 
@@ -114,7 +115,7 @@ class FloodAppUser extends AppUser {
       if (err) console.log(err)
       else {
         console.log(data)
-        if (data.Datasets[0].DatasetName === this.dataset) {
+        if (data.Datasets.length > 0 && data.Datasets[0].DatasetName === this.dataset) {
           this.syncSession.listRecords({...baseParams, DatasetName: this.dataset}, (err, data) => {
             if (err) console.log(err)
             else {
