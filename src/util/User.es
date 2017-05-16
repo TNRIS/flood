@@ -96,8 +96,8 @@ class AppUser {
 
 
 class FloodAppUser extends AppUser {
-  constructor(loginInfo) {
-    super(loginInfo)
+  constructor() {
+    super()
 
     this.dataset = 'texasflood'
     this.userSubscriptions = []
@@ -151,6 +151,7 @@ class FloodAppUser extends AppUser {
       client.openOrCreateDataset(this.dataset, (err, dataset) => {
         if (err) console.log(err)
         else {
+          console.log(dataset)
           dataset.put(
             subscriptionData.subscriptionArn, stringData, (err, record) => {
               if (err) console.log(err)
@@ -165,6 +166,18 @@ class FloodAppUser extends AppUser {
     dataset.synchronize({
       onSuccess: (dataset, newRecords) => {
         store.dispatch(getUserSubscriptions())
+      },
+      onFailure: (err) => {
+        console.log(err)
+      },
+      onConflict: (dataset, conflicts, callback) => {
+
+      },
+      onDatasetDeleted: (dataset, datasetName, callback) => {
+        return callback(true)
+      },
+      onDatasetsMerged: (dataset, datasetNames, callback) => {
+        return callback(false)
       }
     })
   }
