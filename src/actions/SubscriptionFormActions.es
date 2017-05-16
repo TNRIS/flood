@@ -3,7 +3,8 @@ import {
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
   GET_SUBSCRIPTIONS_SUCCESS,
-  DISPLAY_FORM
+  DISPLAY_FORM,
+  NO_SUBSCRIPTIONS_FOUND
 } from '../constants/SubscriptionFormActionTypes'
 
 import {
@@ -14,14 +15,6 @@ import {
 import {
   showSnackbar
 } from './ToasterActions'
-
-import {
-  setSyncSessionToken
-} from './UserActions'
-
-import axios from 'axios'
-// import AWS from 'aws-sdk'
-// import keys from '../keys'
 
 import FloodAppUser from '../util/User'
 
@@ -68,6 +61,16 @@ export function getSubscriptionsSuccess() {
 }
 
 /**
+ * Action for no subscriptions found
+ */
+export function noSubscriptionsFound() {
+  return {
+    type: NO_SUBSCRIPTIONS_FOUND
+  }
+}
+
+
+/**
  * Function to get all subscriptions from Amazon and filter for subscriptions
  * that match the user's email and phone number
  * @param  {string} email     user's email
@@ -80,6 +83,7 @@ export function getUserSubscriptions() {
     return FloodAppUser.checkForSubscriptions((records) => {
       if (records.length === 0) {
         // No subscriptions found
+        dispatch(noSubscriptionsFound())
         dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
       }
       else {

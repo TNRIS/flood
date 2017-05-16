@@ -4,12 +4,6 @@ import { sendErrorReport } from './StevieActions'
 import FloodAppUser from '../util/User'
 
 
-export function addSubscriptionToUserDataset(subscriptionData) {
-  return (dispatch) => {
-    FloodAppUser.subscribe(subscriptionData)
-  }
-}
-
 /**
  * Function confirms to the user that they have subscribed to a gage via sms
  * @param  {[type]} lid [description]
@@ -35,9 +29,8 @@ export function confirmSubscription(phoneNumber, lid) {
  * @param  {string} endpoint subscription endpoint
  * @return {promise}         AWS SDK promise
  */
-export function subscribeGage(lid, protocol, endpoint) {
-  return (dispatch, getState) => {
-    // window.AWS.config.update(keys.awsConfig)
+export function subscribeGage(lid) {
+  return (dispatch) => {
     const sns = new FloodAppUser.AWS.SNS()
 
     const topicParams = {
@@ -46,20 +39,17 @@ export function subscribeGage(lid, protocol, endpoint) {
 
     // Create the topic, function is impotent so will create or return the existing topic
     return sns.createTopic(topicParams).promise()
-      .then((data) => {
+      .then((topic) => {
         const subscriptionParams = {
-          TopicArn: data.TopicArn,
-          Protocol: protocol,
-          Endpoint: protocol === 'sms' ? `+1${endpoint}` : endpoint
+          TopicArn: topic.TopicArn,
+          Protocol: "sms",
+          Endpoint: FloodAppUser.userData.phone_number
         }
         return sns.subscribe(subscriptionParams).promise().then(
-          (data) => {
-            console.log(data)
-            if (subscriptionParams.Protocol === 'sms') {
-              dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-              dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
-            }
-            dispatch(addSubscriptionToUserDataset({lid, protocol, endpoint, subscriptionArn: data.SubscriptionArn}))
+          (subscription) => {
+            dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
+            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
+            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn})
           })
           .catch((err) => {
             console.log(err)

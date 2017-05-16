@@ -10,6 +10,10 @@ import keys from '../keys'
 
 import { store } from '../store'
 
+import {
+  getUserSubscriptions
+} from '../actions/SubscriptionFormActions'
+
 
 class AppUser {
   constructor() {
@@ -97,6 +101,7 @@ class AppUser {
               user[att[i].Name] = att[i].Value
             }
             this.userData = {...user}
+            console.log(this.userData)
           }
         })
         return callback(0)
@@ -134,15 +139,15 @@ class AppUser {
 
 
 class FloodAppUser extends AppUser {
-  constructor(loginInfo) {
-    super(loginInfo)
+  constructor() {
+    super()
 
     this.dataset = 'texasflood'
+    this.userSubscriptions = []
     this.syncSession = null
   }
 
   checkForSubscriptions(callback) {
-    console.log(this.AWS.config.credentials)
     this.syncSession = this.createCognitoSyncSession()
 
     const baseParams = {
@@ -157,43 +162,66 @@ class FloodAppUser extends AppUser {
     }, (err, data) => {
       if (err) console.log(err)
       else {
-        console.log(data)
         if (data.Datasets.length > 0 && data.Datasets[0].DatasetName === this.dataset) {
-          this.syncSession.listRecords({...baseParams, DatasetName: this.dataset}, (err, data) => {
-            if (err) console.log(err)
-            else {
-              console.log(data)
-              return callback(data.Records)
-            }
-          })
+          this.getUserSubscriptions({...baseParams, DatasetName: this.dataset}, callback)
         }
         else return callback([])
       }
     })
-    console.log(this.AWS.config.credentials)
+  }
+
+  getUserSubscriptions(params, callback) {
+    if (!params.nextToken) {
+      this.userSubscriptions = []
+    }
+    this.syncSession.listRecords(params, (err, subscriptions) => {
+      if (err) console.log(err)
+      else {
+        this.userSubscriptions = this.userSubscriptions.concat(subscriptions.Records)
+        if (subscriptions.nextToken) {
+          this.getUserSubscriptions({nextToken})
+        }
+        else {
+          return callback(this.userSubscriptions)
+        }
+      }
+    })
   }
 
   subscribe(subscriptionData) {
-    console.log(this.AWS.config.credentials)
+    const stringData = JSON.stringify({...subscriptionData, protocol: "sms", endpoint: this.userData.phone_number})
     this.AWS.config.credentials.get(() => {
       const client = new this.AWS.CognitoSyncManager()
       client.openOrCreateDataset(this.dataset, (err, dataset) => {
         if (err) console.log(err)
         else {
-          dataset.put(subscriptionData.subscriptionArn, JSON.stringify(subscriptionData), (err, record) => {
-            if (err) console.log(err)
-            else this.synchronize()
-          })
+          console.log(dataset)
+          dataset.put(
+            subscriptionData.subscriptionArn, stringData, (err, record) => {
+              if (err) console.log(err)
+              else this.synchronize(dataset)
+            })
         }
       })
     })
   }
 
-  synchronize() {
+  synchronize(dataset) {
     dataset.synchronize({
       onSuccess: (dataset, newRecords) => {
-        console.log(newRecords)
         store.dispatch(getUserSubscriptions())
+      },
+      onFailure: (err) => {
+        console.log(err)
+      },
+      onConflict: (dataset, conflicts, callback) => {
+
+      },
+      onDatasetDeleted: (dataset, datasetName, callback) => {
+        return callback(true)
+      },
+      onDatasetsMerged: (dataset, datasetNames, callback) => {
+        return callback(false)
       }
     })
   }
@@ -207,7 +235,7 @@ class FloodAppUser extends AppUser {
         else {
           dataset.remove(arn, (err, record) => {
             if (err) console.log(err)
-            else this.synchronize()
+            else this.synchronize(dataset)
           })
         }
       })
