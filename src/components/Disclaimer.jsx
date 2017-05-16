@@ -86,19 +86,6 @@ class Disclaimer extends React.Component {
               including without limitation, property damage, personal injury and/or death
               which may occur in connection with the application service. If you have any
               questions, please contact us at
-              {/* The intent of the TexasFlood.org flood viewer is to assist
-              individuals in quickly assessing the potential flood risk during a
-              flooding event and to provide basic flood information before,
-              during and after a flood event. The data in the flood viewer
-              represents the best available information provided to the Texas
-              Water Development Board (TWDB) by its data contributors. The
-              information on this viewer may not be displayed in real-time and
-              should not be considered an "exact" representation of conditions in
-              your area. Neither the State of Texas nor the TWDB assumes any
-              legal liability or responsibility or makes any guarantees or
-              warranties as to the accuracy, completeness or suitability of the
-              information for any particular purpose. If you have any questions,
-              please contact us at */}
               <a href="https://tnris.org/contact/" target="_blank"> https://tnris.org/contact/</a>
               </p>
               <h5>Notice</h5>
