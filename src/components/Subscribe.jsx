@@ -56,21 +56,9 @@ class Subscribe extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-
-    if (this.state.email || this.state.phone) {
-      if (this.state.phone) {
-        this.props.subscribeGage(this.state.lid.toUpperCase(), "sms", this.state.phone)
-      }
-      if (this.state.email) {
-        this.props.subscribeGage(this.state.lid.toUpperCase(), "email", this.state.email)
-      }
-      this.props.showSnackbar("Your subscription has been submitted")
-      // this.props.setUserInfo(this.state.email, this.state.phone)
-      this.handleCloseDialog()
-    }
-    else {
-      this.props.showSnackbar("Please enter an email or phone number to submit")
-    }
+    this.props.subscribeGage(this.state.lid.toUpperCase())
+    this.props.showSnackbar("Your subscription has been submitted")
+    this.handleCloseDialog()
   }
 
   render() {

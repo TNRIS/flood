@@ -4,6 +4,7 @@ import {
   GET_SUBSCRIPTIONS_ATTEMPT,
   GET_SUBSCRIPTIONS_ERROR,
   GET_SUBSCRIPTIONS_SUCCESS,
+  NO_SUBSCRIPTIONS_FOUND,
   DISPLAY_FORM} from '../constants/SubscriptionFormActionTypes'
 
 const initialState = {
@@ -40,6 +41,11 @@ export default function subscriptionForm(state = initialState, action) {
     case DISPLAY_FORM:
       return objectAssign({}, state, {
         displayForm: action.form
+      })
+    case NO_SUBSCRIPTIONS_FOUND:
+      return objectAssign({}, state, {
+        displayForm: "noSubscriptions",
+        isFetching: false
       })
     default:
       return state

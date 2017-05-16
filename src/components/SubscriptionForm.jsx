@@ -113,6 +113,11 @@ class SubscriptionForm extends Component {
         </p>
       )
     }
+    else if (this.props.displayForm === "noSubscriptions") {
+      subscriptionManagerContent = (
+        <p>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
+      )
+    }
 
     return (
         <div ref="subscriptionManager"

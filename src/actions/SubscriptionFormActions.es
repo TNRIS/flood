@@ -15,14 +15,6 @@ import {
   showSnackbar
 } from './ToasterActions'
 
-import {
-  setSyncSessionToken
-} from './UserActions'
-
-import axios from 'axios'
-// import AWS from 'aws-sdk'
-// import keys from '../keys'
-
 import FloodAppUser from '../util/User'
 
 /**
@@ -106,6 +98,13 @@ export function getUserSubscriptions() {
       }
     })
   }
+}
+
+/**
+ * Action for no subscriptions found
+ */
+export function noSubscriptionsFound() {
+  type: NO_SUBSCRIPTIONS_FOUND
 }
 
 /**
