@@ -13,7 +13,7 @@ export default {
     ClientId: '<COGNITO APP CLIENT ID>',
     identityPoolId: '<COGNITO IDENTITY POOL ID>',
     logins: {
-      'cognito-idp.us-east-1.amazonaws.com/<COGNITO USER POOL ID>' : ""
+      'cognito-idp.us-east-1.amazonaws.com/<COGNITO USER POOL ID>': ""
     }
   },
   mapboxAccessToken: "<MAPBOX ACCESS TOKEN",
