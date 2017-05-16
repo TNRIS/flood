@@ -90,49 +90,24 @@ export function userLogin(username, password) {
 export function userSignUp(username, password, phone, email) {
   return (dispatch) => {
     // dispatch(loginAttempt())
+    FloodAppUser.setCognitoUser({Username: username, Password: password})
+    FloodAppUser.setUserAttributes({Phone: phone, Email: email})
 
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-
-    const attributeList = []
-
-    const dataPhoneNumber = {
-      Name: 'phone_number',
-      Value: `+1${phone}`
-    }
-
-
-    const dataEmail = {
-      Name: 'email',
-      Value: email
-    }
-
-    const attributePhoneNumber = new AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPhoneNumber)
-    const attributeEmail = new AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail)
-
-    attributeList.push(attributePhoneNumber)
-    attributeList.push(attributeEmail)
-
-    return userPool.signUp(username, password, attributeList, null, function(err, result){
-        if (err) {
-            console.log(err)
-            if (err == "UsernameExistsException: User already exists") {
-              dispatch(showSnackbar("This username is already registered. Please try a different username."))
-            }
-            else {
-              dispatch(sendErrorReport(err))
-              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
-            }
-            return
-        }
-        console.log(result)
-        // const cognitoUser = result.user
-        // console.log('user name is ' + cognitoUser.getUsername());
+    return FloodAppUser.signUp((result) => {
+      if (result === 0) {
         dispatch(verificationRequired(username, phone))
         dispatch(swapDisplayForm('verify'))
+      }
+      else {
+        console.log(result)
+        if (result == "UsernameExistsException: User already exists") {
+          dispatch(showSnackbar("This username is already registered. Please try a different username."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+  }
     })
   }
 }
@@ -141,43 +116,38 @@ export function userVerify(username, verificationCode) {
   return (dispatch) => {
     // dispatch(loginAttempt())
 
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.confirmRegistration(verificationCode, false, function(err, result) {
-        if (err) {
-            if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
+    return FloodAppUser.confirmSignup(verificationCode, (result) => {
+        if (result === 0) {
+          // console.log(FloodAppUser)
+          // dispatch(swapDisplayForm('login'))
+          FloodAppUser.authenticate((result) => {
+            if (result === 0) {
+              dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))
+              console.log(FloodAppUser)
+              dispatch(loginSuccessful(FloodAppUser.username, {...result, ...FloodAppUser.userData, FloodAppUser}))
+              dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
+            }
+          })
+        }
+        else {
+            if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
-            else if (err == "AliasExistsException: An account with the phone_number already exists.") {
+            else if (result == "AliasExistsException: An account with the phone_number already exists.") {
               dispatch(swapDisplayForm('login'))
               dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
-              cognitoUser.authenticateUser()
-              cognitoUser.deleteUser(function(err, result) {
-                  if (err) {
-                      alert(err)
-                      console.log(err)
-                  }
-                  console.log('call result: ' + result);
-              })
+              // at this point, the attempted account is created and stuck in a pergatory where the user
+              // cannot log in since the account isn't confirmed, and since the account exists the username
+              // is officially taken and cannot be used for any new account. we will need to come up with 
+              // method to handle these pergatory accounts. i.e. delete them
             }
             else {
-              // alert(err)
-              // console.log(err)
-              dispatch(sendErrorReport(err))
+              dispatch(sendErrorReport(result))
               dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
             }
-            return
         }
-        console.log('call result: ' + result)
+        
+        
     })
   }
 }

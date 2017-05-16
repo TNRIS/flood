@@ -50,12 +50,33 @@ class AppUser {
     return this.cognitoUser
   }
 
+  setUserAttributes = (attributes) => {
+    this.phone = attributes.Phone
+    this.email = attributes.Email
+
+    this.dataPhoneNumber = {
+      Name: 'phone_number',
+      Value: `+1${this.phone}`
+    }
+
+    this.dataEmail = {
+      Name: 'email',
+      Value: this.email
+    }
+
+    this.attributePhoneNumber = new this.AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(this.dataPhoneNumber)
+    this.attributeEmail = new this.AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(this.dataEmail)
+    this.attributeList = [this.attributePhoneNumber, this.attributeEmail]
+
+    return this.attributeList
+  }
+
   authenticate = (callback) => {
     this.cognitoUser.authenticateUser(this.authenticationDetails, {
       onSuccess: (result) => {
         this.idToken = result.getIdToken().getJwtToken()
-        // this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
-        this.credentials = new this.AWS.CognitoIdentityCredentials({
+        this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
+        // this.credentials = new this.AWS.CognitoIdentityCredentials({
           IdentityPoolId: this.appConfig.IdentityPoolId,
           Logins: {
             [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
@@ -63,9 +84,10 @@ class AppUser {
         }, {
           region: 'us-east-1'
         })
-
-        this.identityId = this.credentials.params.IdentityId
-        this.AWS.config.credentials = this.credentials
+        console.log(this.AWS.config.credentials)
+        // this.identityId = this.credentials.params.IdentityId
+        // this.AWS.config.credentials = this.credentials
+        this.identityId = this.AWS.config.credentials.params.IdentityId
 
         this.cognitoUser.getUserAttributes((err, att) => {
           if (err) console.log(err)
@@ -87,6 +109,27 @@ class AppUser {
     return this.cognitoSync
   }
 
+  signUp = (callback) => {
+    this.userPool.signUp(this.username, this.password, this.attributeList, null, function(err, result){
+        if (err) {
+            return callback(err)
+        }
+        
+        return callback(0)
+    })
+  }
+
+  confirmSignup = (verificationCode, callback) => {
+    this.cognitoUser.confirmRegistration(verificationCode, false, function(err, result) {
+      if (err) {
+        return callback(err)
+      }
+      console.log(result)
+
+      return callback(0)
+    })
+  }
+
 }
 
 
@@ -106,6 +149,7 @@ class FloodAppUser extends AppUser {
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
     }
+    console.log(baseParams)
 
     this.syncSession.listDatasets({
       IdentityId: this.identityId,
