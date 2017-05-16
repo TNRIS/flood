@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Button, Spinner, Textfield } from 'react-mdl'
+import { Button, Spinner, Textfield, Icon } from 'react-mdl'
 
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 import LoginForm from './LoginForm'
@@ -59,13 +59,13 @@ class SubscriptionForm extends Component {
       )
       formSwapper = (
         <div>
-        <p className="form__swapper">
-          <span>Don&#39;t have an account? </span>
-          <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
-        </p>
-        <p className="form__swapper">
-          <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot Password</a>
-        </p>
+          <p className="form__swapper">
+            <span>Don&#39;t have an account? </span>
+            <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
+          </p>
+          <p className="form__swapper">
+            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot Password</a>
+          </p>
         </div>
       )
     }
@@ -96,7 +96,11 @@ class SubscriptionForm extends Component {
         <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form__back">
+          <Icon
+              name="arrow_back"
+              onClick={ () => this.props.swapDisplayForm("login") }
+          />
         </p>
       )
     }

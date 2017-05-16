@@ -40,7 +40,6 @@ class VerifyForm extends Component {
   }
 
   render() {
-    
     return (
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent to {this.props.phone} via text message.</p>

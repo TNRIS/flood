@@ -54,10 +54,11 @@ export function newPasswordRequired(username) {
   }
 }
 
-export function verificationRequired(username) {
+export function verificationRequired(username, phone) {
   return {
     type: VERIFICATION_REQUIRED,
-    username
+    username,
+    phone
   }
 }
 
@@ -184,7 +185,7 @@ export function userSignUp(username, password, phone, email) {
         console.log(result)
         // const cognitoUser = result.user
         // console.log('user name is ' + cognitoUser.getUsername());
-        dispatch(verificationRequired(username))
+        dispatch(verificationRequired(username, phone))
         dispatch(swapDisplayForm('verify'))
     })
   }
@@ -298,7 +299,7 @@ export function forgotPassword(username) {
         //Optional automatic callback
         inputVerificationCode: function(data) {
             dispatch(showSnackbar('Code sent to: ' + username))
-            dispatch(verificationRequired(username))
+            dispatch(verificationRequired(username, ""))
             dispatch(swapDisplayForm('newPassword'))
         }
     })
