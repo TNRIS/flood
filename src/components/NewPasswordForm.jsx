@@ -48,7 +48,7 @@ class NewPasswordForm extends Component {
       })
       return
     }
-    this.props.newPassword(this.props.username, this.state.verificationCode, this.state.password)
+    this.props.newPassword(this.state.verificationCode, this.state.password)
   }
 
   render() {

@@ -7,6 +7,7 @@ import SignupForm from './SignupForm'
 import VerifyForm from './VerifyForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 import NewPasswordForm from './NewPasswordForm'
+import FloodAppUser from '../util/User'
 
 /** Form for entering user info and updating current subscriptions */
 class SubscriptionForm extends Component {
@@ -43,10 +44,16 @@ class SubscriptionForm extends Component {
   render() {
     let subscriptionManagerContent
     let formSwapper
+    const userTools = (
+        <p className="form__swapper">
+          <a href="#" onClick={ this.props.userSignOut }>Sign Out</a>
+        </p>
+    )
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.allSubscriptions.length > 0 && !this.props.isFetching && !this.props.isUpdating) {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
+      formSwapper = (userTools)
     }
     else if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
@@ -82,12 +89,12 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm == "verify") {
       subscriptionManagerContent = (
-        <VerifyForm username={this.props.username} phone={this.props.phone} userVerify={this.props.userVerify}/>
+        <VerifyForm phone={FloodAppUser.phone} userVerify={this.props.userVerify}/>
       )
       formSwapper = (
         <p className="form__swapper">
           <span>Having trouble? </span>
-          <a href="#" onClick={ () => this.props.resendVerificationCode(this.props.username) }>Resend Verification Code</a>
+          <a href="#" onClick={ this.props.resendVerificationCode }>Resend Verification Code</a>
         </p>
       )
     }
@@ -106,7 +113,7 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm == "newPassword") {
       subscriptionManagerContent = (
-        <NewPasswordForm username={this.props.username} newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
+        <NewPasswordForm username={FloodAppUser.username} newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
         <p className="form__swapper">
@@ -117,6 +124,7 @@ class SubscriptionForm extends Component {
       subscriptionManagerContent = (
         <p>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
       )
+      formSwapper = (userTools)
     }
 
     return (

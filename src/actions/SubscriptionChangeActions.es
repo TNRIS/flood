@@ -145,13 +145,14 @@ export function saveSubscriptionChanges() {
               promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
                 .then((data) => {
                   dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
-                  FloodAppUser.unsubscribe(subscriptionArn)
                 })
                 .catch((err) => {
                   console.log(err)
                   dispatch(updateSubscriptionsError(err))
                 })
-              )}
+              )
+              promiseQueue.push(FloodAppUser.unsubscribe(subscriptionArn))
+            }
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
@@ -168,7 +169,7 @@ export function saveSubscriptionChanges() {
         // Execute promise queue containing the subscription update operations.
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
-          // dispatch(getUserSubscriptions(user.email, user.phone, ""))
+          dispatch(getUserSubscriptions(user.email, user.phone, ""))
         }).catch(err => dispatch(sendErrorReport(err)))
       }
 

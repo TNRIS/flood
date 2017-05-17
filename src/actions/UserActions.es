@@ -19,10 +19,14 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
-  VERIFICATION_REQUIRED,
   SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
-import { swapDisplayForm } from './SubscriptionFormActions'
+import { swapDisplayForm,
+  getSubscriptionsAttempt,
+  getSubscriptionsSuccess,
+  getSubscriptionsError } from './SubscriptionFormActions'
+
+import { clearSubscriptionList } from './SubscriptionListActions'
 
 import { sendErrorReport } from './StevieActions'
 
@@ -41,10 +45,9 @@ export function loginError(err) {
   }
 }
 
-export function loginSuccessful(username, userAuth) {
+export function loginSuccessful() {
   return {
-    type: LOGIN_SUCCESSFUL,
-    payload: {username, ...userAuth}
+    type: LOGIN_SUCCESSFUL
   }
 }
 
@@ -52,14 +55,6 @@ export function newPasswordRequired(username) {
   return {
     type: NEW_PASSWORD_REQUIRED,
     username
-  }
-}
-
-export function verificationRequired(username, phone) {
-  return {
-    type: VERIFICATION_REQUIRED,
-    username,
-    phone
   }
 }
 
@@ -75,13 +70,17 @@ export function setSyncSessionToken(token) {
 export function userLogin(username, password) {
   return (dispatch) => {
     dispatch(loginAttempt())
+    dispatch(getSubscriptionsAttempt())
     FloodAppUser.setCognitoUser({Username: username, Password: password})
 
     return FloodAppUser.authenticate((result) => {
       if (result === 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
-        dispatch(loginSuccessful(username, {...result, ...FloodAppUser.userData, FloodAppUser}))
+        dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
+      }
+      else {
+        dispatch(getSubscriptionsError())
       }
     })
   }
@@ -89,17 +88,17 @@ export function userLogin(username, password) {
 
 export function userSignUp(username, password, phone, email) {
   return (dispatch) => {
-    // dispatch(loginAttempt())
+    dispatch(getSubscriptionsAttempt())
     FloodAppUser.setCognitoUser({Username: username, Password: password})
     FloodAppUser.setUserAttributes({Phone: phone, Email: email})
 
     return FloodAppUser.signUp((result) => {
       if (result === 0) {
-        dispatch(verificationRequired(username, phone))
         dispatch(swapDisplayForm('verify'))
+        dispatch(getSubscriptionsSuccess())
       }
       else {
-        console.log(result)
+        dispatch(getSubscriptionsError())
         if (result == "UsernameExistsException: User already exists") {
           dispatch(showSnackbar("This username is already registered. Please try a different username."))
         }
@@ -112,24 +111,21 @@ export function userSignUp(username, password, phone, email) {
   }
 }
 
-export function userVerify(username, verificationCode) {
+export function userVerify(verificationCode) {
   return (dispatch) => {
-    // dispatch(loginAttempt())
-
+    dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmSignup(verificationCode, (result) => {
         if (result === 0) {
-          // console.log(FloodAppUser)
-          // dispatch(swapDisplayForm('login'))
           FloodAppUser.authenticate((result) => {
             if (result === 0) {
               dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))
-              console.log(FloodAppUser)
               dispatch(loginSuccessful(FloodAppUser.username, {...result, ...FloodAppUser.userData, FloodAppUser}))
               dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
             }
           })
         }
         else {
+            dispatch(getSubscriptionsError())
             if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
@@ -138,7 +134,7 @@ export function userVerify(username, verificationCode) {
               dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
               // at this point, the attempted account is created and stuck in a pergatory where the user
               // cannot log in since the account isn't confirmed, and since the account exists the username
-              // is officially taken and cannot be used for any new account. we will need to come up with 
+              // is officially taken and cannot be used for any new account. we will need to come up with
               // method to handle these pergatory accounts. i.e. delete them
             }
             else {
@@ -146,117 +142,96 @@ export function userVerify(username, verificationCode) {
               dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
             }
         }
-        
-        
     })
   }
 }
 
-export function resendVerificationCode(username) {
+export function resendVerificationCode() {
   return (dispatch) => {
-    // dispatch(loginAttempt())
-
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.resendConfirmationCode(function(err, result) {
-        if (err) {
-            if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
-              dispatch(showSnackbar("Incorrect validation code. Please try again."))
-            }
-            else {
-              dispatch(sendErrorReport(err))
-              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
-            }
-            return
-        }
+    return FloodAppUser.resendVerificationCode((result) => {
+      if (result === 0) {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
-        console.log('call result: ' + result)
+      }
+      else {
+        if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+          dispatch(showSnackbar("Incorrect validation code. Please try again."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+      }
     })
   }
 }
 
 export function forgotPassword(username) {
   return (dispatch) => {
+    dispatch(getSubscriptionsAttempt())
+    return FloodAppUser.forgotPassword(username, (result) => {
+      if (result === 0) {
+        dispatch(showSnackbar('Code sent to: ' + username))
+        dispatch(swapDisplayForm('newPassword'))
+        dispatch(getSubscriptionsSuccess())
+      }
+      else {
+        dispatch(getSubscriptionsError())
+        if (result == "UserNotFoundException: Username/client id combination not found.") {
+          dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+      }
+    })
+  }
 
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
+}
 
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.forgotPassword({
-        onSuccess: function () {
+export function newPassword(verificationCode, password) {
+  return (dispatch) => {
+    dispatch(getSubscriptionsAttempt())
+    return FloodAppUser.confirmPassword(verificationCode, password, (result) => {
+        if (result === 0) {
+            dispatch(swapDisplayForm('login'))
             dispatch(showSnackbar("Your password has been reset."))
-        },
-        onFailure: function(err) {
-            if (err == "UserNotFoundException: Username/client id combination not found.") {
-              dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
+            dispatch(getSubscriptionsSuccess())
+        }
+        else {
+            console.log(result)
+            dispatch(getSubscriptionsError())
+            if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
+              dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
+            }
+            else if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+              dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
             else {
-              dispatch(sendErrorReport(err))
+              dispatch(sendErrorReport(result))
               dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
             }
-            return
-        },
-        //Optional automatic callback
-        inputVerificationCode: function(data) {
-            dispatch(showSnackbar('Code sent to: ' + username))
-            dispatch(verificationRequired(username, ""))
-            dispatch(swapDisplayForm('newPassword'))
         }
     })
   }
 
 }
 
-export function newPassword(username, verificationCode, password) {
+export function userSignOut() {
   return (dispatch) => {
-
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.confirmPassword(verificationCode, password, {
-        onSuccess: function () {
-            dispatch(showSnackbar("Your password has been reset."))
-        },
-        onFailure: function(err) {
-            alert(err)
-            console.log(err)
-            if (err == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
-              dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
-            }
-            else if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
-              dispatch(showSnackbar("Incorrect validation code. Please try again."))
-            }
-            else {
-              dispatch(sendErrorReport(err))
-              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
-            }
-            return
-        }
+    dispatch(getSubscriptionsAttempt())
+    return FloodAppUser.signOut((result) => {
+      if (result === 0) {
+        dispatch(swapDisplayForm('login'))
+        dispatch(clearSubscriptionList())
+        dispatch(showSnackbar("You have successfully signed out."))
+        dispatch(getSubscriptionsSuccess())
+      }
+      else {
+        dispatch(getSubscriptionsError())
+        dispatch(sendErrorReport(result))
+        dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+      }
     })
   }
-
 }

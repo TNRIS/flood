@@ -13,7 +13,6 @@ class ForgotPasswordForm extends Component {
     this.state = {
       username: '',
       phone: '',
-      password: '',
       usernameDisabled: false,
       phoneDisabled: false
     }

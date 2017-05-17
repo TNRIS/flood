@@ -8,7 +8,8 @@ import {
   userVerify,
   resendVerificationCode,
   forgotPassword,
-  newPassword } from '../actions/UserActions'
+  newPassword,
+  userSignOut } from '../actions/UserActions'
 import { showSnackbar } from '../actions/ToasterActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
@@ -22,8 +23,6 @@ const mapStateToProps = (state) => {
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
-    phone: state.user.phone,
-    username: state.user.username,
     isUpdating: state.subscriptionList.isUpdating,
     displayForm: state.subscriptionForm.displayForm
   }
@@ -72,7 +71,9 @@ const mapDispatchToProps = (dispatch) => {
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
     },
-
+    userSignOut: () => {
+      dispatch(userSignOut())
+    }
   }
 }
 
