@@ -8,7 +8,8 @@ import {
   userVerify,
   resendVerificationCode,
   forgotPassword,
-  newPassword } from '../actions/UserActions'
+  newPassword,
+  userSignOut } from '../actions/UserActions'
 import { showSnackbar } from '../actions/ToasterActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
@@ -70,7 +71,9 @@ const mapDispatchToProps = (dispatch) => {
     showSnackbar: (message) => {
       dispatch(showSnackbar(message))
     },
-
+    userSignOut: () => {
+      dispatch(userSignOut())
+    }
   }
 }
 

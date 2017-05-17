@@ -21,7 +21,10 @@ import {
   NEW_PASSWORD_REQUIRED,
   SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
-import { swapDisplayForm } from './SubscriptionFormActions'
+import { swapDisplayForm,
+  getSubscriptionsAttempt,
+  getSubscriptionsSuccess,
+  getSubscriptionsError } from './SubscriptionFormActions'
 
 import { sendErrorReport } from './StevieActions'
 
@@ -65,6 +68,7 @@ export function setSyncSessionToken(token) {
 export function userLogin(username, password) {
   return (dispatch) => {
     dispatch(loginAttempt())
+    dispatch(getSubscriptionsAttempt())
     FloodAppUser.setCognitoUser({Username: username, Password: password})
 
     return FloodAppUser.authenticate((result) => {
@@ -73,21 +77,26 @@ export function userLogin(username, password) {
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
       }
+      else {
+        dispatch(getSubscriptionsError())
+      }
     })
   }
 }
 
 export function userSignUp(username, password, phone, email) {
   return (dispatch) => {
-    // dispatch(loginAttempt())
+    dispatch(getSubscriptionsAttempt())
     FloodAppUser.setCognitoUser({Username: username, Password: password})
     FloodAppUser.setUserAttributes({Phone: phone, Email: email})
 
     return FloodAppUser.signUp((result) => {
       if (result === 0) {
         dispatch(swapDisplayForm('verify'))
+        dispatch(getSubscriptionsSuccess())
       }
       else {
+        dispatch(getSubscriptionsError())
         if (result == "UsernameExistsException: User already exists") {
           dispatch(showSnackbar("This username is already registered. Please try a different username."))
         }
@@ -102,8 +111,7 @@ export function userSignUp(username, password, phone, email) {
 
 export function userVerify(verificationCode) {
   return (dispatch) => {
-    // dispatch(loginAttempt())
-
+    dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmSignup(verificationCode, (result) => {
         if (result === 0) {
           FloodAppUser.authenticate((result) => {
@@ -115,6 +123,7 @@ export function userVerify(verificationCode) {
           })
         }
         else {
+            dispatch(getSubscriptionsError())
             if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
@@ -137,8 +146,6 @@ export function userVerify(verificationCode) {
 
 export function resendVerificationCode() {
   return (dispatch) => {
-    // dispatch(loginAttempt())
-
     return FloodAppUser.resendVerificationCode((result) => {
       if (result === 0) {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
@@ -158,12 +165,15 @@ export function resendVerificationCode() {
 
 export function forgotPassword(username) {
   return (dispatch) => {
+    dispatch(getSubscriptionsAttempt())
     return FloodAppUser.forgotPassword(username, (result) => {
       if (result === 0) {
         dispatch(showSnackbar('Code sent to: ' + username))
         dispatch(swapDisplayForm('newPassword'))
+        dispatch(getSubscriptionsSuccess())
       }
       else {
+        dispatch(getSubscriptionsError())
         if (result == "UserNotFoundException: Username/client id combination not found.") {
           dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
         }
@@ -179,13 +189,16 @@ export function forgotPassword(username) {
 
 export function newPassword(verificationCode, password) {
   return (dispatch) => {
+    dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmPassword(verificationCode, password, (result) => {
         if (result === 0) {
             dispatch(swapDisplayForm('login'))
             dispatch(showSnackbar("Your password has been reset."))
+            dispatch(getSubscriptionsSuccess())
         }
         else {
             console.log(result)
+            dispatch(getSubscriptionsError())
             if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
               dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
             }
@@ -200,4 +213,22 @@ export function newPassword(verificationCode, password) {
     })
   }
 
+}
+
+export function userSignOut() {
+  return (dispatch) => {
+    dispatch(getSubscriptionsAttempt())
+    return FloodAppUser.signOut((result) => {
+      if (result === 0) {
+        dispatch(swapDisplayForm('login'))
+        dispatch(showSnackbar("You have successfully signed out."))
+        dispatch(getSubscriptionsSuccess())
+      }
+      else {
+        dispatch(getSubscriptionsError())
+        dispatch(sendErrorReport(result))
+        dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+      }
+    })
+  }
 }

@@ -44,10 +44,16 @@ class SubscriptionForm extends Component {
   render() {
     let subscriptionManagerContent
     let formSwapper
+    const userTools = (
+        <p className="form__swapper">
+          <a href="#" onClick={ this.props.userSignOut }>Sign Out</a>
+        </p>
+    )
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.allSubscriptions.length > 0 && !this.props.isFetching && !this.props.isUpdating) {
       subscriptionManagerContent = (<SubscriptionListContainer/>)
+      formSwapper = (userTools)
     }
     else if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
@@ -118,6 +124,7 @@ class SubscriptionForm extends Component {
       subscriptionManagerContent = (
         <p>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
       )
+      formSwapper = (userTools)
     }
 
     return (

@@ -182,6 +182,17 @@ class AppUser {
     })
   }
 
+  signOut = (callback) => {
+    this.cognitoUser.globalSignOut({
+      onSuccess: function () {
+          return callback(0)
+      },
+      onFailure: function(err) {
+          return callback(err)
+      }
+    })
+  }
+
 }
 
 
