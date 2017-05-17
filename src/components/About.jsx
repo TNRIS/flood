@@ -59,7 +59,7 @@ class About extends React.Component {
               Flood Gages:<br/><a href="https://water.weather.gov/ahps/" target="_blank">National Weather Service</a><br/>
               Reservoir Conditions:<br/><a href="https://waterdatafortexas.org/reservoirs/statewide" target="blank">Texas Water Development Board</a><br/>
               Weather Alerts and Warnings:<br/><a href="https://www.aerisweather.com/" target="_blank">Aeris Weather Service</a><br/>
-              SMS Text and Email Services:<br/><a href="https://aws.amazon.com/" target="_blank">Amazon Web Services</a>
+              SMS Text Services:<br/><a href="https://aws.amazon.com/" target="_blank">Amazon Web Services</a>
               </p>
               <h6 className="about-viewer-details-link">
                 <a href="./viewer-details.html" target="_blank">More Detailed Information</a>
