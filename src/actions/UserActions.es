@@ -26,6 +26,8 @@ import { swapDisplayForm,
   getSubscriptionsSuccess,
   getSubscriptionsError } from './SubscriptionFormActions'
 
+import { clearSubscriptionList } from './SubscriptionListActions'
+
 import { sendErrorReport } from './StevieActions'
 
 import FloodAppUser from '../util/User'
@@ -221,6 +223,7 @@ export function userSignOut() {
     return FloodAppUser.signOut((result) => {
       if (result === 0) {
         dispatch(swapDisplayForm('login'))
+        dispatch(clearSubscriptionList())
         dispatch(showSnackbar("You have successfully signed out."))
         dispatch(getSubscriptionsSuccess())
       }
