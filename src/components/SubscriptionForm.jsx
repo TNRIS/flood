@@ -7,6 +7,8 @@ import SignupForm from './SignupForm'
 import VerifyForm from './VerifyForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 import NewPasswordForm from './NewPasswordForm'
+import AccountSettingsForm from './AccountSettingsForm'
+
 import FloodAppUser from '../util/User'
 
 /** Form for entering user info and updating current subscriptions */
@@ -117,6 +119,11 @@ class SubscriptionForm extends Component {
     else if (this.props.displayForm === "noSubscriptions") {
       subscriptionManagerContent = (
         <p>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
+      )
+    }
+    else if (this.props.displayForm === "userSettings") {
+      subscriptionManagerContent = (
+        <AccountSettingsForm/>
       )
     }
 

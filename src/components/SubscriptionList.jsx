@@ -268,6 +268,13 @@ class SubscriptionList extends React.Component {
             className="flood-form-button"
             style={{marginLeft: "10px"}}
             onClick={this.props.clearSubscriptionList}>BACK</Button>
+            <span>
+              <Button ripple raised
+              style={{marginTop: "10px", width: "100%"}}
+              className="flood-form-button"
+              onClick="">
+              <Icon name="settings"/>Account Settings</Button>
+            </span>
 
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
