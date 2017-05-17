@@ -81,7 +81,6 @@ class AppUser {
         console.log(this.AWS.config.credentials)
         this.idToken = result.getIdToken().getJwtToken()
         this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
-        // this.credentials = new this.AWS.CognitoIdentityCredentials({
           IdentityPoolId: this.appConfig.IdentityPoolId,
           Logins: {
             [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
@@ -90,8 +89,7 @@ class AppUser {
           region: 'us-east-1'
         })
         console.log(this.AWS.config.credentials)
-        // this.identityId = this.credentials.params.IdentityId
-        // this.AWS.config.credentials = this.credentials
+
         this.AWS.config.credentials.refresh((error) => {
             if (error) {
                 console.log(error);
@@ -113,9 +111,7 @@ class AppUser {
               })
               return callback(0)
             }
-        });
-
-
+        })
       }
     })
   }
@@ -146,6 +142,46 @@ class AppUser {
     })
   }
 
+  resendVerificationCode = (callback) => {
+    this.cognitoUser.resendConfirmationCode(function(err, result) {
+        if (err) {
+          return callback (err)
+        }
+        console.log('call result: ' + result)
+        return callback(0)
+    })
+  }
+
+  forgotPassword = (username, callback) => {
+    this.userPool = new this.AWS.CognitoIdentityServiceProvider.CognitoUserPool(this.poolData)
+
+    this.userData = {
+      Username: username,
+      Pool: this.userPool
+    }
+    this.cognitoUser = new this.AWS.CognitoIdentityServiceProvider.CognitoUser(this.userData)
+
+    this.cognitoUser.forgotPassword({
+      onFailure: function(err) {
+        return callback(err)
+      },
+      inputVerificationCode: function(data) {
+        return callback(0)
+      }
+    })
+  }
+
+  confirmPassword = (verificationCode, password, callback) => {
+    this.cognitoUser.confirmPassword(verificationCode, password, {
+      onSuccess: function () {
+          return callback(0)
+      },
+      onFailure: function(err) {
+          return callback(err)
+      }
+    })
+  }
+
 }
 
 
@@ -161,7 +197,7 @@ class FloodAppUser extends AppUser {
   checkForSubscriptions(callback) {
     this.syncSession = this.createCognitoSyncSession()
     console.log(this.syncSession)
-
+    console.log(this.AWS.config.credentials)
     const baseParams = {
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
