@@ -112,9 +112,6 @@ class AppUser {
               return callback(0)
             }
         })
-
-        
-        
       }
     })
   }
@@ -129,7 +126,7 @@ class AppUser {
         if (err) {
             return callback(err)
         }
-        
+
         return callback(0)
     })
   }
@@ -240,55 +237,44 @@ class FloodAppUser extends AppUser {
   }
 
   subscribe(subscriptionData) {
-    const stringData = JSON.stringify({...subscriptionData, protocol: "sms", endpoint: this.userData.phone_number})
-    this.AWS.config.credentials.get(() => {
-      const client = new this.AWS.CognitoSyncManager()
-      client.openOrCreateDataset(this.dataset, (err, dataset) => {
-        if (err) console.log(err)
-        else {
-          console.log(dataset)
+    return new Promise((resolve, reject) => {
+      const stringData = JSON.stringify({...subscriptionData, protocol: "sms", endpoint: this.userData.phone_number})
+      this.AWS.config.credentials.get(() => {
+        const client = new this.AWS.CognitoSyncManager()
+        client.openOrCreateDataset(this.dataset, (err, dataset) => {
+          if (err) console.log(err)
           dataset.put(
-            subscriptionData.subscriptionArn, stringData, (err, record) => {
-              if (err) console.log(err)
-              else this.synchronize(dataset)
+            subscriptionData.subscriptionArn, stringData, (putError) => {
+              if (putError) reject(putError)
+              dataset.synchronize({
+                onSuccess: (updatedDataset, newRecords) => {
+                  resolve(newRecords)
+                  store.dispatch(getUserSubscriptions())
+                },
+                onFailure: (syncError) => {
+                  reject(syncError)
+                }
+              })
             })
-        }
+        })
       })
     })
   }
 
-  synchronize(dataset) {
-    dataset.synchronize({
-      onSuccess: (dataset, newRecords) => {
-        store.dispatch(getUserSubscriptions())
-      },
-      onFailure: (err) => {
-        console.log(err)
-      },
-      onConflict: (dataset, conflicts, callback) => {
-
-      },
-      onDatasetDeleted: (dataset, datasetName, callback) => {
-        return callback(true)
-      },
-      onDatasetsMerged: (dataset, datasetNames, callback) => {
-        return callback(false)
-      }
-    })
-  }
-
   unsubscribe(arn) {
-    console.log(this.AWS.config.credentials)
-    this.AWS.config.credentials.get(() => {
-      const client = new this.AWS.CognitoSyncManager()
-      client.openOrCreateDataset(this.dataset, (err, dataset) => {
-        if (err) console.log(err)
-        else {
-          dataset.remove(arn, (err, record) => {
-            if (err) console.log(err)
-            else this.synchronize(dataset)
+    return new Promise((resolve, reject) => {
+      this.AWS.config.credentials.get(() => {
+        const client = new this.AWS.CognitoSyncManager()
+        client.openOrCreateDataset(this.dataset, (err, dataset) => {
+          if (err) console.log(err)
+          dataset.remove(arn, (removeError) => {
+            if (removeError) reject(removeError)
+            dataset.synchronize({
+              onSuccess: (updatedDataset, newRecords) => resolve(newRecords),
+              onFailure: (syncError) => reject(syncError)
+            })
           })
-        }
+        })
       })
     })
   }

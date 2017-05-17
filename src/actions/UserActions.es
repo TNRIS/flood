@@ -40,10 +40,9 @@ export function loginError(err) {
   }
 }
 
-export function loginSuccessful(username, userAuth) {
+export function loginSuccessful() {
   return {
-    type: LOGIN_SUCCESSFUL,
-    payload: {username, ...userAuth}
+    type: LOGIN_SUCCESSFUL
   }
 }
 
@@ -71,7 +70,7 @@ export function userLogin(username, password) {
     return FloodAppUser.authenticate((result) => {
       if (result === 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
-        dispatch(loginSuccessful(username, {...result, ...FloodAppUser.userData, FloodAppUser}))
+        dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
       }
     })
@@ -124,7 +123,7 @@ export function userVerify(verificationCode) {
               dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
               // at this point, the attempted account is created and stuck in a pergatory where the user
               // cannot log in since the account isn't confirmed, and since the account exists the username
-              // is officially taken and cannot be used for any new account. we will need to come up with 
+              // is officially taken and cannot be used for any new account. we will need to come up with
               // method to handle these pergatory accounts. i.e. delete them
             }
             else {
