@@ -3,6 +3,7 @@ import {
   LOGIN_FAILED,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
+  USER_UNAUTHENTICATED,
   SET_SYNC_SESSION_TOKEN
 } from '../constants/UserActionTypes'
 
@@ -30,6 +31,8 @@ export default function user(state = initialState, action) {
       return {...state, ...action.payload, authentication: 0}
     case NEW_PASSWORD_REQUIRED:
       return {...state, ...action.payload, authentication: 20}
+    case USER_UNAUTHENTICATED:
+      return {authentication: 100, error: null}
     case SET_SYNC_SESSION_TOKEN:
       return {...state, ...action.payload}
     default:
