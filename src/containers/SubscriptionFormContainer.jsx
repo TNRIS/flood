@@ -22,8 +22,6 @@ const mapStateToProps = (state) => {
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
-    phone: state.user.phone,
-    username: state.user.username,
     isUpdating: state.subscriptionList.isUpdating,
     displayForm: state.subscriptionForm.displayForm
   }

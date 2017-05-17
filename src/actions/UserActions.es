@@ -19,7 +19,6 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
-  VERIFICATION_REQUIRED,
   SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
 
 import { swapDisplayForm } from './SubscriptionFormActions'
@@ -55,14 +54,6 @@ export function newPasswordRequired(username) {
   }
 }
 
-export function verificationRequired(username, phone) {
-  return {
-    type: VERIFICATION_REQUIRED,
-    username,
-    phone
-  }
-}
-
 export function setSyncSessionToken(token) {
   return {
     type: SET_SYNC_SESSION_TOKEN,
@@ -95,11 +86,9 @@ export function userSignUp(username, password, phone, email) {
 
     return FloodAppUser.signUp((result) => {
       if (result === 0) {
-        dispatch(verificationRequired(username, phone))
         dispatch(swapDisplayForm('verify'))
       }
       else {
-        console.log(result)
         if (result == "UsernameExistsException: User already exists") {
           dispatch(showSnackbar("This username is already registered. Please try a different username."))
         }
@@ -112,7 +101,7 @@ export function userSignUp(username, password, phone, email) {
   }
 }
 
-export function userVerify(username, verificationCode) {
+export function userVerify(verificationCode) {
   return (dispatch) => {
     // dispatch(loginAttempt())
 
@@ -121,7 +110,6 @@ export function userVerify(username, verificationCode) {
           FloodAppUser.authenticate((result) => {
             if (result === 0) {
               dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))
-              console.log(FloodAppUser)
               dispatch(loginSuccessful(FloodAppUser.username, {...result, ...FloodAppUser.userData, FloodAppUser}))
               dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
             }
@@ -144,115 +132,71 @@ export function userVerify(username, verificationCode) {
               dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
             }
         }
-        
-        
     })
   }
 }
 
-export function resendVerificationCode(username) {
+export function resendVerificationCode() {
   return (dispatch) => {
     // dispatch(loginAttempt())
 
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.resendConfirmationCode(function(err, result) {
-        if (err) {
-            if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
-              dispatch(showSnackbar("Incorrect validation code. Please try again."))
-            }
-            else {
-              dispatch(sendErrorReport(err))
-              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
-            }
-            return
-        }
+    return FloodAppUser.resendVerificationCode((result) => {
+      if (result === 0) {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
-        console.log('call result: ' + result)
+      }
+      else {
+        if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+          dispatch(showSnackbar("Incorrect validation code. Please try again."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+      }
     })
   }
 }
 
 export function forgotPassword(username) {
   return (dispatch) => {
-
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.forgotPassword({
-        onSuccess: function () {
-            dispatch(showSnackbar("Your password has been reset."))
-        },
-        onFailure: function(err) {
-            if (err == "UserNotFoundException: Username/client id combination not found.") {
-              dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
-            }
-            else {
-              dispatch(sendErrorReport(err))
-              dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
-            }
-            return
-        },
-        //Optional automatic callback
-        inputVerificationCode: function(data) {
-            dispatch(showSnackbar('Code sent to: ' + username))
-            dispatch(verificationRequired(username, ""))
-            dispatch(swapDisplayForm('newPassword'))
+    return FloodAppUser.forgotPassword(username, (result) => {
+      if (result === 0) {
+        dispatch(showSnackbar('Code sent to: ' + username))
+        dispatch(swapDisplayForm('newPassword'))
+      }
+      else {
+        if (result == "UserNotFoundException: Username/client id combination not found.") {
+          dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
         }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+      }
     })
   }
 
 }
 
-export function newPassword(username, verificationCode, password) {
+export function newPassword(verificationCode, password) {
   return (dispatch) => {
-
-    const poolData = {
-      UserPoolId: keys.awsConfig.UserPoolId,
-      ClientId: keys.awsConfig.ClientId
-    }
-    const userPool = new AWS.CognitoIdentityServiceProvider.CognitoUserPool(poolData)
-    const userData = {
-      Username: username,
-      Pool: userPool
-    }
-
-    const cognitoUser = new AWS.CognitoIdentityServiceProvider.CognitoUser(userData)
-    return cognitoUser.confirmPassword(verificationCode, password, {
-        onSuccess: function () {
+    return FloodAppUser.confirmPassword(verificationCode, password, (result) => {
+        if (result === 0) {
+            dispatch(swapDisplayForm('login'))
             dispatch(showSnackbar("Your password has been reset."))
-        },
-        onFailure: function(err) {
-            alert(err)
-            console.log(err)
-            if (err == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
+        }
+        else {
+            console.log(result)
+            if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
               dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
             }
-            else if (err == "CodeMismatchException: Invalid verification code provided, please try again.") {
+            else if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
             else {
-              dispatch(sendErrorReport(err))
+              dispatch(sendErrorReport(result))
               dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
             }
-            return
         }
     })
   }

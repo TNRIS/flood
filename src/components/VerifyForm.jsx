@@ -4,7 +4,6 @@ import { Button, Spinner, Textfield } from 'react-mdl'
 /** Form for verifying a newly created account */
 class VerifyForm extends Component {
   static propTypes = {
-    username: PropTypes.string,
     phone: PropTypes.string,
     userVerify: PropTypes.func
   }
@@ -36,7 +35,7 @@ class VerifyForm extends Component {
    */
   handleVerification(event) {
     event.preventDefault()
-    this.props.userVerify(this.props.username, this.state.verificationCode)
+    this.props.userVerify(this.state.verificationCode)
   }
 
   render() {
