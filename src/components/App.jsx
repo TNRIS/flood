@@ -5,7 +5,6 @@ import ga from '../util/GoogleAnalytics'
 import MapContainer from '../containers/MapContainer'
 import NavigationDrawer from '../components/NavigationDrawer'
 import Disclaimer from '../components/Disclaimer'
-import SubscribeContainer from '../containers/SubscribeContainer'
 import AboutContainer from '../containers/AboutContainer'
 import ToasterContainer from '../containers/ToasterContainer'
 import FloodHeaderContainer from '../containers/FloodHeaderContainer'
@@ -40,7 +39,6 @@ componentDidMount() {
     return (
       <div>
         <Disclaimer />
-        <SubscribeContainer />
         <AboutContainer />
         <Layout fixedDrawer fixedHeader>
           <FloodHeaderContainer />

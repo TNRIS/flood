@@ -272,9 +272,9 @@ class SubscriptionList extends React.Component {
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
                 <CardTitle className="confirm-modal-title"><i className="material-icons">save</i>
-                Save Changes?
+                Save Changes
                 </CardTitle>
-                <CardText>Are you sure you want to save your changes?</CardText>
+                <CardText className="confirm-modal-text">Are you sure you want to save your changes?</CardText>
                 <CardActions className="confirm-modal-actions">
                   <Button type="button" onClick={this.saveChanges}>Confirm</Button>
                   <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>

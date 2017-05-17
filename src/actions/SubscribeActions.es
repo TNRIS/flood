@@ -2,7 +2,34 @@ import { showSnackbar } from './ToasterActions'
 import { sendErrorReport } from './StevieActions'
 
 import FloodAppUser from '../util/User'
+import {
+  SHOW_SUBSCRIPTION_CONFIRMATION,
+  HIDE_SUBSCRIPTION_CONFIRMATION
+} from '../constants/SubscribeActionTypes'
 
+/**
+ * Function to show the subscription confirmation modal
+ * @return {boolean}  description
+ */
+export function showSubscriptionConfirmation() {
+  return (dispatch) => {
+    dispatch({
+      type: SHOW_SUBSCRIPTION_CONFIRMATION
+    })
+  }
+}
+
+/**
+ * Function to hide the subscription confirmation modal
+ * @return {boolean}  description
+ */
+export function hideSubscriptionConfirmation() {
+  return (dispatch) => {
+    dispatch({
+      type: HIDE_SUBSCRIPTION_CONFIRMATION
+    })
+  }
+}
 
 /**
  * Function confirms to the user that they have subscribed to a gage via sms

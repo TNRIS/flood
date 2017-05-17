@@ -18,7 +18,6 @@ export default class Popup extends Component {
     data: PropTypes.object,
     layerId: PropTypes.string,
     browser: PropTypes.object,
-    setLidAndName: PropTypes.func,
     popupImageLoadAttempt: PropTypes.func,
     popupImageLoadSuccess: PropTypes.func
   }
@@ -72,7 +71,6 @@ export default class Popup extends Component {
     const { data, id } = this.props.popupData
     switch (id) {
       case 'ahps-flood':
-        this.props.setLidAndName(data.lid, data.name)
         return (
           <FloodGaugePopup {...data}
           updatePopup={() => {this.leafletPopup.update()}}
