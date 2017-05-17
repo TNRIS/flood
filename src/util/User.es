@@ -89,7 +89,7 @@ class AppUser {
           region: 'us-east-1'
         })
         console.log(this.AWS.config.credentials)
-
+        this.AWS.config.credentials.clearCachedId()
         this.AWS.config.credentials.refresh((error) => {
             if (error) {
                 console.log(error);
