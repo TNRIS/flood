@@ -118,8 +118,6 @@ export function userVerify(username, verificationCode) {
 
     return FloodAppUser.confirmSignup(verificationCode, (result) => {
         if (result === 0) {
-          // console.log(FloodAppUser)
-          // dispatch(swapDisplayForm('login'))
           FloodAppUser.authenticate((result) => {
             if (result === 0) {
               dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))

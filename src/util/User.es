@@ -78,6 +78,7 @@ class AppUser {
   authenticate = (callback) => {
     this.cognitoUser.authenticateUser(this.authenticationDetails, {
       onSuccess: (result) => {
+        console.log(this.AWS.config.credentials)
         this.idToken = result.getIdToken().getJwtToken()
         this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
         // this.credentials = new this.AWS.CognitoIdentityCredentials({
@@ -91,20 +92,30 @@ class AppUser {
         console.log(this.AWS.config.credentials)
         // this.identityId = this.credentials.params.IdentityId
         // this.AWS.config.credentials = this.credentials
-        this.identityId = this.AWS.config.credentials.params.IdentityId
+        this.AWS.config.credentials.refresh((error) => {
+            if (error) {
+                console.log(error);
+                console.log(this.AWS.config.credentials)
+            } else {
+              this.identityId = this.AWS.config.credentials.params.IdentityId
+              console.log(this)
 
-        this.cognitoUser.getUserAttributes((err, att) => {
-          if (err) console.log(err)
-          else {
-            const user = {}
-            for (let i = 0; i < att.length; i++) {
-              user[att[i].Name] = att[i].Value
+              this.cognitoUser.getUserAttributes((err, att) => {
+                if (err) console.log(err)
+                else {
+                  const user = {}
+                  for (let i = 0; i < att.length; i++) {
+                    user[att[i].Name] = att[i].Value
+                  }
+                  this.userData = {...user}
+                  console.log(this.userData)
+                }
+              })
+              return callback(0)
             }
-            this.userData = {...user}
-            console.log(this.userData)
-          }
-        })
-        return callback(0)
+        });
+        
+        
       }
     })
   }
@@ -149,6 +160,7 @@ class FloodAppUser extends AppUser {
 
   checkForSubscriptions(callback) {
     this.syncSession = this.createCognitoSyncSession()
+    console.log(this.syncSession)
 
     const baseParams = {
       IdentityId: this.identityId,
