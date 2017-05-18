@@ -89,7 +89,7 @@ class SubscriptionForm extends Component {
             <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
           </p>
           <p className="form__swapper">
-            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot Password</a>
+            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
           </p>
         </div>
       )
@@ -101,7 +101,7 @@ class SubscriptionForm extends Component {
       formSwapper = (
         <p className="form__swapper">
           <span>Already have an account? </span>
-          <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Login</a>
+          <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
         </p>
       )
     }
