@@ -132,7 +132,7 @@ class ForgotPasswordForm extends Component {
 
     return (
         <form onSubmit={ this.handleSubmit } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Enter your username or phone number to change your password.</p>
+            <p>Enter your username or phone number to change your password</p>
             {inputs}
             <Button ripple
               className="flood-form-button"

@@ -1076,10 +1076,6 @@ button.toggle-navigation-content.bottom-nav-button {
     height: 85px !important;
 }
 
-.mdl-tooltip {
-    // will-change: auto;
-}
-
 .subscription-list-item__locateAction {
     // height: 85px;
     margin: 0 !important;
@@ -1096,7 +1092,12 @@ button.toggle-navigation-content.bottom-nav-button {
 
 .form__swapper {
   float: right;
-  margin-right: 16px;
+  margin-right: 20px;
+
+  a {
+    color: $lighter-blue;
+  }
+
 }
 
 .form__back {
@@ -1153,10 +1154,6 @@ span.mdl-list__item-secondary-action > i {
     font-size: 10px !important;
 }
 
-// .mdl-tooltip {
-//     will-change: inherit !important;
-// }
-
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
     border: 2px solid $lighter-blue !important;
     .mdl-checkbox__tick-outline {
@@ -1165,6 +1162,13 @@ span.mdl-list__item-secondary-action > i {
 }
 
 .flood-form-button {
+  float: right;
+  margin-bottom: 10px !important;
+  padding: 0 20px 0 20px !important;
+  margin-right: -10px !important;
+}
+
+.subscription-list-save-button {
   float: right;
   margin-bottom: 10px !important;
 }
