@@ -1,5 +1,25 @@
 import React, { Component, PropTypes } from 'react'
-import { Button, Spinner, Textfield } from 'react-mdl'
+import { Button, Card, CardTitle, CardText, CardActions, Spinner, Textfield } from 'react-mdl'
+
+import Modal from 'react-modal'
+
+
+const reactModalStyle = {
+  overlay: {
+    backgroundColor   : 'rgba(0, 0, 0, 0.50)'
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    padding: 0,
+    transform: 'translate(-50%, -50%)',
+    border: null,
+    borderRadius: null
+  }
+}
 
 /** Form for creating a new user account and beginning the verification process */
 class AccountSettingsForm extends Component {
@@ -16,8 +36,9 @@ class AccountSettingsForm extends Component {
       password: '',
       confirmPassword: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleOpenConfirmDialog = this.handleOpenConfirmDialog.bind(this)
+    this.handleCloseConfirmDialog = this.handleCloseConfirmDialog.bind(this)
+    this.deleteAccount = this.deleteAccount.bind(this)
   }
 
   /**
@@ -32,41 +53,25 @@ class AccountSettingsForm extends Component {
     this.setState(nextState)
   }
 
+  handleOpenConfirmDialog() {
+    this.setState({
+      openConfirmDialog: true
+    })
+  }
 
-  /**
-   * Creates an account for the user in the user pool and sends a verification code.
-   * @param {object} event - event fired when the SIGN UP button is clicked
-   */
-  handleSignUp(event) {
-    event.preventDefault()
-    if (this.state.username == '') {
-      this.props.showSnackbar("Please enter a username")
-      return
-    }
-    if (this.state.phone == '') {
-      this.props.showSnackbar("Please enter your phone number")
-      return
-    }
-    if (this.state.password == '') {
-      this.props.showSnackbar("Please enter a password")
-      return
-    }
-    if (this.state.password != this.state.confirmPassword) {
-      this.props.showSnackbar("Passwords do not match")
-      this.setState({
-        password: '',
-        confirmPassword: ''
-      })
-      return
-    }
-    if (confirm(`Is ${this.state.phone} your correct phone number?`)) {
-      this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
-    } else {return}
+  handleCloseConfirmDialog() {
+    this.setState({
+      openConfirmDialog: false
+    })
+  }
+
+  deleteAccount() {
+    console.log("")
   }
 
   render() {
-
     return (
+      <div>
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Update your account settings below.</p>
             <Textfield floatingLabel
@@ -119,6 +124,25 @@ class AccountSettingsForm extends Component {
               value="Submit"
               style={{marginRight: "10px"}}>UPDATE</Button>
         </form>
+        <span style={{padding: "10px"}}>
+          <Button raised
+          style={{background: "#c0392b", color: "white", width: "280px"}}
+          onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</Button>
+        </span>
+        <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
+          <Card>
+            <CardTitle className="confirm-modal-title"><i className="material-icons">warning</i>
+            Confirm Delete
+            </CardTitle>
+            <CardText className="confirm-modal-text">Are you sure you want to delete your account?
+            Once deleted, your account cannot be recovered.</CardText>
+            <CardActions className="confirm-modal-actions">
+              <Button type="button" onClick={this.deleteAccount}>Confirm</Button>
+              <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+            </CardActions>
+          </Card>
+        </Modal>
+        </div>
     )
   }
 }

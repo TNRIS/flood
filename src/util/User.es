@@ -142,6 +142,17 @@ class AppUser {
     })
   }
 
+  deleteAccount = () => {
+    return new Promise((resolve, reject) => {
+      this.cognitoUser.deleteUser((err, result) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(result)
+      })
+    })
+  }
+
   resendVerificationCode = (callback) => {
     this.cognitoUser.resendConfirmationCode(function(err, result) {
         if (err) {
