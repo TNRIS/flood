@@ -47,20 +47,36 @@ class SubscriptionForm extends Component {
     let subscriptionManagerContent
     let formSwapper
     const userTools = (
-        <p className="form__swapper">
-          <a href="#" onClick={ this.props.userSignOut }>Sign Out</a>
-        </p>
+      <div style={{width: "100%", float: "left", marginTop: "10px"}}>
+        <Button
+        style={{width: "50%"}}
+        onClick={ () => this.props.swapDisplayForm("userSettings") }>Settings</Button>
+        <Button
+        style={{width: "50%"}}
+        onClick={ this.props.userSignOut }>Sign Out</Button>
+      </div>
+    )
+
+    const userToolsSettings = (
+      <div style={{width: "100%", float: "left", marginTop: "10px"}}>
+        <Button
+        style={{width: "50%"}}
+        onClick={ () => this.props.swapDisplayForm("SubscriptionList") }>Subscriptions</Button>
+        <Button
+        style={{width: "50%"}}
+        onClick={ this.props.userSignOut }>Sign Out</Button>
+      </div>
     )
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
-    if (this.props.allSubscriptions.length > 0 && !this.props.isFetching && !this.props.isUpdating) {
-      subscriptionManagerContent = (<SubscriptionListContainer/>)
-      formSwapper = (userTools)
-    }
-    else if (this.props.isFetching || this.props.isUpdating) {
+    if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
         <Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>
       )
+    }
+    else if (this.props.displayForm === "SubscriptionList") {
+      subscriptionManagerContent = (<SubscriptionListContainer/>)
+      formSwapper = (userTools)
     }
     else if (this.props.displayForm == "login") {
       subscriptionManagerContent = (
@@ -122,16 +138,17 @@ class SubscriptionForm extends Component {
         </p>
       )
     }
-    else if (this.props.displayForm === "noSubscriptions") {
+    else if (this.props.displayForm === "noSubscriptions" || this.props.allSubscriptions.length === 0) {
       subscriptionManagerContent = (
-        <p>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
+        <p style={{marginRight: "10px", marginLeft: "10px"}}>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
       )
       formSwapper = (userTools)
     }
     else if (this.props.displayForm === "userSettings") {
       subscriptionManagerContent = (
-        <AccountSettingsForm/>
+        <AccountSettingsForm />
       )
+      formSwapper = (userToolsSettings)
     }
 
     return (

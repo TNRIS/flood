@@ -69,6 +69,18 @@ export function noSubscriptionsFound() {
   }
 }
 
+/**
+ * Action for swapping between the sign up and login forms
+ * @param  {string} form     form to display. valid values: login, signUp, verify
+ * @return {object} action
+ */
+export function swapDisplayForm(form) {
+  return {
+    type: DISPLAY_FORM,
+    form
+  }
+}
+
 
 /**
  * Function to get all subscriptions from Amazon and filter for subscriptions
@@ -81,6 +93,7 @@ export function getUserSubscriptions() {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.checkForSubscriptions((records) => {
+      console.log(records.length)
       if (records.length === 0) {
         // No subscriptions found
         dispatch(noSubscriptionsFound())
@@ -105,21 +118,10 @@ export function getUserSubscriptions() {
           }
           if (counter === records.length) {
             dispatch(getSubscriptionsSuccess())
+            dispatch(swapDisplayForm("SubscriptionList"))
           }
         })
       }
     })
-  }
-}
-
-/**
- * Action for swapping between the sign up and login forms
- * @param  {string} form     form to display. valid values: login, signUp, verify
- * @return {object} action
- */
-export function swapDisplayForm(form) {
-  return {
-    type: DISPLAY_FORM,
-    form
   }
 }
