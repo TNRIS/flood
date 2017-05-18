@@ -132,7 +132,7 @@ class LoginForm extends Component {
     }
 
     return (
-        <form onSubmit={ this.handleSearch } style={{marginRight: "10px", marginLeft: "10px"}}>
+        <form className="login-form" onSubmit={ this.handleSearch }>
             <p>Enter your username or phone number with your password to manage your current subscriptions.</p>
             {inputs}
             <Textfield floatingLabel
@@ -146,7 +146,7 @@ class LoginForm extends Component {
               className="flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>LOGIN</Button>
+              style={{marginRight: "10px"}}>sign in</Button>
         </form>
     )
   }

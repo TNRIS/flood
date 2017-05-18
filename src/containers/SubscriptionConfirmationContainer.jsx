@@ -11,8 +11,7 @@ import SubscriptionConfirmation from '../components/SubscriptionConfirmation'
 const mapStateToProps = (state) => {
   return {
     showConfirmation: state.subscriptionConfirmation.showConfirmation,
-    lid: state.popupData.data.lid,
-    name: state.popupData.data.name
+    popupData: state.popupData
   }
 }
 

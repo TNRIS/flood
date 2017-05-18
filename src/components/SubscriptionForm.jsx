@@ -7,7 +7,7 @@ import SignupForm from './SignupForm'
 import VerifyForm from './VerifyForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 import NewPasswordForm from './NewPasswordForm'
-import AccountSettingsForm from './AccountSettingsForm'
+import AccountSettingsFormContainer from '../containers/AccountSettingsFormContainer'
 
 import FloodAppUser from '../util/User'
 
@@ -57,11 +57,19 @@ class SubscriptionForm extends Component {
       </div>
     )
 
+    let formByLength
+    if (this.props.allSubscriptions.length === 0) {
+      formByLength = "noSubscriptions"
+    }
+    else {
+      formByLength = "SubscriptionList"
+    }
+
     const userToolsSettings = (
       <div style={{width: "100%", float: "left", marginTop: "10px"}}>
         <Button
         style={{width: "50%"}}
-        onClick={ () => this.props.swapDisplayForm("SubscriptionList") }>Subscriptions</Button>
+        onClick={ () => this.props.swapDisplayForm(formByLength) }>Subscriptions</Button>
         <Button
         style={{width: "50%"}}
         onClick={ this.props.userSignOut }>Sign Out</Button>
@@ -89,7 +97,7 @@ class SubscriptionForm extends Component {
             <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
           </p>
           <p className="form__swapper">
-            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot Password</a>
+            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
           </p>
         </div>
       )
@@ -101,7 +109,7 @@ class SubscriptionForm extends Component {
       formSwapper = (
         <p className="form__swapper">
           <span>Already have an account? </span>
-          <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Login</a>
+          <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
         </p>
       )
     }
@@ -138,7 +146,7 @@ class SubscriptionForm extends Component {
         </p>
       )
     }
-    else if (this.props.displayForm === "noSubscriptions" || this.props.allSubscriptions.length === 0) {
+    else if (this.props.displayForm === "noSubscriptions" && this.props.allSubscriptions.length === 0) {
       subscriptionManagerContent = (
         <p style={{marginRight: "10px", marginLeft: "10px"}}>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
       )
@@ -146,7 +154,7 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm === "userSettings") {
       subscriptionManagerContent = (
-        <AccountSettingsForm />
+        <AccountSettingsFormContainer/>
       )
       formSwapper = (userToolsSettings)
     }

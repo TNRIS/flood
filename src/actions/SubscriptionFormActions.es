@@ -97,6 +97,7 @@ export function getUserSubscriptions() {
       if (records.length === 0) {
         // No subscriptions found
         dispatch(noSubscriptionsFound())
+        dispatch(swapDisplayForm('noSubscriptions'))
         dispatch(showSnackbar("No subscriptions found. Click a gage to subscribe and start receiving notifications."))
       }
       else {

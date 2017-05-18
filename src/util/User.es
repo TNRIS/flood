@@ -14,6 +14,8 @@ import {
   getUserSubscriptions
 } from '../actions/SubscriptionFormActions'
 
+import { util } from 'aws-sdk/global'
+
 
 class AppUser {
   constructor() {
@@ -78,7 +80,6 @@ class AppUser {
   authenticate = (callback) => {
     this.cognitoUser.authenticateUser(this.authenticationDetails, {
       onSuccess: (result) => {
-        console.log(this.AWS.config.credentials)
         this.idToken = result.getIdToken().getJwtToken()
         this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
           IdentityPoolId: this.appConfig.IdentityPoolId,
@@ -88,15 +89,19 @@ class AppUser {
         }, {
           region: 'us-east-1'
         })
-        console.log(this.AWS.config.credentials)
+
+        const payload = this.idToken.split('.')[1]
+        const expiration = JSON.parse(util.base64.decode(payload).toString('utf8'))
+        this.cognitoUsername = expiration["cognito:username"]
+
+
         this.AWS.config.credentials.clearCachedId()
         this.AWS.config.credentials.refresh((error) => {
             if (error) {
                 console.log(error);
-                console.log(this.AWS.config.credentials)
+
             } else {
               this.identityId = this.AWS.config.credentials.params.IdentityId
-              console.log(this)
 
               this.cognitoUser.getUserAttributes((err, att) => {
                 if (err) console.log(err)
@@ -106,13 +111,15 @@ class AppUser {
                     user[att[i].Name] = att[i].Value
                   }
                   this.userData = {...user}
-                  console.log(this.userData)
                 }
               })
               return callback(0)
             }
         })
-      }
+      },
+      onFailure: function(err) {
+        return callback(err)
+      },
     })
   }
 
@@ -126,7 +133,6 @@ class AppUser {
         if (err) {
             return callback(err)
         }
-
         return callback(0)
     })
   }
@@ -136,8 +142,6 @@ class AppUser {
       if (err) {
         return callback(err)
       }
-      console.log(result)
-
       return callback(0)
     })
   }
@@ -158,7 +162,6 @@ class AppUser {
         if (err) {
           return callback (err)
         }
-        console.log('call result: ' + result)
         return callback(0)
     })
   }
@@ -218,13 +221,10 @@ class FloodAppUser extends AppUser {
 
   checkForSubscriptions(callback) {
     this.syncSession = this.createCognitoSyncSession()
-    console.log(this.syncSession)
-    console.log(this.AWS.config.credentials)
     const baseParams = {
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
     }
-    console.log(baseParams)
 
     this.syncSession.listDatasets({
       IdentityId: this.identityId,
@@ -305,9 +305,6 @@ class FloodAppUser extends AppUser {
     })
   }
 
-  logout() {
-    console.log("logging out")
-  }
 }
 
 export default (new FloodAppUser)
