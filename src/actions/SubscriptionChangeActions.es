@@ -13,7 +13,8 @@ import {
 
 import {
   updateSubscriptionsAttempt,
-  updateSubscriptionsSuccess
+  updateSubscriptionsSuccess,
+  clearSubscriptionList
 } from './SubscriptionListActions'
 
 import {
@@ -169,6 +170,7 @@ export function saveSubscriptionChanges() {
         // Execute promise queue containing the subscription update operations.
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
+          dispatch(clearSubscriptionList())
           dispatch(getUserSubscriptions(user.email, user.phone, ""))
         }).catch(err => dispatch(sendErrorReport(err)))
       }

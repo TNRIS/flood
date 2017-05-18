@@ -15,6 +15,7 @@ import {
 } from './ToasterActions'
 
 import {
+  DELETE_ACCOUNT,
   LOGIN_ATTEMPT,
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
@@ -23,7 +24,7 @@ import {
   SHOW_USER_SETTINGS,
   USER_UNAUTHENTICATED } from '../constants/UserActionTypes'
 
-import { 
+import {
   swapDisplayForm,
   getSubscriptionsAttempt,
   getSubscriptionsSuccess,
@@ -96,6 +97,14 @@ export function userLogin(username, password) {
       }
       else {
         dispatch(getSubscriptionsError())
+        if (result == "NotAuthorizedException: Incorrect username or password.") {
+          dispatch(showSnackbar("Incorrect username or password. Please try again."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+
       }
     })
   }
@@ -248,6 +257,14 @@ export function userSignOut() {
         dispatch(sendErrorReport(result))
         dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
       }
+    })
+  }
+}
+
+export function deleteAccount() {
+  return (dispatch) => {
+    FloodAppUser.deleteAccount().then(() => {
+      dispatch(userSignOut())
     })
   }
 }

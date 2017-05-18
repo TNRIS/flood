@@ -1113,6 +1113,14 @@ button.toggle-navigation-content.bottom-nav-button {
   }
 }
 
+.user__settings {
+  padding: 10px;
+  
+  p {
+    word-wrap: break-word;
+  }
+}
+
 span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
     margin: 0;
 
