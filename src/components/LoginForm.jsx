@@ -133,7 +133,6 @@ class LoginForm extends Component {
 
     return (
         <form onSubmit={ this.handleSearch } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Click on a flood gage and subscribe to receive alerts.</p>
             <p>Enter your username or phone number with your password to manage your current subscriptions.</p>
             {inputs}
             <Textfield floatingLabel

@@ -1135,6 +1135,8 @@ span.mdl-badge {
 
     &:after {
         background-color: $accent-dark-green !important;
+        top: 0 !important;
+        right: -30 !important;
     }
 }
 
@@ -1528,7 +1530,7 @@ div.confirm-modal-title {
     vertical-align: middle;
 
     span {
-        padding-left: 6px;
+        padding-left: 10px;
     }
 }
 
@@ -1582,7 +1584,7 @@ div.subscription-confirm-modal-title {
     vertical-align: middle;
 
     span {
-        padding-left: 6px;
+        padding-left: 10px;
     }
 }
 
