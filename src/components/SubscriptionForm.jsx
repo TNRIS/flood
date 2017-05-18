@@ -57,11 +57,19 @@ class SubscriptionForm extends Component {
       </div>
     )
 
+    let formByLength
+    if (this.props.allSubscriptions.length === 0) {
+      formByLength = "noSubscriptions"
+    }
+    else {
+      formByLength = "SubscriptionList"
+    }
+
     const userToolsSettings = (
       <div style={{width: "100%", float: "left", marginTop: "10px"}}>
         <Button
         style={{width: "50%"}}
-        onClick={ () => this.props.swapDisplayForm("SubscriptionList") }>Subscriptions</Button>
+        onClick={ () => this.props.swapDisplayForm(formByLength) }>Subscriptions</Button>
         <Button
         style={{width: "50%"}}
         onClick={ this.props.userSignOut }>Sign Out</Button>

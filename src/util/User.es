@@ -120,7 +120,10 @@ class AppUser {
               return callback(0)
             }
         })
-      }
+      },
+      onFailure: function(err) {
+        return callback(err)
+      },
     })
   }
 

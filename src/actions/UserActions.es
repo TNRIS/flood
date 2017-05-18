@@ -96,6 +96,14 @@ export function userLogin(username, password) {
       }
       else {
         dispatch(getSubscriptionsError())
+        if (result == "NotAuthorizedException: Incorrect username or password.") {
+          dispatch(showSnackbar("Incorrect username or password. Please try again."))
+        }
+        else {
+          dispatch(sendErrorReport(result))
+          dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+        }
+
       }
     })
   }
