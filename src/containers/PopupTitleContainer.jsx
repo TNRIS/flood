@@ -1,16 +1,23 @@
 import { connect } from 'react-redux'
 
-import * as actions from '../actions'
+import { showSubscriptionConfirmation } from '../actions/SubscribeActions'
+import { showSnackbar } from '../actions/ToasterActions'
+
 import PopupTitle from '../components/PopupTitle'
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    user: state.user
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showSubscribe: () => {
-      dispatch(actions.showSubscribeDialog())
+    showSubscriptionConfirmation: () => {
+      dispatch(showSubscriptionConfirmation())
+    },
+    showSnackbar: (toppings) => {
+      dispatch(showSnackbar(toppings))
     }
   }
 }

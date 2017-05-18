@@ -5,7 +5,7 @@ import baseLayers from './baseLayers'
 import featureLayers from './featureLayers'
 import gageInfo from './gageInfo'
 import map from './map'
-import subscribeDialog from './subscribeDialog'
+import subscriptionConfirmation from './subscriptionConfirmation'
 import { subscriptionChangesById, allSubscriptionChanges, allProcessedSubscriptions } from './subscriptionChanges'
 import subscriptionForm from './subscriptionForm'
 import subscriptionList from './subscriptionList'
@@ -21,7 +21,7 @@ export const rootReducer = combineReducers({
   featureLayers: featureLayers,
   map: map,
   gageInfo,
-  subscribeDialog: subscribeDialog,
+  subscriptionConfirmation: subscriptionConfirmation,
   browser: responsiveStateReducer,
   subscriptionChanges: combineReducers({
     subscriptionChangesById,

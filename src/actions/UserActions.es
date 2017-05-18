@@ -20,9 +20,11 @@ import {
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
   SET_SYNC_SESSION_TOKEN,
-  SHOW_USER_SETTINGS } from '../constants/UserActionTypes'
+  SHOW_USER_SETTINGS,
+  USER_UNAUTHENTICATED } from '../constants/UserActionTypes'
 
-import { swapDisplayForm,
+import { 
+  swapDisplayForm,
   getSubscriptionsAttempt,
   getSubscriptionsSuccess,
   getSubscriptionsError } from './SubscriptionFormActions'
@@ -56,6 +58,12 @@ export function newPasswordRequired(username) {
   return {
     type: NEW_PASSWORD_REQUIRED,
     username
+  }
+}
+
+export function unauthenticateUser() {
+  return {
+    type: USER_UNAUTHENTICATED
   }
 }
 
@@ -232,6 +240,7 @@ export function userSignOut() {
         dispatch(swapDisplayForm('login'))
         dispatch(clearSubscriptionList())
         dispatch(showSnackbar("You have successfully signed out."))
+        dispatch(unauthenticateUser())
         dispatch(getSubscriptionsSuccess())
       }
       else {
