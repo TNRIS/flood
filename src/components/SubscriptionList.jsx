@@ -264,11 +264,6 @@ class SubscriptionList extends React.Component {
             )}
           </List>
           {saveButton()}
-          <Button ripple
-            className="flood-form-button"
-            style={{marginLeft: "10px"}}
-            onClick={this.props.clearSubscriptionList}>BACK</Button>
-
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
                 <CardTitle className="confirm-modal-title"><i className="material-icons">save</i>

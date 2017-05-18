@@ -236,7 +236,11 @@ class FloodAppUser extends AppUser {
     this.syncSession.listRecords(params, (err, subscriptions) => {
       if (err) console.log(err)
       else {
-        this.userSubscriptions = this.userSubscriptions.concat(subscriptions.Records)
+        subscriptions.Records.forEach((subscription) => {
+          if (subscription.Value) {
+            this.userSubscriptions.push(subscription)
+          }
+        })
         if (subscriptions.nextToken) {
           this.getUserSubscriptions({nextToken})
         }

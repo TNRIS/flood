@@ -19,10 +19,12 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,
   NEW_PASSWORD_REQUIRED,
-  USER_UNAUTHENTICATED,
-  SET_SYNC_SESSION_TOKEN } from '../constants/UserActionTypes'
+  SET_SYNC_SESSION_TOKEN,
+  SHOW_USER_SETTINGS,
+  USER_UNAUTHENTICATED } from '../constants/UserActionTypes'
 
-import { swapDisplayForm,
+import { 
+  swapDisplayForm,
   getSubscriptionsAttempt,
   getSubscriptionsSuccess,
   getSubscriptionsError } from './SubscriptionFormActions'
@@ -71,6 +73,12 @@ export function setSyncSessionToken(token) {
     payload: {
       SyncSessionToken: token
     }
+  }
+}
+
+export function showUserSettings() {
+  return {
+    type: SHOW_USER_SETTINGS
   }
 }
 
