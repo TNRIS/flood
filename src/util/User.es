@@ -14,6 +14,8 @@ import {
   getUserSubscriptions
 } from '../actions/SubscriptionFormActions'
 
+import { util } from 'aws-sdk/global'
+
 
 class AppUser {
   constructor() {
@@ -89,6 +91,12 @@ class AppUser {
           region: 'us-east-1'
         })
         console.log(this.AWS.config.credentials)
+
+        const payload = this.idToken.split('.')[1]
+        const expiration = JSON.parse(util.base64.decode(payload).toString('utf8'))
+        this.cognitoUsername = expiration["cognito:username"]
+
+
         this.AWS.config.credentials.clearCachedId()
         this.AWS.config.credentials.refresh((error) => {
             if (error) {

@@ -138,7 +138,7 @@ class SubscriptionForm extends Component {
         </p>
       )
     }
-    else if (this.props.displayForm === "noSubscriptions" || this.props.allSubscriptions.length === 0) {
+    else if (this.props.displayForm === "noSubscriptions" && this.props.allSubscriptions.length === 0) {
       subscriptionManagerContent = (
         <p style={{marginRight: "10px", marginLeft: "10px"}}>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
       )
