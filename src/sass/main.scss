@@ -1174,11 +1174,8 @@ span.mdl-list__item-secondary-action > i {
 
 .flood-form-button {
   float: right;
+  margin-bottom: 10px !important;
 }
-
-// .flood-form-button:enabled {
-//     color: $darker-blue !important;
-// }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
@@ -1599,4 +1596,9 @@ div.subscription-confirm-modal-title {
 .subscription-confirm-modal-text {
   color: $gray20 !important;
   width: 98%;
+}
+
+.login-form {
+  margin-right: 10px;
+  margin-left: 10px;
 }

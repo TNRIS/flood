@@ -22,19 +22,27 @@ class SubscriptionConfirmation extends Component {
     hideSubscriptionConfirmation: PropTypes.func,
     showSnackbar: PropTypes.func,
     subscribeGage: PropTypes.func,
-    lid: PropTypes.string,
-    name: PropTypes.string
+    popupData: PropTypes.object
   }
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      lid: "",
+      name: ""
+    }
     this.handleCloseModal = this.handleCloseModal.bind(this)
     this.handleConfirmation = this.handleConfirmation.bind(this)
   }
 
   componentDidMount() {
-    console.log(this.props)
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      lid: this.props.popupData.data.lid,
+      name: this.props.popupData.data.name
+    })
   }
 
   handleCloseModal() {
@@ -43,7 +51,7 @@ class SubscriptionConfirmation extends Component {
 
   handleConfirmation(event) {
     event.preventDefault()
-    this.props.subscribeGage(this.props.lid.toUpperCase())
+    this.props.subscribeGage(this.props.popupData.data.lid.toUpperCase())
     this.handleCloseModal()
   }
 
@@ -59,7 +67,7 @@ class SubscriptionConfirmation extends Component {
           </CardTitle>
           <CardText className="subscription-confirm-modal-text">
             <p>Are you sure you want to subscribe to receive alerts for the
-            <b> { this.props.name } ({ this.props.lid })</b> flood gage?</p>
+            <b> { this.state.name } ({ this.state.lid })</b> flood gage?</p>
           </CardText>
           <CardActions className="subscription-confirm-modal-actions">
             <Button type="button" onClick={this.handleConfirmation}>Confirm</Button>
