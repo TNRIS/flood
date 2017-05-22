@@ -102,7 +102,7 @@ class AppUser {
 
             } else {
               this.identityId = this.AWS.config.credentials.params.IdentityId
-
+              console.log(this.identityId)
               this.cognitoUser.getUserAttributes((err, att) => {
                 if (err) console.log(err)
                 else {
