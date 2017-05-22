@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
@@ -13,6 +13,14 @@ import FloodFooter from './FloodFooter'
 ga.pageview(window.location.pathname)
 
 export default class App extends Component {
+  static propTypes = {
+    showSnackbar: PropTypes.func,
+    location: PropTypes.object,
+    browser: PropTypes.object,
+    userAuthentication: PropTypes.number,
+    params: PropTypes.object
+  }
+
   constructor(props) {
     super(props)
   }
