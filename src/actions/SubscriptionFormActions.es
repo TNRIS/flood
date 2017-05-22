@@ -93,7 +93,6 @@ export function getUserSubscriptions() {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.checkForSubscriptions((records) => {
-      console.log(records.length)
       if (records.length === 0) {
         // No subscriptions found
         dispatch(noSubscriptionsFound())
@@ -107,7 +106,6 @@ export function getUserSubscriptions() {
         // set counter to zero to iterate new list of subscriptions
         let counter = 0
         records.forEach(subscription => {
-          console.log(subscription)
           counter++
           if (subscription.Value) {
             const subscriptionData = JSON.parse(subscription.Value)

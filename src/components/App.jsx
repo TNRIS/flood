@@ -45,7 +45,9 @@ componentDidMount() {
         <Layout fixedDrawer fixedHeader>
           <FloodHeaderContainer />
             <NavigationDrawer
-              navContentInitState={navContentInitState()} browser={this.props.browser}
+              navContentInitState={navContentInitState()}
+              browser={this.props.browser}
+              userAuthentication={this.props.userAuthentication}
             />
             <Content>
             <MapContainer
