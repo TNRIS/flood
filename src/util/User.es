@@ -277,6 +277,15 @@ class FloodAppUser extends AppUser {
                   resolve(newRecords)
                   store.dispatch(getUserSubscriptions())
                 },
+		            onConflict: (dataset, conflicts, callback) => {
+		              const resolved = []
+		              for (let i=0; i<conflicts.length; i++) {
+			              resolved.push(conflicts[i].resolveWithLocalRecord())
+		              }
+		              dataset.resolve(resolved, () => {
+			              resolve(resolved)
+		              })
+		            },
                 onFailure: (syncError) => {
                   reject(syncError)
                 }
@@ -295,10 +304,23 @@ class FloodAppUser extends AppUser {
           if (err) console.log(err)
           dataset.remove(arn, (removeError) => {
             if (removeError) reject(removeError)
-            dataset.synchronize({
-              onSuccess: (updatedDataset, newRecords) => resolve(newRecords),
-              onFailure: (syncError) => reject(syncError)
-            })
+            else {
+              dataset.synchronize({
+                onSuccess: (updatedDataset, newRecords) => {
+                  resolve(newRecords)
+                },
+                onConflict: (dataset, conflicts, callback) => {
+                  const resolved = []
+                  for (let  i = 0; i < conflicts.length; i++) {
+                    resolved.push(conflicts[i].resolveWithLocalRecord())
+                  }
+                  dataset.resolve(resolved, () => {
+                    resolve(resolved)
+                  })
+                },
+                onFailure: (syncError) => reject(syncError)
+              })
+            }
           })
         })
       })

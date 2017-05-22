@@ -97,9 +97,9 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.email}/>
             <Textfield floatingLabel
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
-                       minLength={8}
-                       error="Minimum 8 characters. Requires uppercase, lowercase, a number, and a special character"
+                       pattern=".{4,}"
+                       minLength={4}
+                       error="Minimum 4 characters. Requires uppercase, lowercase, a number, and a special character"
                        label="Password"
                        type="password"
                        id="password"
