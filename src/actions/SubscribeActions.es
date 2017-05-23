@@ -11,6 +11,9 @@ import {
   HIDE_SUBSCRIPTION_CONFIRMATION
 } from '../constants/SubscribeActionTypes'
 
+import AWS from 'aws-sdk/dist/aws-sdk' 
+import keys from '../keys'
+
 /**
  * Function to show the subscription confirmation modal
  * @return {boolean}  description
@@ -97,9 +100,7 @@ export function subscribeGage(lid) {
 
 // Richard's Demo Fake-Flood Button
 export function demoSendAlert() {
-  const AWS = window.AWS
-  window.AWS.config.update(keys.awsConfig)
-  const sns = new AWS.SNS()
+  const sns = new FloodAppUser.AWS.SNS()
 
   const confirm = {
     TopicArn: keys.SNS_TOPIC_ARN_BASE + "flood-demo-temp",

@@ -26,6 +26,7 @@ const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 import objectAssign from 'object-assign'
 import { demoSendAlert } from '../actions/SubscribeActions.es'
+import FloodAppUser from '../util/User'
 // END OF RICHARD DEMO CODE
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
@@ -468,8 +469,14 @@ export default class Map extends Component {
         icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">pool</i>',
         title: 'Simulate Flood',
         onClick: (control) => {
-          control.state("reset-data")
-          this.simulateFlood(leafletMap, demoSQL, true)
+          if (FloodAppUser.cognitoUser) {
+            control.state("reset-data")
+            this.simulateFlood(leafletMap, demoSQL, true)
+          } else { 
+            this.props.showSnackbar(
+              "You must be logged in to simulate a flood."
+            )
+          }
         }
       }, {
         stateName: 'reset-data',
