@@ -20,8 +20,8 @@ export function sendErrorReport(error) {
       Message: error.name + '\n' + error.stack
     }
     console.log(errorMessage.Message)
-    // return sns.publish(errorMessage).promise().then(
-    //   () => dispatch(showSnackbar('An error has been reported to the TNRIS development team.'))
-    // )
+    return sns.publish(errorMessage).promise().then(
+      () => dispatch(showSnackbar('An error has been reported to the TNRIS development team.'))
+    )
   }
 }

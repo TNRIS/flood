@@ -296,6 +296,23 @@ class FloodAppUser extends AppUser {
     })
   }
 
+  syncData(dataset) {
+    dataset.synchronize({
+      onSuccess: (updatedDataset, newRecords) => {
+        resolve(newRecords)
+      },
+      onConflict: (dataset, conflicts, callback) => {
+        const resolved = []
+        for (let i = 0; i < conflicts.length; i++) {
+          resolved.push(conflicts[i].resolveWithRemoteRecord())
+        }
+        dataset.resolve(resolved, () => {
+          resolve(resolved)
+        })
+      },
+      onFailure: (syncError) => reject(syncError)
+  }
+
   unsubscribe(arn) {
     return new Promise((resolve, reject) => {
       this.AWS.config.credentials.get(() => {
@@ -307,12 +324,14 @@ class FloodAppUser extends AppUser {
             else {
               dataset.synchronize({
                 onSuccess: (updatedDataset, newRecords) => {
+                  console.log("success")
                   resolve(newRecords)
                 },
                 onConflict: (dataset, conflicts, callback) => {
                   const resolved = []
+                  console.log("conflict")
                   for (let  i = 0; i < conflicts.length; i++) {
-                    resolved.push(conflicts[i].resolveWithLocalRecord())
+                    resolved.push(conflicts[i].resolveWithRemoteRecord())
                   }
                   dataset.resolve(resolved, () => {
                     resolve(resolved)
