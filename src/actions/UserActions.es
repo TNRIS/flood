@@ -253,6 +253,7 @@ export function userSignOut() {
         dispatch(showSnackbar("You have successfully signed out."))
         dispatch(unauthenticateUser())
         dispatch(getSubscriptionsSuccess())
+        FloodAppUser.cognitoUser = null
       }
       else {
         dispatch(getSubscriptionsError())
