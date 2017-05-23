@@ -1173,12 +1173,12 @@ span.mdl-list__item-secondary-action > i {
   float: right;
   margin-bottom: 10px !important;
   padding: 0 20px 0 20px !important;
-  margin-right: -10px !important;
 }
 
 .subscription-list-save-button {
   float: right;
   margin-bottom: 10px !important;
+  margin-right: 10px !important;
 }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
@@ -1448,7 +1448,7 @@ label.hide-disclaimer-checkbox {
 .mdl-snackbar {
   z-index: 10 !important;
   background-color: #4F85AE !important;
-  
+
 
   a {
     color: $accent-dark-green;
