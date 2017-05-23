@@ -1115,7 +1115,7 @@ button.toggle-navigation-content.bottom-nav-button {
 
 .user__settings {
   padding: 10px;
-  
+
   p {
     word-wrap: break-word;
   }
@@ -1605,4 +1605,32 @@ div.subscription-confirm-modal-title {
 .login-form {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.settings-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.subscriptions-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px;
+    }
+  }
 }
