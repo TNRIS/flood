@@ -1448,9 +1448,15 @@ label.hide-disclaimer-checkbox {
 .mdl-snackbar {
   z-index: 10 !important;
   background-color: #4F85AE !important;
+  
 
   a {
     color: $accent-dark-green;
+  }
+
+  .mdl-snackbar__text {
+    text-align: center;
+    width: 100%;
   }
 }
 

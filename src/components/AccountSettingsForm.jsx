@@ -97,7 +97,7 @@ class AccountSettingsForm extends Component {
       <div>
         <div className="user__settings">
           <p><b>Current User Profile</b></p>
-          <p><b>Username:</b> { FloodAppUser.cognitoUsername }</p>
+          <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
           <p><b>Phone:</b> { profile.phone_number.substring(2) }</p>
           <p><b>Email:</b> { email }</p>
           <span>

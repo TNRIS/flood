@@ -33,6 +33,7 @@ class AppUser {
       ClientId: this.clientId
     }
     this.AWS.config.update({region: this.region})
+    this.userPool = new this.AWS.CognitoIdentityServiceProvider.CognitoUserPool(this.poolData)
   }
 
   setCognitoUser = (loginInfo) => {
@@ -45,7 +46,6 @@ class AppUser {
     }
     this.authenticationDetails = new this.AWS.CognitoIdentityServiceProvider.AuthenticationDetails(
       this.authenticationData)
-    this.userPool = new this.AWS.CognitoIdentityServiceProvider.CognitoUserPool(this.poolData)
 
     this.userData = {
       Username: this.username,
@@ -90,19 +90,13 @@ class AppUser {
           region: 'us-east-1'
         })
 
-        const payload = this.idToken.split('.')[1]
-        const expiration = JSON.parse(util.base64.decode(payload).toString('utf8'))
-        this.cognitoUsername = expiration["cognito:username"]
-
 
         this.AWS.config.credentials.clearCachedId()
         this.AWS.config.credentials.refresh((error) => {
             if (error) {
                 console.log(error);
-
             } else {
               this.identityId = this.AWS.config.credentials.params.IdentityId
-
               this.cognitoUser.getUserAttributes((err, att) => {
                 if (err) console.log(err)
                 else {
@@ -167,8 +161,6 @@ class AppUser {
   }
 
   forgotPassword = (username, callback) => {
-    this.userPool = new this.AWS.CognitoIdentityServiceProvider.CognitoUserPool(this.poolData)
-
     this.userData = {
       Username: username,
       Pool: this.userPool
@@ -207,6 +199,50 @@ class AppUser {
     })
   }
 
+  retrieveUser = (callback) => {
+    this.cognitoUser = this.userPool.getCurrentUser()
+    if (this.cognitoUser != null) {
+      const session = this.cognitoUser.getSession(function(err, session) {
+          if (err) {
+              return callback(err)
+          }
+          return session
+
+      })
+      this.idToken = session.getIdToken().getJwtToken()
+      this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.appConfig.IdentityPoolId,
+        Logins: {
+          [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
+        }
+      }, {
+        region: 'us-east-1'
+      })
+
+      this.AWS.config.credentials.clearCachedId()
+      this.AWS.config.credentials.refresh((error) => {
+          if (error) {
+              console.log(error);
+          } else {
+            this.identityId = this.AWS.config.credentials.params.IdentityId
+            this.cognitoUser.getUserAttributes((err, att) => {
+              if (err) console.log(err)
+              else {
+                const user = {}
+                for (let i = 0; i < att.length; i++) {
+                  user[att[i].Name] = att[i].Value
+                }
+                this.userData = {...user}
+              }
+            })
+            return callback(0, this.cognitoUser.username)
+          }
+      })
+
+
+    }
+  }
+
 }
 
 
@@ -225,7 +261,6 @@ class FloodAppUser extends AppUser {
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
     }
-
     this.syncSession.listDatasets({
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
