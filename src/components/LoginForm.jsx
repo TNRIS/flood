@@ -133,7 +133,7 @@ class LoginForm extends Component {
 
     return (
         <form className="login-form" onSubmit={ this.handleSearch }>
-            <p>Enter your username or phone number with your password to manage your current subscriptions.</p>
+            <p>Sign in to subscribe to flood gages and manage your current gage subscriptions</p>
             {inputs}
             <Textfield floatingLabel
                        label="Password"

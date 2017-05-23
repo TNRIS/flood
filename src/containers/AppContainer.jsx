@@ -10,7 +10,10 @@ import {
 import { retrieveUser } from '../actions/UserActions'
 
 const mapStateToProps = (state) => {
-  return {browser: state.browser}
+  return {
+    browser: state.browser,
+    userAuthentication: state.user.authentication
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

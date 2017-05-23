@@ -11,11 +11,13 @@ class NavigationToggle extends Component {
     this.state = {
       navigationContent: 'layers',
       showFeatureLayerChooser: this.props.navContentInitState.showFeatureLayerChooser,
-      showSubscriptionForm: this.props.navContentInitState.showSubscriptionForm
+      showSubscriptionForm: this.props.navContentInitState.showSubscriptionForm,
+      userAuthentication: this.props.userAuthentication
     }
 
     this.handleSetNavigationUnsubscribe = this.handleSetNavigationUnsubscribe.bind(this)
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
+    this.handleSetSignInButton = this.handleSetSignInButton.bind(this)
   }
 
   componentDidMount() {
@@ -37,6 +39,10 @@ class NavigationToggle extends Component {
   handleSetNavigationLayers() {
     this.setState({navigationContent: 'layers'})
     this.setState({showFeatureLayerChooser: !this.state.showFeatureLayerChooser})
+  }
+
+  handleSetSignInButton() {
+    return this.props.userAuthentication === 0 ? "My Gage Alerts" : "Sign In"
   }
 
   render() {
@@ -61,7 +67,7 @@ class NavigationToggle extends Component {
               name="notifications_active"
               className="add-alert"
           />
-          MY GAGE ALERTS</Button>
+          {this.handleSetSignInButton()}</Button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
       </div>

@@ -7,7 +7,7 @@ import SignupForm from './SignupForm'
 import VerifyForm from './VerifyForm'
 import ForgotPasswordForm from './ForgotPasswordForm'
 import NewPasswordForm from './NewPasswordForm'
-import AccountSettingsForm from './AccountSettingsForm'
+import AccountSettingsFormContainer from '../containers/AccountSettingsFormContainer'
 
 import FloodAppUser from '../util/User'
 
@@ -154,7 +154,7 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm === "userSettings") {
       subscriptionManagerContent = (
-        <AccountSettingsForm />
+        <AccountSettingsFormContainer/>
       )
       formSwapper = (userToolsSettings)
     }

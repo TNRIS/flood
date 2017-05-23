@@ -17,7 +17,6 @@ const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
 const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
-// const gpsNotFixedIcon = require("../images/ic_gps_not_fixed_black_18dp_2x.png")
 
 import axios from 'axios'
 
@@ -57,7 +56,6 @@ export default class Map extends Component {
     this.state = {
       animationIcon: "play_arrow",
       geolocateControl: "basic",
-      mapboxWordmarkClass: "hide-mapbox-wordmark",
       locateToolbar: null
     }
   }
@@ -73,9 +71,7 @@ export default class Map extends Component {
       this.initializeGeocoderControl()
       this.initializeBasemapLayers()
       this.map.zoomControl.setPosition('bottomright')
-      // this.map.attributionControl.setPrefix('Data Sourced From')
       this.initializeLayerStore(this.props, this.map)
-      // this.fullscreenControl()
       this.geolocationControl()
 
       const defaultMarker = L.icon({
@@ -141,12 +137,7 @@ export default class Map extends Component {
 
           this.map.addLayer(this.geolocateIcon)
 
-          // this.map.addLayer(this.geolocateCircle)
-
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
-            // this.map.fitBounds(
-            //   this.geolocateCircle.getBounds()
-            // )
             this.map.setView(e.latlng, 16)
           }
         })
@@ -286,8 +277,6 @@ export default class Map extends Component {
     const nextActiveBaseLayer = nextProps.baseLayers.active
     if (activeBaseLayer !== nextActiveBaseLayer) {
       basemaps[nextActiveBaseLayer].addTo(this.map)
-      basemaps[nextActiveBaseLayer].options.mapbox ? this.setState({mapboxWordmarkClass: "mapbox-wordmark"}) :
-                                                     this.setState({mapboxWordmarkClass: "hide-mapbox-wordmark"})
       this.map.eachLayer((layer) => {
         if (layer.options.layerId === activeBaseLayer) {
           this.map.removeLayer(layer)
@@ -503,7 +492,6 @@ export default class Map extends Component {
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <a href="http://mapbox.com/about/maps" className={this.state.mapboxWordmarkClass} target="_blank">Mapbox</a>
           <div className="weatherTimestamp">
             <p>{this.displayedTimestamp}</p>
           </div>

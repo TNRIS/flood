@@ -200,14 +200,14 @@ class SubscriptionList extends React.Component {
       if (this.props.allSubscriptionChanges.length > 0) {
         save = (
           <Button ripple
-            className="flood-form-button"
+            className="subscription-list-save-button"
             onClick={this.handleOpenConfirmDialog}>SAVE CHANGES</Button>
         )
       }
       else {
         save = (
           <Button ripple disabled
-            className="flood-form-button">SAVE CHANGES</Button>
+            className="subscription-list-save-button">SAVE CHANGES</Button>
         )
       }
       return save
