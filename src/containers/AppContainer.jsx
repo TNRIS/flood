@@ -7,6 +7,8 @@ import {
   setCenterAndZoom
 } from '../actions/SubscriptionChangeActions'
 
+import { retrieveUser } from '../actions/UserActions'
+
 const mapStateToProps = (state) => {
   return {
     browser: state.browser,
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     showSnackbar: (toppings, timeout) => {
       dispatch(showSnackbar(toppings, timeout))
+    },
+    retrieveUser: () => {
+      dispatch(retrieveUser())
     }
   }
 }

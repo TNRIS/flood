@@ -47,12 +47,10 @@ class SubscriptionForm extends Component {
     let subscriptionManagerContent
     let formSwapper
     const userTools = (
-      <div style={{width: "100%", float: "left", marginTop: "10px"}}>
+      <div className="settings-sign-out-button-wrapper">
         <Button
-        style={{width: "50%"}}
         onClick={ () => this.props.swapDisplayForm("userSettings") }>Settings</Button>
         <Button
-        style={{width: "50%"}}
         onClick={ this.props.userSignOut }>Sign Out</Button>
       </div>
     )
@@ -66,12 +64,10 @@ class SubscriptionForm extends Component {
     }
 
     const userToolsSettings = (
-      <div style={{width: "100%", float: "left", marginTop: "10px"}}>
+      <div className="subscriptions-sign-out-button-wrapper">
         <Button
-        style={{width: "50%"}}
         onClick={ () => this.props.swapDisplayForm(formByLength) }>Subscriptions</Button>
         <Button
-        style={{width: "50%"}}
         onClick={ this.props.userSignOut }>Sign Out</Button>
       </div>
     )

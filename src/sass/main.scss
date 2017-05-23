@@ -1115,7 +1115,7 @@ button.toggle-navigation-content.bottom-nav-button {
 
 .user__settings {
   padding: 10px;
-  
+
   p {
     word-wrap: break-word;
   }
@@ -1173,12 +1173,12 @@ span.mdl-list__item-secondary-action > i {
   float: right;
   margin-bottom: 10px !important;
   padding: 0 20px 0 20px !important;
-  margin-right: -10px !important;
 }
 
 .subscription-list-save-button {
   float: right;
   margin-bottom: 10px !important;
+  margin-right: 10px !important;
 }
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
@@ -1449,8 +1449,14 @@ label.hide-disclaimer-checkbox {
   z-index: 10 !important;
   background-color: #4F85AE !important;
 
+
   a {
     color: $accent-dark-green;
+  }
+
+  .mdl-snackbar__text {
+    text-align: center;
+    width: 100%;
   }
 }
 
@@ -1605,4 +1611,32 @@ div.subscription-confirm-modal-title {
 .login-form {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.settings-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.subscriptions-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px;
+    }
+  }
 }
