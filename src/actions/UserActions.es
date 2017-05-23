@@ -99,6 +99,9 @@ export function userLogin(username, password) {
         if (result == "NotAuthorizedException: Incorrect username or password.") {
           dispatch(showSnackbar("Incorrect username or password. Please try again."))
         }
+        else if (result == "UserNotFoundException: User does not exist.") {
+          dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
+        }
         else {
           dispatch(sendErrorReport(result))
           dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
@@ -222,7 +225,6 @@ export function newPassword(verificationCode, password) {
             dispatch(getSubscriptionsSuccess())
         }
         else {
-            console.log(result)
             dispatch(getSubscriptionsError())
             if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
               dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
@@ -255,6 +257,18 @@ export function userSignOut() {
         dispatch(getSubscriptionsError())
         dispatch(sendErrorReport(result))
         dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
+      }
+    })
+  }
+}
+
+export function retrieveUser() {
+  return (dispatch) => {
+    return FloodAppUser.retrieveUser((result, username) => {
+      if (result === 0) {
+        dispatch(showSnackbar(`Hello ${username}!!`))
+        dispatch(loginSuccessful())
+        dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
       }
     })
   }
