@@ -1,8 +1,39 @@
-import AWS from 'aws-sdk/dist/aws-sdk'
-import keys from '../keys'
-
 import { showSnackbar } from './ToasterActions'
 import { sendErrorReport } from './StevieActions'
+
+import {
+  getUserSubscriptions
+} from './SubscriptionFormActions'
+
+import FloodAppUser from '../util/User'
+import {
+  SHOW_SUBSCRIPTION_CONFIRMATION,
+  HIDE_SUBSCRIPTION_CONFIRMATION
+} from '../constants/SubscribeActionTypes'
+
+/**
+ * Function to show the subscription confirmation modal
+ * @return {boolean}  description
+ */
+export function showSubscriptionConfirmation() {
+  return (dispatch) => {
+    dispatch({
+      type: SHOW_SUBSCRIPTION_CONFIRMATION
+    })
+  }
+}
+
+/**
+ * Function to hide the subscription confirmation modal
+ * @return {boolean}  description
+ */
+export function hideSubscriptionConfirmation() {
+  return (dispatch) => {
+    dispatch({
+      type: HIDE_SUBSCRIPTION_CONFIRMATION
+    })
+  }
+}
 
 /**
  * Function confirms to the user that they have subscribed to a gage via sms
@@ -11,9 +42,7 @@ import { sendErrorReport } from './StevieActions'
  */
 export function confirmSubscription(phoneNumber, lid) {
   return dispatch => {
-    const AWS = window.AWS
-    AWS.config.update(keys.awsConfig)
-    const sns = new AWS.SNS()
+    const sns = new FloodAppUser.AWS.SNS()
 
     const confirm = {
       PhoneNumber: phoneNumber,
@@ -31,12 +60,9 @@ export function confirmSubscription(phoneNumber, lid) {
  * @param  {string} endpoint subscription endpoint
  * @return {promise}         AWS SDK promise
  */
-export function subscribeGage(lid, protocol, endpoint) {
-  return dispatch => {
-    //create aws connection object
-    const AWS = window.AWS
-    window.AWS.config.update(keys.awsConfig)
-    const sns = new AWS.SNS()
+export function subscribeGage(lid) {
+  return (dispatch) => {
+    const sns = new FloodAppUser.AWS.SNS()
 
     const topicParams = {
       // Name: lid
@@ -45,22 +71,27 @@ export function subscribeGage(lid, protocol, endpoint) {
 
     // Create the topic, function is impotent so will create or return the existing topic
     return sns.createTopic(topicParams).promise()
-      .then((data) => {
+      .then((topic) => {
         const subscriptionParams = {
-          TopicArn: data.TopicArn,
-          Protocol: protocol,
-          Endpoint: protocol === 'sms' ? `+1${endpoint}` : endpoint
+          TopicArn: topic.TopicArn,
+          Protocol: "sms",
+          Endpoint: FloodAppUser.userData.phone_number
         }
         return sns.subscribe(subscriptionParams).promise().then(
-          () => {
-            if (subscriptionParams.Protocol === 'sms') {
-              dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-              dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
-            }
+          (subscription) => {
+            dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
+            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
+            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn})
           })
-          .catch(err => dispatch(sendErrorReport(err)))
+          .catch((err) => {
+            console.log(err)
+            // dispatch(sendErrorReport(err))
+          })
       })
-      .catch((err) => dispatch(sendErrorReport(err)))
+      .catch((err) => {
+        console.log(err)
+        // dispatch(sendErrorReport(err))
+      })
   }
 }
 

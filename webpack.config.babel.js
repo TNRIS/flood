@@ -59,7 +59,7 @@ export default {
     port: 3545
   },
   module: {
-    noParse: [/aws-sdk/],
+    // noParse: [/aws-sdk/],
     loaders: [
       {
         test: /\.scss$/,
@@ -85,6 +85,10 @@ export default {
         test: /\.(mss|sql)$/,
         loader: 'raw-loader'
       },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      }
     ]
   },
   resolve: {

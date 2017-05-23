@@ -1,23 +1,40 @@
-import objectAssign from 'object-assign'
-
 import {
-  SET_USER_INFO
-} from '../constants/UserInfoActionTypes'
+  LOGIN_ATTEMPT,
+  LOGIN_FAILED,
+  LOGIN_SUCCESSFUL,
+  NEW_PASSWORD_REQUIRED,
+  USER_UNAUTHENTICATED,
+  SET_SYNC_SESSION_TOKEN
+} from '../constants/UserActionTypes'
 
 const initialState = {
-  email: '',
-  phone: '',
+  authentication: 100,
+  error: null
 }
+
+/**
+ * Authentication Status Codes
+ * 0 - Successful
+ * 10 - Attempting Login
+ * 20 - New Password Required
+ * 99 - Failed
+ * 100 - Unauthenticated
+ */
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-    case SET_USER_INFO:
-      const emailAddress = action.email || initialState.email
-      const phoneNumber = action.phone || initialState.phone
-      return objectAssign({}, state, {
-        email: emailAddress,
-        phone: phoneNumber
-      })
+    case LOGIN_ATTEMPT:
+      return {authentication: 10, error: null}
+    case LOGIN_FAILED:
+      return {...action.payload, authentication: 99}
+    case LOGIN_SUCCESSFUL:
+      return {...state, ...action.payload, authentication: 0}
+    case NEW_PASSWORD_REQUIRED:
+      return {...state, ...action.payload, authentication: 20}
+    case USER_UNAUTHENTICATED:
+      return {authentication: 100, error: null}
+    case SET_SYNC_SESSION_TOKEN:
+      return {...state, ...action.payload}
     default:
       return state
   }

@@ -83,12 +83,12 @@ class SubscriptionList extends React.Component {
    * Returns a tooltip message based on the content/control for the given subscription and thee given user info
    */
   tooltipMessage(userInfoType) {
-    if (userInfoType === "email" && this.props.email.length < 1) {
-      return "Please enter your email and search again"
-    }
-    else if (userInfoType === "phone" && this.props.phone.length < 1) {
-      return "Please enter your phone number and search again"
-    }
+    // if (userInfoType === "email" && this.props.email.length < 1) {
+    //   return "Please enter your email and search again"
+    // }
+    // else if (userInfoType === "phone" && this.props.phone.length < 1) {
+    //   return "Please enter your phone number and search again"
+    // }
     return "Changes will not be made until you click SAVE CHANGES"
   }
 
@@ -176,38 +176,8 @@ class SubscriptionList extends React.Component {
   }
 
   render() {
-    let emailToggle = null
     let listContentDiv
     let smsToggle = null
-
-    /**
-     * Creates the email toggle content based on user info and subscription status
-     * @param  {string} gageSubscriptionId - id of the gageSubscription record
-     * @return {Component}                   email subscription list action
-     */
-    emailToggle = (gageSubscriptionId) => {
-      if (
-        this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email") &&
-        this.props.subscriptions.subscriptionsById[this.props.gageSubscriptionById[gageSubscriptionId].email]
-        .subscription.SubscriptionArn === "PendingConfirmation") {
-        return (
-          <ListItemAction
-            info="Email" title="Pending Confirmation"
-            style={{marginBottom: "0px", marginTop: "7px", marginRight: "0", marginLeft: "4px"}}>
-            <Icon name="email" style={{color: "#999999"}}/>
-          </ListItemAction>
-        )
-      }
-      return (
-          <ListItemAction info="Email" title={this.tooltipMessage("email")}>
-            <Checkbox ripple
-            name="email"
-            disabled={this.props.email.length < 1}
-            defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("email")}
-            onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "email")}/>
-          </ListItemAction>
-        )
-    }
 
     /**
      * Creates the sms toggle content based on user info and subscription status
@@ -219,8 +189,7 @@ class SubscriptionList extends React.Component {
         <ListItemAction info="Text" title={this.tooltipMessage("phone")}>
           <Checkbox ripple
           name="textsms"
-          disabled={this.props.phone.length < 1}
-          defaultChecked={this.props.gageSubscriptionById[gageSubscriptionId].hasOwnProperty("sms")}
+          defaultChecked
           onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
        </ListItemAction>
       )
@@ -231,14 +200,14 @@ class SubscriptionList extends React.Component {
       if (this.props.allSubscriptionChanges.length > 0) {
         save = (
           <Button ripple
-            className="flood-form-button"
+            className="subscription-list-save-button"
             onClick={this.handleOpenConfirmDialog}>SAVE CHANGES</Button>
         )
       }
       else {
         save = (
           <Button ripple disabled
-            className="flood-form-button">SAVE CHANGES</Button>
+            className="subscription-list-save-button">SAVE CHANGES</Button>
         )
       }
       return save
@@ -290,24 +259,18 @@ class SubscriptionList extends React.Component {
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
                   {this.props.gageSubscriptionById[gageSubscriptionId].lid}
                 </ListItemContent>
-                {emailToggle(gageSubscriptionId)}
                 {smsToggle(gageSubscriptionId)}
               </ListItem>
             )}
           </List>
           {saveButton()}
-          <Button ripple
-            className="flood-form-button"
-            style={{marginLeft: "10px"}}
-            onClick={this.props.clearSubscriptionList}>BACK</Button>
-
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <Card>
-                <CardTitle><i className="material-icons">save</i>
-                Save Changes?
+                <CardTitle className="confirm-modal-title"><i className="material-icons">save</i>
+                Save Changes
                 </CardTitle>
-                <CardText>Are you sure you want to save your changes?</CardText>
-                <CardActions>
+                <CardText className="confirm-modal-text">Are you sure you want to save your changes?</CardText>
+                <CardActions className="confirm-modal-actions">
                   <Button type="button" onClick={this.saveChanges}>Confirm</Button>
                   <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
                 </CardActions>

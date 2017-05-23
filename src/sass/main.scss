@@ -199,7 +199,10 @@ body {
 
     .mdl-mini-footer__link-list {
       position: relative;
-      // left: 28px;
+
+      a:focus {
+        outline: none;
+      }
     }
 
     .mdl-mini-footer__link-list li:last-child {
@@ -216,6 +219,10 @@ body {
       a {
         vertical-align: middle;
       }
+    }
+
+    .hideFullscreenButton {
+      display: none;
     }
 
     .fullscreenButton {
@@ -500,31 +507,6 @@ body {
         padding-bottom: 3px;
       }
     }
-
-  //// customize popup tip - give it a more narrow angle
-  //.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  //  background: white;
-  //  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-  //}
-  //
-  //.leaflet-popup-tip-container {
-  //  width: 70px;
-  //  height: 70px;
-  //}
-  //
-  //.leaflet-popup-tip {
-  //  width: 55px;
-  //  height: 55px;
-  //  margin: -30px 0px 0px 6px;
-  //  padding: 1px;
-  //
-  //  $popup-tip-transform: rotate(45deg) skew(20deg, 20deg);
-  //  -webkit-transform: $popup-tip-transform;
-  //  -moz-transform: $popup-tip-transform;
-  //  -ms-transform: $popup-tip-transform;
-  //  -o-transform: $popup-tip-transform;
-  //  transform: $popup-tip-transform;
-  //}
 }
 
 .info__name {
@@ -674,36 +656,88 @@ body {
   vertical-align: middle;
 }
 
-.disclaimer {
-    /* Override default which is too narrow */
-    width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
+.disclaimer-modal:focus {
+  outline: none;
+}
+
+.disclaimer-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 35em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .disclaimer {
+    width: 100% !important;
 
     .disclaimer-title {
+
+      h2 {
+        color: $gray20;
+        font-size: 1.5em;
+        font-weight: 400;
+      }
+    }
+
+    .disclaimer-text {
       color: $gray20;
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      h5 {
+        margin-top: 20px;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      a {
+        color: $lighter-blue;
+      }
+    }
+
+    .disclaimer-button-div {
+      padding: 5px;
+    }
+
+    button {
+      color: #fff!important;
+      background-color: $lighter-blue;
+      border-radius: 0;
+      width: 100%;
+      font-size: 90%;
+    }
+
+    button:hover, button:active, button:focus {
+      background-color: $darker-blue !important;
     }
 
     @media screen and (max-width: 500px) {
+      width: 100% !important;
       padding: 0;
 
-      .mdl-dialog__title {
-        padding: 10px 10px 0;
-        font-size: 1.5em;
-        text-align: center;
+      .disclaimer-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
       }
 
-      .mdl-dialog__content {
+      .disclaimer-text {
         padding: 10px;
 
         p {
@@ -713,161 +747,228 @@ body {
         }
       }
 
-      .dialog-button-div {
-        font-size: 12px;
+      .disclaimer-button-div {
+        font-size: 11px;
 
         button {
           padding: 0;
         }
       }
     }
-}
-
-dialog.disclaimer h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 2em;
+  }
 }
 
 .subscribeDialog {
-    /* Override default which is too narrow */
-    // width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
-    position: fixed;
+  /* Override default which is too narrow */
+  // width: 85% !important;
+  /* Limit width for readability */
+  max-width: 35em;
+  /* Center vertically - also set left for Firefox */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+  /* Scrollbar to allow text viewing and input access on small screens */
+  overflow-y: auto !important;
+  /* Allow the scrollbar to work without forcing it on */
+  max-height: 100%;
+  /* Ensure this isn't transparent on Firefox */
+  background-color: white;
+  position: fixed;
 
-    .mdl-dialog__content {
-      padding: 10px;
-    }
+  .mdl-dialog__content {
+    padding: 10px;
+  }
 }
 
 dialog.subscribeDialog h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 1.5em;
-    text-align: center;
-    padding: 0;
+  /* Reduce size to avoid line break in title */
+  font-size: 1.5em;
+  text-align: center;
+  padding: 0;
 }
 
-.aboutDialog {
-    /* Override default which is too narrow */
-    width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em !important;
-    margin-left: 0;
-    margin-right: 0;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 90%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
-    position: fixed;
-    padding: 0;
+.about-modal:focus {
+  outline: none;
+}
 
-    h4 {
-      /* Reduce size to avoid line break in title */
-      margin-top: 0;
-    }
+.about-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
 
-    .about-version-number {
-      color: $gray20;
-      float: right;
-      font-size: x-small;
-      font-style: italic;
-      padding-right: 10px;
-      padding-top: 3px;
-    }
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .about-version-number {
+    color: $gray20;
+    float: right;
+    font-size: x-small;
+    font-style: italic;
+    padding-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .about {
+    width: 100% !important;
 
     .about-title {
-      font-size: 2.5em;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      img {
+        height: 38px;
+      }
+
+      h2 {
+        color: $gray20;
+        font-size: 1.6em;
+        font-weight: 400;
+      }
+    }
+
+    .about-text {
+      width: 100%;
+      padding-top: 0;
       color: $gray20;
-    }
 
-    .about-viewer-details-link {
-      margin: 50px 0 50px 0;
-    }
-
-    .about-developed-by {
-      font-size: 12px;
-      margin: 0;
-    }
-
-    .about__logos {
-      margin: auto;
-      height: 40px;
-      padding: 10px 0 20px 10px;
-
-      @media screen and (max-width: 767px) {
-        height: 35px;
-        padding: 10px 0 20px 10px;
+      h5 {
+        margin-top: 15px;
+        margin-bottom: 5px;
       }
-    }
 
-    .about__twdb-logo {
+      a {
+        color: $lighter-blue;
+      }
 
-      img {
-        position: relative;
-        padding-right: 10px;
-        max-height: 40px;
-        height: auto;
+      .about-disclaimer-text {
+        font-size: 14px;
+      }
+
+      .data-sources-list {
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .about-viewer-details-link {
+        margin: 10px 0 10px 0;
+      }
+
+      .about-developed-by {
+        font-size: 12px;
+        margin: 0;
+        padding-top: 10px;
+      }
+
+      .about__logos {
+        margin: auto;
+        height: 40px;
+        padding: 0 0 0 40px;
 
         @media screen and (max-width: 767px) {
-          max-height: 35px;
-          padding-right: 7px;
+          height: 35px;
+          text-align: center;
+          padding: 0;
+        }
+      }
+
+      .about__twdb-logo {
+
+        img {
+          position: relative;
+          padding-right: 10px;
+          max-height: 40px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+            padding-right: 7px;
+          }
+        }
+      }
+
+      .about__tnris-logo {
+
+        img {
+          position: relative;
+          margin-left: auto;
+          max-height: 37px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+          }
         }
       }
     }
 
-    .about__tnris-logo {
+    .about-button-div {
+      padding: 5px;
 
-      img {
-        position: relative;
-        margin-left: auto;
-        max-height: 37px;
-        height: auto;
-
-        @media screen and (max-width: 767px) {
-          max-height: 35px;
-        }
-      }
-    }
-
-    .dialog-button-div {
-      padding-left: 24px;
-      padding-right: 24px;
-      padding-bottom: 24px;
-
-      .terms-agree-button:hover {
+      button {
+        color: #fff!important;
         background-color: $lighter-blue;
+        border-radius: 0;
+        width: 100%;
+        font-size: 90%;
+      }
+
+      button:hover, button:active, button:focus {
+        background-color: $darker-blue !important;
       }
     }
 
-    .footer {
-      text-align: center;
-      background-color: rgba(0, 0, 0, 0);
+    @media screen and (max-width: 500px) {
+      width: 100% !important;
+      padding: 0;
 
-      .footer__wrapper {
-        display: inline-block;
-        border-radius: 10px;
-        background-color: $accent-light-green;
-        padding-left: 15px;
-        padding-right: 15px;
+      .about-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
+
+        img {
+          height: 30px;
+        }
+      }
+
+      .about-text {
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+
+        .about-disclaimer-text {
+          font-size: 12px;
+        }
+
+        .data-sources-list {
+          margin-bottom: 16px;
+        }
+      }
+
+      .about-button-div {
+        font-size: 11px;
+
+        button {
+          padding: 0;
+        }
       }
     }
-
+  }
 }
 
 .weatherTimestamp {
@@ -975,10 +1076,6 @@ button.toggle-navigation-content.bottom-nav-button {
     height: 85px !important;
 }
 
-.mdl-tooltip {
-    // will-change: auto;
-}
-
 .subscription-list-item__locateAction {
     // height: 85px;
     margin: 0 !important;
@@ -991,6 +1088,37 @@ button.toggle-navigation-content.bottom-nav-button {
         height: 100%;
         width: 40px;
     }
+}
+
+.form__swapper {
+  float: right;
+  margin-right: 20px;
+
+  a {
+    color: $lighter-blue;
+  }
+
+}
+
+.form__back {
+  padding-top: 5px;
+  margin-left: 16px;
+
+  i {
+    cursor: pointer;
+  }
+
+  i:hover {
+    background-color: #E8E8E8;
+  }
+}
+
+.user__settings {
+  padding: 10px;
+  
+  p {
+    word-wrap: break-word;
+  }
 }
 
 span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
@@ -1016,6 +1144,8 @@ span.mdl-badge {
 
     &:after {
         background-color: $accent-dark-green !important;
+        top: 0 !important;
+        right: -30px !important;
     }
 }
 
@@ -1032,10 +1162,6 @@ span.mdl-list__item-secondary-action > i {
     font-size: 10px !important;
 }
 
-// .mdl-tooltip {
-//     will-change: inherit !important;
-// }
-
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
     border: 2px solid $lighter-blue !important;
     .mdl-checkbox__tick-outline {
@@ -1045,11 +1171,15 @@ span.mdl-list__item-secondary-action > i {
 
 .flood-form-button {
   float: right;
+  margin-bottom: 10px !important;
+  padding: 0 20px 0 20px !important;
+  margin-right: -10px !important;
 }
 
-// .flood-form-button:enabled {
-//     color: $darker-blue !important;
-// }
+.subscription-list-save-button {
+  float: right;
+  margin-bottom: 10px !important;
+}
 
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
@@ -1318,9 +1448,15 @@ label.hide-disclaimer-checkbox {
 .mdl-snackbar {
   z-index: 10 !important;
   background-color: #4F85AE !important;
+  
 
   a {
     color: $accent-dark-green;
+  }
+
+  .mdl-snackbar__text {
+    text-align: center;
+    width: 100%;
   }
 }
 
@@ -1399,10 +1535,10 @@ body > div.ReactModalPortal > div {
 .mdl-card {
     border-radius: 0 0 0 0 !important;
     font-family: 'Open Sans', sans-serif !important;
-    min-height: 180px !important;
+    min-height: 146px !important;
 }
 
-div.mdl-card__title {
+div.confirm-modal-title {
     background-color: #333;
     border-radius: 0 0 0 0 !important;
     height: 42px;
@@ -1410,13 +1546,70 @@ div.mdl-card__title {
     vertical-align: middle;
 
     span {
-        padding-left: 6px;
+        padding-left: 10px;
     }
 }
 
-.mdl-card__actions {
+.confirm-modal-actions {
   button {
     float: right;
-    // color: $darker-blue !important;
   }
+}
+
+.confirm-modal-text {
+  color: $gray20 !important;
+  width: 98%;
+}
+
+.subscription-confirm-modal:focus {
+  outline: none;
+}
+
+.subscription-confirm-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  // padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+}
+
+.subscription-confirm-modal-actions {
+  button {
+    float: right;
+  }
+}
+
+div.subscription-confirm-modal-title {
+    background-color: #333;
+    border-radius: 0 0 0 0 !important;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+.subscription-confirm-modal-text {
+  color: $gray20 !important;
+  width: 98%;
+}
+
+.login-form {
+  margin-right: 10px;
+  margin-left: 10px;
 }
