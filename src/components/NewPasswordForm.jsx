@@ -55,8 +55,8 @@ class NewPasswordForm extends Component {
 
     return (
         <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>A verification code has been sent to {this.props.username} via text message</p>
-            <p>Please enter your 6 digit verification code and new password below</p>
+            <p>A verification code has been sent to {this.props.username} via text message.</p>
+            <p>Please enter your 6 digit verification code and new password below.</p>
             <Textfield floatingLabel
                        pattern="[0-9]*"
                        minLength={6}

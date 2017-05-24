@@ -60,7 +60,7 @@ class SignupForm extends Component {
       })
       return
     }
-    if (confirm(`Is ${this.state.phone} your correct phone number?`)) {
+    if (confirm(`Is ${this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} your correct phone number?`)) {
       this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
     } else {
       return
@@ -71,8 +71,8 @@ class SignupForm extends Component {
 
     return (
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account and subscribe to flood gages to begin recieving text message alerts when they
-              enter elevated flood stages</p>
+            <p>Sign up for an account and subscribe to flood gages to begin recieving text alerts when they
+              enter elevated flood stages.</p>
             <Textfield floatingLabel
                        label="Username"
                        type="username"
