@@ -29,7 +29,7 @@ class PopupTitle extends Component {
       this.props.showSubscriptionConfirmation()
     }
     else {
-      this.props.showSnackbar("You must be signed in to your account to add new subscriptions.")
+      this.props.showSnackbar("Sign in to your account to add new subscriptions.")
     }
   }
 
