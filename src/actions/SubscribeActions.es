@@ -80,9 +80,7 @@ export function subscribeGage(lid) {
           (subscription) => {
             dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
             dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
-            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn}).then(
-              FloodAppUser.syncDataset()
-            )
+            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
           })
           .catch((err) => {
             dispatch(sendErrorReport(err))

@@ -148,7 +148,6 @@ export function saveSubscriptionChanges() {
                   dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
                 })
                 .catch((err) => {
-                  console.log(err)
                   dispatch(updateSubscriptionsError(err))
                 })
               )
@@ -167,11 +166,14 @@ export function saveSubscriptionChanges() {
           }
         })
 
+        // Add the sync operation to the promise queue
+        promiseQueue.push(FloodAppUser.syncDataset())
+
         // Execute promise queue containing the subscription update operations.
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
           dispatch(clearSubscriptionList())
-          dispatch(getUserSubscriptions(user.email, user.phone, ""))
+          dispatch(getUserSubscriptions())
         }).catch(err => dispatch(sendErrorReport(err)))
       }
 
