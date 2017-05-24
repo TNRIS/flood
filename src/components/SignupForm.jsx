@@ -99,9 +99,9 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.email}/>
             <Textfield floatingLabel
-                       pattern=".{4,}"
-                       minLength={4}
-                       error="Minimum 4 characters. Requires uppercase, lowercase, a number, and a special character"
+                       pattern=".{6,}"
+                       minLength={6}
+                       error="Minimum 6 characters."
                        label="Password"
                        type="password"
                        id="password"
@@ -109,7 +109,7 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.password}/>
             <Textfield floatingLabel
-                       minLength={8}
+                       minLength={6}
                        pattern={this.state.password}
                        label="Confirm Password"
                        type="password"
