@@ -13,7 +13,7 @@ const initialState = {
       'url': `https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}`,
       'options': {
         'attribution': 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-        'mapbox': false,
+        'detectRetina': true,
         'layerId': 'esri-world-streetmap'
       }
     },
