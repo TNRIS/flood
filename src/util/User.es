@@ -335,7 +335,6 @@ class FloodAppUser extends AppUser {
             dataset.synchronize({
               onSuccess: (updatedDataset, newRecords) => {
                 resolve(newRecords)
-                console.log("getting user subscriptions")
                 store.dispatch(getUserSubscriptions())
               },
               onConflict: (dataset, conflicts, callback) => {
@@ -345,7 +344,6 @@ class FloodAppUser extends AppUser {
                   }
                 dataset.resolve(resolved, () => {
                   resolve(resolved)
-                  console.log("getting user subscriptions")
                   store.dispatch(getUserSubscriptions())
                 })
               },
