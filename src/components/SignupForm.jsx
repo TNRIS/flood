@@ -62,7 +62,9 @@ class SignupForm extends Component {
     }
     if (confirm(`Is ${this.state.phone} your correct phone number?`)) {
       this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
-    } else {return}
+    } else {
+      return
+    }
   }
 
   render() {
