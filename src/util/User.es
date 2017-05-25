@@ -108,7 +108,7 @@ class AppUser {
             } else {
               this.identityId = this.AWS.config.credentials.params.IdentityId
               this.cognitoUser.getUserAttributes((err, att) => {
-                if (err) console.log(err)
+                if (err) store.dispatch(sendErrorReport(err))
                 else {
                   const user = {}
                   for (let i = 0; i < att.length; i++) {

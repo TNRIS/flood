@@ -265,7 +265,6 @@ export function userSignOut() {
 }
 
 export function siteReset() {
-  console.log("resetting site")
   return (dispatch) => {
     FloodAppUser.cognitoUser.signOut()
     FloodAppUser.AWS.config.credentials.clearCachedId()
