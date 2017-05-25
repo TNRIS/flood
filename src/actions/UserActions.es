@@ -264,6 +264,15 @@ export function userSignOut() {
   }
 }
 
+export function siteReset() {
+  console.log("resetting site")
+  return (dispatch) => {
+    FloodAppUser.cognitoUser.signOut()
+    FloodAppUser.AWS.config.credentials.clearCachedId()
+    window.location.href = location.href.replace(location.hash, "")
+  }
+}
+
 export function deleteAccount() {
   return (dispatch) => {
     FloodAppUser.deleteAccount().then(() => {

@@ -18,6 +18,11 @@ import {
   sendErrorReport
 } from '../actions/StevieActions'
 
+import {
+  userSignOut,
+  siteReset
+} from '../actions/UserActions'
+
 import { util } from 'aws-sdk/global'
 
 
@@ -196,10 +201,11 @@ class AppUser {
   signOut = (callback) => {
     this.cognitoUser.globalSignOut({
       onSuccess: function () {
-          return callback(0)
+        return callback(0)
       },
       onFailure: function(err) {
-          return callback(err)
+        console.log(err)
+        return callback(err)
       }
     })
   }
@@ -212,8 +218,8 @@ class AppUser {
               return callback(err)
           }
           return session
-
       })
+
       this.idToken = session.getIdToken().getJwtToken()
       this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
         IdentityPoolId: this.appConfig.IdentityPoolId,
@@ -227,11 +233,13 @@ class AppUser {
       this.AWS.config.credentials.clearCachedId()
       this.AWS.config.credentials.refresh((error) => {
           if (error) {
-              console.log(error);
+            store.dispatch(sendErrorReport(error))
           } else {
             this.identityId = this.AWS.config.credentials.params.IdentityId
             this.cognitoUser.getUserAttributes((err, att) => {
-              if (err) console.log(err)
+              if (err) {
+                store.dispatch(siteReset())
+              }
               else {
                 const user = {}
                 for (let i = 0; i < att.length; i++) {
@@ -243,8 +251,6 @@ class AppUser {
             return callback(0, this.cognitoUser.username)
           }
       })
-
-
     }
   }
 
