@@ -4,7 +4,6 @@ import { Button, Spinner, Textfield } from 'react-mdl'
 /** Form for entering a new password and updating current user profile */
 class NewPasswordForm extends Component {
   static propTypes = {
-    username: PropTypes.string
   }
 
   constructor(props) {
@@ -55,7 +54,7 @@ class NewPasswordForm extends Component {
 
     return (
         <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>A verification code has been sent to {this.props.username} via text message.</p>
+            <p>A verification code has been sent via text message to the phone number associated with this account.</p>
             <p>Please enter your 6 digit verification code and new password below.</p>
             <Textfield floatingLabel
                        pattern="[0-9]*"

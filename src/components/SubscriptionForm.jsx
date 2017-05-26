@@ -135,7 +135,7 @@ class SubscriptionForm extends Component {
     }
     else if (this.props.displayForm == "newPassword") {
       subscriptionManagerContent = (
-        <NewPasswordForm username={FloodAppUser.username} newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
+        <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
         <p className="form__swapper">

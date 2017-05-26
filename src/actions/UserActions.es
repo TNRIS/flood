@@ -103,6 +103,9 @@ export function userLogin(username, password) {
         else if (result == "UserNotFoundException: User does not exist.") {
           dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
         }
+        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+          dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
+        }
         else {
           dispatch(sendErrorReport(result))
           dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
@@ -205,6 +208,9 @@ export function forgotPassword(username) {
         dispatch(getSubscriptionsError())
         if (result == "UserNotFoundException: Username/client id combination not found.") {
           dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
+        }
+        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+          dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
         }
         else {
           dispatch(sendErrorReport(result))
