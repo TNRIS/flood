@@ -71,7 +71,7 @@ class SignupForm extends Component {
 
     return (
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account and subscribe to flood gages to begin recieving text alerts when they
+            <p>Sign up for an account to subscribe to flood gages and begin recieving text alerts when they
               enter elevated flood stages.</p>
             <Textfield floatingLabel
                        label="Username"
