@@ -103,6 +103,9 @@ export function userLogin(username, password) {
         else if (result == "UserNotFoundException: User does not exist.") {
           dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
         }
+        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+          dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
+        }
         else {
           dispatch(sendErrorReport(result))
           dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
@@ -206,6 +209,9 @@ export function forgotPassword(username) {
         if (result == "UserNotFoundException: Username/client id combination not found.") {
           dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
         }
+        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+          dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
+        }
         else {
           dispatch(sendErrorReport(result))
           dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
@@ -261,6 +267,14 @@ export function userSignOut() {
         dispatch(showSnackbar("There was an error. The support team has been notified. Please try again."))
       }
     })
+  }
+}
+
+export function siteReset() {
+  return (dispatch) => {
+    FloodAppUser.cognitoUser.signOut()
+    FloodAppUser.AWS.config.credentials.clearCachedId()
+    window.location.href = location.href.replace(location.hash, "")
   }
 }
 

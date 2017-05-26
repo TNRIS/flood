@@ -14,7 +14,17 @@ import {
   getUserSubscriptions
 } from '../actions/SubscriptionFormActions'
 
+import {
+  sendErrorReport
+} from '../actions/StevieActions'
+
+import {
+  userSignOut,
+  siteReset
+} from '../actions/UserActions'
+
 import { util } from 'aws-sdk/global'
+
 
 
 class AppUser {
@@ -98,7 +108,7 @@ class AppUser {
             } else {
               this.identityId = this.AWS.config.credentials.params.IdentityId
               this.cognitoUser.getUserAttributes((err, att) => {
-                if (err) console.log(err)
+                if (err) store.dispatch(sendErrorReport(err))
                 else {
                   const user = {}
                   for (let i = 0; i < att.length; i++) {
@@ -191,10 +201,11 @@ class AppUser {
   signOut = (callback) => {
     this.cognitoUser.globalSignOut({
       onSuccess: function () {
-          return callback(0)
+        return callback(0)
       },
       onFailure: function(err) {
-          return callback(err)
+        console.log(err)
+        return callback(err)
       }
     })
   }
@@ -207,8 +218,8 @@ class AppUser {
               return callback(err)
           }
           return session
-
       })
+
       this.idToken = session.getIdToken().getJwtToken()
       this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
         IdentityPoolId: this.appConfig.IdentityPoolId,
@@ -222,11 +233,13 @@ class AppUser {
       this.AWS.config.credentials.clearCachedId()
       this.AWS.config.credentials.refresh((error) => {
           if (error) {
-              console.log(error);
+            store.dispatch(sendErrorReport(error))
           } else {
             this.identityId = this.AWS.config.credentials.params.IdentityId
             this.cognitoUser.getUserAttributes((err, att) => {
-              if (err) console.log(err)
+              if (err) {
+                store.dispatch(siteReset())
+              }
               else {
                 const user = {}
                 for (let i = 0; i < att.length; i++) {
@@ -238,8 +251,6 @@ class AppUser {
             return callback(0, this.cognitoUser.username)
           }
       })
-
-
     }
   }
 
@@ -265,7 +276,7 @@ class FloodAppUser extends AppUser {
       IdentityId: this.identityId,
       IdentityPoolId: this.appConfig.IdentityPoolId
     }, (err, data) => {
-      if (err) console.log(err)
+      if (err) store.dispatch(sendErrorReport(err))
       else {
         if (data.Datasets.length > 0 && data.Datasets[0].DatasetName === this.dataset) {
           this.getUserSubscriptions({...baseParams, DatasetName: this.dataset}, callback)
@@ -280,7 +291,7 @@ class FloodAppUser extends AppUser {
       this.userSubscriptions = []
     }
     this.syncSession.listRecords(params, (err, subscriptions) => {
-      if (err) console.log(err)
+      if (err) store.dispatch(sendErrorReport(err))
       else {
         subscriptions.Records.forEach((subscription) => {
           if (subscription.Value) {
@@ -303,29 +314,48 @@ class FloodAppUser extends AppUser {
       this.AWS.config.credentials.get(() => {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {
-          if (err) console.log(err)
-          dataset.put(
-            subscriptionData.subscriptionArn, stringData, (putError) => {
-              if (putError) reject(putError)
-              dataset.synchronize({
-                onSuccess: (updatedDataset, newRecords) => {
-                  resolve(newRecords)
+          if (err) store.dispatch(sendErrorReport(err))
+          dataset.put(subscriptionData.subscriptionArn, stringData, (putError) => {
+            if (putError) {
+              store.dispatch(sendErrorReport(putError))
+              reject(putError)
+            }
+            else {
+              resolve()
+            }
+          })
+        })
+      })
+    })
+  }
+
+  syncDataset() {
+    return new Promise((resolve, reject) => {
+      this.AWS.config.credentials.get(() => {
+        const client = new this.AWS.CognitoSyncManager()
+        client.openOrCreateDataset(this.dataset, (openError, dataset) => {
+          if (openError) {
+            store.dispatch(sendErrorReport(openError))
+          }
+          else {
+            dataset.synchronize({
+              onSuccess: (updatedDataset, newRecords) => {
+                resolve(newRecords)
+                store.dispatch(getUserSubscriptions())
+              },
+              onConflict: (dataset, conflicts, callback) => {
+                const resolved = []
+                  for (let i = 0; i < conflicts.length; i++) {
+                    resolved.push(conflicts[i].resolveWithRemoteRecord())
+                  }
+                dataset.resolve(resolved, () => {
+                  resolve(resolved)
                   store.dispatch(getUserSubscriptions())
-                },
-		            onConflict: (dataset, conflicts, callback) => {
-		              const resolved = []
-		              for (let i=0; i<conflicts.length; i++) {
-			              resolved.push(conflicts[i].resolveWithLocalRecord())
-		              }
-		              dataset.resolve(resolved, () => {
-			              resolve(resolved)
-		              })
-		            },
-                onFailure: (syncError) => {
-                  reject(syncError)
-                }
-              })
+                })
+              },
+              onFailure: (syncError) => reject(syncError)
             })
+          }
         })
       })
     })
@@ -335,28 +365,19 @@ class FloodAppUser extends AppUser {
     return new Promise((resolve, reject) => {
       this.AWS.config.credentials.get(() => {
         const client = new this.AWS.CognitoSyncManager()
-        client.openOrCreateDataset(this.dataset, (err, dataset) => {
-          if (err) console.log(err)
-          dataset.remove(arn, (removeError) => {
-            if (removeError) reject(removeError)
-            else {
-              dataset.synchronize({
-                onSuccess: (updatedDataset, newRecords) => {
-                  resolve(newRecords)
-                },
-                onConflict: (dataset, conflicts, callback) => {
-                  const resolved = []
-                  for (let  i = 0; i < conflicts.length; i++) {
-                    resolved.push(conflicts[i].resolveWithLocalRecord())
-                  }
-                  dataset.resolve(resolved, () => {
-                    resolve(resolved)
-                  })
-                },
-                onFailure: (syncError) => reject(syncError)
-              })
-            }
-          })
+        client.openOrCreateDataset(this.dataset, (openError, dataset) => {
+          if (openError) store.dispatch(sendErrorReport(openError))
+          else {
+            dataset.remove(arn, (removeError) => {
+              if (removeError) {
+                store.dispatch(sendErrorReport(removeError))
+                reject(removeError)
+              }
+              else {
+                resolve()
+              }
+            })
+          }
         })
       })
     })

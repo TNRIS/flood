@@ -98,7 +98,7 @@ class AccountSettingsForm extends Component {
         <div className="user__settings">
           <p><b>Current User Profile</b></p>
           <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
-          <p><b>Phone:</b> { profile.phone_number.substring(2) }</p>
+          <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
           <p><b>Email:</b> { email }</p>
           <span>
             {deleteAccountButton()}

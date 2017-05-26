@@ -60,17 +60,19 @@ class SignupForm extends Component {
       })
       return
     }
-    if (confirm(`Is ${this.state.phone} your correct phone number?`)) {
+    if (confirm(`Is ${this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} your correct phone number?`)) {
       this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
-    } else {return}
+    } else {
+      return
+    }
   }
 
   render() {
 
     return (
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account and subscribe to flood gages to begin recieving text message alerts when they
-              enter elevated flood stages</p>
+            <p>Sign up for an account and subscribe to flood gages to begin recieving text alerts when they
+              enter elevated flood stages.</p>
             <Textfield floatingLabel
                        label="Username"
                        type="username"
@@ -97,9 +99,9 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.email}/>
             <Textfield floatingLabel
-                       pattern=".{4,}"
-                       minLength={4}
-                       error="Minimum 4 characters. Requires uppercase, lowercase, a number, and a special character"
+                       pattern=".{6,}"
+                       minLength={6}
+                       error="Minimum 6 characters."
                        label="Password"
                        type="password"
                        id="password"
@@ -107,7 +109,7 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.password}/>
             <Textfield floatingLabel
-                       minLength={8}
+                       minLength={6}
                        pattern={this.state.password}
                        label="Confirm Password"
                        type="password"

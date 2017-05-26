@@ -374,13 +374,11 @@ body {
 }
 
 .footer__twdb-logo {
-  // position: absolute;
-  // left: 99px;
-  // bottom: 1px;
   display: inline-block;
   float: left;
   img {
     height: 2.8em;
+    width: auto;
     margin: 5px 0 5px 2px;
 
     @media screen and (max-width: $layout-drawer-width-threshold) {
@@ -390,14 +388,12 @@ body {
 }
 
 .footer__tnris-logo {
-  // position: absolute;
-  // right: 165px;
-  // bottom: -2px;
   display: inline-block;
   float: right;
   max-height: 50px;
   img {
     height: 3.1em;
+    width: auto;
     margin: 5px 2px 3px 0;
 
     @media screen and (max-width: $layout-drawer-width-threshold) {
@@ -1093,6 +1089,7 @@ button.toggle-navigation-content.bottom-nav-button {
 .form__swapper {
   float: right;
   margin-right: 20px;
+  margin-left: 10px;
 
   a {
     color: $lighter-blue;
@@ -1147,6 +1144,10 @@ span.mdl-badge {
         top: 0 !important;
         right: -30px !important;
     }
+}
+
+.subscription-list > p {
+  margin: 16px 10px 0 10px;
 }
 
 span.mdl-list__item-secondary-info {

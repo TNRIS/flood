@@ -41,8 +41,8 @@ class VerifyForm extends Component {
   render() {
     return (
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>A verification code has been sent to {this.props.phone} via text message.</p>
-            <p>Please enter your 6 digit verification code below to confirm your account.</p>
+            <p>A verification code has been sent to {this.props.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} via text message.</p>
+            <p>Please enter the 6 digit verification code below to confirm your account.</p>
             <Textfield floatingLabel
                        pattern="[0-9]*"
                        minLength={6}

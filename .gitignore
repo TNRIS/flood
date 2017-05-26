@@ -47,3 +47,6 @@ src/\.DS_Store
 \.DS_Store
 
 load_test*
+
+*.swp
+
