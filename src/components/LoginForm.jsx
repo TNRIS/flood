@@ -12,10 +12,14 @@ class LoginForm extends Component {
     super(props)
     this.state = {
       username: '',
-      phone: '',
       password: '',
-      usernameDisabled: false,
-      phoneDisabled: false
+      min: 0,
+      max: 50,
+      pattern: '',
+      label: 'Username or Phone Number',
+      error: '',
+      type: ''
+
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
@@ -29,35 +33,43 @@ class LoginForm extends Component {
   handleChange(event) {
     const name = event.target.name
     const value = event.target.value
-    const nextState = {}
+    let nextState = {}
+
+    if (name === 'username' && value === '') {
+      nextState = { ...nextState,
+        min: 0,
+        max: 50,
+        pattern: '',
+        label: 'Username or Phone Number',
+        error: '',
+        type: ''
+      }
+
+    }
+    else if (name === 'username' && value != '' && !isNaN(value.charAt(0))) {
+      nextState = { ...nextState,
+        min: 10,
+        max: 10,
+        pattern: '[0-9]*',
+        label: 'Phone Number',
+        error: '10 digits only including US area code',
+        type: 'phone'
+      }
+    }
+    else if (name === 'username' && value != '') {
+      nextState = { ...nextState,
+        min: 0,
+        max: 50,
+        pattern: '[A-Za-z0-9]*',
+        label: 'Username',
+        error: '',
+        type: 'username'
+      }
+    }
     nextState[name] = value
-    this.setState(nextState, function () {
-      if (this.state.username != '' && this.state.phone == '') {
-        this.setState({
-          usernameDisabled: false,
-          phoneDisabled: true
-        })
-      }
-      else if (this.state.username == '' && this.state.phone != '') {
-        this.setState({
-          usernameDisabled: true,
-          phoneDisabled: false
-        })
-      }
-      else {
-        this.setState({
-          usernameDisabled: false,
-          phoneDisabled: false
-        })
-      }
-    })
+    this.setState(nextState)
   }
 
-  moveCaretAtEnd(e) {
-    const value = e.target.value
-    e.target.value = ''
-    e.target.value = value
-  }
 
   /**
    * Sets the user info in the store and searches for the user's subscriptions
@@ -65,76 +77,32 @@ class LoginForm extends Component {
    */
   handleSearch(event) {
     event.preventDefault()
-    if (this.state.username != '' && this.state.phone == '') {
+    console.log(this.state)
+    if (this.state.type === 'username') {
       this.props.userLogin(this.state.username, this.state.password)
     }
-    else if (this.state.username == '' && this.state.phone != '') {
-      const formattedPhone = `+1${this.state.phone}`
+    else if (this.state.type === 'phone') {
+      const formattedPhone = `+1${this.state.username}`
       this.props.userLogin(formattedPhone, this.state.password)
     }
   }
 
 
   render() {
-    let inputs
-
-    if (this.state.username != '' && this.state.phone == '') {
-      inputs = (<Textfield floatingLabel
-                       autoFocus
-                       onFocus={this.moveCaretAtEnd}
-                       label="Username"
-                       type="username"
-                       id="username"
-                       name="username"
-                       onChange={this.handleChange}
-                       value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>)
-    }
-    else if (this.state.username == '' && this.state.phone != '') {
-      inputs = (<Textfield floatingLabel
-                       autoFocus
-                       onFocus={this.moveCaretAtEnd}
-                       pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Phone Number"
-                       type="tel"
-                       id="phone"
-                       name="phone"
-                       onChange={this.handleChange}
-                       value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/>)
-    }
-    else {
-      inputs = (<div>
-            <Textfield floatingLabel
-                       label="Username"
-                       type="username"
-                       id="username"
-                       name="username"
-                       onChange={this.handleChange}
-                       value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>
-            <p style={{margin: "0"}}>or</p>
-            <Textfield floatingLabel
-                       pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Phone Number"
-                       type="tel"
-                       id="phone"
-                       name="phone"
-                       onChange={this.handleChange}
-                       value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/></div>)
-    }
-
     return (
         <form className="login-form" onSubmit={ this.handleSearch }>
             <p>Sign in to subscribe to flood gages and manage your current gage subscriptions.</p>
-            {inputs}
+            <Textfield floatingLabel
+                       pattern={this.state.pattern}
+                       minLength={this.state.min}
+                       maxLength={this.state.max}
+                       error={this.state.error}
+                       label={this.state.label}
+                       type="username"
+                       id="username"
+                       name="username"
+                       onChange={this.handleChange}
+                       value={this.state.username}/>
             <Textfield floatingLabel
                        label="Password"
                        type="password"
