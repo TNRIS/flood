@@ -77,7 +77,6 @@ class LoginForm extends Component {
    */
   handleSearch(event) {
     event.preventDefault()
-    console.log(this.state)
     if (this.state.type === 'username') {
       this.props.userLogin(this.state.username, this.state.password)
     }
