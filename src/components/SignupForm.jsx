@@ -74,6 +74,8 @@ class SignupForm extends Component {
             <p>Sign up for an account to subscribe to flood gages and begin recieving text alerts when they
               enter elevated flood stages.</p>
             <Textfield floatingLabel
+                       pattern="[^0-9\s]\S*"
+                       error="Username must not start with a number or contain spaces"
                        label="Username"
                        type="username"
                        id="username"
