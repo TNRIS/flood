@@ -186,7 +186,7 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       return (
-        <ListItemAction info="Text" title={this.tooltipMessage("phone")}>
+        <ListItemAction info="Alert" title={this.tooltipMessage("phone")}>
           <Checkbox ripple
           name="textsms"
           defaultChecked
@@ -236,7 +236,8 @@ class SubscriptionList extends React.Component {
           <Badge
           className="subscriptions-count-badge"
           text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
-          <p>To unsubscribe from a gage, uncheck its box in the list and save your changes.</p>
+          <p>Click the marker symbol next to a gage to zoom to its location.</p>
+          <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
