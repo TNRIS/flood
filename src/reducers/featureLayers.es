@@ -24,6 +24,7 @@ const initialState = {
       'text': 'Flood Gages',
       'type': 'cartodb',
       'icon': floodGaugeIcon,
+      'altText': 'Flood Gage Icon',
       'legend': floodGaugeLegend,
       'options': {
         'refreshTimeMs': 300000, // 5 minutes
@@ -44,6 +45,7 @@ const initialState = {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
       'icon': lakeIcon,
+      'altText': 'Lake Icon',
       'legend': lakeLegend,
       'type': 'cartodb',
       'options': {
@@ -67,6 +69,7 @@ const initialState = {
       'id': 'flood-alerts',
       'text': 'Weather Alerts',
       'icon': floodAlertIcon,
+      'altText': 'Flood Alert Icon',
       'legend': floodAlertLegend,
       'type': 'aeris-alerts',
       'options': {
@@ -81,6 +84,7 @@ const initialState = {
       'id': 'animated-weather',
       'text': 'Weather Radar',
       'icon': weatherIcon,
+      'altText': 'Weather Icon',
       'legend': weatherLegend,
       'type': 'animated-weather',
       'active': false,
