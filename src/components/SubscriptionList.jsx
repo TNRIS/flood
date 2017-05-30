@@ -236,7 +236,7 @@ class SubscriptionList extends React.Component {
           <Badge
           className="subscriptions-count-badge"
           text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
-          <p>To unsubscribe from a gage, uncheck the box next to it in the list and save your changes.</p>
+          <p>To unsubscribe from a gage, uncheck its box in the list and save your changes.</p>
           <List>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
