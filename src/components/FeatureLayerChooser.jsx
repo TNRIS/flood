@@ -10,6 +10,7 @@ const FeatureLayerChooser = ({ layers, onLayerClick }) => {
           <FeatureLayer
             key={layer.id}
             icon={layer.icon}
+            altText={layer.altText}
             active={layer.active}
             status={layer.status}
             legend={layer.legend}
