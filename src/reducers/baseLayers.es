@@ -2,58 +2,37 @@ import L from 'leaflet'
 import objectAssign from 'object-assign'
 
 import * as types from '../actions/types'
+import keys from '../keys'
 
 const initialState = {
   layers: [
     {
-      'id': 'osm',
-      'text': 'OpenStreetMap',
+      'id': 'esri-world-streetmap',
+      'text': 'Streets',
       'type': 'tile',
-      'url': 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      'url': `https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}`,
       'options': {
-        'attribution': '&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        'attribution': 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
+        'detectRetina': true,
+        'layerId': 'esri-world-streetmap'
       }
     },
     {
-      'id': 'positron',
-      'text': 'Positron',
-      'type': 'tile',
-      'url': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-      'options': {
-        'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-      }
-    },
-    {
-      'id': 'dark-matter',
-      'text': 'Dark Matter',
-      'type': 'tile',
-      'url': 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-      'options': {
-        'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-      }
-    },
-    {
-      'id': 'bing-road',
-      'text': 'Bing Road',
+      'id': 'bing-hybrid',
+      'text': 'Hybrid',
       'type': 'bing',
       'options': {
-        'type': 'Road'
-      }
-    },
-    {
-      'id': 'bing-aerial',
-      'text': 'Bing Aerial',
-      'type': 'bing',
-      'options': {
-        'type': 'Aerial'
+        'type': 'AerialWithLabels',
+        'layerId': 'bing-hybrid'
       }
     },
     {
       'id': 'tx-goog',
-      'text': 'Texas Google Imagery',
+      'text': 'Satellite',
       'type': 'wmts',
       'url': 'https://txgi.tnris.org/login/path/spoon-java-neuron-nebula/wmts/',
       'options': {
+        'layerId': 'tx-goog',
         'layer': 'texas',
         'style': 'default',
         'tilematrixSet': '0to20',
@@ -65,7 +44,8 @@ const initialState = {
       }
     }
   ],
-  active: 'osm'
+  active: 'esri-world-streetmap',
+  target: 'basemap-context-menu'
 }
 
 export default function baseLayers(state = initialState, action) {

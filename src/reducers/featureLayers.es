@@ -10,10 +10,12 @@ const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
 const floodGaugeIcon = require('../images/flood_gauge_icon.png')
 const floodGaugeLegend = require('../images/nws-ahps-gauges-texas-legend.png')
 const floodAlertIcon = require('../images/flood_alert_red.png')
+const floodAlertLegend = require('../images/flood-alert-legend.png')
 const lakeIcon = require('../images/boat_icon.png')
 const lakeLegend = require('../images/reservoir-conditions-legend.png')
 const rainIcon = require('../images/rain_icon.png')
 const weatherIcon = require('../images/weather_icon.png')
+const weatherLegend = require('../images/animated-weather-legend_800x450.png')
 
 const initialState = {
   layers: [
@@ -22,6 +24,7 @@ const initialState = {
       'text': 'Flood Gages',
       'type': 'cartodb',
       'icon': floodGaugeIcon,
+      'altText': 'Flood Gage Icon',
       'legend': floodGaugeLegend,
       'options': {
         'refreshTimeMs': 300000, // 5 minutes
@@ -39,30 +42,10 @@ const initialState = {
       'status': null,
     },
     {
-      'id': 'animated-weather',
-      'text': 'Weather Radar',
-      'icon': weatherIcon,
-      'type': 'animated-weather',
-      'active': false,
-      'status': null,
-    },
-    {
-      'id': 'flood-alerts',
-      'text': 'Weather Alerts',
-      'icon': floodAlertIcon,
-      'type': 'aeris-alerts',
-      'options': {
-        'code': 'alerts',
-        'refreshTimeMs': 60000, // 1 minute
-        'opacity': 0.7
-      },
-      'active': false,
-      'status': null,
-    },
-    {
       'id': 'reservoir-conditions',
       'text': 'Lake Conditions',
       'icon': lakeIcon,
+      'altText': 'Lake Icon',
       'legend': lakeLegend,
       'type': 'cartodb',
       'options': {
@@ -81,15 +64,33 @@ const initialState = {
       },
       'active': false,
       'status': null,
+    },
+    {
+      'id': 'flood-alerts',
+      'text': 'Weather Alerts',
+      'icon': floodAlertIcon,
+      'altText': 'Flood Alert Icon',
+      'legend': floodAlertLegend,
+      'type': 'aeris-alerts',
+      'options': {
+        'code': 'alerts',
+        'refreshTimeMs': 60000, // 1 minute
+        'opacity': 0.7
+      },
+      'active': false,
+      'status': null,
+    },
+    {
+      'id': 'animated-weather',
+      'text': 'Weather Radar',
+      'icon': weatherIcon,
+      'altText': 'Weather Icon',
+      'legend': weatherLegend,
+      'type': 'animated-weather',
+      'active': false,
+      'status': null,
+      'displayedTimestamp': '',
     }
-    //TODO: Removed until Aeris subscription has been purchased
-    // since their advisory layers don't work under the dev plan
-    // {
-    //   'id': 'flood-alerts',
-    //   'text': 'Flood Alerts',
-    //   'type': 'flood-alerts',
-    //   'active': false,
-    // },
   ],
 }
 
@@ -113,13 +114,36 @@ export default function featureLayers(state = initialState, action) {
     case types.SET_FEATURE_LAYER:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
-          return objectAssign({}, layer, {
-            active: layer.id === action.id
-          })
+          let newLayer
+
+          // This allows us to turn multiple layers on at the same time
+          if (layer.id === action.id) {
+            newLayer = objectAssign({}, layer, {
+              active: !layer.active
+            })
+          }
+          else {
+            newLayer = layer
+          }
+          return newLayer
+        })
+      })
+    case types.UPDATE_TIMESTAMP:
+      return objectAssign({}, state, {
+        layers: state.layers.map((layer) => {
+          let newLayer
+          if (layer.id === 'animated-weather') {
+            newLayer = objectAssign({}, layer, {
+              displayedTimestamp: action.timestamp
+            })
+          }
+          else {
+            newLayer = layer
+          }
+          return newLayer
         })
       })
     default:
       return state
   }
 }
-

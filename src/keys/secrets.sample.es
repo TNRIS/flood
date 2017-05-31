@@ -6,9 +6,15 @@ export default {
   aerisApiId: "<AERIS API ID>",
   aerisApiSecret: "<AERIS API SECRET>",
   awsConfig: {
-  	accessKeyId: "<AWS ACCESS KEY ID>",
-  	secretAccessKey: "<AWS SECRET ACCESS KEY>",
-  	region: "<REGION>"
+    region: "<Region>",
+    UserPoolId: "<User Pool ID>",
+    ClientId: "<Client ID>",
+    IdentityPoolId: "<Identity Pool Id>",
+    Logins: {
+      cognito: {
+        identityProviderName: "<Cognito Identity Provider Name>"
+      }
+    }
   },
   //topic base includes entire aws arn until the specific topic name. keep last colon.
   //example: 'arn:aws:sns:us-east-1:999999999999:'

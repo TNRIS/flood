@@ -4,6 +4,9 @@ import R from 'ramda'
 import keys from '../keys'
 import AerisTileLayer from './AerisTileLayer'
 
+import { store } from '../store'
+import { mapClickHandler } from '../actions/MapActions'
+
 
 function getAdvisoryInfo({latitude, longitude}) {
   const queryURL = `https://api.aerisapi.com/advisories/closest`
@@ -45,7 +48,7 @@ export default class AerisAlertsLayer extends AerisTileLayer {
                 latlng: latlng,
               }
             }
-            this.handlers.onClickAlerts(this.id, alertData)
+            store.dispatch(mapClickHandler(this.id, alertData, latlng, event))
           })
       }
     })

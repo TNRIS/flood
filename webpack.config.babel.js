@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
@@ -16,8 +16,17 @@ const folders = {
 const indexTpl = swig.compileFile(`${folders.src}index.swig`)
 fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
 
-// Move favicon to dist directory
-fs.createReadStream(folders.src + "images/favicon.ico").pipe(fs.createWriteStream(folders.dist + "favicon.ico"));
+// Move icons to dist directory
+fs.mkdirsSync(folders.dist + "/icons")
+fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
+  if (err) return console.error(err)
+});
+fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/flood-alert-legend.png", function (err) {
+  if (err) return console.error(err)
+});
+fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html", function (err) {
+  if (err) return console.error(err)
+});
 
 //setup webpack plugins
 const plugins = []
@@ -28,6 +37,12 @@ if (isProd) {
     'process.env.NODE_ENV': '"production"'
   }))
 }
+
+plugins.push(new webpack.DefinePlugin({
+  VERSION: JSON.stringify(require("./package.json").version),
+  RELEASE: JSON.stringify(require("./package.json").release),
+  SITE_URL: JSON.stringify(require("./package.json").site_url)
+}))
 
 export default {
   entry: `${folders.src}entry.jsx`,
@@ -44,7 +59,7 @@ export default {
     port: 3545
   },
   module: {
-    noParse: [/aws-sdk/],
+    // noParse: [/aws-sdk/],
     loaders: [
       {
         test: /\.scss$/,
@@ -58,7 +73,7 @@ export default {
           : 'style!css',
       },
       {
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(jpg|png|gif|ico)$/,
         loader: 'url-loader?limit=65536'
       },
       {
@@ -70,6 +85,10 @@ export default {
         test: /\.(mss|sql)$/,
         loader: 'raw-loader'
       },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      }
     ]
   },
   resolve: {

@@ -1,14 +1,30 @@
-$lighter-blue: #39aad2;
-$darker-blue: #2c88a9;
+$lighter-blue-version1: #39aad2;
+$darker-blue-version1: #2c88a9;
 $twdb-blue: #3f556d;
 
+$gray20: #333;
+$darker-blue: #265577;
+$lighter-blue: #3473A2;
+$accent-dark-green: #92C553;
+$accent-light-green: #AED480;
+
+$layout-desktop-width-threshold: 1025px !default;
 $layout-drawer-width-threshold: 400px !default;
+$layout-geocode-width-threshold: 500px !default;
 $nav-spacing-from-left-narrow: 6px;
 $nav-spacing-from-left-wide: 16px;
+$nav-icon-wrapper-width: 50px;
+$nav-spacing-from-left-narrow-link: $nav-spacing-from-left-narrow + $nav-icon-wrapper-width + ($nav-spacing-from-left-narrow - 2);
+$popup-icons-width-threshold: 400px !default;
+$iphone-five-width-threshold: 325px !default;
 
 body {
   width: 100%;
   height: 100%;
+}
+
+.mdl-layout__drawer::-webkit-scrollbar {
+  display: none;
 }
 
 .flood-viewer {
@@ -18,11 +34,36 @@ body {
     font-family: 'Open Sans', sans-serif;
   }
 
+  .mdl-layout {
+    background-color: $gray20;
+  }
+
   .mdl-layout__drawer {
     box-shadow: 0 0px 8px rgba(0,0,0,0.65);
 
+    h2 {
+      background: #e2ffc0;
+      border-bottom: 1px solid #AED480;
+      font-size: 16px;
+      line-height: normal;
+      margin: 0;
+      padding: 10px 10px 5px 10px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
     // override mdl white border
     border-right: none;
+
+    .mdl-button {
+      .material-icons {
+        padding-right: 5px;
+      }
+
+      .material-icons.add-alert {
+        padding-bottom: 2px;
+      }
+    }
 
     // override mdl default for padding
     .mdl-navigation .mdl-navigation__link {
@@ -34,20 +75,168 @@ body {
         padding-left: $nav-spacing-from-left-narrow - 2;
       }
     }
+
+    .footer {
+      @media screen and (min-width: $layout-desktop-width-threshold) {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: $layout-desktop-width-threshold) {
+      height: calc(100% - 91px);
+      top: 40px;
+      box-shadow: 8px 0px 8px -4px rgba(0,0,0,0.35);
+    }
   }
 
   .popup .leaflet-popup-content-wrapper {
     padding-bottom: 0px;
   }
 
-  .mdl-layout__drawer-button {
-    background-color: $darker-blue;
-    margin: 20px 0 0 0;
+  .mdl-layout__header {
+    width: 100% !important;
+    min-height: 40px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.35) !important;
 
-    i {
-      color: #ffffff;
-      font-size: 34px;
-      margin: 7px 0 0 -2px;
+    @media screen and (max-width: $layout-desktop-width-threshold) {
+      box-shadow: none !important;
+    }
+
+    .mdl-layout__drawer-button {
+      background-color: inherit;
+      margin: 0 0 0 0;
+      height: 40px;
+
+      i {
+        color: #ffffff;
+        font-size: 34px;
+        margin-left: auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      @media screen and (min-width: $layout-desktop-width-threshold) {
+        display: none;
+      }
+    }
+
+    .mdl-layout__header-row {
+      height: 40px;
+      padding: 0;
+
+      .header__title {
+        height: 40px;
+        margin-left: auto;
+        margin-right: auto;
+
+        img {
+          height: 27px;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+
+          @media screen and (min-width: 350px) and (max-width: 500px) {
+            height: 20px;
+          }
+        }
+      }
+
+      .header__navigation {
+        position: absolute;
+        height: inherit;
+        right: 0px;
+
+        .mdl-navigation__link {
+          line-height: 40px;
+          padding: 0 10px 0 20px;
+
+          i {
+            font-size: 26px;
+          }
+        }
+
+        #basemap-context-menu {
+          padding-right: 0;
+        }
+
+        .mdl-menu__container {
+          top: 55px !important;
+        }
+
+        ul {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+
+  .mdl-mini-footer {
+    color: white;
+    z-index: 2;
+    min-height: 50px;
+    padding: 0;
+    background-color: inherit;
+    position: relative;
+
+    .footer__logos {
+      height: 50px;
+      margin-left: 20px;
+      left: 0px;
+      position: absolute;
+
+
+
+      @media screen and (max-width: $layout-desktop-width-threshold) {
+        display: none;
+      }
+    }
+
+    .mdl-mini-footer__left-section {
+      margin: auto;
+    }
+
+    .mdl-mini-footer__link-list {
+      position: relative;
+
+      a:focus {
+        outline: none;
+      }
+    }
+
+    .mdl-mini-footer__link-list li:last-child {
+      margin-right: 0;
+    }
+
+    .mdl-menu__container {
+      bottom: 55px !important;
+    }
+
+    .footer-context-menu-item {
+      margin-right: 3px;
+
+      a {
+        vertical-align: middle;
+      }
+    }
+
+    .hideFullscreenButton {
+      display: none;
+    }
+
+    .fullscreenButton {
+      position: absolute;
+      color: white;
+      right:10px;
+      top: 50%;
+      transform: translateY(-50%);
+
+
+      i {
+        font-size: 28px;
+        vertical-align: middle;
+      }
     }
   }
 }
@@ -59,10 +248,9 @@ body {
 }
 
 .nav__head {
-  background-image: url(../images/flood_bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-color: #123469;
+  background-color: $gray20;
   color: white;
   font-weight: 300;
   padding-left: $nav-spacing-from-left-wide;
@@ -78,6 +266,8 @@ body {
   margin: 13px auto 10px;
   img {
     max-width: 100%;
+    display: block;
+    margin: auto;
   }
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
@@ -86,6 +276,7 @@ body {
 }
 
 .nav__subtitle {
+  text-align: center;
   margin: 30px auto 10px auto;
   text-shadow: 1px 1px 5px black, 1px 1px 2px black;
 
@@ -96,7 +287,7 @@ body {
 
 .resources {
   flex-grow: 1;
-  background-color: $lighter-blue;
+  background-color: $gray20;
   color: white;
 
   a {
@@ -105,15 +296,23 @@ body {
     text-decoration: none;
   }
 
+  h4 {
+    border-bottom: 1px solid #5ec4ff;
+    color: #5ec4ff;
+    font-size: 14px;
+    margin: 10px 20px 0 20px;
+    text-transform: uppercase;
+  }
+
   .resources__links.mdl-navigation {
-    padding-top: 8px;
+    padding-top: 0;
 
     a.resources__link.mdl-navigation__link {
       padding-left: $nav-spacing-from-left-wide + 4;
 
       color: white;
       font-weight: 300;
-      font-size: 1.3em;
+      font-size: 1.2em;
       letter-spacing: 1.2px;
 
       @media screen and (max-width: $layout-drawer-width-threshold) {
@@ -121,7 +320,7 @@ body {
       }
 
       &:hover {
-        background-color: lighten($lighter-blue, 12%);
+        background-color: $darker-blue;
       }
     }
   }
@@ -133,27 +332,26 @@ body {
   background-image: url(../images/planning_bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-color: $lighter-blue;
+  background-color: $lighter-blue-version1;
   min-height: 124px;
+  padding-bottom: 10px;
 }
 
 .resources__title-text {
   position: absolute;
   bottom: 0;
-  left: $nav-spacing-from-left-wide;
-
-  text-transform: uppercase;
-  font-size: 0.9em;
-  letter-spacing: 1px;
+  left: $nav-spacing-from-left-wide + 4;
+  font-size: 1em;
+  letter-spacing: 1.2px;
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
-    left: $nav-spacing-from-left-narrow;
+    left: $nav-spacing-from-left-narrow + 2;
   }
 }
 
 .footer {
   min-height: 50px;
-  background-color: $darker-blue;
+  background-color: $gray20;
   color: white;
 
   position: relative;
@@ -163,17 +361,40 @@ body {
   position: relative;
   margin: auto;
 
-  width: 235px;
+  width: 260px;
   height: 47px;
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    width: 240px;
+  }
 }
 
 .footer__twdb-logo {
-  position: absolute;
-  left: 0px;
-  bottom: 1px;
-
+  display: inline-block;
+  float: left;
   img {
-    width: 145px;
+    height: 2.8em;
+    width: auto;
+    margin: 5px 0 5px 2px;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-left: 4px;
+    }
+  }
+}
+
+.footer__tnris-logo {
+  display: inline-block;
+  float: right;
+  max-height: 50px;
+  img {
+    height: 3.1em;
+    width: auto;
+    margin: 5px 2px 3px 0;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      margin-right: 4px;
+    }
   }
 }
 
@@ -191,6 +412,7 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  background-color: #222 !important;
 }
 
 .map__cursor--pointer {
@@ -202,9 +424,10 @@ body {
 }
 
 .popup {
+
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
-    border-radius: 0px;
+    border-radius: 0;
 
     .leaflet-popup-content {
       margin: 0 0 0 0;
@@ -214,7 +437,7 @@ body {
   .popup__title {
     position: absolute;
     width: 100%;
-    background-color: red;
+    background-color: $gray20;
   }
 
   .popup__title-text {
@@ -225,7 +448,7 @@ body {
   }
 
   .popup__content {
-    padding-top: 50px;
+    padding-top: 47px;
   }
 
   .popup__icon {
@@ -235,42 +458,53 @@ body {
     margin: 6px 14px 6px 14px;
   }
 
-  .subscribe-button {
-    font-size: 1em;
-    float: right;
-    top: 4px;
+  .mdl-button {
+    min-width: 0;
   }
 
-  // customize popup tip - give it a more narrow angle
-  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-    background: white;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-  }
+    .popup__close {
+      float: right;
+      height: 42px;
 
-  .leaflet-popup-tip-container {
-    width: 70px;
-    height: 70px;
-  }
+      @media screen and (max-width: $popup-icons-width-threshold) {
+        padding: 0 6px 0 0;
+        width: 32px;
 
-  .leaflet-popup-tip {
-    width: 55px;
-    height: 55px;
-    margin: -30px 0px 0px 6px;
-    padding: 1px;
+        .material-icons.material-icons {
+          font-size: 1.5em;
+        }
+      }
 
-    $popup-tip-transform: rotate(45deg) skew(20deg, 20deg);
-    -webkit-transform: $popup-tip-transform;
-    -moz-transform: $popup-tip-transform;
-    -ms-transform: $popup-tip-transform;
-    -o-transform: $popup-tip-transform;
-    transform: $popup-tip-transform;
-  }
+      i {
+        margin-top: -4px;
+      }
+    }
+
+    .subscribe-button {
+      font-size: 1em;
+      float: right;
+      height: 42px;
+      border-left: 1px;
+      border-color: white;
+      @media screen and (max-width: $popup-icons-width-threshold) {
+        padding: 0 8px;
+      }
+      @media screen and (max-width: $iphone-five-width-threshold) {
+        padding: 0 6px;
+      }
+
+      .material-icons {
+        padding-right: 5px;
+        padding-bottom: 3px;
+      }
+    }
 }
 
 .info__name {
   font-weight: 600;
   font-size: 1.5em;
-  margin: 4px 18px 0px 18px;
+  margin: 0px 18px 3px 18px;
+  vertical-align: middle;
 }
 
 
@@ -294,6 +528,7 @@ body {
 
 .feature-layer__link {
   min-height: 40px;
+  border-bottom: 1px solid $accent-light-green;
 }
 
 .feature-layer__link.mdl-navigation__link {
@@ -301,7 +536,7 @@ body {
   flex-direction: column;
 
   padding-left: $nav-spacing-from-left-wide - 6;
-  border-bottom: 1px solid $darker-blue;
+
 
   @media screen and (max-width: $layout-drawer-width-threshold) {
     padding-left: $nav-spacing-from-left-narrow - 2;
@@ -316,7 +551,7 @@ body {
 }
 
 .feature-layer__icon-wrapper {
-  width: 50px;
+  width: $nav-icon-wrapper-width;
   align-self: flex-start;
   margin: auto;
 }
@@ -358,14 +593,18 @@ body {
   }
 }
 
+.feature-layer__legendLink {
+  padding-bottom: 6px;
+  padding-left: $nav-spacing-from-left-wide + $nav-icon-wrapper-width;
+
+  @media screen and (max-width: $layout-drawer-width-threshold) {
+    padding-left: $nav-spacing-from-left-narrow-link;
+  }
+}
+
 .mdl-menu__item.active {
   color: black;
   font-weight: bold;
-}
-
-.easy-button-button {
-  padding: 1px 0 0 0;
-  text-align: center;
 }
 
 /* Material Icon additional rules. */
@@ -405,54 +644,359 @@ body {
   vertical-align: middle;
 }
 
-.disclaimer {
-    /* Override default which is too narrow */
-    width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
+.disclaimer-modal:focus {
+  outline: none;
 }
 
-dialog.disclaimer h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 2em;
+.disclaimer-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 35em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .disclaimer {
+    width: 100% !important;
+
+    .disclaimer-title {
+
+      h2 {
+        color: $gray20;
+        font-size: 1.5em;
+        font-weight: 400;
+      }
+    }
+
+    .disclaimer-text {
+      color: $gray20;
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      h5 {
+        margin-top: 20px;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+
+      a {
+        color: $lighter-blue;
+      }
+    }
+
+    .disclaimer-button-div {
+      padding: 5px;
+    }
+
+    button {
+      color: #fff!important;
+      background-color: $lighter-blue;
+      border-radius: 0;
+      width: 100%;
+      font-size: 90%;
+    }
+
+    button:hover, button:active, button:focus {
+      background-color: $darker-blue !important;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 100% !important;
+      padding: 0;
+
+      .disclaimer-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
+      }
+
+      .disclaimer-text {
+        padding: 10px;
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+      }
+
+      .disclaimer-button-div {
+        font-size: 11px;
+
+        button {
+          padding: 0;
+        }
+      }
+    }
+  }
 }
 
 .subscribeDialog {
-    /* Override default which is too narrow */
-    // width: 85% !important;
-    /* Limit width for readability */
-    max-width: 35em;
-    /* Center vertically - also set left for Firefox */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    /* Scrollbar to allow text viewing and input access on small screens */
-    overflow-y: auto !important;
-    /* Allow the scrollbar to work without forcing it on */
-    max-height: 100%;
-    /* Ensure this isn't transparent on Firefox */
-    background-color: white;
-    position: fixed;
+  /* Limit width for readability */
+  max-width: 35em;
+  /* Center vertically - also set left for Firefox */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+  /* Scrollbar to allow text viewing and input access on small screens */
+  overflow-y: auto !important;
+  /* Allow the scrollbar to work without forcing it on */
+  max-height: 100%;
+  /* Ensure this isn't transparent on Firefox */
+  background-color: white;
+  position: fixed;
+
+  .mdl-dialog__content {
+    padding: 10px;
+  }
 }
 
 dialog.subscribeDialog h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 1.5em;
+  /* Reduce size to avoid line break in title */
+  font-size: 1.5em;
+  text-align: center;
+  padding: 0;
+}
+
+.about-modal:focus {
+  outline: none;
+}
+
+.about-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .about-version-number {
+    color: $gray20;
+    float: right;
+    font-size: x-small;
+    font-style: italic;
+    padding-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .about {
+    width: 100% !important;
+
+    .about-title {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      img {
+        height: 38px;
+      }
+
+      h2 {
+        color: $gray20;
+        font-size: 1.6em;
+        font-weight: 400;
+      }
+    }
+
+    .about-text {
+      width: 100%;
+      padding-top: 0;
+      color: $gray20;
+
+      h5 {
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      a {
+        color: $lighter-blue;
+      }
+
+      .about-disclaimer-text {
+        font-size: 14px;
+      }
+
+      .data-sources-list {
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .about-viewer-details-link {
+        margin: 10px 0 10px 0;
+      }
+
+      .about-developed-by {
+        font-size: 12px;
+        margin: 0;
+        padding-top: 10px;
+      }
+
+      .about__logos {
+        margin: auto;
+        height: 40px;
+        padding: 0 0 0 40px;
+
+        @media screen and (max-width: 767px) {
+          height: 35px;
+          text-align: center;
+          padding: 0;
+        }
+      }
+
+      .about__twdb-logo {
+
+        img {
+          position: relative;
+          padding-right: 10px;
+          max-height: 40px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+            padding-right: 7px;
+          }
+        }
+      }
+
+      .about__tnris-logo {
+
+        img {
+          position: relative;
+          margin-left: auto;
+          max-height: 37px;
+          height: auto;
+
+          @media screen and (max-width: 767px) {
+            max-height: 35px;
+          }
+        }
+      }
+    }
+
+    .about-button-div {
+      padding: 5px;
+
+      button {
+        color: #fff!important;
+        background-color: $lighter-blue;
+        border-radius: 0;
+        width: 100%;
+        font-size: 90%;
+      }
+
+      button:hover, button:active, button:focus {
+        background-color: $darker-blue !important;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 100% !important;
+      padding: 0;
+
+      .about-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
+
+        img {
+          height: 30px;
+        }
+      }
+
+      .about-text {
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+
+        .about-disclaimer-text {
+          font-size: 12px;
+        }
+
+        .data-sources-list {
+          margin-bottom: 16px;
+        }
+      }
+
+      .about-button-div {
+        font-size: 11px;
+
+        button {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+.weatherTimestamp {
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+    text-shadow:
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
+  }
+  z-index: 6;
+  position: absolute;
+  left: 60px;
+  bottom: 25px;
+  padding: 4px;
+}
+
+.animateRadar {
+  font-size: 14px;
+  z-index: 6;
+  position: absolute;
+  left: 10px;
+  bottom: 25px;
+  padding: 4px;
+
+  .mdl-button--fab {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+
+    .material-icons.md-dark {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
 }
 
 .betanotice {
     background-color: #FCF8E3;
-    bottom: -10px;
+    top: 30px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     left: 50%;
     min-width: 230px;
@@ -466,32 +1010,589 @@ dialog.subscribeDialog h4 {
         font-size: 12px;
         margin: 0;
     }
-    .simulateFlood {
-        width: 100%;
-    }
 }
 
 .hide-beta {
     display: none;
 }
 
-.easy-button-button.simulate-flood-active,  .easy-button-button.simulate-flood-active:hover{
-    background-color: #4094C1;
-    border: none;
-    color: white;
-}
-
-.easy-button-button.simulate-flood-active:hover{
-    background-color: #2C88A9;
-    border: none;
-    color: white;
-}
-
 div.dialog-button-div {
   padding-left: 8px;
-    
+
   .terms-agree-button {
+    color: white !important;
+    background-color: $lighter-blue;
+    border-radius: 0;
     width: 100%;
     font-size: 90%;
+  }
+}
+
+button.toggle-navigation-content {
+    color: black;
+    background-color: $accent-light-green;
+    border: 0;
+    border-color:  $accent-light-green;
+    border-radius: 0;
+    border-bottom: 1px solid #E4E4E4;
+    height: 56px;
+    width: 100%;
+    font-size: 1.1em;
+
+    &:hover {
+        color: bla;
+        background-color: $accent-dark-green;
+    }
+}
+
+button.toggle-navigation-content.bottom-nav-button {
+  border-bottom: $accent-light-green;
+}
+
+.subscription-list-item {
+    border-bottom: 1px solid $accent-light-green;
+    margin: 0;
+}
+
+.mdl-list__item--two-line {
+    height: 85px !important;
+}
+
+.subscription-list-item__locateAction {
+    margin: 0 !important;
+    margin-left: 4px !important;
+    width: 40px !important;
+
+    span {
+        height: 100%;
+        width: 40px;
+    }
+}
+
+.form__swapper {
+  float: right;
+  margin-right: 20px;
+  margin-left: 10px;
+
+  a {
+    color: $lighter-blue;
+  }
+
+}
+
+.form__back {
+  padding-top: 5px;
+  margin-left: 16px;
+
+  i {
+    cursor: pointer;
+  }
+
+  i:hover {
+    background-color: #E8E8E8;
+  }
+}
+
+.user__settings {
+  padding: 10px;
+
+  p {
+    word-wrap: break-word;
+  }
+}
+
+span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
+    margin: 0;
+
+    button {
+        background-color: $lighter-blue !important;
+        box-shadow: none;
+        color: white;
+
+        &:hover {
+            background-color: $darker-blue !important;
+        }
+
+        span {
+            margin: 0
+        }
+    }
+}
+
+span.mdl-badge {
+    margin-left: 10px;
+
+    &:after {
+        background-color: $accent-dark-green !important;
+        top: 0 !important;
+        right: -30px !important;
+    }
+}
+
+.subscription-list > p {
+  margin: 16px 10px 0 10px;
+}
+
+span.mdl-list__item-secondary-info {
+    margin-right: 4px;
+}
+
+span.mdl-list__item-secondary-action > i {
+    font-size: 22px;
+    margin-right: 5px !important;
+}
+
+.mdl-list__item-sub-title {
+    font-size: 10px !important;
+}
+
+.mdl-checkbox.is-checked .mdl-checkbox__box-outline {
+    border: 2px solid $lighter-blue !important;
+    .mdl-checkbox__tick-outline {
+        background-color: $lighter-blue !important;
+    }
+}
+
+.flood-form-button {
+  float: right;
+  margin-bottom: 10px !important;
+  padding: 0 20px 0 20px !important;
+}
+
+.subscription-list-save-button {
+  float: right;
+  margin-bottom: 10px !important;
+  margin-right: 10px !important;
+}
+
+button.easy-button-button.leaflet-bar-part.location-on-active {
+    background-color: $accent-light-green;
+}
+
+button.easy-button-button.leaflet-bar-part.location-tools-on-active {
+  background-color: $accent-light-green;
+}
+
+dialog.confirm-subscription-change h4 {
+    /* Reduce size to avoid line break in title */
+    font-size: 1.5em;
+    text-align: center;
+    padding: 0;
+}
+
+a.leaflet-disabled {
+  color: #bbb !important;
+}
+
+dialog.confirm-subscription-change h4 {
+    /* Reduce size to avoid line break in title */
+    font-size: 1.5em;
+    text-align: center;
+    padding: 0;
+}
+
+div.leaflet-popup-content-wrapper {
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 0;
+  }
+  .geolocation-popup & {
+    border-radius: 0 !important;
+    margin: 0;
+    padding: 0;
+
+    h6 {
+      background-color: $gray20;
+      color: white;
+      font-size: 1.3em;
+      font-weight: 300;
+      margin: 0;
+      padding: 4px 10px 4px 10px;
+    }
+
+    p {
+      margin: 0;
+      padding: 2px 10px 2px 10px;
+    }
+  }
+}
+
+.leaflet-bar {
+  border-radius: 0 !important;
+
+  button {
+    border-radius: 0 !important;
+  }
+
+  a {
+    border-radius: 0 !important;
+    color: $gray20 !important;
+  }
+}
+
+a.leaflet-disabled {
+  color: #bbb !important;
+}
+
+button.zoom-major {
+  color: #cc33ff !important;
+}
+
+button.zoom-moderate {
+  color: #ff0000 !important;
+}
+
+button.zoom-flood {
+  color: #ff9900 !important;
+}
+
+button.zoom-action {
+  color: #ffff00 !important;
+}
+
+button.zoom-no-flooding {
+  color: #00ff00 !important;
+}
+
+button.zoom-low {
+  color: #906320 !important;
+}
+
+button.zoom-not-defined {
+  color: #72afe9 !important;
+}
+
+button.zoom-observations-not-current {
+  color: #bdc2bb !important;
+}
+
+button.zoom-out-of-service {
+  color: #666666 !important;
+}
+
+.leaflet-right {
+  width: 100%;
+}
+
+.showGeocoder {
+  visibility: visible !important;
+}
+
+.leaflet-control-geocoder {
+  visibility: hidden;
+  width: 100%;
+  margin: 0 !important;
+  height: 40px;
+  box-shadow: none !important;
+
+  .leaflet-control-geocoder-icon {
+    display: none !important;
+    height: 40px;
+    margin: 0;
+    float: left;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .leaflet-control-geocoder-form {
+    width: 100%;
+    height: 40px;
+
+    .leaflet-control-geocoder-input {
+      font-size: 150%;
+      height: 40px;
+      padding: 0 0 0 2%;
+      width: 88%;
+
+      @media screen and (min-width: $layout-geocode-width-threshold) {
+        width: 93%;
+      }
+    }
+
+    .leaflet-control-geocoder-clear-input {
+      float: right;
+      cursor: pointer;
+      height: 100%;
+      width: 10%;
+      text-align: center;
+
+      @media screen and (min-width: $layout-geocode-width-threshold) {
+        width: 5%;
+      }
+
+      .material-icons.clear-icon {
+        padding-top: 8px;
+      }
+    }
+  }
+
+  .leaflet-control-geocoder-alternatives {
+    background-color: inherit;
+    margin-top: -2px;
+
+    li:nth-child(odd) {
+      background: #f2f2f2;
+     }
+
+     li:hover {
+       background-color: #dcdcdc;
+      }
+  }
+
+  .leaflet-control-geocoder-alternatives li {
+    border: none;
+  }
+
+  .leaflet-control-geocoder-error {
+    color: white;
+    text-shadow:
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
+  }
+}
+
+.leaflet-bar {
+  border-radius: 0 !important;
+
+  button {
+    border-radius: 0 !important;
+  }
+
+  a {
+    border-radius: 0 !important;
+  }
+}
+
+.leaflet-control-layers {
+  visibility: hidden;
+  border-radius: 0 !important;
+}
+
+.showLeafletControlLayers {
+  visibility: visible;
+}
+
+label.hide-disclaimer-checkbox {
+  color: gray;
+  margin-top: 10px;
+  width: 95%;
+
+  span {
+    font-size: 12px;
+    font-style: italic;
+    line-height: 18px;
+    margin-bottom: 0;
+  }
+}
+
+.leaflet-control-attribution {
+  font-size: 8px !important;
+}
+
+.leaflet-bottom.leaflet-right {
+  z-index: 4;
+}
+
+.leaflet-top.leaflet-right {
+  z-index: 4;
+}
+
+.mdl-snackbar {
+  z-index: 10 !important;
+  background-color: #4F85AE !important;
+
+
+  a {
+    color: $accent-dark-green;
+  }
+
+  .mdl-snackbar__text {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.easy-button-button{
+  transition-duration: .3s;
+  position: relative;
+  border: solid 0px transparent;
+  padding: 0;
+}
+
+.state-location-on,
+.state-location-off {
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+
+  .track-location-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
+}
+
+.state-reset-geolocation-tools,
+.state-zoom-to-location {
+  transition-duration: .5s;
+  transform: scaleY(0);
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+
+  .geolocate-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
+}
+
+.state-reset-geolocation-tools {
+  transform-origin: 0 50%;
+}
+
+.state-zoom-to-location {
+  transform-origin: 100% 50%;
+}
+
+.state-reset-geolocation-tools.reset-geolocation-tools-active{
+  transform: scaleY(1);
+}
+
+.state-zoom-to-location.zoom-to-location-active{
+  transform: scaleY(1);
+}
+
+.shareBar {
+    background-color: #333;
+    max-height: 26px;
+    min-height: 26px;
+    padding: 6px 14px 6px 14px;
+}
+
+.share-button {
+    float: right;
+    cursor: pointer;
+
+    @media screen and (max-width: 400px) {
+      float: none;
+    }
+}
+
+body > div.ReactModalPortal > div {
+    z-index: 10000000 !important;
+}
+
+.mdl-card {
+    border-radius: 0 0 0 0 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    min-height: 146px !important;
+}
+
+div.confirm-modal-title {
+    background-color: #333;
+    border-radius: 0 0 0 0 !important;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+.confirm-modal-actions {
+  button {
+    float: right;
+  }
+}
+
+.confirm-modal-text {
+  color: $gray20 !important;
+  width: 98%;
+}
+
+.subscription-confirm-modal:focus {
+  outline: none;
+}
+
+.subscription-confirm-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+}
+
+.subscription-confirm-modal-actions {
+  button {
+    float: right;
+  }
+}
+
+div.subscription-confirm-modal-title {
+    background-color: #333;
+    border-radius: 0 0 0 0 !important;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+
+    span {
+        padding-left: 10px;
+    }
+}
+
+.subscription-confirm-modal-text {
+  color: $gray20 !important;
+  width: 98%;
+}
+
+.login-form {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.settings-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.subscriptions-sign-out-button-wrapper {
+  width: 100%;
+  float: left;
+  margin: 10px 0 15px 0;
+
+  button {
+    width: 50%;
+
+    @media screen and (max-width: 400px) {
+      font-size: 12px;
+    }
   }
 }

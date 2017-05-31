@@ -7,6 +7,7 @@ export default class FeatureLayer extends Component {
     active: PropTypes.bool,
     children: PropTypes.array,
     icon: PropTypes.string,
+    altText: PropTypes.string,
     legend: PropTypes.string,
     onClick: PropTypes.func,
     status: PropTypes.string,
@@ -14,7 +15,7 @@ export default class FeatureLayer extends Component {
   }
 
   render() {
-    const { onClick, text, icon, legend, active, status } = this.props
+    const { onClick, text, icon, altText, legend, active, status } = this.props
 
     let statusIndicator
     if (active && status !== 'ready') {
@@ -25,32 +26,43 @@ export default class FeatureLayer extends Component {
     }
 
     let legendElement
-    if (active && legend) {
+    if (active && legend && text != "Weather Alerts") {
       legendElement = (
         <div className="feature-layer__legend">
           <img src={legend} />
         </div>
       )
     }
+    let legendLink
+    if (active && legend && text == "Weather Alerts") {
+      legendLink = (
+        <div className="feature-layer__legendLink">
+          <a href="./flood-alert-legend.png" target="weather-alerts-legend">NOAA Advisories</a>
+        </div>
+      )
+    }
 
     return (
-      <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer__link mdl-navigation__link" href="">
-        <div className="feature-layer__wrapper">
-          <div className="feature-layer__icon-wrapper">
-            <img src={icon} className="feature-layer__icon" />
-          </div>
-          <div className="feature-layer__name vertically-centered__wrapper">
-            <div className="vertically-centered__element">
-              { text }
+      <div className="feature-layer__link">
+        <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">
+          <div className="feature-layer__wrapper">
+            <div className="feature-layer__icon-wrapper">
+              <img src={icon} alt={altText} className="feature-layer__icon" />
+            </div>
+            <div className="feature-layer__name vertically-centered__wrapper">
+              <div className="vertically-centered__element">
+                { text }
+              </div>
+            </div>
+            <div className="feature-layer__checkbox">
+              { statusIndicator }
             </div>
           </div>
-          <div className="feature-layer__checkbox">
-            { statusIndicator }
-          </div>
-        </div>
 
-        { legendElement }
-      </a>
+          { legendElement }
+        </a>
+          { legendLink }
+      </div>
     )
   }
 }

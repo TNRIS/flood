@@ -1,16 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import hash from 'object-hash'
 
+import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupTitle from './PopupTitle'
 import PopupContent from './PopupContent'
 import PopupHeader from './PopupHeader'
 import PopupText from './PopupText'
 
-const icon = require('../images/flood_alert_white.png')
+import { store } from '../store'
+import {Provider} from 'react-redux'
+
+const icon = require('../images/flood_alert_red.png')
 
 export default class FloodAlertsPopup extends Component {
   static propTypes = {
     response: PropTypes.array,
+    leafletMap: PropTypes.object,
     updatePopup: PropTypes.func,
   }
 
@@ -23,7 +28,9 @@ export default class FloodAlertsPopup extends Component {
     const { response } = this.props
     return (
       <div>
-        <PopupTitle icon={icon} title="Weather Alert Information" />
+        <Provider store={store}>
+          <PopupTitleContainer icon={icon} title="Weather Alert" leafletMap={this.props.leafletMap}/>
+        </Provider>
         <PopupContent>
           {response.map(({ details }) => {
             const id = hash(details, { algorithm: 'md5', encoding: 'base64' })

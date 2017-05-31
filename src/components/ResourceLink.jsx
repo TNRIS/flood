@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ResourceLink = ({ text, href }) => {
+const ResourceLink = ({ text, href, title, target }) => {
   return (
-    <a className="mdl-navigation__link resources__link" href={href}>
-      {text}
+    <a className="mdl-navigation__link resources__link" href={href} target={target}>
+      {text} &nbsp; <strong>{title}</strong>
     </a>
   )
 }

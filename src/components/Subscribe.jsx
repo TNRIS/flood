@@ -1,122 +1,85 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import * as FloodAlerts from '../util/FloodAlerts'
+
 import {
-    Textfield, Snackbar, Button, Dialog, DialogTitle, DialogContent, DialogActions
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, Textfield
 } from 'react-mdl'
 import * as dialogPolyfill from 'dialog-polyfill'
 
 
-class Subscribe extends Component {
+class Subscribe extends React.Component {
+  static propTypes = {
+    email: React.PropTypes.string,
+    phone: React.PropTypes.string,
+    hideSubscribe: React.PropTypes.func,
+    openDialog: React.PropTypes.bool,
+    setUserInfo: React.PropTypes.func,
+    showSnackbar: React.PropTypes.func,
+    subscribeGage: React.PropTypes.func
+  }
+
   constructor(props) {
-    super(props);
-    this.state = {isSnackbarActive: false};
-    this.handleCloseDialog = this.handleCloseDialog.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleShowSnackbar = this.handleShowSnackbar.bind(this);
-    this.handleTimeoutSnackbar = this.handleTimeoutSnackbar.bind(this);
+    super(props)
+    this.state = {}
+    this.handleCloseDialog = this.handleCloseDialog.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-      const dialog = ReactDOM.findDOMNode(this.refs.subscribeDialog)
-      if (!dialog.showModal) {
-          dialogPolyfill.registerDialog(dialog)
-      }
+    const dialog = ReactDOM.findDOMNode(this.refs.subscribeDialog)
+    if (!dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      email: this.props.email,
+      phone: this.props.phone,
       lid: nextProps.lid,
       name: nextProps.name
     })
   }
 
-  handleShowSnackbar() {
-    this.setState({ isSnackbarActive: true });
-  }
-  handleTimeoutSnackbar() {
-    this.setState({ isSnackbarActive: false });
-  }
-
   handleCloseDialog() {
-    this.setState({
-      phone: null,
-      email: null
-    });
-    this.props.hideSubscribe();
+    this.props.hideSubscribe()
   }
 
   handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
-    let nextState = {};
-    nextState[name] = value;
-    this.setState(nextState);
+    const name = event.target.name
+    const value = event.target.value
+    const nextState = {}
+    nextState[name] = value
+    this.setState(nextState)
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-
-    if (this.state.email||this.state.phone) {
-      FloodAlerts.subscribeGauge(this.state.lid, this.state.phone, this.state.email)
-      this.setState({
-        toast: "Your subscription has been submitted"
-      })
-      this.handleShowSnackbar()
-      this.handleCloseDialog()
-    } else {
-      this.setState({
-        toast: "Please enter an email or phone number to submit"
-      })
-      this.handleShowSnackbar()
-    }
-    
+    event.preventDefault()
+    this.props.subscribeGage(this.state.lid.toUpperCase())
+    this.props.showSnackbar("Your subscription has been submitted")
+    this.handleCloseDialog()
   }
-  
+
   render() {
     return (
-      <div className='subscribe__wrapper'>
-        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog } onCancel={ this.handleCloseDialog } >
-          <DialogTitle className="subscribe-title">{ this.state.name } ({ this.state.lid })</DialogTitle>
-          <form className="subscribe-form" onSubmit={ this.handleSubmit }>
+      <div className="subscribe__wrapper">
+        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog }
+        onCancel={ this.handleCloseDialog } >
+          <form className="subscribe-form">
             <DialogContent>
-              <p>Subscribe to receive email and/or text alerts when this gage reaches elevated flood stages.</p>
-              <Textfield floatingLabel
-                         onChange={ this.handleChange }
-                         label="Email..."
-                         type="email"
-                         id="email"
-                         name="email"
-                         value= { this.state.email }
-              />
-              <Textfield
-                         floatingLabel
-                         onChange={ this.handleChange }
-                         pattern="[0-9]*"
-                         minLength={10}
-                         maxLength={10}
-                         error="10 digits only including US area code"
-                         label="Phone..."
-                         type="tel" 
-                         id="phone"
-                         name="phone"
-                         value={ this.state.phone }
-              />
-              <sub><small>Disclaimer: Flood gage alerts (or lack thereof) are in no way an indicator of safety or danger.
-              Always use all available information resources during weather events.</small></sub>
+              <p>Are you sure you want to subscribe to receive alerts for the <b>{ this.state.name } ({ this.state.lid })</b> flood gage?</p>
             </DialogContent>
             <DialogActions>
-              <Button primary ripple type="submit" value="Submit">Submit</Button>
-              <Button primary ripple type="button" value="Cancel" onClick={ this.handleCloseDialog }>Cancel</Button>
+              <Button ripple className="flood-form-button" type="button" value="Submit"
+                onClick={ this.handleSubmit }>Submit</Button>
+              <Button ripple className="flood-form-button" type="button" value="Cancel"
+                onClick={ this.handleCloseDialog }>Cancel</Button>
             </DialogActions>
           </form>
         </Dialog>
-        <Snackbar active={ this.state.isSnackbarActive } onTimeout={ this.handleTimeoutSnackbar } timeout={ 3200 }>
-          { this.state.toast }
-        </Snackbar>
       </div>
-    );
+    )
   }
 }
 

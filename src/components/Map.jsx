@@ -1,5 +1,7 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import { hashHistory } from 'react-router'
 import R from 'ramda'
 
 import keys from '../keys'
@@ -8,16 +10,15 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
+    FABButton, Icon
 } from 'react-mdl'
 
-const demoSQL = require('../cartodb/nws-ahps-gauges-texas-demo.sql')
-const SQL = require('../cartodb/nws-ahps-gauges-texas.sql')
-const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
-import objectAssign from 'object-assign'
-import * as FloodAlerts from '../util/FloodAlerts'
+const pause = require('../images/pause.png')
 
+const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
+const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
 
+import axios from 'axios'
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
@@ -43,43 +44,203 @@ function leafletLayerForPropBaseLayer(propBaseLayer) {
 export default class Map extends Component {
   static propTypes = {
     baseLayers: PropTypes.shape({
-      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer)
+      layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
+      active: PropTypes.string
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
-    onClickAlerts: PropTypes.func.isRequired,
-    onClickUTFGrid: PropTypes.func.isRequired,
-    onMouseoutUTFGrid: PropTypes.func.isRequired,
-    onMouseoverUTFGrid: PropTypes.func.isRequired
+    showSnackbar: PropTypes.func
   }
 
   constructor(props) {
     super(props)
-    this.state = {}
-    this.updateLayerStore = this.updateLayerStore.bind(this);
+    this.state = {
+      animationIcon: "play_arrow",
+      geolocateControl: "basic",
+      locateToolbar: null
+    }
   }
 
-  componentDidMount() {    
-    setTimeout(() => {
+  componentDidMount() {
+    const initMap = (options) => {
       this.map = L.map(this.refs.map, {
-        center: [31, -100],
-        zoom: 7,
-        minZoom: 5
+        center: [options.latitude, options.longitude],
+        zoom: options.zoom,
+        minZoom: window.innerWidth < 768 ? 5 : 6
       })
 
-      // fit to Texas
-      this.map.fitBounds([[25.8371, -106.6460], [36.5007, -93.5083]])
-
-      this.map.zoomControl.setPosition('topright')
-      this.map.attributionControl.setPrefix('Data Sourced From')
-      this.initializeLayerStore(this.props, this.map)
-      this.initializeBasemapLayers()
       this.initializeGeocoderControl()
-      this.initializeSimulateFloodControl()
-    }, 0)
+      this.initializeBasemapLayers()
+      this.map.zoomControl.setPosition('bottomright')
+      this.initializeLayerStore(this.props, this.map)
+      this.geolocationControl()
 
-    this.setState({
-      flooded: false
-    })
+      const defaultMarker = L.icon({
+        iconUrl: defaultMarkerIcon,
+        iconAnchor: [24, 44],
+        popupAnchor: [0, -44]
+      })
+
+      const watchLocationMarker = L.icon({
+        iconUrl: gpsFixedIcon,
+        iconAnchor: [18, 20]
+      })
+
+      this.geolocateCircle = null
+      this.geolocateIcon = null
+      this.popupContentNode = null
+
+      this.map
+        .on('locationfound', (e) => {
+          if (this.geolocateCircle) {
+            this.map.removeLayer(this.geolocateCircle)
+          }
+          if (this.geolocateIcon) {
+            this.map.removeLayer(this.geolocateIcon)
+          }
+
+          if (this.map._locateOptions && !this.map._locateOptions.watch) {
+            this.geolocateIcon = L.marker(e.latlng, {
+              icon: defaultMarker
+            })
+          }
+          else {
+            this.geolocateIcon = L.marker(e.latlng, {
+              icon: watchLocationMarker
+            })
+          }
+
+          this.geolocateIcon.bindPopup(
+            `<h6>Approximate Location</h3>` +
+            `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
+            `<p>Longitude: ${e.longitude.toPrecision(7)}</p>` +
+            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`,
+            {
+              className: 'geolocation-popup',
+              closeButton: false
+            }
+          )
+
+          this.geolocateIcon.on('contextmenu', () => {
+            this.locateToolbar._buttons[1].state('location-off')
+            this.locateToolbar._buttons[1].disable()
+            this.locateToolbar._buttons[0].state('zoom-to-location')
+            this.map.stopLocate()
+            this.map.removeLayer(this.geolocateIcon)
+          })
+
+          this.geolocateCircle = L.circle(e.latlng, e.accuracy, {
+            color: "#265577",
+            fillColor: "#3473A2",
+            fillOpacity: 0.1,
+            stroke: false
+          })
+
+          this.map.addLayer(this.geolocateIcon)
+
+          if (this.map._locateOptions && !this.map._locateOptions.watch) {
+            this.map.setView(e.latlng, 16)
+          }
+        })
+        .on('locationerror', () => {
+          this.props.showSnackbar(
+            "Error retrieving location. Please verify permission has been granted to your device or browser."
+          )
+        })
+        .on('zoomend dragend', () => {
+          if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
+            const center = this.map.getCenter()
+            const zoom =  this.map.getZoom()
+            hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          }
+          else {
+            hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+          }
+        })
+        .on('popupopen', () => {
+          const popupContent = document.getElementsByClassName('leaflet-popup-content')
+
+          this.popupContentNode = popupContent.length > 0 ? popupContent[0] : null
+        })
+        .on('popupclose', () => {
+          this.props.clearPopup()
+
+          if (this.popupContentNode) {
+            ReactDOM.unmountComponentAtNode(this.popupContentNode)
+          }
+
+          const center = this.map.getCenter()
+          const zoom =  this.map.getZoom()
+          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+        })
+        .on('dblclick', (e) => {
+          const zoom =  this.map.getZoom()
+          const southwest = L.latLng(30.263042706097306, -97.75079011917114)
+          const northeast = L.latLng(30.26316780672294, -97.75057554244995)
+          const bounds = L.latLngBounds(southwest, northeast)
+          const contains = bounds.contains(e.latlng)
+          if (contains == true && zoom == 18) {
+            window.open('https://youtu.be/KC5H9P4F5Uk', '_stevieVaughan')
+          }
+        })
+        .on('click', (e) => {
+          L.DomEvent.preventDefault(e)
+          L.DomEvent.stopPropagation(e)
+        })
+
+
+    }
+
+    setTimeout(() => {
+      const getZoom = () => {
+        if (this.props.initialCenter.zoom && this.props.initialCenter.zoom.match(/\d*\z+/)) {
+          return this.props.initialCenter.zoom.replace(/z$/, "")
+        }
+        return window.innerWidth < 768 ? 5 : 6
+      }
+
+      const initView = {
+        latitude: this.props.initialCenter.lat || 31,
+        longitude: this.props.initialCenter.lng || -100,
+        zoom: getZoom()
+      }
+      if (this.props.hasOwnProperty("gageCenter") && this.props.gageCenter.lid) {
+        const upperLid = this.props.gageCenter.lid.toUpperCase()
+        const query = (
+          `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas_develop WHERE lid = '${upperLid}'`
+        )
+        axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
+          .then(({data}) => {
+            if (data.rows.length === 0) {
+              this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
+              hashHistory.push("")
+              return initMap(initView)
+            }
+            data.rows.map((gage) => {
+              initView.latitude = gage.latitude
+              initView.longitude = gage.longitude
+              initView.zoom = 13
+
+              initMap(initView)
+
+              this.props.setPopup({
+                id: 'ahps-flood',
+                data: {
+                  name: gage.name,
+                  wfo: gage.wfo,
+                  lid: this.props.gageCenter.lid
+                },
+                clickLocation: L.latLng(gage.latitude, gage.longitude)
+              })
+            })
+          })
+      }
+      else {
+        if (!this.props.initialCenter) {
+          hashHistory.push("")
+        }
+        initMap(initView)
+      }
+    }, 1000)
   }
 
   componentWillUpdate(nextProps) {
@@ -97,6 +258,38 @@ export default class Map extends Component {
 
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(nextProps)
+    }
+
+    const lyrs = nextProps.featureLayers.layers
+    if (lyrs[lyrs.length - 1]['active'] === true) {
+      this.displayedTimestamp = lyrs[lyrs.length - 1]['displayedTimestamp']
+    }
+    else {
+      this.displayedTimestamp = ''
+    }
+
+    const basemaps = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
+      [propBaseLayer.id, leafletLayerForPropBaseLayer(propBaseLayer)]
+    ))
+
+    const activeBaseLayer = this.props.baseLayers.active
+
+    const nextActiveBaseLayer = nextProps.baseLayers.active
+    if (activeBaseLayer !== nextActiveBaseLayer) {
+      basemaps[nextActiveBaseLayer].addTo(this.map)
+      this.map.eachLayer((layer) => {
+        if (layer.options.layerId === activeBaseLayer) {
+          this.map.removeLayer(layer)
+        }
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
+      const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
+      this.map.setView(latlngPoint, this.props.map.zoomLevel)
+      this.props.clearCenterAndZoom()
     }
   }
 
@@ -132,84 +325,34 @@ export default class Map extends Component {
         onClickUTFGrid: this.props.onClickUTFGrid,
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
+        updateTimestamp: this.props.updateTimestamp,
       }
     })
-
-    props.featureLayers.layers.forEach((layer) => {
+    props.featureLayers.layers.map((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
     })
   }
 
-  updateLayerStore() {
-    this.setState({
-      flooded: !this.state.flooded
-    })
-    
-    let sqlRef = SQL
-    
-    if (this.state.flooded === true) {
-        sqlRef = demoSQL
-    } 
-    
-    const newProps = objectAssign({}, this.props, {
-        featureLayers: { layers:
-          this.props.featureLayers.layers.map((layer) => {
-            if (layer.id == 'ahps-flood') {
-              return objectAssign({}, layer, {
-                options: {
-                  'refreshTimeMs': 300000, // 5 minutes
-                  'account': 'tnris-flood',
-                  'sql': sqlRef,
-                  'interactivity': [
-                    'lid',
-                    'name',
-                    'wfo',
-                  ],
-                  'cartocss': floodCartoCSS,
-                  'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
-                }
-              })
-            } else {
-              return objectAssign({}, layer)
-            }
-          })
-        }
-    });
-    this.layerStore = null;
-    this.map.eachLayer((layer)  => {
-        if (layer.hasOwnProperty('_url')) {
-            const gageLayerExt = layer._url.includes('json')
-            if (gageLayerExt) {
-                this.map.removeLayer(layer)
-            }
-        }
-    })
-    
-    this.initializeLayerStore(newProps, this.map);
-
-    if (this.state.flooded === true) {
-      FloodAlerts.checkStage('tnris-flood');
-    }
-    
-  }
-    
-
   initializeBasemapLayers() {
-    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer => 
+    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
-    const layerControl = L.control.layers(layers)
-    layerControl.setPosition('bottomright').addTo(this.map)
-    this.map.on('baselayerchange', ({ layer }) => {
-      layer.bringToBack()
-    })
-
-    layers['OpenStreetMap'].addTo(this.map)
+    layers['Streets'].addTo(this.map)
   }
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
-      geocoder: L.Control.Geocoder.bing(keys.bingApiKey)
+      geocoder: L.Control.Geocoder.nominatim({
+        geocodingQueryParams: {
+          countrycodes: 'us',
+          state: "Texas",
+          viewbox: [-115.02685546875, 39.740986355883564, -84.70458984375, 23.563987128451217],
+          bounded: 1
+        }
+      }),
+      placeholder: "Search by City or Street Address",
+      collapsed: false,
+      position: "topright"
     })
 
     //override the default markGeocode method
@@ -220,53 +363,145 @@ export default class Map extends Component {
 
     control.addTo(this.map)
   }
-  
-  initializeSimulateFloodControl() {
-      const toggleFloodAction = this.updateLayerStore;
-      const toggleFlood = L.easyButton({
-          type: 'animate',
-          position: 'topright',
-          states: [{
-              stateName: 'real-time-data',
-              icon: '&bcong; &backcong;&#x0224C;&#8780;',
-              title: 'Simulate Flood',
-              onClick: function(control){
-                  toggleFloodAction();
-                  control.state('simulate-flood');
-              }
-          }, {
-              stateName: 'simulate-flood',
-              icon: '&bcong; &backcong;&#x0224C;&#8780;',
-              title: 'Show Current Data',
-              onClick: function(control){
-                  toggleFloodAction();
-                  control.state('real-time-data');
-              }
-          }]
-      });
-      
-      toggleFlood.addTo(this.map);
+
+  //use a custom map bound functionality to restrict panning
+  //leaflet maxBounds and panInsideBounds functions are buggy and
+  //cause infinite pan loops when at awkward zoom levels
+  initializeMapBounds() {
+    // these are the more limiting maxbounds for texas
+    // const maxBounds = [[25.7, -107], [36.8, -93.2]]
+    const maxBounds = [[23.5, -112.6], [41, -83]]
+    const center = this.map.getCenter()
+    const newCenter = {lat: center.lat, lng: center.lng}
+    if (center.lat < maxBounds[0][0]) {
+      newCenter.lat = maxBounds[0][0]
+    }
+    if (center.lat > maxBounds[1][0]) {
+      newCenter.lat = maxBounds[1][0]
+    }
+    if (center.lng < maxBounds[0][1]) {
+      newCenter.lng = maxBounds[0][1]
+    }
+    if (center.lng > maxBounds[1][1]) {
+      newCenter.lng = maxBounds[1][1]
+    }
+    if (newCenter.lat !== center.lat || newCenter.lng !== center.lng) {
+      this.map.panTo(newCenter, {
+        animate: true
+      })
+    }
   }
-  
+
+  geolocationControl() {
+    const leafletMap = this.map
+    const showSnackbar = this.props.showSnackbar
+
+    const geolocationOptions = {
+      watch: false,
+      setView: false,
+      maximumAge: 10000,
+      enableHighAccuracy: true
+    }
+
+    const trackLocationButton = L.easyButton({
+      states: [{
+        stateName: 'location-off',
+        icon: '<i class="material-icons track-location-icon" style="font-size: 22px;">gps_not_fixed</i>',
+        title: 'Follow my location',
+        onClick: (control) => {
+          control.state('location-on')
+          leafletMap.closePopup()
+          leafletMap.locate({...geolocationOptions, watch: true})
+          showSnackbar(
+            "Using the follow location feature on a mobile device will consume additional battery and data.", 3000
+          )
+        }
+      }, {
+        stateName: 'location-on',
+        icon: '<i class="material-icons track-location-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
+        title: 'Stop following my location',
+        onClick: (control) => {
+          control.state('location-off')
+          leafletMap.stopLocate()
+        }
+      }]
+    }).disable()
+
+    const geolocateButton = L.easyButton({
+      type: 'animate',
+      states: [{
+        stateName: 'zoom-to-location',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">person_pin_circle</i>',
+        title: 'Find my location',
+        onClick: (control) => {
+          control.state("reset-geolocation-tools")
+          leafletMap.closePopup()
+          trackLocationButton.enable()
+          leafletMap.locate(geolocationOptions)
+        }
+      }, {
+        stateName: 'reset-geolocation-tools',
+        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">clear</i>',
+        title: 'Reset geolocation tools',
+        onClick: (control) => {
+          control.state("zoom-to-location")
+          leafletMap.removeLayer(this.geolocateIcon)
+          leafletMap.stopLocate()
+          trackLocationButton.state('location-off')
+          trackLocationButton.disable()
+        }
+      }]
+    })
+
+    this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
+      position: 'bottomright'
+    })
+    this.locateToolbar.addTo(leafletMap)
+  }
+
+  toggleAnimation() {
+    this.layerStore.get('animated-weather').toggleAnimation()
+    if (this.layerStore.get('animated-weather').animate === true) {
+      this.setState({animationIcon: "pause"})
+    }
+    else {
+      this.setState({animationIcon: "play_arrow"})
+    }
+  }
+
   betaNotice() {
-      if (document.URL === 'http://map.texasflood.org/') {
-          return "hide-beta"
-      } else {
-          return "betanotice"
-      }
+    if (document.URL === 'http://map.texasflood.org/') {
+      return "hide-beta"
+    }
+    return "betanotice"
   }
 
   render() {
+    let radarInfo
+    if (this.displayedTimestamp !== '') {
+      radarInfo =  (
+        <FABButton mini onClick={() => {this.toggleAnimation()}}>
+        <Icon
+            name={this.state.animationIcon}
+            className="material-icons md-dark"
+        />
+        </FABButton>
+      )
+    }
+
     return (
       <div className="map">
         <div ref="map" className="map--full">
-        <div id="betanotice" className={this.betaNotice()}>
-          <p><strong>Warning: </strong>This application is currently in development. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>
-        </div>
-        <PopupContainer leafletMap={this.map} />
+          <div className="weatherTimestamp">
+            <p>{this.displayedTimestamp}</p>
+          </div>
+          <div className="animateRadar">
+            {radarInfo}
+          </div>
+          <PopupContainer leafletMap={this.map} />
         </div>
       </div>
-      
+
     )
   }
 }

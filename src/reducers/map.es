@@ -1,24 +1,29 @@
 import objectAssign from 'object-assign'
-import R from 'ramda'
 
-import * as types from '../actions/types'
+import {
+  CLEAR_CENTER_AND_ZOOM,
+  SET_CENTER_AND_ZOOM
+ } from '../constants/MapActionTypes'
 
-const initialState = {}
+const initialState = {
+  mapCenterLat: null,
+  mapCenterLng: null,
+  zoomLevel: null
+}
 
 export default function map(state = initialState, action) {
   switch (action.type) {
-    case types.SET_POPUP:
-      if (action.payload) {
-        return objectAssign({}, state, {
-          popup: action.payload
-        })
-      }
-      else {
-        return objectAssign({}, R.omit(['popup'], state))
-      }
-    case types.HOVER_OVER_MAP_CLICKABLE:
+    case CLEAR_CENTER_AND_ZOOM:
       return objectAssign({}, state, {
-        hoveringOver: action.data
+        mapCenterLat: null,
+        mapCenterLng: null,
+        zoomLevel: null
+      })
+    case SET_CENTER_AND_ZOOM:
+      return objectAssign({}, state, {
+        mapCenterLat: action.lat,
+        mapCenterLng: action.lng,
+        zoomLevel: action.zoom
       })
     default:
       return state

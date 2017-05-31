@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     baseLayers: state.baseLayers.layers,
     featureLayers: state.featureLayers.layers,
-    activeBaseId: state.baseLayers.active
+    activeBaseId: state.baseLayers.active,
+    target: state.baseLayers.target
   }
 }
 

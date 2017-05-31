@@ -12,12 +12,12 @@ const extractImportant = state => {
   let copy = Object.assign({}, state)
   copy.layers = copy.layers.map(layer => {
     return R.pick([
-        'id',
-        'text',
-        'type',
-        'active',
-        'status'
-      ], layer)
+      'id',
+      'text',
+      'type',
+      'active',
+      'status'
+    ], layer)
   })
 
   return copy
@@ -94,7 +94,7 @@ describe('reducer: featureLayers', () => {
         status: 'pending',
       })
     ).toEqual({
-        layers: [
+      layers: [
           {
             'id': 'ahps-flood',
             'text': 'Flood Gauges',
@@ -152,7 +152,7 @@ describe('reducer: featureLayers', () => {
         status: 'pending',
       })
     ).toEqual({
-        layers: [
+      layers: [
           {
             'id': 'ahps-flood',
             'text': 'Flood Gauges',
@@ -209,7 +209,7 @@ describe('reducer: featureLayers', () => {
         id: 'animated-weather',
       })
     ).toEqual({
-        layers: [
+      layers: [
           {
             'id': 'ahps-flood',
             'text': 'Flood Gauges',
@@ -266,7 +266,7 @@ describe('reducer: featureLayers', () => {
         id: 'ahps-flood',
       })
     ).toEqual({
-        layers: [
+      layers: [
           {
             'id': 'ahps-flood',
             'text': 'Flood Gauges',

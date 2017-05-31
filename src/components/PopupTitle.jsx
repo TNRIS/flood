@@ -1,15 +1,36 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import {
-    Button, Dialog, DialogTitle, DialogContent, DialogActions
-} from 'react-mdl'
+import { Button, Icon } from 'react-mdl'
 
-const floodGaugeIcon = require('../images/flood_gauge_white.png')
+import SubscriptionConfirmationContainer from '../containers/SubscriptionConfirmationContainer'
 
-const PopupTitle = class PopupTitle extends Component {
+class PopupTitle extends Component {
+  static propTypes = {
+    leafletMap: PropTypes.object,
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    user: PropTypes.object,
+    showSubscriptionConfirmation: PropTypes.func,
+    showSnackbar: PropTypes.func
+  }
+
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
+    this.handleShowSubscriptionConfirmation = this.handleShowSubscriptionConfirmation.bind(this)
+  }
+
+  closePopup() {
+    const map = this.props.leafletMap
+    map.closePopup()
+  }
+
+  handleShowSubscriptionConfirmation() {
+    if (this.props.user.authentication === 0) {
+      this.props.showSubscriptionConfirmation()
+    }
+    else {
+      this.props.showSnackbar("Sign in to your account to add new subscriptions.")
+    }
   }
 
   render() {
@@ -19,17 +40,24 @@ const PopupTitle = class PopupTitle extends Component {
         <span className="popup__title-text">
           { this.props.title }
         </span>
-          {this.props.title == "Flood Gage" &&
-            <Button className="subscribe-button mdl-color-text--white" onClick={this.props.showSubscribe}>Subscribe</Button>
+        <Button className="popup__close mdl-color-text--white" onClick={this.closePopup.bind(this)}>
+          <Icon
+              name="clear"
+              className="material-icons"
+          />
+        </Button>
+          {this.props.title === "Flood Gage" &&
+            <Button className="subscribe-button mdl-color-text--white"
+                    onClick={this.handleShowSubscriptionConfirmation}>
+              <Icon
+                className="material-icons" name="notifications_active"/>
+                Subscribe
+            </Button>
           }
+        <SubscriptionConfirmationContainer />
       </div>
-    );
+    )
   }
-}
-
-PopupTitle.defaultProps = {
-  icon: floodGaugeIcon,
-  title: "Flood Gage"
 }
 
 export default PopupTitle

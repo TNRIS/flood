@@ -2,7 +2,9 @@ import axios from 'axios'
 import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
-import * as FloodAlerts from '../util/FloodAlerts'
+import { store } from '../store'
+import { retrieveGageStatus } from '../actions'
+import { mapClickHandler } from '../actions/MapActions'
 import Layer from './Layer'
 
 function getLayer(options) {
@@ -35,7 +37,7 @@ function getLayer(options) {
 }
 
 export default class CartoDBLayer extends Layer {
-  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs=7200000}) {
+  constructor({account, id, map, handlers, sql, interactivity, cartocss, attribution, refreshTimeMs = 7200000}) {
     super({id, map, handlers})
 
     this.account = account
@@ -52,6 +54,7 @@ export default class CartoDBLayer extends Layer {
 
   update() {
     this.setStatus('updating')
+    store.dispatch(retrieveGageStatus())
 
     return getLayer({account: this.account, cartocss: this.cartocss, interactivity: this.interactivity, sql: this.sql})
       .then((data) => {
@@ -71,11 +74,9 @@ export default class CartoDBLayer extends Layer {
             useJsonP: false
           })
 
-          utfGridLayer.on('click', (gridData) => {
-            this.handlers.onClickUTFGrid(this.id, gridData)
+          utfGridLayer.on('click', (event) => {
+            store.dispatch(mapClickHandler(this.id, event, event.latlng, event))
           })
-          utfGridLayer.on('mouseover', this.handlers.onMouseoverUTFGrid)
-          utfGridLayer.on('mouseout', this.handlers.onMouseoutUTFGrid)
 
           this.utfGridLayer = utfGridLayer
         }
@@ -83,6 +84,19 @@ export default class CartoDBLayer extends Layer {
         if (currentlyVisible && previousTileLayer) {
           this.map.removeLayer(previousTileLayer)
           this.map.addLayer(this.tileLayer)
+
+          //  This will set the visible layer order relative to
+          //  the order set in TileLayer.es and AnimatedWeatherLayer.es
+          switch (this.id) {
+            case "ahps-flood":
+              this.tileLayer.setZIndex(99)
+              break
+            case "reservoir-conditions":
+              this.tileLayer.setZIndex(98)
+              break
+            default:
+              null
+          }
 
           if (previousUtfGridLayer) {
             this.map.removeLayer(previousUtfGridLayer)
@@ -96,15 +110,24 @@ export default class CartoDBLayer extends Layer {
 
   refresh() {
     this.update()
-    // if (this.id == "ahps-flood") {
-    //   FloodAlerts.checkStage(this.account)
-    // }
   }
 
   show() {
     if (this.status === 'ready') {
       if (this.tileLayer && !this.map.hasLayer(this.tileLayer)) {
         this.map.addLayer(this.tileLayer)
+
+        // This will set the visible layer order relative to the order set in TileLayer.es
+        switch (this.id) {
+          case "ahps-flood":
+            this.tileLayer.setZIndex(99)
+            break
+          case "reservoir-conditions":
+            this.tileLayer.setZIndex(98)
+            break
+          default:
+            null
+        }
       }
       if (this.utfGridLayer && !this.map.hasLayer(this.utfGridLayer)) {
         this.map.addLayer(this.utfGridLayer)
@@ -113,6 +136,13 @@ export default class CartoDBLayer extends Layer {
   }
 
   hide() {
+    const popupData = store.getState().popupData
+    if (popupData.id) {
+      if (popupData.id === this.id) {
+        this.map.closePopup()
+      }
+    }
+
     if (this.tileLayer && this.map.hasLayer(this.tileLayer)) {
       this.map.removeLayer(this.tileLayer)
     }

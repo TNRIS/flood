@@ -38,6 +38,15 @@ jspm_packages
 
 /dist/*
 
-.editorconfig
-
 .idea/
+
+src/images/\.DS_Store
+
+src/\.DS_Store
+
+\.DS_Store
+
+load_test*
+
+*.swp
+
