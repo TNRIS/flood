@@ -19,6 +19,7 @@ export function sendErrorReport(error) {
       Subject: 'Stevie found an ERROR!! - An error has occurred in the Texas Flood App',
       Message: error.name + '\n' + error.stack
     }
+    console.log(errorMessage.Message)
     return sns.publish(errorMessage).promise().then(
       () => dispatch(showSnackbar('An error has been reported to the TNRIS development team.'))
     )

@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
 import MapContainer from '../containers/MapContainer'
 import NavigationDrawer from '../components/NavigationDrawer'
 import Disclaimer from '../components/Disclaimer'
-import SubscribeContainer from '../containers/SubscribeContainer'
 import AboutContainer from '../containers/AboutContainer'
 import ToasterContainer from '../containers/ToasterContainer'
 import FloodHeaderContainer from '../containers/FloodHeaderContainer'
@@ -14,13 +13,24 @@ import FloodFooter from './FloodFooter'
 ga.pageview(window.location.pathname)
 
 export default class App extends Component {
+  static propTypes = {
+    showSnackbar: PropTypes.func,
+    location: PropTypes.object,
+    browser: PropTypes.object,
+    userAuthentication: PropTypes.number,
+    params: PropTypes.object
+  }
+
   constructor(props) {
     super(props)
+    this.props.retrieveUser()
   }
 
 componentDidMount() {
-  this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a></p>,
-                          5000)
+  this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
+    from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
+    gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
+    </p>, 5000)
 }
 
   render() {
@@ -40,12 +50,13 @@ componentDidMount() {
     return (
       <div>
         <Disclaimer />
-        <SubscribeContainer />
         <AboutContainer />
         <Layout fixedDrawer fixedHeader>
           <FloodHeaderContainer />
             <NavigationDrawer
-              navContentInitState={navContentInitState()} browser={this.props.browser}
+              navContentInitState={navContentInitState()}
+              browser={this.props.browser}
+              userAuthentication={this.props.userAuthentication}
             />
             <Content>
             <MapContainer

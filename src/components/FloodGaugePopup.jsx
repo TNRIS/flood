@@ -32,6 +32,24 @@ export default class FloodGaugePopup extends Component {
     browser: PropTypes.object
   }
 
+
+  format_time(date_obj) {
+    // https://gist.github.com/hjst/1326755
+    // formats a javascript Date object into a 12h AM/PM time string
+    let hour = date_obj.getHours();
+    let minute = date_obj.getMinutes();
+    const amPM = (hour > 11) ? "pm" : "am";
+    if(hour > 12) {
+      hour -= 12;
+    } else if(hour == 0) {
+      hour = "12";
+    }
+    if(minute < 10) {
+      minute = "0" + minute;
+    }
+    return hour + ":" + minute + amPM;
+  }
+
   render() {
     const { lid, name, wfo, updatePopup } = this.props
     const hydrographImage = `https://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
@@ -43,11 +61,17 @@ export default class FloodGaugePopup extends Component {
     let shareTitle
     if (currentStore.gageInfo && currentStore.gageInfo[lid]) {
       const gageInfo = currentStore.gageInfo[lid]
+      let timestamp
+      if (gageInfo.timestamp) {
+        const date = new Date(gageInfo.timestamp)
+        timestamp = this.format_time(date)
+      }
+
       if (["action", "flood", "moderate", "major"].indexOf(gageInfo.sigstage) !== -1) {
-        shareTitle = `@TexasFloodOrg ${name} (${lid.toUpperCase()}) - Status: ${gageInfo.sigstage.toUpperCase()} at ${gageInfo.stage} feet`
+        shareTitle = `@TexasFloodOrg ${timestamp} ${name} (${lid.toUpperCase()}) - Status: ${gageInfo.sigstage.toUpperCase()} at ${gageInfo.stage} feet`
       }
       else {
-        shareTitle = `@TexasFloodOrg ${name} (${lid.toUpperCase()}) - Stage: ${gageInfo.stage} feet`
+        shareTitle = `@TexasFloodOrg ${timestamp} ${name} (${lid.toUpperCase()}) - Stage: ${gageInfo.stage} feet`
       }
     }
     else {

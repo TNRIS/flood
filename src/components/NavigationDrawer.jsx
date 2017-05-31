@@ -33,13 +33,12 @@ class  NavigationDrawer extends React.Component {
     return (
       <Drawer className="nav">
         <div className="nav__head">
-          {/* <div className="nav__title">
-            <a href="http://texasflood.org">
-              TexasFlood Information Viewer
-            </a>
-          </div> */}
         </div>
-        <NavigationContent navContentInitState={this.props.navContentInitState} browser={this.props.browser} />
+        <NavigationContent
+          navContentInitState={this.props.navContentInitState}
+          browser={this.props.browser}
+          userAuthentication={this.props.userAuthentication}
+        />
         <Resources />
         <div className="footer">
           <div className="footer__wrapper">

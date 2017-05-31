@@ -13,7 +13,8 @@ import {
 
 import {
   updateSubscriptionsAttempt,
-  updateSubscriptionsSuccess
+  updateSubscriptionsSuccess,
+  clearSubscriptionList
 } from './SubscriptionListActions'
 
 import {
@@ -28,8 +29,7 @@ import {
   sendErrorReport
 } from './StevieActions'
 
-import AWS from 'aws-sdk/dist/aws-sdk'
-import keys from '../keys'
+import FloodAppUser from '../util/User'
 
 /**
  * SUBSCRIBE action on the queue of subscription changes
@@ -104,6 +104,12 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
   }
 }
 
+export function removeSubscriptionFromUserDataset() {
+  return (dispatch) => {
+    console.log("Removing subscription")
+  }
+}
+
 /**
  * Iterates through the queue of subscription changes and sends a subscribe or unsubscribe request to Amazon
  * based on the action of the change in the queue.
@@ -123,9 +129,7 @@ export function saveSubscriptionChanges() {
         const user = currentState.user
         const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
 
-        const WINDOW_AWS = window.AWS
-        WINDOW_AWS.config.update(keys.awsConfig)
-        const sns = new WINDOW_AWS.SNS()
+        const sns = new FloodAppUser.AWS.SNS()
 
         const promiseQueue = []
 
@@ -138,12 +142,17 @@ export function saveSubscriptionChanges() {
             // Process unsubscribe requests
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
-              const subscriptionArn = subscription.SubscriptionArn
+              const subscriptionArn = subscription.subscriptionArn
               promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
-                .then((data) => dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId)))
-                .catch((err) => dispatch(updateSubscriptionsError(err))
+                .then((data) => {
+                  dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+                })
+                .catch((err) => {
+                  dispatch(updateSubscriptionsError(err))
+                })
               )
-            )}
+              promiseQueue.push(FloodAppUser.unsubscribe(subscriptionArn))
+            }
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
@@ -157,10 +166,14 @@ export function saveSubscriptionChanges() {
           }
         })
 
+        // Add the sync operation to the promise queue
+        promiseQueue.push(FloodAppUser.syncDataset())
+
         // Execute promise queue containing the subscription update operations.
         Promise.all(promiseQueue).then(() => {
           dispatch(updateSubscriptionsSuccess())
-          dispatch(getUserSubscriptions(user.email, user.phone, ""))
+          dispatch(clearSubscriptionList())
+          dispatch(getUserSubscriptions())
         }).catch(err => dispatch(sendErrorReport(err)))
       }
 

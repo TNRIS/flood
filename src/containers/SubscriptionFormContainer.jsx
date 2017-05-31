@@ -1,7 +1,16 @@
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/SubscriptionFormActions'
-import { setUserInfo } from '../actions/UserInfoActions'
+import {
+  userLogin, 
+  loginSuccessful,
+  userSignUp,
+  userVerify,
+  resendVerificationCode,
+  forgotPassword,
+  newPassword,
+  userSignOut } from '../actions/UserActions'
+import { showSnackbar } from '../actions/ToasterActions'
 import SubscriptionForm from '../components/SubscriptionForm'
 
 import { clearSubscriptionList }  from '../actions/SubscriptionListActions'
@@ -14,8 +23,8 @@ const mapStateToProps = (state) => {
     error: state.subscriptionForm.error,
     isFetching: state.subscriptionForm.isFetching,
     nextToken: state.subscriptionForm.nextToken,
-    phone: state.user.phone,
-    isUpdating: state.subscriptionList.isUpdating
+    isUpdating: state.subscriptionList.isUpdating,
+    displayForm: state.subscriptionForm.displayForm
   }
 
   return props
@@ -37,6 +46,33 @@ const mapDispatchToProps = (dispatch) => {
     },
     subscriptionFormUpdated: () => {
       dispatch(actions.subscriptionFormUpdated(email, phone))
+    },
+    swapDisplayForm: (form) => {
+      dispatch(actions.swapDisplayForm(form))
+    },
+    userLogin: (username, password) => {
+      dispatch(userLogin(username, password))
+    },
+    userSignUp: (username, password, phone, email) => {
+      dispatch(userSignUp(username, password, phone, email))
+    },
+    userVerify: (username, verificationCode) => {
+      dispatch(userVerify(username, verificationCode))
+    },
+    resendVerificationCode: (username) => {
+      dispatch(resendVerificationCode(username))
+    },
+    forgotPassword: (username) => {
+      dispatch(forgotPassword(username))
+    },
+    newPassword: (username, verificationCode, password) => {
+      dispatch(newPassword(username, verificationCode, password))
+    },
+    showSnackbar: (message) => {
+      dispatch(showSnackbar(message))
+    },
+    userSignOut: () => {
+      dispatch(userSignOut())
     }
   }
 }
