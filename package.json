@@ -1,7 +1,7 @@
 {
   "name": "flood-web-viewer",
   "version": "2.2.0",
-  "release": "Guadalupe Bass",
+  "release": "Walleye",
   "site_url": "develop.texasflood.org",
   "description": "Texas flood information web viewer",
   "private": true,
