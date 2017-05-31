@@ -51,7 +51,6 @@ class NewPasswordForm extends Component {
   }
 
   render() {
-
     return (
         <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent via text message to the phone number associated with this account.</p>
