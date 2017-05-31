@@ -215,11 +215,10 @@ class AppUser {
         if (err) {
           return callback(err)
         }
-        console.log('session validity: ' + session.isValid())
         return session
       })
 
-      if (session.isValid()) {
+      try {
         this.idToken = session.getIdToken().getJwtToken()
         this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
           IdentityPoolId: this.appConfig.IdentityPoolId,
@@ -252,9 +251,10 @@ class AppUser {
           }
         })
       }
-      else {
+      catch (e) {
+        console.log(e)
         alert("Your session has timed out.")
-        store.dispatch(sendErrorReport(error))
+        store.dispatch(siteReset())
       }
     }
   }
