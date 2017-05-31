@@ -253,8 +253,8 @@ class AppUser {
       }
       catch (e) {
         console.log(e)
-        alert("Your session has timed out.")
         store.dispatch(siteReset())
+        alert("Your session has timed out.")
       }
     }
   }
