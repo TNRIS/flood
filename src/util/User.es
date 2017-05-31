@@ -215,40 +215,47 @@ class AppUser {
         if (err) {
           return callback(err)
         }
+        console.log('session validity: ' + session.isValid())
         return session
       })
 
-      this.idToken = session.getIdToken().getJwtToken()
-      this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
-        IdentityPoolId: this.appConfig.IdentityPoolId,
-        Logins: {
-          [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
-        }
-      }, {
-        region: 'us-east-1'
-      })
+      if (session.isValid()) {
+        this.idToken = session.getIdToken().getJwtToken()
+        this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
+          IdentityPoolId: this.appConfig.IdentityPoolId,
+          Logins: {
+            [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
+          }
+        }, {
+          region: 'us-east-1'
+        })
 
-      this.AWS.config.credentials.clearCachedId()
-      this.AWS.config.credentials.refresh((error) => {
-        if (error) {
-          store.dispatch(sendErrorReport(error))
-        } else {
-          this.identityId = this.AWS.config.credentials.params.IdentityId
-          this.cognitoUser.getUserAttributes((err, att) => {
-            if (err) {
-              store.dispatch(siteReset())
-            }
-            else {
-              const user = {}
-              for (let i = 0; i < att.length; i++) {
-                user[att[i].Name] = att[i].Value
+        this.AWS.config.credentials.clearCachedId()
+        this.AWS.config.credentials.refresh((error) => {
+          if (error) {
+            store.dispatch(sendErrorReport(error))
+          } else {
+            this.identityId = this.AWS.config.credentials.params.IdentityId
+            this.cognitoUser.getUserAttributes((err, att) => {
+              if (err) {
+                store.dispatch(siteReset())
               }
-              this.userData = {...user}
-            }
-          })
-          return callback(0, this.cognitoUser.username)
-        }
-      })
+              else {
+                const user = {}
+                for (let i = 0; i < att.length; i++) {
+                  user[att[i].Name] = att[i].Value
+                }
+                this.userData = {...user}
+              }
+            })
+            return callback(0, this.cognitoUser.username)
+          }
+        })
+      }
+      else {
+        alert("Your session has timed out.")
+        store.dispatch(sendErrorReport(error))
+      }
     }
   }
 
