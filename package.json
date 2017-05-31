@@ -1,6 +1,6 @@
 {
   "name": "flood-web-viewer",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "release": "Walleye",
   "site_url": "map.texasflood.org",
   "description": "Texas flood information web viewer",
