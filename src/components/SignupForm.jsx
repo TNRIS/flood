@@ -60,7 +60,7 @@ class SignupForm extends Component {
       })
       return
     }
-    if (confirm(`Is ${this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} your correct phone number?`)) {
+    if (confirm(`Is ${this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} your correct mobile phone number?`)) {
       this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
     } else {
       return
@@ -71,9 +71,11 @@ class SignupForm extends Component {
 
     return (
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account to subscribe to flood gages and begin recieving text alerts when they
+            <p>Sign up for an account to subscribe to flood gages and begin receiving text message alerts when they
               enter elevated flood stages.</p>
             <Textfield floatingLabel
+                       pattern="[^0-9\s]\S*"
+                       error="Username must not start with a number or contain spaces"
                        label="Username"
                        type="username"
                        id="username"
@@ -85,7 +87,7 @@ class SignupForm extends Component {
                        minLength={10}
                        maxLength={10}
                        error="10 digits only including US area code"
-                       label="Phone Number"
+                       label="Mobile Phone Number"
                        type="tel"
                        id="phone"
                        name="phone"

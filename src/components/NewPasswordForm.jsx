@@ -51,7 +51,6 @@ class NewPasswordForm extends Component {
   }
 
   render() {
-
     return (
         <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent via text message to the phone number associated with this account.</p>
@@ -68,9 +67,9 @@ class NewPasswordForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.verificationCode}/>
             <Textfield floatingLabel
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
-                       minLength={8}
-                       error="Minimum 8 characters. Requires uppercase, lowercase, a number, and a special character"
+                       pattern=".{6,}"
+                       minLength={6}
+                       error="Minimum 6 characters."
                        label="New Password"
                        type="password"
                        id="password"
@@ -78,7 +77,7 @@ class NewPasswordForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.password}/>
             <Textfield floatingLabel
-                       minLength={8}
+                       minLength={6}
                        pattern={this.state.password}
                        label="Confirm New Password"
                        type="password"

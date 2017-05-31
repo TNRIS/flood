@@ -4,7 +4,8 @@ import 'amazon-cognito-js'
 import {
   CognitoUserPool,
   CognitoUserAttribute,
-  CognitoUser } from 'amazon-cognito-identity-js'
+  CognitoUser
+} from 'amazon-cognito-identity-js'
 
 import keys from '../keys'
 
@@ -24,8 +25,6 @@ import {
 } from '../actions/UserActions'
 
 import { util } from 'aws-sdk/global'
-
-
 
 class AppUser {
   constructor() {
@@ -100,25 +99,24 @@ class AppUser {
           region: 'us-east-1'
         })
 
-
         this.AWS.config.credentials.clearCachedId()
         this.AWS.config.credentials.refresh((error) => {
-            if (error) {
-                console.log(error);
-            } else {
-              this.identityId = this.AWS.config.credentials.params.IdentityId
-              this.cognitoUser.getUserAttributes((err, att) => {
-                if (err) store.dispatch(sendErrorReport(err))
-                else {
-                  const user = {}
-                  for (let i = 0; i < att.length; i++) {
-                    user[att[i].Name] = att[i].Value
-                  }
-                  this.userData = {...user}
+          if (error) {
+            console.log(error)
+          } else {
+            this.identityId = this.AWS.config.credentials.params.IdentityId
+            this.cognitoUser.getUserAttributes((err, att) => {
+              if (err) store.dispatch(sendErrorReport(err))
+              else {
+                const user = {}
+                for (let i = 0; i < att.length; i++) {
+                  user[att[i].Name] = att[i].Value
                 }
-              })
-              return callback(0)
-            }
+                this.userData = {...user}
+              }
+            })
+            return callback(0)
+          }
         })
       },
       onFailure: function(err) {
@@ -133,11 +131,11 @@ class AppUser {
   }
 
   signUp = (callback) => {
-    this.userPool.signUp(this.username, this.password, this.attributeList, null, function(err, result){
-        if (err) {
-            return callback(err)
-        }
-        return callback(0)
+    this.userPool.signUp(this.username, this.password, this.attributeList, null, function(err, result) {
+      if (err) {
+        return callback(err)
+      }
+      return callback(0)
     })
   }
 
@@ -163,10 +161,10 @@ class AppUser {
 
   resendVerificationCode = (callback) => {
     this.cognitoUser.resendConfirmationCode(function(err, result) {
-        if (err) {
-          return callback (err)
-        }
-        return callback(0)
+      if (err) {
+        return callback(err)
+      }
+      return callback(0)
     })
   }
 
@@ -189,18 +187,18 @@ class AppUser {
 
   confirmPassword = (verificationCode, password, callback) => {
     this.cognitoUser.confirmPassword(verificationCode, password, {
-      onSuccess: function () {
-          return callback(0)
+      onSuccess: function() {
+        return callback(0)
       },
       onFailure: function(err) {
-          return callback(err)
+        return callback(err)
       }
     })
   }
 
   signOut = (callback) => {
     this.cognitoUser.globalSignOut({
-      onSuccess: function () {
+      onSuccess: function() {
         return callback(0)
       },
       onFailure: function(err) {
@@ -212,26 +210,28 @@ class AppUser {
 
   retrieveUser = (callback) => {
     this.cognitoUser = this.userPool.getCurrentUser()
-    if (this.cognitoUser != null) {
+    if (this.cognitoUser !== null) {
       const session = this.cognitoUser.getSession(function(err, session) {
-          if (err) {
-              return callback(err)
-          }
-          return session
-      })
-
-      this.idToken = session.getIdToken().getJwtToken()
-      this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
-        IdentityPoolId: this.appConfig.IdentityPoolId,
-        Logins: {
-          [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
+        if (err) {
+          return callback(err)
         }
-      }, {
-        region: 'us-east-1'
+        console.log('session validity: ' + session.isValid())
+        return session
       })
 
-      this.AWS.config.credentials.clearCachedId()
-      this.AWS.config.credentials.refresh((error) => {
+      if (session.isValid()) {
+        this.idToken = session.getIdToken().getJwtToken()
+        this.AWS.config.credentials = new this.AWS.CognitoIdentityCredentials({
+          IdentityPoolId: this.appConfig.IdentityPoolId,
+          Logins: {
+            [this.appConfig.Logins.cognito.identityProviderName]: this.idToken
+          }
+        }, {
+          region: 'us-east-1'
+        })
+
+        this.AWS.config.credentials.clearCachedId()
+        this.AWS.config.credentials.refresh((error) => {
           if (error) {
             store.dispatch(sendErrorReport(error))
           } else {
@@ -250,12 +250,16 @@ class AppUser {
             })
             return callback(0, this.cognitoUser.username)
           }
-      })
+        })
+      }
+      else {
+        alert("Your session has timed out.")
+        store.dispatch(sendErrorReport(error))
+      }
     }
   }
 
 }
-
 
 class FloodAppUser extends AppUser {
   constructor() {
@@ -279,7 +283,10 @@ class FloodAppUser extends AppUser {
       if (err) store.dispatch(sendErrorReport(err))
       else {
         if (data.Datasets.length > 0 && data.Datasets[0].DatasetName === this.dataset) {
-          this.getUserSubscriptions({...baseParams, DatasetName: this.dataset}, callback)
+          this.getUserSubscriptions({
+            ...baseParams,
+            DatasetName: this.dataset
+          }, callback)
         }
         else return callback([])
       }
@@ -310,7 +317,11 @@ class FloodAppUser extends AppUser {
 
   subscribe(subscriptionData) {
     return new Promise((resolve, reject) => {
-      const stringData = JSON.stringify({...subscriptionData, protocol: "sms", endpoint: this.userData.phone_number})
+      const stringData = JSON.stringify({
+        ...subscriptionData,
+        protocol: 'sms',
+        endpoint: this.userData.phone_number
+      })
       this.AWS.config.credentials.get(() => {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {
@@ -345,9 +356,9 @@ class FloodAppUser extends AppUser {
               },
               onConflict: (dataset, conflicts, callback) => {
                 const resolved = []
-                  for (let i = 0; i < conflicts.length; i++) {
-                    resolved.push(conflicts[i].resolveWithRemoteRecord())
-                  }
+                for (let i = 0; i < conflicts.length; i++) {
+                  resolved.push(conflicts[i].resolveWithRemoteRecord())
+                }
                 dataset.resolve(resolved, () => {
                   resolve(resolved)
                   store.dispatch(getUserSubscriptions())
