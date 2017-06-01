@@ -326,7 +326,7 @@ class FloodAppUser extends AppUser {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {
           if (err) store.dispatch(sendErrorReport(err))
-          dataset.put(subscriptionData.subscriptionArn, stringData, (putError) => {
+          dataset.put(subscriptionData.lid, stringData, (putError) => {
             if (putError) {
               store.dispatch(sendErrorReport(putError))
               reject(putError)
