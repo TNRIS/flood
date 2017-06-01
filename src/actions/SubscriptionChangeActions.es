@@ -143,6 +143,7 @@ export function saveSubscriptionChanges() {
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
               const subscriptionArn = subscription.subscriptionArn
+              const subscriptionLid = subscription.lid
               promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
                 .then((data) => {
                   dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
@@ -151,7 +152,7 @@ export function saveSubscriptionChanges() {
                   dispatch(updateSubscriptionsError(err))
                 })
               )
-              promiseQueue.push(FloodAppUser.unsubscribe(subscriptionArn))
+              promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
             }
 
             // Process subscribe requests
