@@ -94,6 +94,7 @@ export function userLogin(username, password) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
+        FloodAppUser.syncDataset()
       }
       else {
         dispatch(getSubscriptionsError())
@@ -293,6 +294,7 @@ export function retrieveUser() {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
+        FloodAppUser.syncDataset()
       }
     })
   }
