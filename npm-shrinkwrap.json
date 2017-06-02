@@ -1,6 +1,6 @@
 {
   "name": "flood-web-viewer",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "dependencies": {
     "abab": {
       "version": "1.0.3",
