@@ -252,9 +252,8 @@ class AppUser {
         })
       }
       catch (e) {
-        console.log(e)
         store.dispatch(siteReset())
-        alert("Your session has timed out.")
+        // alert("Your session has timed out.")
       }
     }
   }
@@ -354,17 +353,28 @@ class FloodAppUser extends AppUser {
                 resolve(newRecords)
                 store.dispatch(getUserSubscriptions())
               },
+              onFailure: (syncError) => reject(syncError),
               onConflict: (dataset, conflicts, callback) => {
                 const resolved = []
+
                 for (let i = 0; i < conflicts.length; i++) {
-                  resolved.push(conflicts[i].resolveWithRemoteRecord())
+                  const localRecord = conflicts[i].getLocalRecord()
+                  const remoteRecord = conflicts[i].getRemoteRecord()
+
+                  if (localRecord.value === "") {
+                    resolved.push(conflicts[i].resolveWithLocalRecord())
+                  }
+                  else {
+                    resolved.push(conflicts[i].resolveWithRemoteRecord())
+                  }
                 }
+
                 dataset.resolve(resolved, () => {
                   resolve(resolved)
                   store.dispatch(getUserSubscriptions())
+                  return callback(true)
                 })
               },
-              onFailure: (syncError) => reject(syncError)
             })
           }
         })
