@@ -274,7 +274,9 @@ export function userSignOut() {
 export function siteReset() {
   return (dispatch) => {
     FloodAppUser.cognitoUser.signOut()
-    FloodAppUser.AWS.config.credentials.clearCachedId()
+    if (FloodAppUser.AWS.config.credentials) {
+      FloodAppUser.AWS.config.credentials.clearCachedId()
+    }
     window.location.href = location.href.replace(location.hash, "")
   }
 }
