@@ -21,6 +21,7 @@ class PopupTitle extends Component {
 
   closePopup() {
     const map = this.props.leafletMap
+    this.props.clearPopup()
     map.closePopup()
   }
 

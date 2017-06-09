@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import { showSubscriptionConfirmation } from '../actions/SubscribeActions'
 import { showSnackbar } from '../actions/ToasterActions'
 
+import {
+  clearPopup
+} from '../actions/PopupActions'
+
 import PopupTitle from '../components/PopupTitle'
 
 const mapStateToProps = (state) => {
@@ -13,6 +17,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearPopup: () => {
+      dispatch(clearPopup())
+    },
     showSubscriptionConfirmation: () => {
       dispatch(showSubscriptionConfirmation())
     },
