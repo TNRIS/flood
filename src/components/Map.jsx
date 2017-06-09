@@ -161,9 +161,10 @@ export default class Map extends Component {
 
           this.popupContentNode = popupContent.length > 0 ? popupContent[0] : null
         })
+        .on('preclick', () => {
+          this.props.clearPopup()
+        })
         .on('popupclose', () => {
-          // this.props.clearPopup()
-
           if (this.popupContentNode) {
             ReactDOM.unmountComponentAtNode(this.popupContentNode)
           }
