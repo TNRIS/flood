@@ -359,6 +359,7 @@ export default class Map extends Component {
     //override the default markGeocode method
     // so that a marker is not added to the map
     control.markGeocode = (result) => {
+      this.map.closePopup()
       this.map.fitBounds(result.bbox)
     }
 
