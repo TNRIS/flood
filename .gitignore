@@ -50,3 +50,5 @@ load_test*
 
 *.swp
 
+vault-password.txt
+.vault/

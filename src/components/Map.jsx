@@ -161,9 +161,10 @@ export default class Map extends Component {
 
           this.popupContentNode = popupContent.length > 0 ? popupContent[0] : null
         })
-        .on('popupclose', () => {
+        .on('preclick', () => {
           this.props.clearPopup()
-
+        })
+        .on('popupclose', () => {
           if (this.popupContentNode) {
             ReactDOM.unmountComponentAtNode(this.popupContentNode)
           }
@@ -358,6 +359,7 @@ export default class Map extends Component {
     //override the default markGeocode method
     // so that a marker is not added to the map
     control.markGeocode = (result) => {
+      this.map.closePopup()
       this.map.fitBounds(result.bbox)
     }
 
