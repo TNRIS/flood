@@ -6,9 +6,12 @@ Install Node. Version 6 will not work, use version 5.12: `nvm use 5`
 
 Install Packages: `npm install`
 
+To retrieve the secrets file, install [ansible](http://www.ansible.com/)
+
 ## Developing
 
-1. Make a copy of `src/keys/secrets.sample.es`, fill out and save as `src/keys/secrets.es`
+1. place a copy `vault-password.txt` into the root of this repo `~/flood`. You might need to change spaces to newlines. cd into the root folder and run `make pull-secrets` to quickly download, decrypt, and properly place the secrets file.
+    * Alternatively (without ansible), make a copy of `src/keys/secrets.sample.es`, fill out and save as `src/keys/secrets.es`
 1. `npm start` to start a hot-reloading development web server
 1. Open browser to `http://localhost:3545`
 
