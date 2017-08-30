@@ -448,6 +448,8 @@ body {
   }
 
   .popup__content {
+    max-height: 550px;
+    overflow-y: auto;
     padding-top: 47px;
   }
 
