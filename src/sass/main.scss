@@ -428,7 +428,8 @@ body {
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
     border-radius: 0;
-
+    max-height: 578px;
+    overflow-y: auto;
     .leaflet-popup-content {
       margin: 0 0 0 0;
     }
@@ -448,8 +449,6 @@ body {
   }
 
   .popup__content {
-    max-height: 550px;
-    overflow-y: auto;
     padding-top: 47px;
   }
 
