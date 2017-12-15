@@ -21,9 +21,7 @@ export default class LakeConditionsPopup extends Component {
 
   render() {
     const { full_name, lake_url_name, updatePopup } = this.props
-    // below is the link to the old charts from version 1
-    // const image_src = `http://waterdatafortexas.org/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
-    const image_src = `https://waterdatafortexas.org/reservoirs/individual/${lake_url_name}/recent-volume.png`
+    const image_src = `https://waterdatafortexas.org/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
     const link_src = `https://waterdatafortexas.org/reservoirs/individual/${lake_url_name}`
 
     return (
@@ -32,9 +30,9 @@ export default class LakeConditionsPopup extends Component {
           <PopupTitleContainer icon={icon} title="Lake Conditions" leafletMap={this.props.leafletMap}/>
         </Provider>
         <PopupContent>
-          <PopupHeader>
+          {/* <PopupHeader>
             { full_name }
-          </PopupHeader>
+          </PopupHeader> */}
           <Provider store={store}>
             <PopupImageContainer link={link_src} src={image_src} updatePopup={updatePopup} target="lake-conditions"/>
           </Provider>
