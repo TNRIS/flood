@@ -2,9 +2,12 @@
 
 ## Setup
 
-Install Node. Version 6 will not work, use version 5.12: `nvm use 5`
+Install Node.
+Currently builds with Node v8.9.2 & Npm v5.6.0
 
-Install Packages: `npm install`
+Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27)
+
+Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 
 To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 
@@ -12,7 +15,7 @@ To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 
 1. place a copy `vault-password.txt` into the root of this repo `~/flood`. You might need to change spaces to newlines. cd into the root folder and run `make pull-secrets` to quickly download, decrypt, and properly place the secrets file.
     * Alternatively (without ansible), make a copy of `src/keys/secrets.sample.es`, fill out and save as `src/keys/secrets.es`
-1. `npm start` to start a hot-reloading development web server
+1. `npm start` to start a hot-reloading development web server. First time starting, may require you create the empty directory `dist` in the project root.
 1. Open browser to `http://localhost:3545`
 
 ## Production Build
