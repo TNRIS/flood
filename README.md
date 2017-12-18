@@ -4,7 +4,7 @@
 
 Install Node. Version 6 will not work, use version 5.12: `nvm use 5`
 
-Install Packages: `npm install`
+Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27)
 
 To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 
