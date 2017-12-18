@@ -7,7 +7,7 @@ Currently builds with Node v8.9.2 & Npm v5.6.0
 
 Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27)
 
-Note: may have to rebuild node-sass or reinstall.
+Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 
 To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 
