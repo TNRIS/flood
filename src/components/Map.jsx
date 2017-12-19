@@ -2,7 +2,7 @@ import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { hashHistory } from 'react-router'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'

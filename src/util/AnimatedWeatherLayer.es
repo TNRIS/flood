@@ -1,6 +1,6 @@
 import axios from 'axios'
 import L from 'leaflet'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import keys from '../keys'
 import Layer from './Layer'
