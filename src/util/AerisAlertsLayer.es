@@ -1,5 +1,5 @@
 import axios from 'axios'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import keys from '../keys'
 import AerisTileLayer from './AerisTileLayer'

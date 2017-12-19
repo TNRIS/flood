@@ -1,5 +1,5 @@
 import expect from 'expect'
-import R from 'ramda'
+import * as R from 'ramda'
 
 
 import reducer from './featureLayers'
