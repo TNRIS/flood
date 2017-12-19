@@ -108,7 +108,7 @@
   },
   "devDependencies": {
     "aws-sdk-mock": "^1.7.0",
-    "babel-preset-react-native": "^1.9.1",
+    "babel-preset-react-native": "^4.0.0",
     "enzyme": "^3.2.0",
     "json-loader": "^0.5.7",
     "react-addons-test-utils": "^0.14.8"
