@@ -12,7 +12,9 @@ import { retrieveUser } from '../actions/UserActions'
 const mapStateToProps = (state) => {
   return {
     browser: state.browser,
-    userAuthentication: state.user.authentication
+    userAuthentication: state.user.authentication,
+    location: {pathname: "/"},
+    params: {lat: null, long: null, zoom: null, lid: null}
   }
 }
 

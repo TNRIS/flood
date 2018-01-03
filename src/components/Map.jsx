@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import { hashHistory } from 'react-router'
+// import { hashHistory } from 'react-router'
 import * as R from 'ramda'
 
 import keys from '../keys'
@@ -150,10 +150,10 @@ export default class Map extends Component {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
             const center = this.map.getCenter()
             const zoom =  this.map.getZoom()
-            hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+            // hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
           }
           else {
-            hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+            // hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
           }
         })
         .on('popupopen', () => {
@@ -171,7 +171,7 @@ export default class Map extends Component {
 
           const center = this.map.getCenter()
           const zoom =  this.map.getZoom()
-          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          // hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
         })
         .on('dblclick', (e) => {
           const zoom =  this.map.getZoom()
@@ -213,7 +213,7 @@ export default class Map extends Component {
           .then(({data}) => {
             if (data.rows.length === 0) {
               this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
-              hashHistory.push("")
+              // hashHistory.push("")
               return initMap(initView)
             }
             data.rows.map((gage) => {
@@ -237,7 +237,7 @@ export default class Map extends Component {
       }
       else {
         if (!this.props.initialCenter) {
-          hashHistory.push("")
+          // hashHistory.push("")
         }
         initMap(initView)
       }
