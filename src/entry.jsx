@@ -3,6 +3,8 @@ import {render} from 'react-dom'
 import {Provider} from 'react-redux'
 // import { Router, Route, hashHistory } from 'react-router'
 
+import 'foundation-sites'
+
 import AppContainer from './containers/AppContainer'
 
 import { store } from './store'
@@ -15,8 +17,6 @@ import 'leaflet_marker_2x'
 import 'leaflet_marker_shadow'
 
 // vendor css and js
-import './vendor/material.css'
-import './vendor/material.js'
 import './vendor/Leaflet.BingLayer.js'
 import './vendor/leaflet.TileLayer.WMTS.js'
 import './vendor/leaflet.utfgrid.js'
