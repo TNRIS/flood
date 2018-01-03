@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Card, CardTitle, CardText, CardActions } from 'react-mdl'
 
 import Modal from 'react-modal'

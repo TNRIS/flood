@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import {
   Button,
@@ -43,25 +44,25 @@ const reactModalStyle = {
 
 class SubscriptionList extends React.Component {
   static propTypes = {
-    addSubscribeToChangeList: React.PropTypes.func,
-    addUnsubscribeToChangeList: React.PropTypes.func,
-    allGageSubscriptions: React.PropTypes.array,
-    allSubscriptions: React.PropTypes.array,
-    allSubscriptionChanges: React.PropTypes.array,
-    clearSubscriptionList: React.PropTypes.func,
-    email: React.PropTypes.string,
-    gageInfo: React.PropTypes.object,
-    isUpdating: React.PropTypes.bool,
-    gageSubscriptionById: React.PropTypes.object,
-    markSubscriptionForAdd: React.PropTypes.func,
-    markSubscriptionForRemove: React.PropTypes.func,
-    phone: React.PropTypes.string,
-    saveSubscriptionChanges: React.PropTypes.func,
-    setCenterAndZoom: React.PropTypes.func,
-    setPopup: React.PropTypes.func,
-    subscriptions: React.PropTypes.object,
-    unqueueChangeFromChangeList: React.PropTypes.func,
-    browser: React.PropTypes.object
+    addSubscribeToChangeList: PropTypes.func,
+    addUnsubscribeToChangeList: PropTypes.func,
+    allGageSubscriptions: PropTypes.array,
+    allSubscriptions: PropTypes.array,
+    allSubscriptionChanges: PropTypes.array,
+    clearSubscriptionList: PropTypes.func,
+    email: PropTypes.string,
+    gageInfo: PropTypes.object,
+    isUpdating: PropTypes.bool,
+    gageSubscriptionById: PropTypes.object,
+    markSubscriptionForAdd: PropTypes.func,
+    markSubscriptionForRemove: PropTypes.func,
+    phone: PropTypes.string,
+    saveSubscriptionChanges: PropTypes.func,
+    setCenterAndZoom: PropTypes.func,
+    setPopup: PropTypes.func,
+    subscriptions: PropTypes.object,
+    unqueueChangeFromChangeList: PropTypes.func,
+    browser: PropTypes.object
   }
 
   constructor() {

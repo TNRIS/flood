@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 
 import {
@@ -9,13 +10,13 @@ import * as dialogPolyfill from 'dialog-polyfill'
 
 class Subscribe extends React.Component {
   static propTypes = {
-    email: React.PropTypes.string,
-    phone: React.PropTypes.string,
-    hideSubscribe: React.PropTypes.func,
-    openDialog: React.PropTypes.bool,
-    setUserInfo: React.PropTypes.func,
-    showSnackbar: React.PropTypes.func,
-    subscribeGage: React.PropTypes.func
+    email: PropTypes.string,
+    phone: PropTypes.string,
+    hideSubscribe: PropTypes.func,
+    openDialog: PropTypes.bool,
+    setUserInfo: PropTypes.func,
+    showSnackbar: PropTypes.func,
+    subscribeGage: PropTypes.func
   }
 
   constructor(props) {

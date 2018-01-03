@@ -1,5 +1,4 @@
-
-import { PropTypes } from 'react'
+import PropTypes from 'prop-types'
 
 const CustomPropTypes = {
   baseLayer: PropTypes.shape({

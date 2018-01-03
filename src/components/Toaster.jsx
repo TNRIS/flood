@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Snackbar } from 'react-mdl'
 
 /**
@@ -6,13 +7,13 @@ import { Snackbar } from 'react-mdl'
  */
 class Toaster extends React.Component {
   static propTypes = {
-    hideSnackbar: React.PropTypes.func,
-    isSnackbarActive: React.PropTypes.bool,
-    snackbarText: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object
+    hideSnackbar: PropTypes.func,
+    isSnackbarActive: PropTypes.bool,
+    snackbarText: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
     ]),
-    snackbarTimeout: React.PropTypes.number
+    snackbarTimeout: PropTypes.number
   }
 
   constructor() {
