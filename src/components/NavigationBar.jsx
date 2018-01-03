@@ -4,7 +4,7 @@ import { Navigation, Icon } from 'react-mdl'
 import { preventDefault } from '../util'
 import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
-const NavigationBar = React.createClass({
+class NavigationBar extends React.Component {
   render() {
     return (
       <Navigation>
@@ -15,6 +15,6 @@ const NavigationBar = React.createClass({
       </Navigation>
     )
   }
-})
+}
 
 export default NavigationBar

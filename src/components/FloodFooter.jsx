@@ -9,9 +9,7 @@ import TWDBLogoImage from '../images/logo_twdb_300x83.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_300x166.gif'
 
 class FloodFooter extends React.Component {
-  static propTypes = {
-  }
-
+  
   constructor(props) {
     super(props)
     this.state = {fullscreenIcon: "fullscreen"}

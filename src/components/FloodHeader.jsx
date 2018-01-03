@@ -7,8 +7,6 @@ import TexasFloodLogoImage from '../images/texas_flood_logo_transparent_300x42.p
 import TexasFloodIconImage from '../images/icons/favicon.ico'
 
 class FloodHeader extends React.Component {
-  static propTypes = {
-  }
 
   constructor(props) {
     super(props)

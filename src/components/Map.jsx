@@ -1,5 +1,6 @@
 import L from 'leaflet'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 // import { hashHistory } from 'react-router'
 import * as R from 'ramda'

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'

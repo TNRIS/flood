@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Button, Spinner, Textfield } from 'react-mdl'
 
 /** Form for entering a new password and updating current user profile */
 class NewPasswordForm extends Component {
-  static propTypes = {
-  }
-
+  
   constructor(props) {
     super(props)
     this.state = {

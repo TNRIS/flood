@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupContent from './PopupContent'
@@ -54,7 +55,7 @@ export default class FloodGaugePopup extends Component {
     const { lid, name, wfo, updatePopup } = this.props
     const hydrographImage = `https://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
     const gaugeLink = `https://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
-    
+
     const shareUrl = `https://${SITE_URL}/#/gage/${lid}`
 
     const currentStore = store.getState()
@@ -92,7 +93,7 @@ export default class FloodGaugePopup extends Component {
                                  target="flood-gage-details"/>
           </Provider>
           <div className="shareBar">
-            <TwitterShareButton 
+            <TwitterShareButton
               url={shareUrl}
               title={shareTitle}
               className="share-button"

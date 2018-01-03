@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Button, Spinner, Textfield } from 'react-mdl'
 
 /** Form for creating a new user account and beginning the verification process */
