@@ -1,3 +1,7 @@
+@import "~foundation-sites/scss/foundation";
+@include foundation-everything;
+@import "~foundation-icons/foundation-icons.css";
+
 $lighter-blue-version1: #39aad2;
 $darker-blue-version1: #2c88a9;
 $twdb-blue: #3f556d;

@@ -20,10 +20,10 @@ export default class FeatureLayer extends Component {
 
     let statusIndicator
     if (active && status !== 'ready') {
-      statusIndicator = <RingLoader color={'#92C553'} loading=true />
+      statusIndicator = <RingLoader color={'#92C553'} loading={true} />
     }
     else {
-      statusIndicator = <div class="switch"><input class="switch-input" type="checkbox" checked={active}></div>
+      statusIndicator = <div className="switch"><input className="switch-input" type="checkbox" defaultChecked={active}/></div>
     }
 
     let legendElement

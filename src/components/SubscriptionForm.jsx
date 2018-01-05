@@ -76,7 +76,7 @@ class SubscriptionForm extends Component {
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
-        <RingLoader color={'#92C553'} loading=true />
+        <RingLoader color={'#92C553'} loading={true} />
       )
     }
     else if (this.props.displayForm === "SubscriptionList") {

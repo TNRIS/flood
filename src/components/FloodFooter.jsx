@@ -62,7 +62,7 @@ class FloodFooter extends React.Component {
                  data-position="top"
                  data-alignment="left"
                  data-dropdown data-auto-focus="true">
-              <ul class="vertical menu">
+              <ul className="vertical menu">
                 <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></li>
                 <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">Being Safe During a Flood</a></li>
                 <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">Recovering After a Flood</a></li>
