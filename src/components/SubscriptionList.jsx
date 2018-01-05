@@ -174,7 +174,7 @@ class SubscriptionList extends React.Component {
             <input
               type="checkbox"
               name="textsms"
-              checked=true
+              checked="true"
               onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
             <label className="switch-paddle" for="textsms">
               <span className="show-for-sr">Alert</span>
@@ -218,7 +218,7 @@ class SubscriptionList extends React.Component {
       )
 
     if (this.props.isUpdating) {
-      listContentDiv = <RingLoader color={'#92C553'} loading=true />
+      listContentDiv = <RingLoader color={'#92C553'} loading={true} />
     }
     else {
       listContentDiv = (

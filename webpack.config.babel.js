@@ -29,7 +29,7 @@ fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html
 });
 
 //setup webpack plugins
-const plugins = ["emotion"]
+const plugins = []
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'))
   plugins.push(new webpack.optimize.UglifyJsPlugin())
@@ -72,8 +72,12 @@ export default {
           : 'style-loader!css-loader',
       },
       {
-        test: /\.(jpg|png|gif|ico)$/,
+        test: /\.(jpg|png|gif|ico|woff)$/,
         loader: 'url-loader?limit=65536'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
       },
       {
         test: /\.(es|jsx)$/,

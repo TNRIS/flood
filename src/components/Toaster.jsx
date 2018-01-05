@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastMessageAnimated } from "react-toastr";
 
 /**
  * App level toast notification component
@@ -22,15 +22,13 @@ class Toaster extends React.Component {
 
   render() {
     return (
-      // active={this.props.isSnackbarActive}
-      toast({this.props.snackbarText}, {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: {this.props.snackbarTimeout},
-        onClose: {this.props.hideSnackbar}
-      })
-
       <div>
-        <ToastContainer />
+        <ToastMessageAnimated
+        showAnimation="bounceInUp"
+        active={this.props.isSnackbarActive.toString()}
+        timeOut={this.props.snackbarTimeout}
+        onRemove={this.props.hideSnackbar}
+        message={this.props.snackbarText} />
       </div>
     )
   }

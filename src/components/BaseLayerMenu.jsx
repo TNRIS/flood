@@ -7,9 +7,8 @@ import CustomPropTypes from '../CustomPropTypes'
 const BaseLayerMenu = ({ baseLayers, activeBaseId, onLayerClick, target }) => (
   <ul className="vertical menu" target={target} valign="bottom" align="right">
     {baseLayers.map(layer => (
-      <li>
+      <li key={layer.id}>
         <div
-        key={layer.id}
         className={classnames({'active': activeBaseId === layer.id})}
         onClick={() => onLayerClick(layer.id)}>
         {layer.text}

@@ -482,7 +482,7 @@ export default class Map extends Component {
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
         <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
-        <i class="material-icons md-dark">{this.state.animationIcon}</i>
+        <i className="material-icons md-dark">{this.state.animationIcon}</i>
       </button>
       )
     }
