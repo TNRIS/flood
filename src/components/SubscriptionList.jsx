@@ -263,8 +263,8 @@ class SubscriptionList extends React.Component {
               </div>
                 <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
                 <div className="card-section confirm-modal-actions">
-                  <Button type="button" onClick={this.saveChanges}>Confirm</Button>
-                  <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
+                  <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
+                  <button autoFocus="true" className="button" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
                 </div>
               </div>
             </Modal>
