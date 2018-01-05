@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon } from 'react-mdl'
+
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
@@ -49,25 +49,21 @@ class NavigationToggle extends Component {
     return (
       <div>
         <div>
-          <Button ripple
-          className="toggle-navigation-content"
+          <button
+          className="button toggle-navigation-content"
+          type="button"
           onClick={this.handleSetNavigationLayers}>
-          <Icon
-              name="layers"
-              className="layers"
-          />
-          Map Layers</Button>
+          <i class="material-icons" name="layers">layers</i>
+          Map Layers</button>
           { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
         <div>
-          <Button ripple
-          className="toggle-navigation-content bottom-nav-button"
+          <button
+          className="button toggle-navigation-content bottom-nav-button"
+          type="button"
           onClick={this.handleSetNavigationUnsubscribe}>
-          <Icon
-              name="notifications_active"
-              className="add-alert"
-          />
-          {this.handleSetSignInButton()}</Button>
+          <i class="material-icons" name="notifications_active">add-alert</i>
+          {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
       </div>

@@ -29,7 +29,7 @@ fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html
 });
 
 //setup webpack plugins
-const plugins = []
+const plugins = ["emotion"]
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'))
   plugins.push(new webpack.optimize.UglifyJsPlugin())

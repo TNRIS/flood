@@ -2,7 +2,7 @@ import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-dom/test-utils'
 
-import { Checkbox, Spinner } from 'react-mdl'
+import { RingLoader } from 'react-spinners'
 import FeatureLayer from '../components/FeatureLayer'
 
 function setup(overrides) {
@@ -54,7 +54,7 @@ describe('component: FeatureLayer', () => {
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(Spinner)
+    expect(statusIndicator.type).toBe(RingLoader)
   })
 
   it('should render with Checkbox when active and ready', () => {
@@ -67,7 +67,7 @@ describe('component: FeatureLayer', () => {
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(Checkbox)
+    expect(statusIndicator.type).toBe(div)
   })
 
   it('should render with Checkbox when not active or ready', () => {
@@ -80,6 +80,6 @@ describe('component: FeatureLayer', () => {
     let [ span, text, statusWrapper ] = wrapperDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(Checkbox)
+    expect(statusIndicator.type).toBe(div)
   })
 })

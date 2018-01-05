@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Card, CardTitle, CardText, CardActions } from 'react-mdl'
+
 
 import Modal from 'react-modal'
 
@@ -75,9 +75,9 @@ class AccountSettingsForm extends Component {
       if (this.props.allSubscriptions.length === 0) {
         button = (
           <div style={{marginTop: "30px"}}>
-            <Button raised
+            <button raised type="button"
             style={{background: "#c0392b", color: "white", width: "100%"}}
-            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</Button>
+            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
       }
@@ -85,9 +85,9 @@ class AccountSettingsForm extends Component {
         button = (
           <div style={{marginTop: "30px"}}>
             <p>Please unsubscribe from all gages before deleting your account.</p>
-            <Button raised disabled
+            <button raised disabled type="button"
             style={{width: "100%"}}
-            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</Button>
+            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
       }
@@ -106,17 +106,17 @@ class AccountSettingsForm extends Component {
           </span>
         </div>
         <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
-          <Card>
-            <CardTitle className="confirm-modal-title"><i className="material-icons">warning</i>
+          <div className="card">
+            <div className="card-divider confirm-modal-title"><i className="material-icons">warning</i>
             Confirm Delete
-            </CardTitle>
-            <CardText className="confirm-modal-text">Are you sure you want to delete your account?
-            Once deleted, your account cannot be recovered.</CardText>
-            <CardActions className="confirm-modal-actions">
-              <Button type="button" onClick={this.deleteAccount}>Confirm</Button>
-              <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
-            </CardActions>
-          </Card>
+            </div>
+            <div className="card-section confirm-modal-text">Are you sure you want to delete your account?
+            Once deleted, your account cannot be recovered.</div>
+            <div className="confirm-modal-actions">
+              <button type="button" onClick={this.deleteAccount}>Confirm</button>
+              <button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+            </div>
+          </div>
         </Modal>
       </div>
     )

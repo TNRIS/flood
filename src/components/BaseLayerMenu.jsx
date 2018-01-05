@@ -1,21 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, MenuItem } from 'react-mdl'
 import classnames from 'classnames'
 
 import CustomPropTypes from '../CustomPropTypes'
 
 const BaseLayerMenu = ({ baseLayers, activeBaseId, onLayerClick, target }) => (
-  <Menu target={target} valign="bottom" align="right">
+  <ul className="vertical menu" target={target} valign="bottom" align="right">
     {baseLayers.map(layer => (
-      <MenuItem
+      <li>
+        <div
         key={layer.id}
         className={classnames({'active': activeBaseId === layer.id})}
         onClick={() => onLayerClick(layer.id)}>
         {layer.text}
-      </MenuItem>
+        </div>
+      </li>
     ))}
-  </Menu>
+  </ul>
 )
 
 BaseLayerMenu.propTypes = {

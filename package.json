@@ -89,6 +89,8 @@
     "react-modal": "^3.1.10",
     "react-redux": "^5.0.6",
     "react-share": "^1.18.0",
+    "react-spinners": "^0.2.5",
+    "react-toastify": "^3.2.1",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.5.0",

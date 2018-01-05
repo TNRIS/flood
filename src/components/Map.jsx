@@ -10,9 +10,7 @@ import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
-import {
-    FABButton, Icon
-} from 'react-mdl'
+
 
 const pause = require('../images/pause.png')
 
@@ -483,12 +481,9 @@ export default class Map extends Component {
     let radarInfo
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
-        <FABButton mini onClick={() => {this.toggleAnimation()}}>
-        <Icon
-            name={this.state.animationIcon}
-            className="material-icons md-dark"
-        />
-        </FABButton>
+        <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
+        <i class="material-icons md-dark">{this.state.animationIcon}</i>
+      </button>
       )
     }
 
