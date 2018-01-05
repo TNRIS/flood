@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import Resources from './Resources'
+
 import NavigationContent from './NavigationContent'
 
 import TWDBLogoImage from '../images/logo_twdb.png'
@@ -39,7 +39,6 @@ class  NavigationDrawer extends React.Component {
           browser={this.props.browser}
           userAuthentication={this.props.userAuthentication}
         />
-        <Resources />
         <div className="footer">
           <div className="footer__wrapper">
             <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">

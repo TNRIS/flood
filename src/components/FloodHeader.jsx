@@ -41,10 +41,6 @@ class FloodHeader extends React.Component {
     const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
       <div className="title-bar" style={{color: 'white'}}>
-        <div className="title-bar-left">
-          <button className="menu-icon" type="button" data-open="offCanvasLeft"></button>
-          <span className="title-bar-title">Foundation</span>
-        </div>
         <div className="header__title">
           <a href="http://texasflood.org" target="_blank">
             <img src={imgSource} alt="The Texas Flood dot org logo"/>

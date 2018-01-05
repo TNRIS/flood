@@ -54,7 +54,7 @@ componentDidMount() {
         <Disclaimer />
         <AboutContainer />
         <FloodHeaderContainer />
-        <div className="off-canvas position-left reveal-for-medium" data-off-canvas>
+        <div className="off-canvas reveal-for-medium" data-off-canvas>
           <NavigationDrawer
             navContentInitState={navContentInitState()}
             browser={this.props.browser}
