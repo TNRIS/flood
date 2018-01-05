@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Navigation } from 'react-mdl'
+
 
 import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
@@ -40,22 +40,30 @@ class FloodHeader extends React.Component {
   render() {
     const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
-      <Header transparent style={{color: 'white'}}>
+      <div className="title-bar" style={{color: 'white'}}>
+        <div class="title-bar-left">
+          <button class="menu-icon" type="button" data-open="offCanvasLeft"></button>
+          <span class="title-bar-title">Foundation</span>
+        </div>
         <div className="header__title">
           <a href="http://texasflood.org" target="_blank">
             <img src={imgSource} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
-        <Navigation className="header__navigation">
+        <button className="button header__navigation" type="button" data-toggle="example-dropdown-bottom-right">
           <a href="#"
             id="basemap-context-menu"
             title="Basemaps"><i className="material-icons">satellite</i></a>
+        </button>
+        <div class="dropdown-pane" data-position="bottom" data-alignment="right" id="basemap-dropdown" data-dropdown data-auto-focus="true">
           <BaseLayerMenuContainer />
-          <a href="#"
-            title="Search"
-             onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>
-        </Navigation>
-      </Header>
+        </div>
+        <a href="#"
+          title="Search"
+           onClick={this.handleShowGeocoder}><i className="material-icons">search</i>
+        </a>
+
+      </div>
     )
   }
 }

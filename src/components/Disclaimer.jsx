@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-    Button,
-    Checkbox,
-    Card,
-    CardTitle,
-    CardText,
-    CardActions
-} from 'react-mdl'
+
 
 import Modal from 'react-modal'
 
@@ -81,9 +74,9 @@ class Disclaimer extends React.Component {
                isOpen={this.state.openDialog}
                contentLabel="Disclaimer Modal"
                style={reactModalStyle}>
-          <Card className="disclaimer">
-            <CardTitle expand className="disclaimer-title">Legal Review and Disclaimer</CardTitle>
-            <CardText className="disclaimer-text">
+          <div className="card disclaimer">
+            <div className="card-divider disclaimer-title">Legal Review and Disclaimer</div>
+            <div className="card-section disclaimer-text">
               <p>
               The data and information presented in this viewer is the best available
               information provided to the Texas Water Development Board (TWDB) by its
@@ -102,18 +95,23 @@ class Disclaimer extends React.Component {
               <a href="https://tnris.org/contact/" target="_blank"> https://tnris.org/contact/</a>
               </p>
               {notice}
-            </CardText>
-            <CardActions className="disclaimer-button-div">
-              <Button colored className="terms-agree-button" type="button" onClick={this.handleCloseDialog}>
+            </div>
+            <div className="disclaimer-button-div">
+              <button className="button terms-agree-button" type="button" onClick={this.handleCloseDialog}>
               I have read and agree to these terms
-              </Button>
-              <Checkbox
-                className="hide-disclaimer-checkbox"
-                label="Do not show again"
-                onChange={updateDisclaimerAcceptance}
-              />
-            </CardActions>
-          </Card>
+            </button>
+              <div className="switch">
+                <input className="switch-input hide-disclaimer-checkbox"
+                  id="noShowSwitch"
+                  type="checkbox"
+                  name="noShowSwitch"
+                  onChange={updateDisclaimerAcceptance} />
+                <label className="switch-paddle" for="noShowSwitch">
+                  <span className="show-for-sr">Do not show again</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </Modal>
       </div>
     )

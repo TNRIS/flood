@@ -143,7 +143,7 @@ body {
         }
       }
 
-      .header__navigation {
+      .button.header__navigation {
         position: absolute;
         height: inherit;
         right: 0px;
@@ -172,13 +172,16 @@ body {
     }
   }
 
-  .mdl-mini-footer {
+  .footer__bar {
     color: white;
     z-index: 2;
     min-height: 50px;
+    width: 100%;
     padding: 0;
     background-color: inherit;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+
 
     .footer__logos {
       height: 50px;
@@ -193,11 +196,11 @@ body {
       }
     }
 
-    .mdl-mini-footer__left-section {
+    .footer__bar-section {
       margin: auto;
     }
 
-    .mdl-mini-footer__link-list {
+    .footer__bar-links {
       position: relative;
 
       a:focus {
@@ -205,7 +208,7 @@ body {
       }
     }
 
-    .mdl-mini-footer__link-list li:last-child {
+    .footer__bar-links li:last-child {
       margin-right: 0;
     }
 
@@ -399,7 +402,7 @@ body {
 }
 
 // override mdl drawer top padding
-.mdl-layout__drawer .mdl-navigation.nav__layers {
+.vertical-menu.nav__layers {
   padding-top: 0px;
 }
 
@@ -463,7 +466,7 @@ body {
     min-width: 0;
   }
 
-    .popup__close {
+    .button.popup__close {
       float: right;
       height: 42px;
 
@@ -481,7 +484,7 @@ body {
       }
     }
 
-    .subscribe-button {
+    .button.subscribe-button {
       font-size: 1em;
       float: right;
       height: 42px;
@@ -669,10 +672,10 @@ body {
     max-width: 85%;
   }
 
-  .disclaimer {
+  .card.disclaimer {
     width: 100% !important;
 
-    .disclaimer-title {
+    .card-divider.disclaimer-title {
 
       h2 {
         color: $gray20;
@@ -681,7 +684,7 @@ body {
       }
     }
 
-    .disclaimer-text {
+    .card-section.disclaimer-text {
       color: $gray20;
       width: 100%;
       padding-top: 0;
@@ -807,10 +810,10 @@ dialog.subscribeDialog h4 {
     margin-bottom: 0;
   }
 
-  .about {
+  .card.about {
     width: 100% !important;
 
-    .about-title {
+    .card-divider.about-title {
       padding-top: 0;
       padding-bottom: 0;
 
@@ -825,7 +828,7 @@ dialog.subscribeDialog h4 {
       }
     }
 
-    .about-text {
+    .card-section.about-text {
       width: 100%;
       padding-top: 0;
       color: $gray20;
@@ -1020,7 +1023,7 @@ dialog.subscribeDialog h4 {
 div.dialog-button-div {
   padding-left: 8px;
 
-  .terms-agree-button {
+  .button.terms-agree-button {
     color: white !important;
     background-color: $lighter-blue;
     border-radius: 0;
@@ -1154,13 +1157,13 @@ span.mdl-list__item-secondary-action > i {
     }
 }
 
-.flood-form-button {
+.button.flood-form-button {
   float: right;
   margin-bottom: 10px !important;
   padding: 0 20px 0 20px !important;
 }
 
-.subscription-list-save-button {
+.button.subscription-list-save-button {
   float: right;
   margin-bottom: 10px !important;
   margin-right: 10px !important;
@@ -1174,7 +1177,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   background-color: $accent-light-green;
 }
 
-dialog.confirm-subscription-change h4 {
+div.confirm-subscription-change h4 {
     /* Reduce size to avoid line break in title */
     font-size: 1.5em;
     text-align: center;
@@ -1185,7 +1188,7 @@ a.leaflet-disabled {
   color: #bbb !important;
 }
 
-dialog.confirm-subscription-change h4 {
+div.confirm-subscription-change h4 {
     /* Reduce size to avoid line break in title */
     font-size: 1.5em;
     text-align: center;
@@ -1495,7 +1498,7 @@ body > div.ReactModalPortal > div {
     min-height: 146px !important;
 }
 
-div.confirm-modal-title {
+div.card-divider.confirm-modal-title {
     background-color: #333;
     border-radius: 0 0 0 0 !important;
     height: 42px;
@@ -1513,7 +1516,7 @@ div.confirm-modal-title {
   }
 }
 
-.confirm-modal-text {
+.card-section.confirm-modal-text {
   color: $gray20 !important;
   width: 98%;
 }
@@ -1542,7 +1545,7 @@ div.confirm-modal-title {
   }
 }
 
-.subscription-confirm-modal-actions {
+.card-section.subscription-confirm-modal-actions {
   button {
     float: right;
   }
@@ -1560,7 +1563,7 @@ div.subscription-confirm-modal-title {
     }
 }
 
-.subscription-confirm-modal-text {
+.card-section.subscription-confirm-modal-text {
   color: $gray20 !important;
   width: 98%;
 }

@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Navigation } from 'react-mdl'
 
 import FeatureLayer from './FeatureLayer'
 
 const FeatureLayerChooser = ({ layers, onLayerClick }) => {
   return (
-      <Navigation className="nav__layers">
+      <ul className="vertical-menu nav__layers">
         {layers.map(layer =>
           <FeatureLayer
             key={layer.id}
@@ -19,7 +18,7 @@ const FeatureLayerChooser = ({ layers, onLayerClick }) => {
             {...layer}
           />
         )}
-      </Navigation>
+      </ul>
   )
 }
 

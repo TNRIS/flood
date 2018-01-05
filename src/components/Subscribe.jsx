@@ -1,10 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-
-import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, Textfield
-} from 'react-mdl'
+import Modal from 'react-modal'
 import * as dialogPolyfill from 'dialog-polyfill'
 
 
@@ -65,20 +62,23 @@ class Subscribe extends React.Component {
   render() {
     return (
       <div className="subscribe__wrapper">
-        <Dialog ref="subscribeDialog" className="subscribeDialog" open={ this.props.openDialog }
-        onCancel={ this.handleCloseDialog } >
-          <form className="subscribe-form">
-            <DialogContent>
+        <Modal className="subscribeDialog"
+               isOpen={ this.props.openDialog }
+               contentLabel="Subscribe Modal"
+               style={reactModalStyle}
+               ref="subscribeDialog">
+          <div className="card subscribe-form">
+            <div classname="card-divider">
               <p>Are you sure you want to subscribe to receive alerts for the <b>{ this.state.name } ({ this.state.lid })</b> flood gage?</p>
-            </DialogContent>
-            <DialogActions>
-              <Button ripple className="flood-form-button" type="button" value="Submit"
-                onClick={ this.handleSubmit }>Submit</Button>
-              <Button ripple className="flood-form-button" type="button" value="Cancel"
-                onClick={ this.handleCloseDialog }>Cancel</Button>
-            </DialogActions>
-          </form>
-        </Dialog>
+            </div>
+            <div className="card-section">
+              <button className="button flood-form-button" type="button" value="Submit"
+                onClick={ this.handleSubmit }>Submit</button>
+              <button className="button flood-form-button" type="button" value="Cancel"
+                onClick={ this.handleCloseDialog }>Cancel</button>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

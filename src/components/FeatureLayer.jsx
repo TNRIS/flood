@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Checkbox, Spinner } from 'react-mdl'
+import { RingLoader } from 'react-spinners'
 
 
 export default class FeatureLayer extends Component {
@@ -20,10 +20,10 @@ export default class FeatureLayer extends Component {
 
     let statusIndicator
     if (active && status !== 'ready') {
-      statusIndicator = <Spinner />
+      statusIndicator = <RingLoader color={'#92C553'} loading=true />
     }
     else {
-      statusIndicator = <Checkbox checked={active} readOnly />
+      statusIndicator = <div class="switch"><input class="switch-input" type="checkbox" checked={active}></div>
     }
 
     let legendElement
@@ -44,26 +44,28 @@ export default class FeatureLayer extends Component {
     }
 
     return (
-      <div className="feature-layer__link">
-        <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">
-          <div className="feature-layer__wrapper">
-            <div className="feature-layer__icon-wrapper">
-              <img src={icon} alt={altText} className="feature-layer__icon" />
-            </div>
-            <div className="feature-layer__name vertically-centered__wrapper">
-              <div className="vertically-centered__element">
-                { text }
+      <li>
+        <div className="feature-layer__link">
+          <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">
+            <div className="feature-layer__wrapper">
+              <div className="feature-layer__icon-wrapper">
+                <img src={icon} alt={altText} className="feature-layer__icon" />
+              </div>
+              <div className="feature-layer__name vertically-centered__wrapper">
+                <div className="vertically-centered__element">
+                  { text }
+                </div>
+              </div>
+              <div className="feature-layer__checkbox">
+                { statusIndicator }
               </div>
             </div>
-            <div className="feature-layer__checkbox">
-              { statusIndicator }
-            </div>
-          </div>
 
-          { legendElement }
-        </a>
-          { legendLink }
-      </div>
+            { legendElement }
+          </a>
+            { legendLink }
+        </div>
+      </li>
     )
   }
 }

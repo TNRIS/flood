@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Textfield } from 'react-mdl'
 
 
 /** Form for entering user info and updating current subscriptions */
@@ -92,29 +91,31 @@ class LoginForm extends Component {
     return (
         <form className="login-form" onSubmit={ this.handleSearch }>
             <p>Sign in to subscribe to flood gages and manage your current gage subscriptions.</p>
-            <Textfield floatingLabel
+            <label>{this.state.label}
+              <input
                        pattern={this.state.pattern}
                        minLength={this.state.min}
                        maxLength={this.state.max}
                        error={this.state.error}
-                       label={this.state.label}
                        type="username"
                        id="username"
                        name="username"
                        onChange={this.handleChange}
                        value={this.state.username}/>
-            <Textfield floatingLabel
-                       label="Password"
+            </label>
+            <label>Password
+              <input
                        type="password"
                        id="password"
                        name="password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
-            <Button ripple
-              className="flood-form-button"
+            </label>
+            <button
+              className="button flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>sign in</Button>
+              style={{marginRight: "10px"}}>sign in</button>
         </form>
     )
   }

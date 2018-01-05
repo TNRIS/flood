@@ -1,28 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Badge,
-  Card,
-  CardText,
-  CardActions,
-  CardTitle,
-  Checkbox,
-  Icon,
-  IconButton,
-  List,
-  ListItem,
-  ListItemContent,
-  ListItemAction,
-  Spinner
-} from 'react-mdl'
+
 
 import Modal from 'react-modal'
+import { RingLoader } from 'react-spinners'
 
 const reactModalStyle = {
   overlay: {
@@ -187,12 +169,18 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       return (
-        <ListItemAction info="Alert" title={this.tooltipMessage("phone")}>
-          <Checkbox ripple
-          name="textsms"
-          defaultChecked
-          onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
-       </ListItemAction>
+        <div title={this.tooltipMessage("phone")}>
+          <div className="switch">
+            <input
+              type="checkbox"
+              name="textsms"
+              checked=true
+              onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
+            <label className="switch-paddle" for="textsms">
+              <span className="show-for-sr">Alert</span>
+            </label>
+          </div>
+       </div>
       )
     }
 
@@ -200,51 +188,52 @@ class SubscriptionList extends React.Component {
       let save
       if (this.props.allSubscriptionChanges.length > 0) {
         save = (
-          <Button ripple
-            className="subscription-list-save-button"
-            onClick={this.handleOpenConfirmDialog}>SAVE CHANGES</Button>
+          <button type="button"
+            className="button subscription-list-save-button"
+            onClick={this.handleOpenConfirmDialog}>SAVE CHANGES</button>
         )
       }
       else {
         save = (
-          <Button ripple disabled
-            className="subscription-list-save-button">SAVE CHANGES</Button>
+          <button type="button" disabled
+            className="button subscription-list-save-button">SAVE CHANGES</button>
         )
       }
       return save
     }
 
     this.confirmDialog = (
-          <Dialog className="confirm-subscription-change" ref={(ref) => confirmDialog = ref}
-            open={this.state.openConfirmDialog} onCancel={this.handleCloseConfirmDialog}>
-            <DialogTitle className="subscribe-title">Confirm Changes</DialogTitle>
-            <DialogContent>
+        <Modal isOpen={this.state.openConfirmDialog} onRequestClose={this.handleCloseConfirmDialog} style={reactModalStyle}>
+          <div className="card confirm-subscription-change" ref={(ref) => confirmDialog = ref}>
+            <div className="card-divider subscribe-title">Confirm Changes</div>
+            <div className="card-section">
               <p>Are you sure you want to save your subscription changes?</p>
-            </DialogContent>
-            <DialogActions fullWidth style={{float: "right", width: "100%"}}>
-              <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
-              <Button type="button" onClick={this.saveChanges}>Confirm</Button>
-            </DialogActions>
-          </Dialog>
+            </div>
+            <div className="card-section" style={{float: "right", width: "100%"}}>
+              <button className="button" autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+              <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
+            </div>
+          </div>
+        </Modal>
       )
 
     if (this.props.isUpdating) {
-      listContentDiv = <Spinner />
+      listContentDiv = <RingLoader color={'#92C553'} loading=true />
     }
     else {
       listContentDiv = (
         <div className="subscription-list">
-          <Badge
-          className="subscriptions-count-badge"
-          text={this.props.allGageSubscriptions.length}>Total Subscriptions</Badge>
+          <span className="badge subscriptions-count-badge">
+            {this.props.allGageSubscriptions.length}
+          </span>
+          <span>Total Subscriptions</span>
           <p>Click the marker symbol next to a gage to zoom to its location.</p>
           <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
-          <List>
+          <div>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
-              <ListItem twoLine key={gageSubscriptionId} className="subscription-list-item">
-                <ListItemAction className="subscription-list-item__locateAction">
-                  <IconButton
-                    mini name="room"
+              <div twoLine key={gageSubscriptionId} className="subscription-list-item">
+                <div className="subscription-list-item__locateAction">
+                  <i
                     title="Zoom to gage location"
                     className={
                       SubscriptionList.setZoomButtonColor(
@@ -256,28 +245,28 @@ class SubscriptionList extends React.Component {
                       this.props.gageSubscriptionById[gageSubscriptionId].lid,
                       this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
                     )}
-                  }/>
-                </ListItemAction>
-                <ListItemContent
+                  }>room</i>
+                </div>
+                <div
                 subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
                   {this.props.gageSubscriptionById[gageSubscriptionId].lid}
-                </ListItemContent>
+                </div>
                 {smsToggle(gageSubscriptionId)}
-              </ListItem>
+              </div>
             )}
-          </List>
+          </div>
           {saveButton()}
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
-              <Card>
-                <CardTitle className="confirm-modal-title"><i className="material-icons">save</i>
+              <div className="card">
+                <div className="card-divider confirm-modal-title"><i className="material-icons">save</i>
                 Save Changes
-                </CardTitle>
-                <CardText className="confirm-modal-text">Are you sure you want to save your changes?</CardText>
-                <CardActions className="confirm-modal-actions">
+              </div>
+                <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
+                <div className="card-section confirm-modal-actions">
                   <Button type="button" onClick={this.saveChanges}>Confirm</Button>
                   <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
-                </CardActions>
-              </Card>
+                </div>
+              </div>
             </Modal>
 
         </div>

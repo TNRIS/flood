@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon } from 'react-mdl'
+
 
 import SubscriptionConfirmationContainer from '../containers/SubscriptionConfirmationContainer'
 
@@ -42,19 +42,15 @@ class PopupTitle extends Component {
         <span className="popup__title-text">
           { this.props.title }
         </span>
-        <Button className="popup__close mdl-color-text--white" onClick={this.closePopup.bind(this)}>
-          <Icon
-              name="clear"
-              className="material-icons"
-          />
-        </Button>
+        <button type="button" className="button popup__close mdl-color-text--white" onClick={this.closePopup.bind(this)}>
+          <i name="clear" className="material-icons">clear</i>
+        </button>
           {this.props.title === "Flood Gage" &&
-            <Button className="subscribe-button mdl-color-text--white"
+            <button type="button" className="button subscribe-button mdl-color-text--white"
                     onClick={this.handleShowSubscriptionConfirmation}>
-              <Icon
-                className="material-icons" name="notifications_active"/>
-                Subscribe
-            </Button>
+              <i className="material-icons" name="notifications_active">
+                Subscribe</i>
+            </button>
           }
         <SubscriptionConfirmationContainer />
       </div>

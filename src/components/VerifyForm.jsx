@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Spinner, Textfield } from 'react-mdl'
 
 /** Form for verifying a newly created account */
 class VerifyForm extends Component {
@@ -44,22 +43,23 @@ class VerifyForm extends Component {
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent to {this.props.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} via text message.</p>
             <p>Please enter the 6 digit verification code below to confirm your account.</p>
-            <Textfield floatingLabel
+            <label>Verification Code
+              <input
                        pattern="[0-9]*"
                        minLength={6}
                        maxLength={6}
                        error="6 digits required"
-                       label="Verification Code"
                        type="tel"
                        id="verificationCode"
                        name="verificationCode"
                        onChange={this.handleChange}
                        value={this.state.verificationCode}/>
-            <Button ripple
-              className="flood-form-button"
+            </label>
+            <button
+              className="button flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px", marginBottom: "16px"}}>SUBMIT</Button>
+              style={{marginRight: "10px", marginBottom: "16px"}}>SUBMIT</button>
         </form>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer } from 'react-mdl'
+
 
 import Resources from './Resources'
 import NavigationContent from './NavigationContent'
@@ -31,7 +31,7 @@ class  NavigationDrawer extends React.Component {
 
   render() {
     return (
-      <Drawer className="nav">
+      <div className="nav">
         <div className="nav__head">
         </div>
         <NavigationContent
@@ -50,7 +50,7 @@ class  NavigationDrawer extends React.Component {
             </a>
           </div>
         </div>
-      </Drawer>
+      </div>
     )
   }
 }

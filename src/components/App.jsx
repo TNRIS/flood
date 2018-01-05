@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Content, Layout } from 'react-mdl'
 
 import ga from '../util/GoogleAnalytics'
 import MapContainer from '../containers/MapContainer'
@@ -54,27 +53,27 @@ componentDidMount() {
       <div>
         <Disclaimer />
         <AboutContainer />
-        <Layout fixedDrawer fixedHeader>
+        <div className="off-canvas position-left reveal-for-medium" data-off-canvas>
           <FloodHeaderContainer />
             <NavigationDrawer
               navContentInitState={navContentInitState()}
               browser={this.props.browser}
               userAuthentication={this.props.userAuthentication}
             />
-            <Content>
-            <MapContainer
-              initialCenter={{
-                lat: this.props.params.lat || null,
-                lng: this.props.params.lng || null,
-                zoom: this.props.params.zoom || null
-              }}
-              gageCenter={{
-                lid: this.props.params.lid || null
-              }} />
-            </Content>
+            <div>
+              <MapContainer
+                initialCenter={{
+                  lat: this.props.params.lat || null,
+                  lng: this.props.params.lng || null,
+                  zoom: this.props.params.zoom || null
+                }}
+                gageCenter={{
+                  lid: this.props.params.lid || null
+                }} />
+            </div>
           <FloodFooter />
           <ToasterContainer />
-        </Layout>
+        </div>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Footer, FooterSection, FooterLinkList, IconButton, Menu, MenuItem } from 'react-mdl'
+
 
 import AboutLinkContainer from '../containers/AboutLinkContainer'
 import ContactLink from './ContactLink'
@@ -9,7 +9,7 @@ import TWDBLogoImage from '../images/logo_twdb_300x83.png'
 import tnrisLogoImage from '../images/tnris_white_transparent_300x166.gif'
 
 class FloodFooter extends React.Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {fullscreenIcon: "fullscreen"}
@@ -43,7 +43,7 @@ class FloodFooter extends React.Component {
   render() {
     const contactLink = "mailto:tnrisdatasupport@twdb.texas.gov?subject=TexasFlood.org Version: " + VERSION
     return (
-      <Footer size="mini">
+      <div className="footer__bar">
         <div className="footer__logos">
           <div className="footer__wrapper">
             <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
@@ -54,29 +54,33 @@ class FloodFooter extends React.Component {
             </a>
           </div>
         </div>
-        <FooterSection>
-          <FooterLinkList>
-            <div style={{position: 'relative'}}>
-              <a href="#" name="more_vert" id="footer-context-menu">Resources</a>
-              <Menu className="footer-context-menu" target="footer-context-menu" valign="top" align="left" ripple>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></MenuItem>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">Being Safe During a Flood</a></MenuItem>
-                <MenuItem className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">Recovering After a Flood</a></MenuItem>
-              </Menu>
+        <div className="footer__bar-section">
+          <div className="footer__bar-links">
+            <button className="button" type="button"  data-toggle="resources-dropdown-top-left">Resources</button>
+            <div className="dropdown-pane footer-context-menu"
+                 id="resources-dropdown-top-left"
+                 data-position="top"
+                 data-alignment="left"
+                 data-dropdown data-auto-focus="true">
+              <ul class="vertical menu">
+                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></li>
+                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">Being Safe During a Flood</a></li>
+                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">Recovering After a Flood</a></li>
+              </ul>
             </div>
             <AboutLinkContainer />
             <ContactLink text="Contact"
                           href={contactLink}
                           target="_top" />
-          </FooterLinkList>
-        </FooterSection>
+          </div>
+        </div>
         <a href="#"
           title="Fullscreen"
           className={this.handleShowFullscreenToggle()}
           onClick={this.toggleFullscreen}>
           <i className="material-icons">{this.state.fullscreenIcon}</i>
         </a>
-      </Footer>
+      </div>
     )
   }
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Textfield } from 'react-mdl'
 
 
 /** Form for resetting a forgotten password */
@@ -79,67 +78,66 @@ class ForgotPasswordForm extends Component {
     let inputs
 
     if (this.state.username != '' && this.state.phone == '') {
-      inputs = (<Textfield floatingLabel
+      inputs = (<label>Username<input
                        autoFocus
                        onFocus={this.moveCaretAtEnd}
-                       label="Username"
-                       type="username"
+                       type="text"
                        id="username"
                        name="username"
                        onChange={this.handleChange}
                        value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>)
+                       disabled={this.state.usernameDisabled}/></label>)
     }
     else if (this.state.username == '' && this.state.phone != '') {
-      inputs = (<Textfield floatingLabel
+      inputs = (<label>Phone Number<input
                        autoFocus
                        onFocus={this.moveCaretAtEnd}
                        pattern="[0-9]*"
                        minLength={10}
                        maxLength={10}
                        error="10 digits only including US area code"
-                       label="Phone Number"
                        type="tel"
                        id="phone"
                        name="phone"
                        onChange={this.handleChange}
                        value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/>)
+                       disabled={this.state.phoneDisabled}/></label>)
     }
     else {
       inputs = (<div>
-            <Textfield floatingLabel
-                       label="Username"
-                       type="username"
-                       id="username"
-                       name="username"
-                       onChange={this.handleChange}
-                       value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>
+            <label>Username
+              <input
+               type="text"
+               id="username"
+               name="username"
+               onChange={this.handleChange}
+               value={this.state.username}
+               disabled={this.state.usernameDisabled}/>
+            </label>
             <p style={{margin: "0"}}>or</p>
-            <Textfield floatingLabel
-                       pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Phone Number"
-                       type="tel"
-                       id="phone"
-                       name="phone"
-                       onChange={this.handleChange}
-                       value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/></div>)
+            <label>Phone Number
+              <input
+               pattern="[0-9]*"
+               minLength={10}
+               maxLength={10}
+               error="10 digits only including US area code"
+               type="tel"
+               id="phone"
+               name="phone"
+               onChange={this.handleChange}
+               value={this.state.phone}
+               disabled={this.state.phoneDisabled}/></label></div>)
     }
 
     return (
         <form onSubmit={ this.handleSubmit } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Enter your username or phone number to change your password.</p>
             {inputs}
-            <Button ripple
-              className="flood-form-button"
+            <button
+              className="button flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>SUBMIT</Button>
+              style={{marginRight: "10px"}}>SUBMIT</button>
         </form>
     )
   }

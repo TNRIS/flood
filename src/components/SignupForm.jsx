@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Spinner, Textfield } from 'react-mdl'
+
 
 /** Form for creating a new user account and beginning the verification process */
 class SignupForm extends Component {
@@ -74,57 +74,62 @@ class SignupForm extends Component {
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Sign up for an account to subscribe to flood gages and begin receiving text message alerts when they
               enter elevated flood stages.</p>
-            <Textfield floatingLabel
+            <label>Username
+              <input
                        pattern="[^0-9\s]\S*"
                        error="Username must not start with a number or contain spaces"
-                       label="Username"
                        type="username"
                        id="username"
                        name="username"
                        onChange={this.handleChange}
                        value={this.state.username}/>
-            <Textfield floatingLabel
+            </label>
+            <label>Mobile Phone Number
+              <input
                        pattern="[0-9]*"
                        minLength={10}
                        maxLength={10}
                        error="10 digits only including US area code"
-                       label="Mobile Phone Number"
                        type="tel"
                        id="phone"
                        name="phone"
                        onChange={this.handleChange}
                        value={this.state.phone}/>
-            <Textfield floatingLabel
-                       label="Email"
+            </label>
+            <label>Email
+              <input
                        type="email"
                        id="email"
                        name="email"
                        onChange={this.handleChange}
                        value={this.state.email}/>
-            <Textfield floatingLabel
+            </label>
+            <label>Password
+              <input
                        pattern=".{6,}"
                        minLength={6}
                        error="Minimum 6 characters."
-                       label="Password"
                        type="password"
                        id="password"
                        name="password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
-            <Textfield floatingLabel
+            </label>
+            <label>Confirm Password
+              <input
                        minLength={6}
                        pattern={this.state.password}
-                       label="Confirm Password"
                        type="password"
                        id="confirmPassword"
                        name="confirmPassword"
                        onChange={this.handleChange}
                        value={this.state.confirmPassword}/>
-            <Button ripple
-              className="flood-form-button"
+            </label>
+            <button
+              className="button flood-form-button"
               type="submit"
               value="Submit"
-              style={{marginRight: "10px"}}>SIGN UP</Button>
+              style={{marginRight: "10px"}}>SIGN UP</button>
         </form>
     )
   }
