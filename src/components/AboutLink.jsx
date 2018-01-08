@@ -8,9 +8,9 @@ const AboutLink = class AboutLink extends Component {
 
   render() {
     return (
-      <a className="mdl-navigation__link resources__link" href="#" onClick={this.props.showAbout}>
+      <button className="button" type="button" onClick={this.props.showAbout}>
         About
-      </a>
+      </button>
     )
   }
 }
