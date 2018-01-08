@@ -49,7 +49,7 @@ class FloodHeader extends React.Component {
         <button className="button basemap-button" type="button" data-toggle="basemap-dropdown">
           <a href="#"
             id="basemap-context-menu"
-            title="Basemaps"><i className="fi-mountains"></i></a>
+            title="Basemaps"><i className="fi-photo"></i></a>
         </button>
         <div className="dropdown-pane"
              data-position="bottom"
