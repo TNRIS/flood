@@ -40,25 +40,30 @@ class FloodHeader extends React.Component {
   render() {
     const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
     return (
-      <div className="title-bar" style={{color: 'white'}}>
-        <div className="header__title">
+      <div className="title-bar">
+        <div className="title-logo">
           <a href="http://texasflood.org" target="_blank">
             <img src={imgSource} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
-        <button className="button header__navigation" type="button" data-toggle="basemap-dropdown">
+        <button className="button basemap-button" type="button" data-toggle="basemap-dropdown">
           <a href="#"
             id="basemap-context-menu"
-            title="Basemaps"><i className="fi-layout"></i></a>
+            title="Basemaps"><i className="fi-mountains"></i></a>
         </button>
-        <div className="dropdown-pane" data-position="bottom" data-alignment="right" id="basemap-dropdown" data-dropdown data-auto-focus="true">
+        <div className="dropdown-pane"
+             data-position="bottom"
+             data-alignment="right"
+             data-dropdown
+             data-auto-focus="true"
+             id="basemap-dropdown">
           <BaseLayerMenuContainer />
         </div>
-        <a href="#"
-          title="Search"
-           onClick={this.handleShowGeocoder}><i className="material-icons">search</i>
-        </a>
-
+        <button className="button" type="button" onClick={this.handleShowGeocoder}>
+          <a href="#"
+             title="Search"><i className="fi-magnifying-glass"></i>
+          </a>
+        </button>
       </div>
     )
   }

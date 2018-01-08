@@ -43,19 +43,30 @@ body {
     background-color: $gray20;
     padding-top: 0;
     padding-bottom: 0;
+    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.35) !important;
 
-    .header__title {
+    .title-logo {
       margin: auto;
+      padding-left: 105px;
 
       img {
         max-height: 27px;
       }
     }
 
+    .button {
+      background-color: $gray20;
+      margin: 0;
+
+      a > i {
+        font-size: 26px;
+        color: white;
+      }
+    }
+
     // -----BASEMAP DROPDOWN-----
     .vertical.menu > li > div {
-      height: 48px;
-      line-height: 48px;
+      line-height: 40px;
       padding: 0px 16px 0px 16px;
       cursor: pointer;
       text-align: center;
@@ -205,32 +216,32 @@ body {
         }
       }
 
-      .button.header__navigation {
-        position: absolute;
-        height: inherit;
-        right: 0px;
-
-        .mdl-navigation__link {
-          line-height: 40px;
-          padding: 0 10px 0 20px;
-
-          i {
-            font-size: 26px;
-          }
-        }
-
-        #basemap-context-menu {
-          padding-right: 0;
-        }
-
-        .mdl-menu__container {
-          top: 55px !important;
-        }
-
-        ul {
-          min-width: 100px;
-        }
-      }
+      // .button.header__navigation {
+      //   position: absolute;
+      //   height: inherit;
+      //   right: 0px;
+      //
+      //   .mdl-navigation__link {
+      //     line-height: 40px;
+      //     padding: 0 10px 0 20px;
+      //
+      //     i {
+      //       font-size: 26px;
+      //     }
+      //   }
+      //
+      //   #basemap-context-menu {
+      //     padding-right: 0;
+      //   }
+      //
+      //   .mdl-menu__container {
+      //     top: 55px !important;
+      //   }
+      //
+      //   ul {
+      //     min-width: 100px;
+      //   }
+      // }
     }
   }
 
