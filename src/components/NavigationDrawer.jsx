@@ -40,11 +40,11 @@ class  NavigationDrawer extends React.Component {
           userAuthentication={this.props.userAuthentication}
         />
         <div className="footer">
-          <div className="footer__wrapper">
-            <a className="footer__twdb-logo" href="http://www.twdb.texas.gov">
+          <div className="footer-wrapper">
+            <a className="footer-twdb-logo" href="http://www.twdb.texas.gov">
               <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
             </a>
-            <a className="footer__tnris-logo" href="http://www.tnris.org">
+            <a className="footer-tnris-logo" href="http://www.tnris.org">
               <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
             </a>
           </div>
