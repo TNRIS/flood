@@ -27,12 +27,70 @@ body {
   height: 100%;
 }
 
-.mdl-layout__drawer::-webkit-scrollbar {
-  display: none;
-}
-
 .flood-viewer {
   font-family: 'Open Sans', sans-serif;
+
+  // -----UNIVERSAL-----
+  .dropdown-pane {
+    color: black;
+    width: auto;
+    padding: 8px 0px 8px 0px;
+  }
+
+  // -----HEADER BAR-----
+  .title-bar {
+    max-height: 40px;
+    background-color: $gray20;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .header__title {
+      margin: auto;
+
+      img {
+        max-height: 27px;
+      }
+    }
+
+    // -----BASEMAP DROPDOWN-----
+    .vertical.menu > li > div {
+      height: 48px;
+      line-height: 48px;
+      padding: 0px 16px 0px 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .vertical.menu > li > div:hover {
+      background-color: lightgray;
+    }
+
+    .vertical.menu > li > div.active {
+      font-weight: 700;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .leaflet-container {
     font-family: 'Open Sans', sans-serif;

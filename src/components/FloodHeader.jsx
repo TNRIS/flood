@@ -46,10 +46,10 @@ class FloodHeader extends React.Component {
             <img src={imgSource} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
-        <button className="button header__navigation" type="button" data-toggle="example-dropdown-bottom-right">
+        <button className="button header__navigation" type="button" data-toggle="basemap-dropdown">
           <a href="#"
             id="basemap-context-menu"
-            title="Basemaps"><i className="material-icons">satellite</i></a>
+            title="Basemaps"><i className="fi-layout"></i></a>
         </button>
         <div className="dropdown-pane" data-position="bottom" data-alignment="right" id="basemap-dropdown" data-dropdown data-auto-focus="true">
           <BaseLayerMenuContainer />
