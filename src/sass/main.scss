@@ -98,11 +98,6 @@ body {
 
 
 
-
-
-
-
-
   .leaflet-container {
     font-family: 'Open Sans', sans-serif;
   }
@@ -317,6 +312,102 @@ body {
   }
 }
 
+// -----POPUP-----
+.popup {
+
+  .leaflet-popup-content-wrapper {
+    padding: 0 0 1px 0;
+    border-radius: 0;
+    max-height: 578px;
+    overflow-y: auto;
+    .leaflet-popup-content {
+      margin: 0 0 0 0;
+    }
+  }
+
+  .popup-title {
+    position: absolute;
+    width: 100%;
+    background-color: $gray20;
+
+    .popup-icon {
+      max-height: 30px;
+      // note: !important is to override leaflet popup img rule
+      max-width: 50px !important;
+      margin: 6px 14px 6px 14px;
+    }
+
+    .popup-title-text {
+      color: white;
+      vertical-align: middle;
+      font-size: 1.4em;
+      margin-right: 18px;
+    }
+
+    .button {
+      background-color: $gray20;
+      margin: 0;
+    }
+
+    .button.subscribe-button {
+      float: right;
+      text-transform: uppercase;
+
+      span {
+        padding-left: 8px;
+      }
+    }
+
+    .button.popup-close {
+      float: right;
+      height: 42px;
+
+      @media screen and (max-width: $popup-icons-width-threshold) {
+        padding: 0 6px 0 0;
+        width: 32px;
+      }
+    }
+  }
+
+  .popup__content {
+    padding-top: 47px;
+  }
+
+
+
+  .mdl-button {
+    min-width: 0;
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ddddddddddddddddddddddddddddd
+// sssssssssssssssssssssssssssssss
+// xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+
 .site-warning {
   color: #770F0F;
   background: #FFC3C3;
@@ -499,83 +590,7 @@ body {
   }
 }
 
-.popup {
 
-  .leaflet-popup-content-wrapper {
-    padding: 0 0 1px 0;
-    border-radius: 0;
-    max-height: 578px;
-    overflow-y: auto;
-    .leaflet-popup-content {
-      margin: 0 0 0 0;
-    }
-  }
-
-  .popup__title {
-    position: absolute;
-    width: 100%;
-    background-color: $gray20;
-  }
-
-  .popup__title-text {
-    color: white;
-    vertical-align: middle;
-    font-size: 1.4em;
-    margin-right: 18px;
-  }
-
-  .popup__content {
-    padding-top: 47px;
-  }
-
-  .popup__icon {
-    max-height: 30px;
-    // note: !important is to override leaflet popup img rule
-    max-width: 50px !important;
-    margin: 6px 14px 6px 14px;
-  }
-
-  .mdl-button {
-    min-width: 0;
-  }
-
-    .button.popup__close {
-      float: right;
-      height: 42px;
-
-      @media screen and (max-width: $popup-icons-width-threshold) {
-        padding: 0 6px 0 0;
-        width: 32px;
-
-        .material-icons.material-icons {
-          font-size: 1.5em;
-        }
-      }
-
-      i {
-        margin-top: -4px;
-      }
-    }
-
-    .button.subscribe-button {
-      font-size: 1em;
-      float: right;
-      height: 42px;
-      border-left: 1px;
-      border-color: white;
-      @media screen and (max-width: $popup-icons-width-threshold) {
-        padding: 0 8px;
-      }
-      @media screen and (max-width: $iphone-five-width-threshold) {
-        padding: 0 6px;
-      }
-
-      .material-icons {
-        padding-right: 5px;
-        padding-bottom: 3px;
-      }
-    }
-}
 
 .info__name {
   font-weight: 600;
