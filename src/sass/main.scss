@@ -11,6 +11,7 @@ $darker-blue: #265577;
 $lighter-blue: #3473A2;
 $accent-dark-green: #92C553;
 $accent-light-green: #AED480;
+$hover-gray: lightgray;
 
 $layout-desktop-width-threshold: 1025px !default;
 $layout-drawer-width-threshold: 400px !default;
@@ -30,11 +31,15 @@ body {
 .flood-viewer {
   font-family: 'Open Sans', sans-serif;
 
-  // -----UNIVERSAL-----
+  // -----GLOBAL-----
   .dropdown-pane {
     color: black;
     width: auto;
     padding: 8px 0px 8px 0px;
+  }
+
+  button:focus {
+    outline: none;
   }
 
   // -----HEADER BAR-----
@@ -73,7 +78,7 @@ body {
     }
 
     .vertical.menu > li > div:hover {
-      background-color: lightgray;
+      background-color: $hover-gray;
     }
 
     .vertical.menu > li > div.active {
@@ -308,7 +313,7 @@ body {
   }
 }
 
-// -----POPUPS-----
+// -----LAYER POPUPS-----
 .popup {
 
   .leaflet-popup-content-wrapper {
@@ -385,7 +390,7 @@ body {
     }
   }
 }
-
+// -----GEOLOCATION POPUP-----
 div.leaflet-popup-content-wrapper {
   .leaflet-popup-content {
     margin: 0;
@@ -411,8 +416,70 @@ div.leaflet-popup-content-wrapper {
     }
   }
 }
+// -----MODALS-----
+.card {
+  border: 0;
+  margin-bottom: 0;
+}
+// -----SUBSCRIPTION CONFIRM MODAL-----
+.subscription-confirm-modal:focus {
+  outline: none;
+}
 
+.subscription-confirm-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 45em;
+  overflow-y: auto;
+  background-color: white;
+  width: 330px;
 
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .card {
+    .subscription-confirm-modal-title {
+        background-color: #333;
+        height: 42px;
+        color: white;
+        vertical-align: middle;
+        line-height: 42px;
+        padding: 0 0 0 1pc;
+
+        span {
+            padding-left: 10px;
+        }
+    }
+
+    .subscription-confirm-modal-text {
+      color: $gray20;
+      width: 98%;
+    }
+
+    .subscription-confirm-modal-actions {
+      button {
+        float: right;
+        margin: 0;
+        color: $gray20;
+        background-color: white;
+        text-transform: uppercase;
+      }
+
+      button:hover {
+        background-color: $hover-gray;
+      }
+    }
+  }
+}
 
 
 
@@ -1598,52 +1665,7 @@ div.card-divider.confirm-modal-title {
   width: 98%;
 }
 
-.subscription-confirm-modal:focus {
-  outline: none;
-}
 
-.subscription-confirm-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  border: none;
-  border-radius: 0;
-  max-height: 91%;
-  max-width: 45em;
-  overflow-y: auto;
-  background-color: white;
-
-  @media screen and (max-width: 500px) {
-    max-width: 85%;
-  }
-}
-
-.card-section.subscription-confirm-modal-actions {
-  button {
-    float: right;
-  }
-}
-
-div.subscription-confirm-modal-title {
-    background-color: #333;
-    border-radius: 0 0 0 0 !important;
-    height: 42px;
-    color: white;
-    vertical-align: middle;
-
-    span {
-        padding-left: 10px;
-    }
-}
-
-.card-section.subscription-confirm-modal-text {
-  color: $gray20 !important;
-  width: 98%;
-}
 
 .login-form {
   margin-right: 10px;

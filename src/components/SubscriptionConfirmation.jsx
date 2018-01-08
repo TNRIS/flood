@@ -56,8 +56,9 @@ class SubscriptionConfirmation extends Component {
              style={reactModalStyle}
              className="subscription-confirm-modal">
         <div className="card">
-          <div className="card-divider subscription-confirm-modal-title"><i className="material-icons">playlist_add_check</i>
-          Confirm Subscription
+          <div className="card-divider subscription-confirm-modal-title">
+            <i className="fi-page-edit"></i>
+            <span>Confirm Subscription</span>
           </div>
           <div className="card-section subscription-confirm-modal-text">
             <p>Are you sure you want to subscribe to receive alerts for the
