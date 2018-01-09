@@ -66,7 +66,7 @@ componentDidMount() {
             userAuthentication={this.props.userAuthentication}
           />
         </div>
-        <div>
+        {/* <div> */}
           <MapContainer
             initialCenter={{
               lat: this.props.params.lat || null,
@@ -76,7 +76,7 @@ componentDidMount() {
             gageCenter={{
               lid: this.props.params.lid || null
             }} />
-        </div>
+        {/* </div> */}
         <FloodFooter />
         <ToasterContainer />
       </div>

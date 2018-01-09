@@ -151,6 +151,256 @@ body {
   }
 }
 
+
+//  -----MAP! MAP! MAP!-----
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.map--full {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #222 !important;
+}
+
+.map__cursor--pointer {
+  cursor: pointer;
+
+  &.leaflet-container {
+    cursor: pointer;
+  }
+}
+
+// -----MAP: LEAFLET OVERRIDES-----
+.leaflet-right {
+  width: 100%;
+}
+
+.showGeocoder {
+  visibility: visible !important;
+}
+
+.leaflet-control-geocoder {
+  visibility: hidden;
+  width: 100%;
+  margin: 0 !important;
+  height: 40px;
+  box-shadow: none !important;
+
+  .leaflet-control-geocoder-icon {
+    display: none !important;
+    height: 40px;
+    margin: 0;
+    float: left;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .leaflet-control-geocoder-form {
+    width: 100%;
+    height: 40px;
+
+    .leaflet-control-geocoder-input {
+      font-size: 150%;
+      height: 40px;
+      padding: 0 0 0 2%;
+      width: 88%;
+
+      @media screen and (min-width: $layout-geocode-width-threshold) {
+        width: 93%;
+      }
+    }
+
+    .leaflet-control-geocoder-clear-input {
+      float: right;
+      cursor: pointer;
+      height: 100%;
+      width: 10%;
+      text-align: center;
+
+      @media screen and (min-width: $layout-geocode-width-threshold) {
+        width: 5%;
+      }
+
+      .material-icons.clear-icon {
+        padding-top: 8px;
+      }
+    }
+  }
+
+  .leaflet-control-geocoder-alternatives {
+    background-color: inherit;
+    margin-top: -2px;
+
+    li:nth-child(odd) {
+      background: #f2f2f2;
+     }
+
+     li:hover {
+       background-color: #dcdcdc;
+      }
+  }
+
+  .leaflet-control-geocoder-alternatives li {
+    border: none;
+  }
+
+  .leaflet-control-geocoder-error {
+    color: white;
+    text-shadow:
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
+  }
+}
+
+a.leaflet-disabled {
+  color: #bbb !important;
+}
+
+.leaflet-bar {
+  border-radius: 0 !important;
+
+  button {
+    border-radius: 0 !important;
+  }
+
+  a {
+    border-radius: 0 !important;
+    color: $gray20 !important;
+  }
+}
+
+.leaflet-control-layers {
+  visibility: hidden;
+  border-radius: 0 !important;
+}
+
+.showLeafletControlLayers {
+  visibility: visible;
+}
+
+
+
+.leaflet-control-attribution {
+  font-size: 8px !important;
+}
+
+.leaflet-bottom.leaflet-right {
+  z-index: 4;
+}
+
+.leaflet-top.leaflet-right {
+  z-index: 4;
+}
+
+// -----MAP: EASY-BUTTONS-----
+.easy-button-button{
+  transition-duration: .3s;
+  position: relative;
+  border: solid 0px transparent;
+  padding: 0;
+}
+
+button.easy-button-button.leaflet-bar-part.location-on-active {
+    background-color: $accent-light-green;
+}
+
+button.easy-button-button.leaflet-bar-part.location-tools-on-active {
+  background-color: $accent-light-green;
+}
+
+// -----MAP: RADAR LAYER BUTTONS-----
+.weatherTimestamp {
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+    text-shadow:
+    -1px -1px 1px #000000,
+    1px -1px 1px #000000,
+    -1px 1px 1px #000000,
+    1px 1px 1px #000000;
+    font-weight: bold;
+  }
+  z-index: 6;
+  position: absolute;
+  left: 60px;
+  bottom: 25px;
+  padding: 4px;
+}
+
+.animateRadar {
+  font-size: 14px;
+  z-index: 6;
+  position: absolute;
+  left: 10px;
+  bottom: 25px;
+  padding: 4px;
+
+  .mdl-button--fab {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+
+    .material-icons.md-dark {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
+}
+
+// -----MAP: GEOLOCATION BUTTONS-----
+.state-location-on,
+.state-location-off {
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+
+  .track-location-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
+}
+
+.state-reset-geolocation-tools,
+.state-zoom-to-location {
+  transition-duration: .5s;
+  transform: scaleY(0);
+  position: absolute  !important;
+  display: block;
+  top: 2px;
+  width: 100%;
+
+  .geolocate-icon {
+    cursor: pointer;
+    color: $gray20;
+  }
+}
+
+.state-reset-geolocation-tools {
+  transform-origin: 0 50%;
+}
+
+.state-zoom-to-location {
+  transform-origin: 100% 50%;
+}
+
+.state-reset-geolocation-tools.reset-geolocation-tools-active{
+  transform: scaleY(1);
+}
+
+.state-zoom-to-location.zoom-to-location-active{
+  transform: scaleY(1);
+}
+
+
+
 // -----LAYER POPUPS-----
 .popup {
 
@@ -255,6 +505,10 @@ div.leaflet-popup-content-wrapper {
   }
 }
 // -----MODALS-----
+body > div.ReactModalPortal > div {
+    z-index: 10000000 !important;
+}
+
 .card {
   border: 0;
   margin-bottom: 0;
@@ -811,26 +1065,6 @@ div.leaflet-popup-content-wrapper {
   padding-top: 0px;
 }
 
-.map {
-  height: 100%;
-  width: 100%;
-}
-
-.map--full {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: #222 !important;
-}
-
-.map__cursor--pointer {
-  cursor: pointer;
-
-  &.leaflet-container {
-    cursor: pointer;
-  }
-}
-
 
 
 .info__name {
@@ -1008,42 +1242,7 @@ dialog.subscribeDialog h4 {
 
 
 
-.weatherTimestamp {
-  p {
-    font-size: 14px;
-    margin: 0;
-    color: white;
-    text-shadow:
-    -1px -1px 1px #000000,
-    1px -1px 1px #000000,
-    -1px 1px 1px #000000,
-    1px 1px 1px #000000;
-    font-weight: bold;
-  }
-  z-index: 6;
-  position: absolute;
-  left: 60px;
-  bottom: 25px;
-  padding: 4px;
-}
 
-.animateRadar {
-  font-size: 14px;
-  z-index: 6;
-  position: absolute;
-  left: 10px;
-  bottom: 25px;
-  padding: 4px;
-
-  .mdl-button--fab {
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
-
-    .material-icons.md-dark {
-      color: rgba(0, 0, 0, .8);
-    }
-  }
-}
 
 .betanotice {
     background-color: #FCF8E3;
@@ -1216,13 +1415,7 @@ span.mdl-list__item-secondary-action > i {
   margin-right: 10px !important;
 }
 
-button.easy-button-button.leaflet-bar-part.location-on-active {
-    background-color: $accent-light-green;
-}
 
-button.easy-button-button.leaflet-bar-part.location-tools-on-active {
-  background-color: $accent-light-green;
-}
 
 div.confirm-subscription-change h4 {
     /* Reduce size to avoid line break in title */
@@ -1231,9 +1424,7 @@ div.confirm-subscription-change h4 {
     padding: 0;
 }
 
-a.leaflet-disabled {
-  color: #bbb !important;
-}
+
 
 div.confirm-subscription-change h4 {
     /* Reduce size to avoid line break in title */
@@ -1242,22 +1433,7 @@ div.confirm-subscription-change h4 {
     padding: 0;
 }
 
-.leaflet-bar {
-  border-radius: 0 !important;
 
-  button {
-    border-radius: 0 !important;
-  }
-
-  a {
-    border-radius: 0 !important;
-    color: $gray20 !important;
-  }
-}
-
-a.leaflet-disabled {
-  color: #bbb !important;
-}
 
 button.zoom-major {
   color: #cc33ff !important;
@@ -1295,126 +1471,7 @@ button.zoom-out-of-service {
   color: #666666 !important;
 }
 
-.leaflet-right {
-  width: 100%;
-}
 
-.showGeocoder {
-  visibility: visible !important;
-}
-
-.leaflet-control-geocoder {
-  visibility: hidden;
-  width: 100%;
-  margin: 0 !important;
-  height: 40px;
-  box-shadow: none !important;
-
-  .leaflet-control-geocoder-icon {
-    display: none !important;
-    height: 40px;
-    margin: 0;
-    float: left;
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-  }
-
-  .leaflet-control-geocoder-form {
-    width: 100%;
-    height: 40px;
-
-    .leaflet-control-geocoder-input {
-      font-size: 150%;
-      height: 40px;
-      padding: 0 0 0 2%;
-      width: 88%;
-
-      @media screen and (min-width: $layout-geocode-width-threshold) {
-        width: 93%;
-      }
-    }
-
-    .leaflet-control-geocoder-clear-input {
-      float: right;
-      cursor: pointer;
-      height: 100%;
-      width: 10%;
-      text-align: center;
-
-      @media screen and (min-width: $layout-geocode-width-threshold) {
-        width: 5%;
-      }
-
-      .material-icons.clear-icon {
-        padding-top: 8px;
-      }
-    }
-  }
-
-  .leaflet-control-geocoder-alternatives {
-    background-color: inherit;
-    margin-top: -2px;
-
-    li:nth-child(odd) {
-      background: #f2f2f2;
-     }
-
-     li:hover {
-       background-color: #dcdcdc;
-      }
-  }
-
-  .leaflet-control-geocoder-alternatives li {
-    border: none;
-  }
-
-  .leaflet-control-geocoder-error {
-    color: white;
-    text-shadow:
-    -1px -1px 1px #000000,
-    1px -1px 1px #000000,
-    -1px 1px 1px #000000,
-    1px 1px 1px #000000;
-    font-weight: bold;
-  }
-}
-
-.leaflet-bar {
-  border-radius: 0 !important;
-
-  button {
-    border-radius: 0 !important;
-  }
-
-  a {
-    border-radius: 0 !important;
-  }
-}
-
-.leaflet-control-layers {
-  visibility: hidden;
-  border-radius: 0 !important;
-}
-
-.showLeafletControlLayers {
-  visibility: visible;
-}
-
-
-
-.leaflet-control-attribution {
-  font-size: 8px !important;
-}
-
-.leaflet-bottom.leaflet-right {
-  z-index: 4;
-}
-
-.leaflet-top.leaflet-right {
-  z-index: 4;
-}
 
 .mdl-snackbar {
   z-index: 10 !important;
@@ -1431,62 +1488,11 @@ button.zoom-out-of-service {
   }
 }
 
-.easy-button-button{
-  transition-duration: .3s;
-  position: relative;
-  border: solid 0px transparent;
-  padding: 0;
-}
-
-.state-location-on,
-.state-location-off {
-  position: absolute  !important;
-  display: block;
-  top: 2px;
-  width: 100%;
-
-  .track-location-icon {
-    cursor: pointer;
-    color: $gray20;
-  }
-}
-
-.state-reset-geolocation-tools,
-.state-zoom-to-location {
-  transition-duration: .5s;
-  transform: scaleY(0);
-  position: absolute  !important;
-  display: block;
-  top: 2px;
-  width: 100%;
-
-  .geolocate-icon {
-    cursor: pointer;
-    color: $gray20;
-  }
-}
-
-.state-reset-geolocation-tools {
-  transform-origin: 0 50%;
-}
-
-.state-zoom-to-location {
-  transform-origin: 100% 50%;
-}
-
-.state-reset-geolocation-tools.reset-geolocation-tools-active{
-  transform: scaleY(1);
-}
-
-.state-zoom-to-location.zoom-to-location-active{
-  transform: scaleY(1);
-}
 
 
 
-body > div.ReactModalPortal > div {
-    z-index: 10000000 !important;
-}
+
+
 
 .mdl-card {
     border-radius: 0 0 0 0 !important;
