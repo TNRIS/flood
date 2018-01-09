@@ -59,14 +59,17 @@ componentDidMount() {
         <Disclaimer />
         <AboutContainer />
         <FloodHeaderContainer />
-        <div className="off-canvas reveal-for-medium" data-off-canvas>
-          <NavigationDrawer
-            navContentInitState={navContentInitState()}
-            browser={this.props.browser}
-            userAuthentication={this.props.userAuthentication}
-          />
+        <div id="off-canvas-drawer"
+             className="off-canvas"
+             data-transition="overlap"
+             data-off-canvas>
+            <NavigationDrawer
+              navContentInitState={navContentInitState()}
+              browser={this.props.browser}
+              userAuthentication={this.props.userAuthentication}
+            />
         </div>
-        {/* <div> */}
+        <div className="off-canvas-content" data-off-canvas-content>
           <MapContainer
             initialCenter={{
               lat: this.props.params.lat || null,
@@ -76,7 +79,7 @@ componentDidMount() {
             gageCenter={{
               lid: this.props.params.lid || null
             }} />
-        {/* </div> */}
+        </div>
         <FloodFooter />
         <ToasterContainer />
       </div>
