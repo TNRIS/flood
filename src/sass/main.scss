@@ -46,6 +46,46 @@ body {
     outline: none;
   }
 
+  // -GLOBAL: FOOTER LOGOS-
+  .footer-wrapper {
+    position: relative;
+    margin: auto;
+
+    width: 260px;
+    height: 47px;
+
+    @media screen and (max-width: $layout-drawer-width-threshold) {
+      width: 240px;
+    }
+  }
+
+  .footer-twdb-logo {
+    display: inline-block;
+    float: left;
+    img {
+      height: 2.8em;
+      width: auto;
+
+      @media screen and (max-width: $layout-drawer-width-threshold) {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  .footer-tnris-logo {
+    display: inline-block;
+    float: right;
+    max-height: 50px;
+    img {
+      height: 3.1em;
+      width: auto;
+
+      @media screen and (max-width: $layout-drawer-width-threshold) {
+        margin-right: 4px;
+      }
+    }
+  }
+
   // -----HEADER BAR-----
   .title-bar {
     max-height: 40px;
@@ -154,13 +194,13 @@ body {
 
 //  -----MAP! MAP! MAP!-----
 .map {
-  height: 100%;
+  height: calc(100vh - 90px);
   width: 100%;
 }
 
 .map--full {
   position: absolute;
-  height: 100%;
+  height: calc(100vh - 90px);
   width: 100%;
   background-color: #222 !important;
 }
@@ -173,7 +213,7 @@ body {
   }
 }
 
-// -----MAP: LEAFLET OVERRIDES-----
+// -MAP: LEAFLET OVERRIDES-
 .leaflet-right {
   width: 100%;
 }
@@ -300,7 +340,7 @@ a.leaflet-disabled {
   z-index: 4;
 }
 
-// -----MAP: EASY-BUTTONS-----
+// -MAP: EASY-BUTTONS-
 .easy-button-button{
   transition-duration: .3s;
   position: relative;
@@ -316,7 +356,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   background-color: $accent-light-green;
 }
 
-// -----MAP: RADAR LAYER BUTTONS-----
+// -MAP: RADAR LAYER BUTTONS-
 .weatherTimestamp {
   p {
     font-size: 14px;
@@ -359,7 +399,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 .state-location-off {
   position: absolute  !important;
   display: block;
-  top: 2px;
+  top: 0px;
   width: 100%;
 
   .track-location-icon {
@@ -374,7 +414,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   transform: scaleY(0);
   position: absolute  !important;
   display: block;
-  top: 2px;
+  top: 0px;
   width: 100%;
 
   .geolocate-icon {
@@ -1014,46 +1054,7 @@ body > div.ReactModalPortal > div {
   position: relative;
 }
 
-.footer-wrapper {
-  position: relative;
-  margin: auto;
 
-  width: 260px;
-  height: 47px;
-
-  @media screen and (max-width: $layout-drawer-width-threshold) {
-    width: 240px;
-  }
-}
-
-.footer-twdb-logo {
-  display: inline-block;
-  float: left;
-  img {
-    height: 2.8em;
-    width: auto;
-    margin: 5px 0 5px 2px;
-
-    @media screen and (max-width: $layout-drawer-width-threshold) {
-      margin-left: 4px;
-    }
-  }
-}
-
-.footer-tnris-logo {
-  display: inline-block;
-  float: right;
-  max-height: 50px;
-  img {
-    height: 3.1em;
-    width: auto;
-    margin: 5px 2px 3px 0;
-
-    @media screen and (max-width: $layout-drawer-width-threshold) {
-      margin-right: 4px;
-    }
-  }
-}
 // SIDE PANEL MENU FOOTER ^^^
 
 

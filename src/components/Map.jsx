@@ -11,9 +11,6 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 
-
-const pause = require('../images/pause.png')
-
 const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
 const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
 
@@ -53,7 +50,7 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animationIcon: "play_arrow",
+      animationIcon: "fi-play",
       geolocateControl: "basic",
       locateToolbar: null
     }
@@ -407,7 +404,7 @@ export default class Map extends Component {
     const trackLocationButton = L.easyButton({
       states: [{
         stateName: 'location-off',
-        icon: '<i class="material-icons track-location-icon" style="font-size: 22px;">gps_not_fixed</i>',
+        icon: '<i class="fi-eye track-location-icon" style="font-size: 22px;"></i>',
         title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
@@ -419,7 +416,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'location-on',
-        icon: '<i class="material-icons track-location-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
+        icon: '<i class="fi-target-two track-location-icon location-on-button" style="font-size: 22px;"></i>',
         title: 'Stop following my location',
         onClick: (control) => {
           control.state('location-off')
@@ -432,7 +429,7 @@ export default class Map extends Component {
       type: 'animate',
       states: [{
         stateName: 'zoom-to-location',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">person_pin_circle</i>',
+        icon: '<i class="fi-marker geolocate-icon" style="font-size: 22px;"></i>',
         title: 'Find my location',
         onClick: (control) => {
           control.state("reset-geolocation-tools")
@@ -442,7 +439,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'reset-geolocation-tools',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">clear</i>',
+        icon: '<i class="fi-x geolocate-icon" style="font-size: 22px;"></i>',
         title: 'Reset geolocation tools',
         onClick: (control) => {
           control.state("zoom-to-location")
@@ -463,10 +460,10 @@ export default class Map extends Component {
   toggleAnimation() {
     this.layerStore.get('animated-weather').toggleAnimation()
     if (this.layerStore.get('animated-weather').animate === true) {
-      this.setState({animationIcon: "pause"})
+      this.setState({animationIcon: "fi-pause"})
     }
     else {
-      this.setState({animationIcon: "play_arrow"})
+      this.setState({animationIcon: "fi-play"})
     }
   }
 
@@ -482,8 +479,8 @@ export default class Map extends Component {
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
         <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
-        <i className="material-icons md-dark">{this.state.animationIcon}</i>
-      </button>
+          <i className="{this.state.animationIcon}"></i>
+        </button>
       )
     }
 
