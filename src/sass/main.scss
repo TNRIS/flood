@@ -340,22 +340,6 @@ a.leaflet-disabled {
   z-index: 4;
 }
 
-// -MAP: EASY-BUTTONS-
-.easy-button-button{
-  transition-duration: .3s;
-  position: relative;
-  border: solid 0px transparent;
-  padding: 0;
-}
-
-button.easy-button-button.leaflet-bar-part.location-on-active {
-    background-color: $accent-light-green;
-}
-
-button.easy-button-button.leaflet-bar-part.location-tools-on-active {
-  background-color: $accent-light-green;
-}
-
 // -MAP: RADAR LAYER BUTTONS-
 .weatherTimestamp {
   p {
@@ -394,7 +378,22 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   }
 }
 
+// -MAP: EASY-BUTTONS-
+.easy-button-button{
+  transition-duration: .3s;
+  position: relative;
+  border: solid 0px transparent;
+  padding: 0;
+}
 // -----MAP: GEOLOCATION BUTTONS-----
+button.easy-button-button.leaflet-bar-part.location-on-active {
+    background-color: $accent-light-green;
+}
+
+button.easy-button-button.leaflet-bar-part.location-tools-on-active {
+  background-color: $accent-light-green;
+}
+
 .state-location-on,
 .state-location-off {
   position: absolute  !important;
