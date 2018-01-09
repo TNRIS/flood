@@ -55,7 +55,6 @@ class FloodHeader extends React.Component {
              data-position="bottom"
              data-alignment="right"
              data-dropdown
-             data-auto-focus="true"
              id="basemap-dropdown">
           <BaseLayerMenuContainer />
         </div>

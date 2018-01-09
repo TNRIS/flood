@@ -119,13 +119,21 @@ body {
         margin-bottom: 8px;
         background-color: $gray20;
       }
-    }
 
-    .footer-context-menu-item {
-      margin-right: 3px;
+      // -----RESOURCES DROPDOWN MENU-----
+      .footer-context-menu-item {
+        a {
+          color: $gray20;
+          vertical-align: middle;
+        }
 
-      a {
-        vertical-align: middle;
+        a:focus {
+          outline: none;
+        }
+      }
+
+      .footer-context-menu-item:hover {
+        background-color: $hover-gray;
       }
     }
 
