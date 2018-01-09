@@ -12,7 +12,7 @@ class FloodFooter extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {fullscreenIcon: "fullscreen"}
+    this.state = {fullscreenIcon: "fi-arrows-out"}
     this.toggleFullscreen = this.toggleFullscreen.bind(this)
     this.handleShowFullscreenToggle = this.handleShowFullscreenToggle.bind(this)
   }
@@ -25,11 +25,11 @@ class FloodFooter extends React.Component {
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
       req.call(document)
-      this.setState({fullscreenIcon: "fullscreen"})
+      this.setState({fullscreenIcon: "fi-arrows-out"})
     } else {
       const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
       req.call(element)
-      this.setState({fullscreenIcon: "fullscreen_exit"})
+      this.setState({fullscreenIcon: "fi-arrows-in"})
     }
   }
 
@@ -78,7 +78,7 @@ class FloodFooter extends React.Component {
           title="Fullscreen"
           className={this.handleShowFullscreenToggle()}
           onClick={this.toggleFullscreen}>
-          <i className="material-icons">{this.state.fullscreenIcon}</i>
+          <i className={this.state.fullscreenIcon}></i>
         </a>
       </div>
     )
