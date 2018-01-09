@@ -105,7 +105,7 @@ class Disclaimer extends React.Component {
                 type="checkbox"
                 name="noShowSwitch"
                 onChange={updateDisclaimerAcceptance} />
-              <label className="switch-paddle" for="noShowSwitch">
+              <label className="switch-paddle" htmlFor="noShowSwitch">
                 <span className="show-for-sr">Do not show again</span>
               </label>
               <span className="switch-label-text">Do not show again</span>
