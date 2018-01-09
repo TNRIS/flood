@@ -17,9 +17,12 @@ class About extends React.Component {
     super(props)
   }
 
+  componentWillMount() {
+    Modal.setAppElement('#reactApp')
+  }
+
   render() {
     return (
-      <div className="about__wrapper">
         <Modal className="about-modal"
                isOpen={this.props.openDialog}
                contentLabel="About Modal"
@@ -57,23 +60,22 @@ class About extends React.Component {
                 <a href="./viewer-details.html" target="_blank">More Detailed Information</a>
               </h6>
               <p className="about-developed-by">Developed By</p>
-              <div className="about__logos">
-                <a className="about__twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
+              <div className="about-logos">
+                <a className="about-twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
                   <img src={twdbLogoImage} alt="The Texas Water Development Board logo"/>
                 </a>
-                <a className="about__tnris-logo" href="http://www.tnris.org" target="_blank">
+                <a className="about-tnris-logo" href="http://www.tnris.org" target="_blank">
                   <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
                 </a>
               </div>
             </div>
             <div className="about-button-div">
-                  <button className="button terms-agree-button" type="button" onClick={this.props.hideAbout}>
-                  Close
-                </button>
+              <button className="button terms-agree-button" type="button" onClick={this.props.hideAbout}>
+                Close
+              </button>
             </div>
           </div>
         </Modal>
-      </div>
     )
   }
 }

@@ -474,6 +474,186 @@ div.leaflet-popup-content-wrapper {
     }
   }
 }
+// -----ABOUT INFO MODAL-----
+.about-modal:focus {
+  outline: none;
+}
+
+.about-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 41em;
+  overflow-y: auto;
+  background-color: white;
+
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
+
+  .about-version-number {
+    color: $gray20;
+    float: right;
+    font-size: x-small;
+    font-style: italic;
+    padding-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .card.about {
+    width: 100%;
+
+    .card-divider.about-title {
+      padding-top: 0;
+      padding-bottom: 0;
+      background-color: white;
+
+      img {
+        height: 38px;
+      }
+
+      h2 {
+        color: $gray20;
+        font-size: 1.6em;
+        font-weight: 400;
+      }
+    }
+
+    .card-section.about-text {
+      width: 100%;
+      padding-top: 0;
+      color: $gray20;
+
+      h5 {
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      a {
+        text-decoration: underline;
+      }
+
+      .about-disclaimer-text {
+        font-size: 14px;
+      }
+
+      .data-sources-list {
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .about-viewer-details-link {
+        margin: 10px 0 10px 0;
+      }
+
+      .about-developed-by {
+        font-size: 12px;
+        margin: 0;
+        padding-top: 10px;
+      }
+
+      .about-logos {
+        margin: auto;
+        height: 40px;
+        padding: 0 0 0 40px;
+
+        @media screen and (max-width: 767px) {
+          height: 35px;
+          text-align: center;
+          padding: 0;
+        }
+
+        .about-twdb-logo {
+
+          img {
+            position: relative;
+            padding-right: 10px;
+            max-height: 40px;
+            height: auto;
+
+            @media screen and (max-width: 767px) {
+              max-height: 35px;
+              padding-right: 7px;
+            }
+          }
+        }
+
+        .about-tnris-logo {
+
+          img {
+            position: relative;
+            margin-left: auto;
+            max-height: 37px;
+            height: auto;
+
+            @media screen and (max-width: 767px) {
+              max-height: 35px;
+            }
+          }
+        }
+      }
+    }
+
+    .about-button-div {
+      padding: 5px;
+
+      button {
+        background-color: $lighter-blue;
+        width: 100%;
+        font-size: 90%;
+        text-transform: uppercase;
+      }
+
+      button:hover, button:active, button:focus {
+        background-color: $darker-blue;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      .card-divider.about-title {
+        padding: 0px 10px 0;
+        font-size: 1em;
+
+        img {
+          height: 30px;
+        }
+      }
+
+      .card-section.about-text {
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+
+        .about-disclaimer-text {
+          font-size: 12px;
+        }
+
+        .data-sources-list {
+          margin-bottom: 16px;
+        }
+      }
+
+      .about-button-div {
+        font-size: 12px;
+
+        button {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
 
 
 
@@ -542,24 +722,24 @@ div.leaflet-popup-content-wrapper {
   }
 }
 
-.resources {
-  flex-grow: 1;
-  background-color: $gray20;
-  color: white;
-
-  a {
-    color: white;
-    font-weight: inherit;
-    text-decoration: none;
-  }
-
-  h4 {
-    border-bottom: 1px solid #5ec4ff;
-    color: #5ec4ff;
-    font-size: 14px;
-    margin: 10px 20px 0 20px;
-    text-transform: uppercase;
-  }
+// .resources {
+  // flex-grow: 1;
+  // background-color: $gray20;
+  // color: white;
+  //
+  // a {
+  //   color: white;
+  //   font-weight: inherit;
+  //   text-decoration: none;
+  // }
+  //
+  // h4 {
+  //   border-bottom: 1px solid #5ec4ff;
+  //   color: #5ec4ff;
+  //   font-size: 14px;
+  //   margin: 10px 20px 0 20px;
+  //   text-transform: uppercase;
+  // }
 
   // .resources__links.mdl-navigation {
   //   padding-top: 0;
@@ -581,30 +761,30 @@ div.leaflet-popup-content-wrapper {
   //     }
   //   }
   // }
-}
+// }
 
-.resources__title {
-  position: relative;
-
-  background-image: url(../images/planning_bg.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-color: $lighter-blue-version1;
-  min-height: 124px;
-  padding-bottom: 10px;
-}
-
-.resources__title-text {
-  position: absolute;
-  bottom: 0;
-  left: $nav-spacing-from-left-wide + 4;
-  font-size: 1em;
-  letter-spacing: 1.2px;
-
-  @media screen and (max-width: $layout-drawer-width-threshold) {
-    left: $nav-spacing-from-left-narrow + 2;
-  }
-}
+// .resources__title {
+//   position: relative;
+//
+//   background-image: url(../images/planning_bg.jpg);
+//   background-repeat: no-repeat;
+//   background-size: 100% auto;
+//   background-color: $lighter-blue-version1;
+//   min-height: 124px;
+//   padding-bottom: 10px;
+// }
+//
+// .resources__title-text {
+//   position: absolute;
+//   bottom: 0;
+//   left: $nav-spacing-from-left-wide + 4;
+//   font-size: 1em;
+//   letter-spacing: 1.2px;
+//
+//   @media screen and (max-width: $layout-drawer-width-threshold) {
+//     left: $nav-spacing-from-left-narrow + 2;
+//   }
+// }
 
 
 
@@ -966,189 +1146,7 @@ dialog.subscribeDialog h4 {
   padding: 0;
 }
 
-.about-modal:focus {
-  outline: none;
-}
 
-.about-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  padding: 10px;
-  border: none;
-  border-radius: 0;
-  max-height: 91%;
-  max-width: 45em;
-  overflow-y: auto;
-  background-color: white;
-
-  @media screen and (max-width: 500px) {
-    max-width: 85%;
-  }
-
-  .about-version-number {
-    color: $gray20;
-    float: right;
-    font-size: x-small;
-    font-style: italic;
-    padding-right: 10px;
-    margin-bottom: 0;
-  }
-
-  .card.about {
-    width: 100% !important;
-
-    .card-divider.about-title {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      img {
-        height: 38px;
-      }
-
-      h2 {
-        color: $gray20;
-        font-size: 1.6em;
-        font-weight: 400;
-      }
-    }
-
-    .card-section.about-text {
-      width: 100%;
-      padding-top: 0;
-      color: $gray20;
-
-      h5 {
-        margin-top: 15px;
-        margin-bottom: 5px;
-      }
-
-      a {
-        color: $lighter-blue;
-      }
-
-      .about-disclaimer-text {
-        font-size: 14px;
-      }
-
-      .data-sources-list {
-        span {
-          font-size: 12px;
-        }
-      }
-
-      .about-viewer-details-link {
-        margin: 10px 0 10px 0;
-      }
-
-      .about-developed-by {
-        font-size: 12px;
-        margin: 0;
-        padding-top: 10px;
-      }
-
-      .about__logos {
-        margin: auto;
-        height: 40px;
-        padding: 0 0 0 40px;
-
-        @media screen and (max-width: 767px) {
-          height: 35px;
-          text-align: center;
-          padding: 0;
-        }
-      }
-
-      .about__twdb-logo {
-
-        img {
-          position: relative;
-          padding-right: 10px;
-          max-height: 40px;
-          height: auto;
-
-          @media screen and (max-width: 767px) {
-            max-height: 35px;
-            padding-right: 7px;
-          }
-        }
-      }
-
-      .about__tnris-logo {
-
-        img {
-          position: relative;
-          margin-left: auto;
-          max-height: 37px;
-          height: auto;
-
-          @media screen and (max-width: 767px) {
-            max-height: 35px;
-          }
-        }
-      }
-    }
-
-    .about-button-div {
-      padding: 5px;
-
-      button {
-        color: #fff!important;
-        background-color: $lighter-blue;
-        border-radius: 0;
-        width: 100%;
-        font-size: 90%;
-      }
-
-      button:hover, button:active, button:focus {
-        background-color: $darker-blue !important;
-      }
-    }
-
-    @media screen and (max-width: 500px) {
-      width: 100% !important;
-      padding: 0;
-
-      .about-title {
-        padding: 0px 10px 0;
-        font-size: 1em;
-
-        img {
-          height: 30px;
-        }
-      }
-
-      .about-text {
-
-        p {
-          font-size: 12px;
-          line-height: 18px;
-          margin-bottom: 0;
-        }
-
-        .about-disclaimer-text {
-          font-size: 12px;
-        }
-
-        .data-sources-list {
-          margin-bottom: 16px;
-        }
-      }
-
-      .about-button-div {
-        font-size: 11px;
-
-        button {
-          padding: 0;
-        }
-      }
-    }
-  }
-}
 
 .weatherTimestamp {
   p {
