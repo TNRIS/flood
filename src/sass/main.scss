@@ -107,7 +107,7 @@ body {
       background-color: $gray20;
       margin: 0;
 
-      a > i {
+      i {
         font-size: 26px;
         color: white;
       }
@@ -325,8 +325,6 @@ a.leaflet-disabled {
 .showLeafletControlLayers {
   visibility: visible;
 }
-
-
 
 .leaflet-control-attribution {
   font-size: 8px !important;
