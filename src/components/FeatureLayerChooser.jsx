@@ -5,7 +5,7 @@ import FeatureLayer from './FeatureLayer'
 
 const FeatureLayerChooser = ({ layers, onLayerClick }) => {
   return (
-      <ul className="vertical-menu nav__layers">
+      <ul className="vertical menu nav-layers">
         {layers.map(layer =>
           <FeatureLayer
             key={layer.id}
