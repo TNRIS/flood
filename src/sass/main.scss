@@ -134,7 +134,6 @@ body {
   // -----SIDEBAR/OFF CANVAS DRAWER-----
   .off-canvas.position-left {
     width: 300px;
-    overflow-y: hidden;
 
     // -NAVIGATION DRAWER-
     .nav {
@@ -145,6 +144,7 @@ body {
 
       // -NAVIGATION CONTENT-
       .navigation-content {
+        // overflow: auto;
         .toggle-navigation-content {
             color: black;
             background-color: $accent-light-green;
@@ -182,18 +182,6 @@ body {
             border-bottom: 1px solid $accent-light-green;
           }
 
-          // .feature-layer-link.mdl-navigation__link {
-          //   display: flex;
-          //   flex-direction: column;
-          //
-          //   padding-left: $nav-spacing-from-left-wide - 6;
-          //
-          //
-          //   @media screen and (max-width: $layout-drawer-width-threshold) {
-          //     padding-left: $nav-spacing-from-left-narrow - 2;
-          //   }
-          // }
-
           .feature-layer-wrapper {
             display: flex;
             flex-direction: row;
@@ -219,15 +207,17 @@ body {
             margin: auto auto auto 6px;
 
             color: black;
-            font-size: 1.2em;
-            font-weight: 400;
             letter-spacing: .4px;
             word-spacing: 2px;
           }
 
-          .feature-layer__checkbox {
+          .feature-layer-switch {
             align-self: flex-end;
             margin: auto;
+
+            .switch.tiny {
+              margin-bottom: 0;
+            }
           }
 
           .feature-layer-legend {
@@ -265,6 +255,11 @@ body {
         bottom: 0;
       }
     }
+    // disable scrollbars
+    .nav::-webkit-scrollbar {
+      display: none;  // Safari and Chrome
+    }
+    
   }
 
   // -----FOOTER BAR-----

@@ -66,6 +66,7 @@ class NavigationToggle extends Component {
           {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
+        <div style={{height:'50px', width:'100%'}}></div>
       </div>
     )
   }

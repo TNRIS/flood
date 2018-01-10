@@ -20,7 +20,7 @@ export default class FeatureLayer extends Component {
 
     let statusIndicator
     if (active && status !== 'ready') {
-      statusIndicator = <RingLoader color={'#92C553'} loading={true} />
+      statusIndicator = <RingLoader size={30} color={'#92C553'} loading={true} />
     }
     else {
       statusIndicator = (
@@ -29,7 +29,8 @@ export default class FeatureLayer extends Component {
             id="layerSwitch"
             type="checkbox"
             name="layerSwitch"
-            checked={active}/>
+            checked={active}
+            readOnly/>
           <label className="switch-paddle" htmlFor="layerSwitch">
             <span className="show-for-sr"></span>
           </label>
@@ -65,7 +66,7 @@ export default class FeatureLayer extends Component {
               <div className="feature-layer-name">
                 { text }
               </div>
-              <div className="feature-layer__checkbox">
+              <div className="feature-layer-switch">
                 { statusIndicator }
               </div>
             </div>
