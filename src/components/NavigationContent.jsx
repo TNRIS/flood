@@ -47,13 +47,13 @@ class NavigationToggle extends Component {
 
   render() {
     return (
-      <div>
+      <div className="navigation-content">
         <div>
           <button
           className="button toggle-navigation-content"
           type="button"
           onClick={this.handleSetNavigationLayers}>
-          <i className="material-icons" name="layers">layers</i>
+          <i className="fi-page-multiple"></i>
           Map Layers</button>
           { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
@@ -62,7 +62,7 @@ class NavigationToggle extends Component {
           className="button toggle-navigation-content bottom-nav-button"
           type="button"
           onClick={this.handleSetNavigationUnsubscribe}>
-          <i className="material-icons" name="notifications_active">add-alert</i>
+          <i className="fi-megaphone"></i>
           {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
