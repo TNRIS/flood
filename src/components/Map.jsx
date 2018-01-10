@@ -404,7 +404,7 @@ export default class Map extends Component {
     const trackLocationButton = L.easyButton({
       states: [{
         stateName: 'location-off',
-        icon: '<i class="fi-eye track-location-icon" style="font-size: 22px;"></i>',
+        icon: '<i class="fi-compass track-location-icon" style="font-size: 22px;"></i>',
         title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
@@ -479,7 +479,7 @@ export default class Map extends Component {
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
         <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
-          <i className="{this.state.animationIcon}"></i>
+          <i className={this.state.animationIcon}></i>
         </button>
       )
     }

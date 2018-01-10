@@ -60,7 +60,7 @@ componentDidMount() {
         <AboutContainer />
         <FloodHeaderContainer />
         <div id="off-canvas-drawer"
-             className="off-canvas"
+             className="off-canvas position-left"
              data-transition="overlap"
              data-off-canvas>
             <NavigationDrawer
