@@ -23,13 +23,24 @@ export default class FeatureLayer extends Component {
       statusIndicator = <RingLoader color={'#92C553'} loading={true} />
     }
     else {
-      statusIndicator = <div className="switch"><input className="switch-input" type="checkbox" defaultChecked={active}/></div>
+      statusIndicator = (
+        <div className="switch tiny">
+          <input className="switch-input"
+            id="layerSwitch"
+            type="checkbox"
+            name="layerSwitch"
+            checked={active}/>
+          <label className="switch-paddle" htmlFor="layerSwitch">
+            <span className="show-for-sr"></span>
+          </label>
+        </div>
+      )
     }
 
     let legendElement
     if (active && legend && text != "Weather Alerts") {
       legendElement = (
-        <div className="feature-layer__legend">
+        <div className="feature-layer-legend">
           <img src={legend} />
         </div>
       )
@@ -37,7 +48,7 @@ export default class FeatureLayer extends Component {
     let legendLink
     if (active && legend && text == "Weather Alerts") {
       legendLink = (
-        <div className="feature-layer__legendLink">
+        <div className="feature-layer-legendLink">
           <a href="./flood-alert-legend.png" target="weather-alerts-legend">NOAA Advisories</a>
         </div>
       )
@@ -45,16 +56,14 @@ export default class FeatureLayer extends Component {
 
     return (
       <li>
-        <div className="feature-layer__link">
-          <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">
-            <div className="feature-layer__wrapper">
-              <div className="feature-layer__icon-wrapper">
-                <img src={icon} alt={altText} className="feature-layer__icon" />
+        <div className="feature-layer-link">
+          <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
+            <div className="feature-layer-wrapper">
+              <div className="feature-layer-icon-wrapper">
+                <img src={icon} alt={altText} className="feature-layer-icon" />
               </div>
-              <div className="feature-layer__name vertically-centered__wrapper">
-                <div className="vertically-centered__element">
-                  { text }
-                </div>
+              <div className="feature-layer-name">
+                { text }
               </div>
               <div className="feature-layer__checkbox">
                 { statusIndicator }
