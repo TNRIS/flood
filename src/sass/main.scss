@@ -51,8 +51,9 @@ body {
     position: relative;
     margin: auto;
 
-    width: 260px;
-    height: 47px;
+    width: 280px;
+    height: 50px;
+    padding: 3px;
 
     @media screen and (max-width: $layout-drawer-width-threshold) {
       width: 240px;
@@ -129,6 +130,21 @@ body {
       font-weight: 700;
     }
   }
+  // -----SIDEBAR/OFF CANVAS DRAWER-----
+  .off-canvas.position-left {
+    width: 300px;
+
+    .nav {
+      .nav-footer {
+        min-height: 50px;
+        background-color: $gray20;
+        color: white;
+
+        position: relative;
+      }
+    }
+  }
+
   // -----FOOTER BAR-----
   .footer-bar {
     color: white;
@@ -359,19 +375,29 @@ a.leaflet-disabled {
 }
 
 .animateRadar {
-  font-size: 14px;
   z-index: 6;
   position: absolute;
   left: 10px;
   bottom: 25px;
   padding: 4px;
+  height: 48px;
+  width: 48px;
 
-  .mdl-button--fab {
+  .button {
     background: rgba(255, 255, 255, 0.5);
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+    margin: 0;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
 
-    .material-icons.md-dark {
+    i {
       color: rgba(0, 0, 0, .8);
+      font-size: 24px;
+
+      position: absolute;
+      bottom: 11px;
+      left: 19px;
     }
   }
 }
@@ -935,21 +961,6 @@ body > div.ReactModalPortal > div {
   padding: 4px 20px;
 }
 
-.nav__head {
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-color: $gray20;
-  color: white;
-  font-weight: 300;
-  padding-left: $nav-spacing-from-left-wide;
-  padding-right: $nav-spacing-from-left-wide;
-
-  @media screen and (max-width: $layout-drawer-width-threshold) {
-    padding-left: $nav-spacing-from-left-narrow;
-    padding-right: $nav-spacing-from-left-narrow;
-  }
-}
-
 .nav__title {
   margin: 13px auto 10px;
   img {
@@ -1043,13 +1054,7 @@ body > div.ReactModalPortal > div {
 
 
 // SIDE PANEL MENU FOOTER VVV
-.footer {
-  min-height: 50px;
-  background-color: $gray20;
-  color: white;
 
-  position: relative;
-}
 
 
 // SIDE PANEL MENU FOOTER ^^^

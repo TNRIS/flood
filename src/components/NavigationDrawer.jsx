@@ -32,14 +32,12 @@ class  NavigationDrawer extends React.Component {
   render() {
     return (
       <div className="nav">
-        <div className="nav__head">
-        </div>
         <NavigationContent
           navContentInitState={this.props.navContentInitState}
           browser={this.props.browser}
           userAuthentication={this.props.userAuthentication}
         />
-        <div className="footer">
+        <div className="nav-footer">
           <div className="footer-wrapper">
             <a className="footer-twdb-logo" href="http://www.twdb.texas.gov">
               <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
