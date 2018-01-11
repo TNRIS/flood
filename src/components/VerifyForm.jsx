@@ -11,7 +11,8 @@ class VerifyForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      verificationCode: ''
+      verificationCode: '',
+      labelVC: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleVerification = this.handleVerification.bind(this)
@@ -27,6 +28,13 @@ class VerifyForm extends Component {
     const nextState = {}
     nextState[name] = value
     this.setState(nextState)
+
+    if (name === 'verificationCode' && value != '') {
+      this.setState({labelVC: 'Verification Code'})
+    }
+    else if (name === 'verificationCode' && value === '') {
+      this.setState({labelVC: ''})
+    }
   }
 
   /**
@@ -43,7 +51,7 @@ class VerifyForm extends Component {
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent to {this.props.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} via text message.</p>
             <p>Please enter the 6 digit verification code below to confirm your account.</p>
-            <label>Verification Code
+            <label className="form-chunk">{this.state.labelVC}
               <input
                        pattern="[0-9]*"
                        minLength={6}
@@ -52,14 +60,16 @@ class VerifyForm extends Component {
                        type="tel"
                        id="verificationCode"
                        name="verificationCode"
+                       placeholder="Verification Code"
                        onChange={this.handleChange}
                        value={this.state.verificationCode}/>
             </label>
-            <button
-              className="button flood-form-button"
-              type="submit"
-              value="Submit"
-              style={{marginRight: "10px", marginBottom: "16px"}}>SUBMIT</button>
+            <div className="login-button-wrapper">
+              <button
+                className="button flood-form-button"
+                type="submit"
+                value="Submit">SUBMIT</button>
+            </div>
         </form>
     )
   }
