@@ -169,15 +169,16 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       return (
-        <div title={this.tooltipMessage("phone")}>
-          <div className="switch">
-            <input
+        <div title={this.tooltipMessage("phone")}><small>Alert</small>
+          <div className="switch tiny">
+            <input className="switch-input"
               type="checkbox"
               name="textsms"
               checked="true"
-              onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")} />
+              onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")}
+              />
             <label className="switch-paddle" for="textsms">
-              <span className="show-for-sr">Alert</span>
+              <span className="show-for-sr"></span>
             </label>
           </div>
        </div>
@@ -223,33 +224,35 @@ class SubscriptionList extends React.Component {
     else {
       listContentDiv = (
         <div className="subscription-list">
+          <span>Total Subscriptions</span>
           <span className="badge subscriptions-count-badge">
             {this.props.allGageSubscriptions.length}
           </span>
-          <span>Total Subscriptions</span>
           <p>Click the marker symbol next to a gage to zoom to its location.</p>
           <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
           <div>
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
-              <div twoLine key={gageSubscriptionId} className="subscription-list-item">
-                <div className="subscription-list-item__locateAction">
-                  <i
+              <div key={gageSubscriptionId} className="subscription-list-item">
+                <div className="list-item-locateAction">
+                  <button
                     title="Zoom to gage location"
                     className={
                       SubscriptionList.setZoomButtonColor(
                         this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].sigstage
                       )}
-                  onClick={(event) => {
-                    this.zoomToGage(
-                      event,
-                      this.props.gageSubscriptionById[gageSubscriptionId].lid,
-                      this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
-                    )}
-                  }>room</i>
+                    onClick={(event) => {
+                      this.zoomToGage(
+                        event,
+                        this.props.gageSubscriptionById[gageSubscriptionId].lid,
+                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
+                      )}
+                    }>
+                    <i className="fi-marker"></i>
+                  </button>
                 </div>
-                <div
-                subtitle={this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}>
+                <div>
                   {this.props.gageSubscriptionById[gageSubscriptionId].lid}
+                  <small>{this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}</small>
                 </div>
                 {smsToggle(gageSubscriptionId)}
               </div>
