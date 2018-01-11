@@ -136,7 +136,7 @@ class SubscriptionForm extends Component {
         <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
-        <p className="form-swapper">
+        <p className="form-swapper" style={{height:'15px'}}>
         </p>
       )
     }

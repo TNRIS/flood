@@ -9,7 +9,10 @@ class NewPasswordForm extends Component {
     this.state = {
       verificationCode: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      labelVC: '',
+      labelPWD: '',
+      labelCNP: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleNewPassword = this.handleNewPassword.bind(this)
@@ -24,6 +27,26 @@ class NewPasswordForm extends Component {
     const value = event.target.value
     const nextState = {}
     nextState[name] = value
+
+    if (name === 'verificationCode' && value != '') {
+      this.setState({labelVC: 'Verification Code'})
+    }
+    else if (name === 'verificationCode' && value === '') {
+      this.setState({labelVC: ''})
+    }
+    if (name === 'password' && value != '') {
+      this.setState({labelPWD: 'New Password'})
+    }
+    else if (name === 'password' && value === '') {
+      this.setState({labelPWD: ''})
+    }
+    if (name === 'confirmPassword' && value != '') {
+      this.setState({labelCNP: 'Confirm New Password'})
+    }
+    else if (name === 'confirmPassword' && value === '') {
+      this.setState({labelCNP: ''})
+    }
+
     this.setState(nextState)
   }
 
@@ -53,7 +76,7 @@ class NewPasswordForm extends Component {
         <form onSubmit={ this.handleNewPassword } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>A verification code has been sent via text message to the phone number associated with this account.</p>
             <p>Please enter your 6 digit verification code and new password below.</p>
-            <label>Verification Code
+            <label className="form-chunk">{this.state.labelVC}
               <input
                        pattern="[0-9]*"
                        minLength={6}
@@ -62,10 +85,11 @@ class NewPasswordForm extends Component {
                        type="tel"
                        id="verificationCode"
                        name="verificationCode"
+                       placeholder="Verification Code"
                        onChange={this.handleChange}
                        value={this.state.verificationCode}/>
             </label>
-            <label>New Password
+            <label className="form-chunk">{this.state.labelPWD}
               <input
                        pattern=".{6,}"
                        minLength={6}
@@ -73,24 +97,25 @@ class NewPasswordForm extends Component {
                        type="password"
                        id="password"
                        name="password"
+                       placeholder="New Password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
             </label>
-            <label>Confirm New Password
+            <label className="form-chunk">{this.state.labelCNP}
               <input
                        minLength={6}
                        pattern={this.state.password}
                        type="password"
                        id="confirmPassword"
                        name="confirmPassword"
+                       placeholder="Confirm New Password"
                        onChange={this.handleChange}
                        value={this.state.confirmPassword}/>
             </label>
             <button
               className="button flood-form-button"
               type="submit"
-              value="Submit"
-              style={{marginRight: "10px", marginBottom: "16px"}}>SUBMIT</button>
+              value="Submit">SUBMIT</button>
         </form>
     )
   }
