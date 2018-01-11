@@ -245,6 +245,83 @@ body {
         }
       }
 
+      // -----SUBSCRIPTION MANAGER-----
+      .subscriptionManager {
+        background-color: white;
+        font-size: 14px;
+
+        .login-form {
+          margin-right: 10px;
+          margin-left: 10px;
+
+          label {
+            color: $lighter-blue;
+
+            input {
+              width: 100%;
+              font-size: 16px;
+              line-height: 24px;
+              padding: 6px;
+              border: solid #cacaca;
+              border-width: 0 0 1px 0;
+              margin-bottom: 1rem;
+              box-shadow: none;
+            }
+
+            input:focus {
+              border: solid $lighter-blue;
+              border-width: 0 0 1px 0;
+              box-shadow: none;
+              outline: none;
+            }
+          }
+
+          .login-button-wrapper {
+            height: 50px;
+            width: 100%;
+            
+            .flood-form-button {
+              float: right;
+              margin-right: 10px;
+              margin-bottom: 0px;
+              text-transform: uppercase;
+              background-color: white;
+              color: $gray20;
+            }
+
+            .flood-form-button:hover {
+              background-color: $hover-gray;
+            }
+          }
+        }
+
+        .form-swapper {
+          text-align: right;
+          margin-right: 20px;
+          margin-left: 10px;
+
+          a {
+            color: $lighter-blue;
+            text-decoration: underline;
+          }
+
+        }
+
+        .form__back {
+          padding-top: 5px;
+          margin-left: 16px;
+
+          i {
+            cursor: pointer;
+          }
+
+          i:hover {
+            background-color: #E8E8E8;
+          }
+        }
+      }
+
+      // -NAVIGATION DRAWER FOOTER-
       .nav-footer {
         min-height: 50px;
         width: 100%;
@@ -259,7 +336,7 @@ body {
     .nav::-webkit-scrollbar {
       display: none;  // Safari and Chrome
     }
-    
+
   }
 
   // -----FOOTER BAR-----
@@ -1343,29 +1420,7 @@ div.dialog-button-div {
     }
 }
 
-.form__swapper {
-  float: right;
-  margin-right: 20px;
-  margin-left: 10px;
 
-  a {
-    color: $lighter-blue;
-  }
-
-}
-
-.form__back {
-  padding-top: 5px;
-  margin-left: 16px;
-
-  i {
-    cursor: pointer;
-  }
-
-  i:hover {
-    background-color: #E8E8E8;
-  }
-}
 
 .user__settings {
   padding: 10px;
@@ -1427,11 +1482,7 @@ span.mdl-badge {
 //     }
 // }
 
-.button.flood-form-button {
-  float: right;
-  margin-bottom: 10px !important;
-  padding: 0 20px 0 20px !important;
-}
+
 
 .button.subscription-list-save-button {
   float: right;
@@ -1549,10 +1600,7 @@ div.card-divider.confirm-modal-title {
 
 
 
-.login-form {
-  margin-right: 10px;
-  margin-left: 10px;
-}
+
 
 .settings-sign-out-button-wrapper {
   width: 100%;
