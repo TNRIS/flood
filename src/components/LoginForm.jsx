@@ -98,7 +98,7 @@ class LoginForm extends Component {
     return (
         <form className="login-form" onSubmit={ this.handleSearch }>
             <p>Sign in to subscribe to flood gages and manage your current gage subscriptions.</p>
-            <label>{this.state.label}
+            <label className="form-chunk">{this.state.label}
               <input
                        pattern={this.state.pattern}
                        minLength={this.state.min}
@@ -111,7 +111,7 @@ class LoginForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.username}/>
             </label>
-            <label>{this.state.labelPWD}
+            <label className="form-chunk">{this.state.labelPWD}
               <input
                        type="password"
                        id="password"

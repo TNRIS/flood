@@ -126,8 +126,8 @@ class SubscriptionForm extends Component {
         <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
       )
       formSwapper = (
-        <p className="form__back">
-          <i name="arrow_back" className="material-icons" onClick={ () => this.props.swapDisplayForm("login") }>arrow_back</i>
+        <p className="form-back">
+          <i className="fi-arrow-left" onClick={ () => this.props.swapDisplayForm("login") }></i>
         </p>
       )
     }

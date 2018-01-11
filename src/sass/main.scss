@@ -254,45 +254,45 @@ body {
           margin-right: 10px;
           margin-left: 10px;
 
-          label {
-            color: $lighter-blue;
-
-            input {
-              width: 100%;
-              font-size: 16px;
-              line-height: 24px;
-              padding: 6px;
-              border: solid #cacaca;
-              border-width: 0 0 1px 0;
-              margin-bottom: 1rem;
-              box-shadow: none;
-            }
-
-            input:focus {
-              border: solid $lighter-blue;
-              border-width: 0 0 1px 0;
-              box-shadow: none;
-              outline: none;
-            }
-          }
-
           .login-button-wrapper {
             height: 50px;
             width: 100%;
-            
-            .flood-form-button {
-              float: right;
-              margin-right: 10px;
-              margin-bottom: 0px;
-              text-transform: uppercase;
-              background-color: white;
-              color: $gray20;
-            }
-
-            .flood-form-button:hover {
-              background-color: $hover-gray;
-            }
           }
+        }
+
+        label.form-chunk {
+          color: $lighter-blue;
+
+          input {
+            width: 100%;
+            font-size: 16px;
+            line-height: 24px;
+            padding: 6px;
+            border: solid #cacaca;
+            border-width: 0 0 1px 0;
+            margin-bottom: 1rem;
+            box-shadow: none;
+          }
+
+          input:focus {
+            border: solid $lighter-blue;
+            border-width: 0 0 1px 0;
+            box-shadow: none;
+            outline: none;
+          }
+        }
+
+        .flood-form-button {
+          float: right;
+          margin-right: 10px;
+          margin-bottom: 0px;
+          text-transform: uppercase;
+          background-color: white;
+          color: $gray20;
+        }
+
+        .flood-form-button:hover {
+          background-color: $hover-gray;
         }
 
         .form-swapper {
@@ -307,16 +307,19 @@ body {
 
         }
 
-        .form__back {
+        .form-back {
           padding-top: 5px;
           margin-left: 16px;
+          font-size: 24px;
 
           i {
             cursor: pointer;
+            padding-left: 5px;
+            padding-right: 8px;
           }
 
           i:hover {
-            background-color: #E8E8E8;
+            background-color: $hover-gray;
           }
         }
       }
