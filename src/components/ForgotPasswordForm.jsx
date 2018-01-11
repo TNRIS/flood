@@ -156,8 +156,7 @@ class ForgotPasswordForm extends Component {
             <button
               className="button flood-form-button"
               type="submit"
-              value="Submit"
-              style={{marginRight: "10px"}}>SUBMIT</button>
+              value="Submit">SUBMIT</button>
         </form>
     )
   }
