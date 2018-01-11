@@ -34,14 +34,6 @@ class LoginForm extends Component {
     const name = event.target.name
     const value = event.target.value
     let nextState = {}
-
-    if (name === 'password' && value != '') {
-      this.setState({labelPWD: 'Password'})
-    }
-    else if (name === 'password' && value === '') {
-      this.setState({labelPWD: ''})
-    }
-
     if (name === 'username' && value === '') {
       nextState = { ...nextState,
         min: 0,
@@ -75,6 +67,13 @@ class LoginForm extends Component {
     }
     nextState[name] = value
     this.setState(nextState)
+
+    if (name === 'password' && value != '') {
+      this.setState({labelPWD: 'Password'})
+    }
+    else if (name === 'password' && value === '') {
+      this.setState({labelPWD: ''})
+    }
   }
 
 

@@ -27,6 +27,7 @@ class NewPasswordForm extends Component {
     const value = event.target.value
     const nextState = {}
     nextState[name] = value
+    this.setState(nextState)
 
     if (name === 'verificationCode' && value != '') {
       this.setState({labelVC: 'Verification Code'})
@@ -46,8 +47,6 @@ class NewPasswordForm extends Component {
     else if (name === 'confirmPassword' && value === '') {
       this.setState({labelCNP: ''})
     }
-
-    this.setState(nextState)
   }
 
   /**

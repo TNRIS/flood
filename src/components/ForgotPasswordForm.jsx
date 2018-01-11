@@ -32,20 +32,6 @@ class ForgotPasswordForm extends Component {
     const value = event.target.value
     const nextState = {}
     nextState[name] = value
-
-    if (name === 'username' && value != '') {
-      this.setState({label: 'Username'})
-    }
-    else if (name === 'username' && value === '') {
-      this.setState({label: ''})
-    }
-    if (name === 'phone' && value != '') {
-      this.setState({labelPhone: 'Phone Number'})
-    }
-    else if (name === 'phone' && value === '') {
-      this.setState({labelPhone: ''})
-    }
-
     this.setState(nextState, function () {
       if (this.state.username != '' && this.state.phone == '') {
         this.setState({
@@ -66,6 +52,19 @@ class ForgotPasswordForm extends Component {
         })
       }
     })
+
+    if (name === 'username' && value != '') {
+      this.setState({label: 'Username'})
+    }
+    else if (name === 'username' && value === '') {
+      this.setState({label: ''})
+    }
+    if (name === 'phone' && value != '') {
+      this.setState({labelPhone: 'Phone Number'})
+    }
+    else if (name === 'phone' && value === '') {
+      this.setState({labelPhone: ''})
+    }
   }
 
   moveCaretAtEnd(e) {
