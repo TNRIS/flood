@@ -74,84 +74,86 @@ class SubscriptionForm extends Component {
     )
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
-    if (this.props.isFetching || this.props.isUpdating) {
+    // if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
-        <RingLoader color={'#92C553'} loading={true} />
-      )
-    }
-    else if (this.props.displayForm === "SubscriptionList") {
-      subscriptionManagerContent = (<SubscriptionListContainer/>)
-      formSwapper = (userTools)
-    }
-    else if (this.props.displayForm == "login") {
-      subscriptionManagerContent = (
-        <LoginForm userLogin={this.props.userLogin}/>
-      )
-      formSwapper = (
-        <div>
-          <p className="form-swapper">
-            <span>Don&#39;t have an account? </span>
-            <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
-          </p>
-          <p className="form-swapper">
-            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
-          </p>
+        <div className="spinner-wrapper">
+          <RingLoader color={'#92C553'} loading={true}/>
         </div>
       )
-    }
-    else if (this.props.displayForm == "signUp") {
-      subscriptionManagerContent = (
-        <SignupForm userSignUp={this.props.userSignUp} showSnackbar={this.props.showSnackbar}/>
-      )
-      formSwapper = (
-        <p className="form-swapper">
-          <span>Already have an account? </span>
-          <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
-        </p>
-      )
-    }
-    else if (this.props.displayForm == "verify") {
-      subscriptionManagerContent = (
-        <VerifyForm phone={FloodAppUser.phone} userVerify={this.props.userVerify}/>
-      )
-      formSwapper = (
-        <p className="form-swapper">
-          <span>Having trouble? </span>
-          <a href="#" onClick={ this.props.resendVerificationCode }>Resend Verification Code</a>
-        </p>
-      )
-    }
-    else if (this.props.displayForm == "forgotPassword") {
-      subscriptionManagerContent = (
-        <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
-      )
-      formSwapper = (
-        <p className="form-back">
-          <i className="fi-arrow-left" onClick={ () => this.props.swapDisplayForm("login") }></i>
-        </p>
-      )
-    }
-    else if (this.props.displayForm == "newPassword") {
-      subscriptionManagerContent = (
-        <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
-      )
-      formSwapper = (
-        <p className="form-swapper" style={{height:'15px'}}>
-        </p>
-      )
-    }
-    else if (this.props.displayForm === "noSubscriptions" && this.props.allSubscriptions.length === 0) {
-      subscriptionManagerContent = (
-        <p style={{marginRight: "10px", marginLeft: "10px"}}>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
-      )
-      formSwapper = (userTools)
-    }
-    else if (this.props.displayForm === "userSettings") {
-      subscriptionManagerContent = (
-        <AccountSettingsFormContainer/>
-      )
-      formSwapper = (userToolsSettings)
-    }
+    // }
+    // else if (this.props.displayForm === "SubscriptionList") {
+    //   subscriptionManagerContent = (<SubscriptionListContainer/>)
+    //   formSwapper = (userTools)
+    // }
+    // else if (this.props.displayForm == "login") {
+    //   subscriptionManagerContent = (
+    //     <LoginForm userLogin={this.props.userLogin}/>
+    //   )
+    //   formSwapper = (
+    //     <div>
+    //       <p className="form-swapper">
+    //         <span>Don&#39;t have an account? </span>
+    //         <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
+    //       </p>
+    //       <p className="form-swapper">
+    //         <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
+    //       </p>
+    //     </div>
+    //   )
+    // }
+    // else if (this.props.displayForm == "signUp") {
+    //   subscriptionManagerContent = (
+    //     <SignupForm userSignUp={this.props.userSignUp} showSnackbar={this.props.showSnackbar}/>
+    //   )
+    //   formSwapper = (
+    //     <p className="form-swapper">
+    //       <span>Already have an account? </span>
+    //       <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
+    //     </p>
+    //   )
+    // }
+    // else if (this.props.displayForm == "verify") {
+    //   subscriptionManagerContent = (
+    //     <VerifyForm phone={FloodAppUser.phone} userVerify={this.props.userVerify}/>
+    //   )
+    //   formSwapper = (
+    //     <p className="form-swapper">
+    //       <span>Having trouble? </span>
+    //       <a href="#" onClick={ this.props.resendVerificationCode }>Resend Verification Code</a>
+    //     </p>
+    //   )
+    // }
+    // else if (this.props.displayForm == "forgotPassword") {
+    //   subscriptionManagerContent = (
+    //     <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
+    //   )
+    //   formSwapper = (
+    //     <p className="form-back">
+    //       <i className="fi-arrow-left" onClick={ () => this.props.swapDisplayForm("login") }></i>
+    //     </p>
+    //   )
+    // }
+    // else if (this.props.displayForm == "newPassword") {
+    //   subscriptionManagerContent = (
+    //     <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
+    //   )
+    //   formSwapper = (
+    //     <p className="form-swapper" style={{height:'15px'}}>
+    //     </p>
+    //   )
+    // }
+    // else if (this.props.displayForm === "noSubscriptions" && this.props.allSubscriptions.length === 0) {
+    //   subscriptionManagerContent = (
+    //     <p style={{marginRight: "10px", marginLeft: "10px"}}>No alert subscriptions found. Click on a gage to sign up for alerts.</p>
+    //   )
+    //   formSwapper = (userTools)
+    // }
+    // else if (this.props.displayForm === "userSettings") {
+    //   subscriptionManagerContent = (
+    //     <AccountSettingsFormContainer/>
+    //   )
+    //   formSwapper = (userToolsSettings)
+    // }
 
     return (
         <div className="subscriptionManager"
