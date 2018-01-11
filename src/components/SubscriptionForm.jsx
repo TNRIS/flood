@@ -89,11 +89,11 @@ class SubscriptionForm extends Component {
       )
       formSwapper = (
         <div>
-          <p className="form__swapper">
+          <p className="form-swapper">
             <span>Don&#39;t have an account? </span>
             <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
           </p>
-          <p className="form__swapper">
+          <p className="form-swapper">
             <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
           </p>
         </div>
@@ -104,7 +104,7 @@ class SubscriptionForm extends Component {
         <SignupForm userSignUp={this.props.userSignUp} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper">
           <span>Already have an account? </span>
           <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
         </p>
@@ -115,7 +115,7 @@ class SubscriptionForm extends Component {
         <VerifyForm phone={FloodAppUser.phone} userVerify={this.props.userVerify}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper">
           <span>Having trouble? </span>
           <a href="#" onClick={ this.props.resendVerificationCode }>Resend Verification Code</a>
         </p>
@@ -136,7 +136,7 @@ class SubscriptionForm extends Component {
         <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper">
         </p>
       )
     }
@@ -154,8 +154,9 @@ class SubscriptionForm extends Component {
     }
 
     return (
-        <div ref="subscriptionManager"
-        style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '0', paddingRight: '0', display: 'block'}}>
+        <div className="subscriptionManager"
+             ref="subscriptionManager"
+             style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '0', paddingRight: '0', display: 'block'}}>
           {subscriptionManagerContent}
           {formSwapper}
         </div>

@@ -16,10 +16,10 @@ class LoginForm extends Component {
       min: 0,
       max: 50,
       pattern: '',
-      label: 'Username or Phone Number',
+      label: '',
       error: '',
-      type: ''
-
+      type: '',
+      labelPWD: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
@@ -35,12 +35,19 @@ class LoginForm extends Component {
     const value = event.target.value
     let nextState = {}
 
+    if (name === 'password' && value != '') {
+      this.setState({labelPWD: 'Password'})
+    }
+    else if (name === 'password' && value === '') {
+      this.setState({labelPWD: ''})
+    }
+
     if (name === 'username' && value === '') {
       nextState = { ...nextState,
         min: 0,
         max: 50,
         pattern: '',
-        label: 'Username or Phone Number',
+        label: '',
         error: '',
         type: ''
       }
@@ -100,22 +107,27 @@ class LoginForm extends Component {
                        type="username"
                        id="username"
                        name="username"
+                       placeholder="Username or Phone Number"
                        onChange={this.handleChange}
                        value={this.state.username}/>
             </label>
-            <label>Password
+            <label>{this.state.labelPWD}
               <input
                        type="password"
                        id="password"
                        name="password"
+                       placeholder="Password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
             </label>
-            <button
-              className="button flood-form-button"
-              type="submit"
-              value="Submit"
-              style={{marginRight: "10px"}}>sign in</button>
+            <div className="login-button-wrapper">
+              <button
+                className="button flood-form-button"
+                type="submit"
+                value="Submit">
+                sign in
+              </button>
+            </div>
         </form>
     )
   }
