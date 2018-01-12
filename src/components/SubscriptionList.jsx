@@ -260,7 +260,9 @@ class SubscriptionList extends React.Component {
               </div>
             )}
           </div>
-          {saveButton()}
+          <div className="subscription-list-save-wrapper">
+            {saveButton()}
+          </div>
             <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
               <div className="card">
                 <div className="card-divider confirm-modal-title"><i className="material-icons">save</i>
