@@ -205,21 +205,6 @@ class SubscriptionList extends React.Component {
       return save
     }
 
-    // this.confirmDialog = (
-    //     <Modal isOpen={this.state.openConfirmDialog} onRequestClose={this.handleCloseConfirmDialog} style={reactModalStyle}>
-    //       <div className="card confirm-subscription-change" ref={(ref) => confirmDialog = ref}>
-    //         <div className="card-divider subscribe-title">Confirm Changes</div>
-    //         <div className="card-section">
-    //           <p>Are you sure you want to save your subscription changes?</p>
-    //         </div>
-    //         <div className="card-section" style={{float: "right", width: "100%"}}>
-    //           <button className="button" autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
-    //           <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
-    //         </div>
-    //       </div>
-    //     </Modal>
-    //   )
-
     if (this.props.isUpdating) {
       listContentDiv = <RingLoader color={'#92C553'} loading={true} />
     }

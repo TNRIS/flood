@@ -406,6 +406,54 @@ body {
           }
         }
 
+        .user-settings {
+          padding: 10px;
+
+          p {
+            word-wrap: break-word;
+          }
+
+          .delete-button-container {
+            margin-top: 30px;
+
+            .delete-account {
+              background-color: #c0392b;
+              color: white;
+              width: 100%;
+              margin-bottom: 0;
+            }
+
+            .delete-account-disabled {
+              background-color: darkgray;
+              color: black;
+              width: 100%;
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .subscriptions-sign-out-button-wrapper {
+          background-color: white;
+          width: 100%;
+          float: left;
+          margin: 10px 0 15px 0;
+
+          button {
+            width: 50%;
+            text-transform: uppercase;
+            background-color: white;
+            color: $gray20;
+
+            @media screen and (max-width: 400px) {
+              font-size: 12px !important;
+            }
+          }
+
+          button:hover {
+            background-color: $hover-gray;
+          }
+        }
+
         .login-button-wrapper {
           height: 50px;
           width: 100%;
@@ -1606,13 +1654,7 @@ body > div.ReactModalPortal > div {
 
 
 
-.user__settings {
-  padding: 10px;
 
-  p {
-    word-wrap: break-word;
-  }
-}
 
 
 

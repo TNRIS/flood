@@ -74,19 +74,17 @@ class AccountSettingsForm extends Component {
       let button
       if (this.props.allSubscriptions.length === 0) {
         button = (
-          <div style={{marginTop: "30px"}}>
-            <button raised type="button"
-            style={{background: "#c0392b", color: "white", width: "100%"}}
+          <div className="delete-button-container">
+            <button type="button" className="button delete-account"
             onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
       }
       else {
         button = (
-          <div style={{marginTop: "30px"}}>
+          <div className="delete-button-container">
             <p>Please unsubscribe from all gages before deleting your account.</p>
-            <button raised disabled type="button"
-            style={{width: "100%"}}
+            <button disabled type="button" className="button delete-account-disabled"
             onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
@@ -96,7 +94,7 @@ class AccountSettingsForm extends Component {
 
     return (
       <div>
-        <div className="user__settings">
+        <div className="user-settings">
           <p><b>Current User Profile</b></p>
           <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
           <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
