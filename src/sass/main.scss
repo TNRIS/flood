@@ -385,16 +385,24 @@ body {
         }
 
         .settings-sign-out-button-wrapper {
+          background-color: white;
           width: 100%;
           float: left;
           margin: 10px 0 15px 0;
 
           button {
             width: 50%;
+            text-transform: uppercase;
+            background-color: white;
+            color: $gray20;
 
             @media screen and (max-width: 400px) {
               font-size: 12px !important;
             }
+          }
+
+          button:hover {
+            background-color: $hover-gray;
           }
         }
 
