@@ -990,6 +990,63 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+// -----CONFIRM/SAVE SUBSCRIPTION CHANGES MODAL-----
+.confirm-subscription-changes-modal:focus {
+  outline: none;
+}
+
+.confirm-subscription-changes-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 35em;
+  overflow-y: auto;
+  background-color: white;
+
+  .confirm-modal-title {
+    background-color: #333;
+    border-radius: 0 0 0 0;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+    line-height: 42px;
+    padding: 0 0 0 1pc;
+
+    span {
+        padding-left: 10px;
+    }
+  }
+
+  .confirm-modal-text {
+    color: $gray20;
+    width: 98%;
+    font-size: 14px;
+  }
+
+  .confirm-modal-actions {
+    padding: 8px;
+
+    button {
+      float: right;
+      margin: 0;
+      text-transform: uppercase;
+      background-color: white;
+      color: $gray20;
+    }
+
+    button:hover {
+      background-color: $hover-gray;
+    }
+  }
+}
 // -----ABOUT INFO MODAL-----
 .about-modal:focus {
   outline: none;
@@ -1490,32 +1547,32 @@ body > div.ReactModalPortal > div {
 
 
 
-.subscribeDialog {
-  /* Limit width for readability */
-  max-width: 35em;
-  /* Center vertically - also set left for Firefox */
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%);
-  /* Scrollbar to allow text viewing and input access on small screens */
-  overflow-y: auto !important;
-  /* Allow the scrollbar to work without forcing it on */
-  max-height: 100%;
-  /* Ensure this isn't transparent on Firefox */
-  background-color: white;
-  position: fixed;
-
-  .mdl-dialog__content {
-    padding: 10px;
-  }
-}
-
-dialog.subscribeDialog h4 {
-  /* Reduce size to avoid line break in title */
-  font-size: 1.5em;
-  text-align: center;
-  padding: 0;
-}
+// .subscribeDialog {
+//   /* Limit width for readability */
+//   max-width: 35em;
+//   /* Center vertically - also set left for Firefox */
+//   top: 50% !important;
+//   left: 50% !important;
+//   transform: translate(-50%, -50%);
+//   /* Scrollbar to allow text viewing and input access on small screens */
+//   overflow-y: auto !important;
+//   /* Allow the scrollbar to work without forcing it on */
+//   max-height: 100%;
+//   /* Ensure this isn't transparent on Firefox */
+//   background-color: white;
+//   position: fixed;
+//
+//   .mdl-dialog__content {
+//     padding: 10px;
+//   }
+// }
+//
+// dialog.subscribeDialog h4 {
+//   /* Reduce size to avoid line break in title */
+//   font-size: 1.5em;
+//   text-align: center;
+//   padding: 0;
+// }
 
 
 
@@ -1587,21 +1644,14 @@ dialog.subscribeDialog h4 {
 
 
 
-div.confirm-subscription-change h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 1.5em;
-    text-align: center;
-    padding: 0;
-}
+// div.confirm-subscription-change h4 {
+//     /* Reduce size to avoid line break in title */
+//     font-size: 1.5em;
+//     text-align: center;
+//     padding: 0;
+// }
 
 
-
-div.confirm-subscription-change h4 {
-    /* Reduce size to avoid line break in title */
-    font-size: 1.5em;
-    text-align: center;
-    padding: 0;
-}
 
 
 
@@ -1635,26 +1685,3 @@ div.confirm-subscription-change h4 {
 //     font-family: 'Open Sans', sans-serif !important;
 //     min-height: 146px !important;
 // }
-
-div.card-divider.confirm-modal-title {
-    background-color: #333;
-    border-radius: 0 0 0 0 !important;
-    height: 42px;
-    color: white;
-    vertical-align: middle;
-
-    span {
-        padding-left: 10px;
-    }
-}
-
-.confirm-modal-actions {
-  button {
-    float: right;
-  }
-}
-
-.card-section.confirm-modal-text {
-  color: $gray20 !important;
-  width: 98%;
-}
