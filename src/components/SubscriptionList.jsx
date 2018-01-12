@@ -205,20 +205,20 @@ class SubscriptionList extends React.Component {
       return save
     }
 
-    this.confirmDialog = (
-        <Modal isOpen={this.state.openConfirmDialog} onRequestClose={this.handleCloseConfirmDialog} style={reactModalStyle}>
-          <div className="card confirm-subscription-change" ref={(ref) => confirmDialog = ref}>
-            <div className="card-divider subscribe-title">Confirm Changes</div>
-            <div className="card-section">
-              <p>Are you sure you want to save your subscription changes?</p>
-            </div>
-            <div className="card-section" style={{float: "right", width: "100%"}}>
-              <button className="button" autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
-              <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
-            </div>
-          </div>
-        </Modal>
-      )
+    // this.confirmDialog = (
+    //     <Modal isOpen={this.state.openConfirmDialog} onRequestClose={this.handleCloseConfirmDialog} style={reactModalStyle}>
+    //       <div className="card confirm-subscription-change" ref={(ref) => confirmDialog = ref}>
+    //         <div className="card-divider subscribe-title">Confirm Changes</div>
+    //         <div className="card-section">
+    //           <p>Are you sure you want to save your subscription changes?</p>
+    //         </div>
+    //         <div className="card-section" style={{float: "right", width: "100%"}}>
+    //           <button className="button" autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+    //           <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
+    //         </div>
+    //       </div>
+    //     </Modal>
+    //   )
 
     if (this.props.isUpdating) {
       listContentDiv = <RingLoader color={'#92C553'} loading={true} />
@@ -263,17 +263,21 @@ class SubscriptionList extends React.Component {
           <div className="subscription-list-save-wrapper">
             {saveButton()}
           </div>
-            <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
-              <div className="card">
-                <div className="card-divider confirm-modal-title"><i className="material-icons">save</i>
-                Save Changes
-              </div>
-                <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
-                <div className="card-section confirm-modal-actions">
-                  <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
-                  <button autoFocus="true" className="button" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+            <Modal className="confirm-subscription-changes-modal"
+                   isOpen={this.state.openConfirmDialog}
+                   contentLabel="Confirm Changes Modal"
+                   style={reactModalStyle}>
+                <div className="card">
+                  <div className="card-divider confirm-modal-title">
+                    <i className="fi-save"></i>
+                    <span>Save Changes</span>
+                  </div>
+                  <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
+                  <div className="card-section confirm-modal-actions">
+                    <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
+                    <button autoFocus="true" className="button" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+                  </div>
                 </div>
-              </div>
             </Modal>
 
         </div>
