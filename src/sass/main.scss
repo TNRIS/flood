@@ -264,9 +264,10 @@ body {
         .subscription-list {
           padding-left: 10px;
 
-          span.badge {
+          .subscriptions-count-badge {
               margin-left: 10px;
               background-color: $accent-dark-green;
+              font-size: 12px;
           }
 
           p {
@@ -1056,6 +1057,63 @@ body > div.ReactModalPortal > div {
   border-radius: 0;
   max-height: 91%;
   max-width: 35em;
+  overflow-y: auto;
+  background-color: white;
+
+  .confirm-modal-title {
+    background-color: #333;
+    border-radius: 0 0 0 0;
+    height: 42px;
+    color: white;
+    vertical-align: middle;
+    line-height: 42px;
+    padding: 0 0 0 1pc;
+
+    span {
+        padding-left: 10px;
+    }
+  }
+
+  .confirm-modal-text {
+    color: $gray20;
+    width: 98%;
+    font-size: 14px;
+  }
+
+  .confirm-modal-actions {
+    padding: 8px;
+
+    button {
+      float: right;
+      margin: 0;
+      text-transform: uppercase;
+      background-color: white;
+      color: $gray20;
+    }
+
+    button:hover {
+      background-color: $hover-gray;
+    }
+  }
+}
+// -----CONFIRM DELETE ACCOUNT MODAL-----
+.confirm-delete-account:focus {
+  outline: none;
+}
+
+.confirm-delete-account {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  max-height: 91%;
+  max-width: 25em;
   overflow-y: auto;
   background-color: white;
 

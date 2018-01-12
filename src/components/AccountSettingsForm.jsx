@@ -103,16 +103,20 @@ class AccountSettingsForm extends Component {
             {deleteAccountButton()}
           </span>
         </div>
-        <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
+        <Modal className="confirm-delete-account"
+               isOpen={this.state.openConfirmDialog}
+               contentLabel="Confirm Changes Modal"
+               style={reactModalStyle}>
           <div className="card">
-            <div className="card-divider confirm-modal-title"><i className="material-icons">warning</i>
-            Confirm Delete
+            <div className="card-divider confirm-modal-title">
+              <i className="fi-alert"></i>
+              <span>Confirm Delete</span>
             </div>
             <div className="card-section confirm-modal-text">Are you sure you want to delete your account?
             Once deleted, your account cannot be recovered.</div>
             <div className="confirm-modal-actions">
-              <button type="button" onClick={this.deleteAccount}>Confirm</button>
-              <button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+              <button type="button" className="button" onClick={this.deleteAccount}>Confirm</button>
+              <button autoFocus="true" type="button" className="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
             </div>
           </div>
         </Modal>
