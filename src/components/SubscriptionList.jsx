@@ -168,16 +168,18 @@ class SubscriptionList extends React.Component {
      * @return {Component}                   SMS subscription list action
      */
     smsToggle = (gageSubscriptionId) => {
+      const switchID = "textsms-" + gageSubscriptionId
+      console.log(switchID)
       return (
-        <div title={this.tooltipMessage("phone")}><small>Alert</small>
+        <div className="switch-container shrink cell" title={this.tooltipMessage("phone")}><small>Alert</small>
           <div className="switch tiny">
             <input className="switch-input"
+              id={switchID}
               type="checkbox"
               name="textsms"
-              checked="true"
-              onClick={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")}
-              />
-            <label className="switch-paddle" for="textsms">
+              defaultChecked="true"
+              onChange={(event) => this.toggleSubscription(event, gageSubscriptionId, "sms")}/>
+            <label className="switch-paddle" htmlFor={switchID}>
               <span className="show-for-sr"></span>
             </label>
           </div>
@@ -230,10 +232,10 @@ class SubscriptionList extends React.Component {
           </span>
           <p>Click the marker symbol next to a gage to zoom to its location.</p>
           <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
-          <div>
+          <div className="subscription-list-container">
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
-              <div key={gageSubscriptionId} className="subscription-list-item">
-                <div className="list-item-locateAction">
+              <div key={gageSubscriptionId} className="subscription-list-item grid-x">
+                <div className="locate-gauge-container shrink cell">
                   <button
                     title="Zoom to gage location"
                     className={
@@ -250,9 +252,9 @@ class SubscriptionList extends React.Component {
                     <i className="fi-marker"></i>
                   </button>
                 </div>
-                <div>
-                  {this.props.gageSubscriptionById[gageSubscriptionId].lid}
-                  <small>{this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}</small>
+                <div className="gauge-name-container auto cell">
+                  <span className="gauge-acronym">{this.props.gageSubscriptionById[gageSubscriptionId].lid}</span>
+                  <span className="full-gauge-name">{this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}</span>
                 </div>
                 {smsToggle(gageSubscriptionId)}
               </div>

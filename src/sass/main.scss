@@ -273,78 +273,97 @@ body {
             margin: 16px 0 0 0;
           }
 
-          .subscription-list-item {
-              border-bottom: 1px solid $accent-light-green;
-              margin: 0;
+          .subscription-list-container {
+            margin: 12px 0 12px 0;
 
-              .list-item-locateAction {
-                  margin: 0 !important;
-                  margin-left: 4px !important;
-                  width: 40px !important;
+            .subscription-list-item {
+                border-bottom: 1px solid $accent-light-green;
+                margin: 0;
+                padding: 16px;
+                height: 85px;
 
-                  // span {
-                  //     height: 100%;
-                  //     width: 40px;
-                  // }
+                .locate-gauge-container {
+                    margin: 0;
+                    padding: 10px 0 10px 0;
 
-                  button.zoom-major {
-                    color: #cc33ff !important;
+                    button {
+                        background-color: $lighter-blue;
+                        box-shadow: none;
+                        width: 32px;
+                        height: 32px;
+                        font-size: 26px;
+                        border-radius: 20px;
+
+                        &:hover {
+                            background-color: $darker-blue;
+                            cursor: pointer;
+                        }
+                    }
+
+                    // span {
+                    //     height: 100%;
+                    //     width: 40px;
+                    // }
+
+                    button.zoom-major {
+                      color: #cc33ff;
+                    }
+
+                    button.zoom-moderate {
+                      color: #ff0000;
+                    }
+
+                    button.zoom-flood {
+                      color: #ff9900;
+                    }
+
+                    button.zoom-action {
+                      color: #ffff00;
+                    }
+
+                    button.zoom-no-flooding {
+                      color: #00ff00;
+                    }
+
+                    button.zoom-low {
+                      color: #906320;
+                    }
+
+                    button.zoom-not-defined {
+                      color: #72afe9;
+                    }
+
+                    button.zoom-observations-not-current {
+                      color: #bdc2bb;
+                    }
+
+                    button.zoom-out-of-service {
+                      color: #666666;
+                    }
+                }
+
+                .gauge-name-container {
+                  padding: 7px 0 7px 6px;
+
+                  .gauge-acronym {
+                    font-size: 16px;
                   }
 
-                  button.zoom-moderate {
-                    color: #ff0000 !important;
+                  .full-gauge-name {
+                    color: rgba(0,0,0,.54);
+                    font-size: 10px;
+                    display: block;
                   }
+                }
 
-                  button.zoom-flood {
-                    color: #ff9900 !important;
+                .switch-container {
+                  text-align: center;
+
+                  small {
+                    color: rgba(0,0,0,.54);
                   }
-
-                  button.zoom-action {
-                    color: #ffff00 !important;
-                  }
-
-                  button.zoom-no-flooding {
-                    color: #00ff00 !important;
-                  }
-
-                  button.zoom-low {
-                    color: #906320 !important;
-                  }
-
-                  button.zoom-not-defined {
-                    color: #72afe9 !important;
-                  }
-
-                  button.zoom-observations-not-current {
-                    color: #bdc2bb !important;
-                  }
-
-                  button.zoom-out-of-service {
-                    color: #666666 !important;
-                  }
-              }
-          }
-
-          .mdl-list__item--two-line {
-              height: 85px !important;
-          }
-
-          span.mdl-list__item-secondary-content.subscription-list-item__locateAction > span {
-              margin: 0;
-
-              button {
-                  background-color: $lighter-blue !important;
-                  box-shadow: none;
-                  color: white;
-
-                  &:hover {
-                      background-color: $darker-blue !important;
-                  }
-
-                  span {
-                      margin: 0
-                  }
-              }
+                }
+            }
           }
 
           .button.subscription-list-save-button {
@@ -833,6 +852,13 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
   .popup__content {
     padding-top: 44px;
+
+    .info__name {
+      font-weight: 600;
+      font-size: 1.5em;
+      margin: 0px 18px 3px 18px;
+      vertical-align: middle;
+    }
 
     .shareBar {
         background-color: #333;
@@ -1378,12 +1404,7 @@ body > div.ReactModalPortal > div {
 
 
 
-// .info__name {
-//   font-weight: 600;
-//   font-size: 1.5em;
-//   margin: 0px 18px 3px 18px;
-//   vertical-align: middle;
-// }
+
 //
 //
 // .info__text {
