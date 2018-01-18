@@ -1,6 +1,9 @@
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
 @import "~foundation-icons/foundation-icons.css";
+// Toaster CSS
+@import '~react-s-alert/dist/s-alert-default.css';
+@import '~react-s-alert/dist/s-alert-css-effects/genie.css';
 
 $lighter-blue-version1: #39aad2;
 $darker-blue-version1: #2c88a9;
@@ -300,11 +303,6 @@ body {
                             cursor: pointer;
                         }
                     }
-
-                    // span {
-                    //     height: 100%;
-                    //     width: 40px;
-                    // }
 
                     button.zoom-major {
                       color: #cc33ff;
@@ -1759,20 +1757,20 @@ body > div.ReactModalPortal > div {
 
 
 
-.mdl-snackbar {
-  z-index: 10 !important;
-  background-color: #4F85AE !important;
-
-
-  a {
-    color: $accent-dark-green;
-  }
-
-  .mdl-snackbar__text {
-    text-align: center;
-    width: 100%;
-  }
-}
+// .mdl-snackbar {
+//   z-index: 10 !important;
+//   background-color: #4F85AE !important;
+//
+//
+//   a {
+//     color: $accent-dark-green;
+//   }
+//
+//   .mdl-snackbar__text {
+//     text-align: center;
+//     width: 100%;
+//   }
+// }
 
 
 
