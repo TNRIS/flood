@@ -169,7 +169,6 @@ class SubscriptionList extends React.Component {
      */
     smsToggle = (gageSubscriptionId) => {
       const switchID = "textsms-" + gageSubscriptionId
-      console.log(switchID)
       return (
         <div className="switch-container shrink cell" title={this.tooltipMessage("phone")}><small>Alert</small>
           <div className="switch tiny">
