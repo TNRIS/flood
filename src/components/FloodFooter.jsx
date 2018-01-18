@@ -15,6 +15,7 @@ class FloodFooter extends React.Component {
     this.state = {fullscreenIcon: "fi-arrows-out"}
     this.toggleFullscreen = this.toggleFullscreen.bind(this)
     this.handleShowFullscreenToggle = this.handleShowFullscreenToggle.bind(this)
+    this.watchFullscreen = this.watchFullscreen.bind(this)
   }
 
   toggleFullscreen() {
@@ -25,12 +26,29 @@ class FloodFooter extends React.Component {
         document.msFullscreenEnabled) {
       const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
       req.call(document)
-      this.setState({fullscreenIcon: "fi-arrows-out"})
     } else {
       const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
       req.call(element)
-      this.setState({fullscreenIcon: "fi-arrows-in"})
     }
+  }
+
+  watchFullscreen () {
+    if (document.fullscreenEnabled ||
+        document.webkitIsFullScreen ||
+        document.mozFullScreen ||
+        document.msFullscreenEnabled) {
+          this.setState({fullscreenIcon: "fi-arrows-in"})
+    } else {
+      this.setState({fullscreenIcon: "fi-arrows-out"})
+    }
+  }
+
+  componentDidMount () {
+    const element = document.getElementsByTagName("html")[0]
+    element.addEventListener('webkitfullscreenchange', this.watchFullscreen, false)
+    element.addEventListener('mozfullscreenchange', this.watchFullscreen, false)
+    element.addEventListener('fullscreenchange', this.watchFullscreen, false)
+    element.addEventListener('MSFullscreenChange', this.watchFullscreen, false)
   }
 
   handleShowFullscreenToggle() {
@@ -75,7 +93,7 @@ class FloodFooter extends React.Component {
           </div>
         </div>
         <a href="#"
-          title="Fullscreen"
+          title="Toggle Fullscreen"
           className={this.handleShowFullscreenToggle()}
           onClick={this.toggleFullscreen}>
           <i className={this.state.fullscreenIcon}></i>
