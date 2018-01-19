@@ -886,9 +886,10 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
     padding: 0 0 1px 0;
     border-radius: 0;
     max-height: 578px;
-    overflow-y: auto;
+    // overflow-y: auto;
     .leaflet-popup-content {
       margin: 0 0 0 0;
+      max-height: 578px;
     }
   }
 
@@ -938,6 +939,8 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
   .popup__content {
     padding-top: 47px;
+    max-height: 578px;
+    overflow-y: auto;
 
     .info__image {
       a {
@@ -966,8 +969,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
     .shareBar {
         background-color: #333;
-        max-height: 40px;
-        min-height: 40px;
+        height: 38px;
         padding: 6px 14px 6px 14px;
     }
 
