@@ -649,6 +649,7 @@ body {
   margin: 0 !important;
   height: 40px;
   box-shadow: none !important;
+  border: none !important;
 
   .leaflet-control-geocoder-icon {
     display: none !important;
@@ -667,13 +668,20 @@ body {
 
     .leaflet-control-geocoder-input {
       font-size: 150%;
-      height: 40px;
+      height: 100%;
       padding: 0 0 0 2%;
       width: 88%;
+      display: inline-block;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
         width: 93%;
       }
+    }
+
+    .leaflet-control-geocoder-input:focus {
+      border: none;
+      box-shadow: none;
+      outline: none;
     }
 
     .leaflet-control-geocoder-clear-input {
@@ -682,14 +690,20 @@ body {
       height: 100%;
       width: 10%;
       text-align: center;
+      color: gray;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
         width: 5%;
       }
 
-      .material-icons.clear-icon {
+      i {
         padding-top: 8px;
+        font-size: 26px;
       }
+    }
+
+    .leaflet-control-geocoder-clear-input:hover {
+      color: black;
     }
   }
 
