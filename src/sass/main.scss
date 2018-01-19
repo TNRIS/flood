@@ -937,8 +937,26 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   }
 
   .popup__content {
-    padding-top: 44px;
+    padding-top: 47px;
 
+    .info__image {
+      a {
+        img {
+          max-width: 100% !important;
+        }
+      }
+    }
+
+    .info__text {
+      font-family: monospace;
+      font-weight: 400;
+      font-size: 1em;
+      margin: 4px 18px 0px 18px;
+      padding-bottom: 20px;
+      max-width: 600px;
+    }
+
+    // -----FLOOD GAUGE POPUP CONTENT-----
     .info__name {
       font-weight: 600;
       font-size: 1.5em;
@@ -1607,14 +1625,7 @@ body > div.ReactModalPortal > div {
 
 //
 //
-// .info__text {
-//   font-family: monospace;
-//   font-weight: 400;
-//   font-size: 1em;
-//   margin: 4px 18px 0px 18px;
-//   padding-bottom: 20px;
-//   max-width: 600px;
-// }
+
 
 // .leaflet-container .info__image img {
 //   max-width: 100% !important;
