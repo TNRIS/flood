@@ -18,32 +18,23 @@ class Toaster extends React.Component {
 
   constructor() {
     super()
-    console.log('toaster')
   }
 
   componentDidUpdate () {
-    console.log(this.props)
-    // const colors = { background: '#4F85AE', text: "#FFFFFF" }
-    // notify.show(this.props.snackbarText, 'custom', 99999999, colors)
-    const options = {
-      position: 'bottom',
-      effect: 'genie',
-      onClose: this.props.hideSnackbar,
-      beep: false,
-      timeout: this.props.snackbarTimeout
+    if (this.props.snackbarText != '') {
+      const options = {
+        position: 'bottom',
+        effect: 'genie',
+        onClose: this.props.hideSnackbar,
+        beep: false,
+        timeout: this.props.snackbarTimeout
+      }
+      Alert.info(this.props.snackbarText, options)
     }
-    Alert.info(this.props.snackbarText, options)
   }
-  // {/* <ToastMessageAnimated
-  // showAnimation="bounceInUp"
-  // active={this.props.isSnackbarActive.toString()}
-  // {/* timeOut= */}
-  // timeOut=99999
-  // onRemove={this.props.hideSnackbar}
-  // message={this.props.snackbarText} /> */}
   render() {
     return (
-      <Alert stack={{limit: 3}} />
+      <Alert stack={{limit: 3}} preserveContext />
     )
   }
 }

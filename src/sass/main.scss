@@ -600,6 +600,24 @@ body {
       transform: translateY(-50%);
     }
   }
+  // -----TOASTER-----
+  .s-alert-wrapper {
+    .s-alert-box {
+      background-color: #4F85AE;
+      max-width: 50%;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 14px;
+
+      a {
+        color: $accent-dark-green;
+      }
+
+      .s-alert-close {
+        display: none;
+      }
+    }
+  }
 }
 
 
