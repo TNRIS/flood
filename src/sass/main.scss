@@ -57,10 +57,6 @@ body {
     width: 280px;
     height: 50px;
     padding: 3px;
-
-    @media screen and (max-width: $layout-drawer-width-threshold) {
-      width: 240px;
-    }
   }
 
   .footer-twdb-logo {
@@ -387,17 +383,13 @@ body {
           background-color: white;
           width: 100%;
           float: left;
-          margin: 10px 0 15px 0;
+          margin: 10px 0 50px 0;
 
           button {
             width: 50%;
             text-transform: uppercase;
             background-color: white;
             color: $gray20;
-
-            @media screen and (max-width: 400px) {
-              font-size: 12px !important;
-            }
           }
 
           button:hover {
@@ -435,17 +427,13 @@ body {
           background-color: white;
           width: 100%;
           float: left;
-          margin: 10px 0 15px 0;
+          margin: 10px 0 50px 0;
 
           button {
             width: 50%;
             text-transform: uppercase;
             background-color: white;
             color: $gray20;
-
-            @media screen and (max-width: 400px) {
-              font-size: 12px !important;
-            }
           }
 
           button:hover {
@@ -608,6 +596,10 @@ body {
       margin: 0 auto;
       text-align: center;
       font-size: 14px;
+
+      @media screen and (max-width: 400px) {
+        max-width: 90%;
+      }
 
       a {
         color: $accent-dark-green;
