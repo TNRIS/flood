@@ -467,13 +467,6 @@ export default class Map extends Component {
     }
   }
 
-  betaNotice() {
-    if (document.URL === 'http://map.texasflood.org/') {
-      return "hide-beta"
-    }
-    return "betanotice"
-  }
-
   render() {
     let radarInfo
     if (this.displayedTimestamp !== '') {
