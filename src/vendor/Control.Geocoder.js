@@ -71,8 +71,7 @@ module.exports = {
 			//L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
 
 			clearDiv = L.DomUtil.create('div', "leaflet-control-geocoder-clear-input");
-			clear = this._clear = L.DomUtil.create('i', "material-icons clear-icon md-dark");
-			clear.innerHTML = "clear";
+			clear = this._clear = L.DomUtil.create('i', "fi-x");
 			clearDiv.appendChild(clear);
 			L.DomEvent.addListener(clearDiv, 'click', this._clearInput, this);
 
