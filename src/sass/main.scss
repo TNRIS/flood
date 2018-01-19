@@ -604,7 +604,7 @@ body {
   .s-alert-wrapper {
     .s-alert-box {
       background-color: #4F85AE;
-      max-width: 50%;
+      max-width: 65%;
       margin: 0 auto;
       text-align: center;
       font-size: 14px;
@@ -760,11 +760,7 @@ a.leaflet-disabled {
 }
 
 .leaflet-bottom.leaflet-right {
-  z-index: 4;
-}
-
-.leaflet-top.leaflet-right {
-  z-index: 4;
+  z-index: 2;
 }
 
 // -MAP: RADAR LAYER BUTTONS-
