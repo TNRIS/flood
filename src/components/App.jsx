@@ -27,6 +27,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.props.retrieveUser()
+    console.log(this.props)
   }
 
 componentDidMount() {
