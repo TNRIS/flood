@@ -1,7 +1,8 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-// import { Router, Route, hashHistory } from 'react-router-dom'
+import { HashRouter, Route } from 'react-router-dom'
+// import history from './history'
 
 import AppContainer from './containers/AppContainer'
 
@@ -28,7 +29,7 @@ import './vendor/leaflet.label.css'
 // Promise polyfill
 require('es6-promise').polyfill()
 
-let lastPath = ""
+// let lastPath = ""
 
 // hashHistory.listen((ev) => {
 //   if (ev.action === "POP" && ev.pathname !== lastPath) {
@@ -39,15 +40,14 @@ let lastPath = ""
 
 render(
   <Provider store={store}>
-    <AppContainer />
-    {/* <Router history={hashHistory}>
-      <Route path="/" component={AppContainer}>
-        <Route path="gage/:lid" component={AppContainer} />
-        <Route path="map/@:lat,:lng,:zoom" component={AppContainer} />
-        <Route path="subscriptions/" component={AppContainer} />
+    <HashRouter>
+      <div>
+        <Route path="/gage/:lid" component={AppContainer} />
+        <Route path="/map/@:lat,:lng,:zoom" component={AppContainer} />
+        <Route path="/subscriptions" component={AppContainer} />
         <Route path="/*" component={AppContainer} />
-      </Route>
-    </Router> */}
+      </div>
+    </HashRouter>
   </Provider>,
   document.getElementById('reactApp')
 )
