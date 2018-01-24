@@ -151,7 +151,10 @@ export default class Map extends Component {
             }
           }
           else {
-            this.props.history.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+            const urlPath = `/gage/${this.props.popupData.data.lid.toLowerCase()}`
+            if (this.props.history.location.pathname != urlPath) {
+              this.props.history.push(urlPath)
+            }
           }
         })
         .on('popupopen', () => {
@@ -169,7 +172,10 @@ export default class Map extends Component {
 
           const center = this.map.getCenter()
           const zoom =  this.map.getZoom()
-          this.props.history.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+          if (this.props.history.location.pathname != urlPath) {
+            this.props.history.push(urlPath)
+          }
         })
         .on('dblclick', (e) => {
           const zoom =  this.map.getZoom()
