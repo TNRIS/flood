@@ -11,7 +11,6 @@ class FloodHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.changeIcon = this.changeIcon.bind(this)
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
   }
 
