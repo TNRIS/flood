@@ -7,7 +7,7 @@ import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
-// import {  hashHistory } from 'react-router'
+// import history from '../history'
 
 
 export default class Popup extends Component {
@@ -51,7 +51,7 @@ export default class Popup extends Component {
           const gage = gageInfo[lid]
           const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
           this.leafletPopup.setLatLng(popupLocation)
-          // hashHistory.push(`/gage/${lid.toLowerCase()}`)
+          // history.push(`/gage/${lid.toLowerCase()}`)
           return this.showPopop()
 
         case 'flood-alerts':

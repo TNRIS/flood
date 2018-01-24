@@ -71,15 +71,7 @@ componentDidMount() {
             />
         </div>
         <div className="off-canvas-content" data-off-canvas-content>
-          <MapContainer
-            initialCenter={{
-              lat: this.props.params.lat || null,
-              lng: this.props.params.lng || null,
-              zoom: this.props.params.zoom || null
-            }}
-            gageCenter={{
-              lid: this.props.params.lid || null
-            }} />
+          <MapContainer />
         </div>
         <FloodFooter />
         <ToasterContainer />

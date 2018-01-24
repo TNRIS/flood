@@ -9,14 +9,10 @@ import {
 
 import { retrieveUser } from '../actions/UserActions'
 
-import { withRouter } from 'react-router'
-
 const mapStateToProps = (state) => {
   return {
     browser: state.browser,
-    userAuthentication: state.user.authentication,
-    location: {pathname: "/"},
-    params: {lat: null, long: null, zoom: null, lid: null}
+    userAuthentication: state.user.authentication
   }
 }
 
@@ -34,11 +30,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const appWithRouter = withRouter(App)
-
 const AppContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(appWithRouter)
+)(App)
 
 export default AppContainer
