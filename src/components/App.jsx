@@ -27,19 +27,21 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.props.retrieveUser()
-    console.log(this.props)
   }
 
-componentDidMount() {
-    $(document).foundation()
+  componentDidMount() {
+      $(document).foundation()
+      if (this.props.location.pathname === '/subscriptions') {
+        $('#off-canvas-drawer').foundation('open')
+      }
 
-    if (SITE_URL != 'map.texasflood.org') {
-      this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
-      from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
-      gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
-      </p>, 10000)
-    }
-}
+      if (SITE_URL != 'map.texasflood.org') {
+        this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
+        from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
+        gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
+        </p>, 10000)
+      }
+  }
 
   render() {
     const navContentInitState = () => {

@@ -7,8 +7,6 @@ import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
 
-// import history from '../history'
-
 
 export default class Popup extends Component {
   static propTypes = {
@@ -51,7 +49,10 @@ export default class Popup extends Component {
           const gage = gageInfo[lid]
           const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
           this.leafletPopup.setLatLng(popupLocation)
-          // history.push(`/gage/${lid.toLowerCase()}`)
+          const urlPath = `/gage/${lid.toLowerCase()}`
+          if (this.props.history.location.pathname != urlPath) {
+            this.props.history.push(urlPath)
+          }
           return this.showPopop()
 
         case 'flood-alerts':

@@ -15,23 +15,6 @@ class FloodHeader extends React.Component {
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.changeIcon()
-    }, 0)
-  }
-
-  // This is a hack to replace the mdl-layout__drawer-button icon from
-  // the chevron_right icon to the hamburger menu icon for our use.
-  // This is not usually a good way to do this but as MDL has provided
-  // no other way outside of editing the CSS directly .... viola...
-  changeIcon() {
-    const _db = document.querySelector('.mdl-layout__drawer-button i')
-    if (_db) {
-      _db.textContent = 'menu'
-    }
-  }
-
   handleShowGeocoder() {
     const geocoderControl = document.querySelector(".leaflet-control-geocoder")
     geocoderControl.classList.toggle("showGeocoder")
