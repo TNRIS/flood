@@ -14,6 +14,7 @@ import {
   setPopup
 } from '../actions/PopupActions'
 
+import { withRouter } from 'react-router'
 
 const mapStateToProps = (state) => {
   return {
@@ -47,9 +48,11 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+const mapWithRouter = withRouter(Map)
+
 const MapContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Map)
+)(mapWithRouter)
 
 export default MapContainer
