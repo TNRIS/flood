@@ -2,7 +2,6 @@ import L from 'leaflet'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import history from '../history'
 import * as R from 'ramda'
 
 import keys from '../keys'
@@ -54,7 +53,6 @@ export default class Map extends Component {
       geolocateControl: "basic",
       locateToolbar: null
     }
-    console.log(this.props)
   }
 
   componentDidMount() {
@@ -147,10 +145,13 @@ export default class Map extends Component {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
             const center = this.map.getCenter()
             const zoom =  this.map.getZoom()
-            history.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+            const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+            if (this.props.history.location.pathname != urlPath) {
+              this.props.history.push(urlPath)
+            }
           }
           else {
-            history.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+            this.props.history.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
           }
         })
         .on('popupopen', () => {
@@ -168,7 +169,7 @@ export default class Map extends Component {
 
           const center = this.map.getCenter()
           const zoom =  this.map.getZoom()
-          history.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          this.props.history.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
         })
         .on('dblclick', (e) => {
           const zoom =  this.map.getZoom()
@@ -202,7 +203,6 @@ export default class Map extends Component {
         zoom: getZoom()
       }
       if (this.props.match.params.lid) {
-        console.log('there is lid')
         const upperLid = this.props.match.params.lid.toUpperCase()
         const query = (
           `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas_develop WHERE lid = '${upperLid}'`
@@ -211,10 +211,9 @@ export default class Map extends Component {
           .then(({data}) => {
             if (data.rows.length === 0) {
               this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
-              history.push("")
+              this.props.history.push("")
               return initMap(initView)
             }
-            console.log('found gage')
             data.rows.map((gage) => {
               initView.latitude = gage.latitude
               initView.longitude = gage.longitude
@@ -235,10 +234,6 @@ export default class Map extends Component {
           })
       }
       else {
-        // if (this.props.match.url === "/") {
-        //   history.push("")
-        // }
-        console.log(initView)
         initMap(initView)
       }
     }, 1000)
@@ -297,7 +292,7 @@ export default class Map extends Component {
   setActiveFeatureLayers(props) {
     // TODO: this should be cleaned up - this way of setting the cursor is
     // really not the right way to do things
-    // this.map._container.classList.toggle('map__cursor--pointer', false)
+    this.map._container.classList.toggle('map__cursor--pointer', false)
 
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 

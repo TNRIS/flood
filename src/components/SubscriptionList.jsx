@@ -90,10 +90,11 @@ class SubscriptionList extends React.Component {
       clickLocation: L.latLng(gageInfo.latitude, gageInfo.longitude)
     })
 
-    if (this.props.browser.width < 1025) {
-      const layout = document.querySelector('.mdl-layout')
-      layout.MaterialLayout.toggleDrawer()
-    }
+    // close sidebar when zoom to gage location. commented out the mobile screen
+    // limit since the sidebar is temporarily not fixed open on desktop screens
+    // if (this.props.browser.width < 1025) {
+      $('#off-canvas-drawer').foundation('close')
+    // }
   }
 
   handleOpenConfirmDialog() {
