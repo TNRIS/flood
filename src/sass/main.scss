@@ -624,6 +624,7 @@ body {
   height: calc(100vh - 90px);
   width: 100%;
   background-color: #222 !important;
+  z-index: 1;
 }
 
 .map__cursor--pointer {
@@ -766,7 +767,7 @@ a.leaflet-disabled {
 }
 
 .leaflet-bottom.leaflet-right {
-  z-index: 2;
+  z-index: 401;
 }
 
 // -MAP: RADAR LAYER BUTTONS-
@@ -782,7 +783,7 @@ a.leaflet-disabled {
     1px 1px 1px #000000;
     font-weight: bold;
   }
-  z-index: 6;
+  z-index: 401;
   position: absolute;
   left: 60px;
   bottom: 25px;
@@ -790,7 +791,7 @@ a.leaflet-disabled {
 }
 
 .animateRadar {
-  z-index: 6;
+  z-index: 401;
   position: absolute;
   left: 10px;
   bottom: 25px;
