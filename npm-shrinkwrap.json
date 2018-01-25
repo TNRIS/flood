@@ -286,11 +286,41 @@
       "integrity": "sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM="
     },
     "amazon-cognito-identity-js": {
-      "version": "1.16.0",
-      "resolved": "https://registry.npmjs.org/amazon-cognito-identity-js/-/amazon-cognito-identity-js-1.16.0.tgz",
-      "integrity": "sha1-EqPAS/Zh66n4p364Av6WoFgWlrM=",
+      "version": "1.31.0",
+      "resolved": "https://registry.npmjs.org/amazon-cognito-identity-js/-/amazon-cognito-identity-js-1.31.0.tgz",
+      "integrity": "sha1-Hc0PJs6UBMGYo1Ro6LsAQQUDAh0=",
       "requires": {
-        "aws-sdk": "2.171.0"
+        "aws-sdk": "2.177.0",
+        "js-cookie": "2.2.0"
+      },
+      "dependencies": {
+        "aws-sdk": {
+          "version": "2.177.0",
+          "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.177.0.tgz",
+          "integrity": "sha1-1fvx+CurJQ5VFTaZsDC0T2h/YAs=",
+          "requires": {
+            "buffer": "4.9.1",
+            "crypto-browserify": "1.0.9",
+            "events": "1.1.1",
+            "jmespath": "0.15.0",
+            "querystring": "0.2.0",
+            "sax": "1.2.1",
+            "url": "0.10.3",
+            "uuid": "3.1.0",
+            "xml2js": "0.4.17",
+            "xmlbuilder": "4.2.1"
+          }
+        },
+        "crypto-browserify": {
+          "version": "1.0.9",
+          "resolved": "https://registry.npmjs.org/crypto-browserify/-/crypto-browserify-1.0.9.tgz",
+          "integrity": "sha1-zFRJaF37hesRyYKKzHy4erW7/MA="
+        },
+        "uuid": {
+          "version": "3.1.0",
+          "resolved": "https://registry.npmjs.org/uuid/-/uuid-3.1.0.tgz",
+          "integrity": "sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g=="
+        }
       }
     },
     "amazon-cognito-js": {
@@ -601,12 +631,11 @@
       }
     },
     "aws-sdk": {
-      "version": "2.171.0",
-      "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.171.0.tgz",
-      "integrity": "sha1-acJWXpjjU9Q3QCR3zDBkoTyu3Jw=",
+      "version": "2.186.0",
+      "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.186.0.tgz",
+      "integrity": "sha1-ZOzOpb8ESYEDI8MT2ctBwqSihQ0=",
       "requires": {
         "buffer": "4.9.1",
-        "crypto-browserify": "1.0.9",
         "events": "1.1.1",
         "jmespath": "0.15.0",
         "querystring": "0.2.0",
@@ -617,11 +646,6 @@
         "xmlbuilder": "4.2.1"
       },
       "dependencies": {
-        "crypto-browserify": {
-          "version": "1.0.9",
-          "resolved": "https://registry.npmjs.org/crypto-browserify/-/crypto-browserify-1.0.9.tgz",
-          "integrity": "sha1-zFRJaF37hesRyYKKzHy4erW7/MA="
-        },
         "uuid": {
           "version": "3.1.0",
           "resolved": "https://registry.npmjs.org/uuid/-/uuid-3.1.0.tgz",
@@ -635,7 +659,7 @@
       "integrity": "sha1-dpizuoL0k/cf8GCuISPNCAathnY=",
       "dev": true,
       "requires": {
-        "aws-sdk": "2.171.0",
+        "aws-sdk": "2.186.0",
         "sinon": "1.17.7",
         "traverse": "0.6.6"
       }
@@ -10547,6 +10571,11 @@
       "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.1.9.tgz",
       "integrity": "sha1-8OgK4DmkvWVLXygfyT8EqRSn/M4="
     },
+    "js-cookie": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.0.tgz",
+      "integrity": "sha1-Gywnmm7s44ChIWi5JIUmWzWx7/s="
+    },
     "js-tokens": {
       "version": "1.0.3",
       "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.3.tgz",
@@ -17451,13 +17480,6 @@
       "integrity": "sha1-qlijBBoGb5DqoWwvU4n/GfP0YaU=",
       "requires": {
         "lodash": "4.17.4"
-      },
-      "dependencies": {
-        "lodash": {
-          "version": "4.17.4",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz",
-          "integrity": "sha1-eCA6TRwyiuHYbcpkYONptX9AVa4="
-        }
       }
     },
     "xtend": {

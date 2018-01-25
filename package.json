@@ -36,11 +36,11 @@
   },
   "homepage": "https://github.com/tnris/flood",
   "dependencies": {
-    "amazon-cognito-identity-js": "^1.16.0",
+    "amazon-cognito-identity-js": "^1.31.0",
     "amazon-cognito-js": "^1.1.0",
     "assets-webpack-plugin": "^3.5.1",
     "autoprefixer-loader": "^3.2.0",
-    "aws-sdk": "^2.171.0",
+    "aws-sdk": "^2.186.0",
     "axios": "^0.17.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
