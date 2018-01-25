@@ -29,7 +29,7 @@ export default class Popup extends Component {
     this.leafletPopup = L.popup({
       className: 'popup',
       closeButton: false,
-      maxheight: 600,
+      maxHeight: 600,
       keepInView: true
     })
   }
@@ -98,26 +98,23 @@ export default class Popup extends Component {
   updatePopupSize() {
     const {leafletMap} = this.props
 
-    this.leafletPopup.update(
-          this.leafletPopup.options = {
-            ...this.leafletPopup.options,
-            minWidth: (() => {
-              const mapWidth = leafletMap.getSize().x
-              if (mapWidth > 800) {
-                if (this.props.popupData.id === 'reservoir-conditions') {
-                  return 800
-                }
-                return 600
-              }
-              else if (mapWidth > 600) {
-                if (this.props.popupData.id === 'reservoir-conditions') {
-                  return 0.90 * mapWidth
-                }
-                return 600
-              }
-              return 0.90 * mapWidth
-            })()
-          })
+    this.leafletPopup.options.minWidth =  (() => {
+        const mapWidth = leafletMap.getSize().x
+        if (mapWidth > 800) {
+          if (this.props.popupData.id === 'reservoir-conditions') {
+            return 800
+          }
+          return 600
+        }
+        else if (mapWidth > 600) {
+          if (this.props.popupData.id === 'reservoir-conditions') {
+            return 0.90 * mapWidth
+          }
+          return 600
+        }
+        return 0.90 * mapWidth
+      })()
+    this.leafletPopup.update()
   }
 
   showPopop() {
