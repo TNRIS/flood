@@ -60,9 +60,15 @@ class FloodFooter extends React.Component {
 
   render() {
     const contactLink = "mailto:tnrisdatasupport@twdb.texas.gov?subject=TexasFlood.org Version: " + VERSION
+
+    let footerLogoClass = "footer-logos"
+    if (this.props.browser.lessThan.large || this.props.browser.is.large) {
+      footerLogoClass = "footer-logos mobile"
+    }
+
     return (
       <div className="footer-bar">
-        <div className="footer-logos">
+        <div className={footerLogoClass}>
           <div className="footer-wrapper">
             <a className="footer-twdb-logo" href="http://www.twdb.texas.gov">
               <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>

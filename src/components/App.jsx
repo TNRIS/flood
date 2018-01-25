@@ -31,7 +31,7 @@ export default class App extends Component {
 
   componentDidMount() {
       $(document).foundation()
-      if (this.props.location.pathname === '/subscriptions') {
+      if (this.props.location.pathname === '/subscriptions' && this.props.browser.width < 1025) {
         $('#off-canvas-drawer').foundation('open')
       }
 
@@ -57,11 +57,20 @@ export default class App extends Component {
       }
     }
 
-    return (
-      <div>
-        <Disclaimer />
-        <AboutContainer />
-        <FloodHeaderContainer />
+    let sideBar
+    if (this.props.browser.greaterThan.large) {
+      sideBar = (
+        <div id="off-canvas-drawer"
+             className="on-canvas">
+            <NavigationDrawer
+              navContentInitState={navContentInitState()}
+              browser={this.props.browser}
+              userAuthentication={this.props.userAuthentication}
+            />
+        </div>
+      )
+    } else {
+      sideBar = (
         <div id="off-canvas-drawer"
              className="off-canvas position-left"
              data-transition="overlap"
@@ -72,10 +81,21 @@ export default class App extends Component {
               userAuthentication={this.props.userAuthentication}
             />
         </div>
-        <div className="off-canvas-content" data-off-canvas-content>
-          <MapContainer />
+      )
+    }
+
+    return (
+      <div>
+        <Disclaimer />
+        <AboutContainer />
+        <FloodHeaderContainer />
+        <div className="app-content">
+          { sideBar }
+          <div className="off-canvas-content" data-off-canvas-content>
+            <MapContainer />
+          </div>
         </div>
-        <FloodFooter />
+        <FloodFooter browser={this.props.browser} />
         <ToasterContainer />
       </div>
     )
