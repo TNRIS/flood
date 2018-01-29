@@ -60,27 +60,37 @@ export default class App extends Component {
     let sideBar
     if (this.props.browser.greaterThan.large) {
       sideBar = (
-        <div id="off-canvas-drawer"
-             className="on-canvas">
-            <NavigationDrawer
-              navContentInitState={navContentInitState()}
-              browser={this.props.browser}
-              userAuthentication={this.props.userAuthentication}
-            />
+        <div className="app-content">
+          <div id="off-canvas-drawer"
+               className="on-canvas">
+              <NavigationDrawer
+                navContentInitState={navContentInitState()}
+                browser={this.props.browser}
+                userAuthentication={this.props.userAuthentication}
+              />
+          </div>
+          <div className="off-canvas-content" data-off-canvas-content>
+            <MapContainer />
+          </div>
         </div>
       )
     } else {
       sideBar = (
-        <div id="off-canvas-drawer"
-             className="off-canvas position-left"
-             data-transition="overlap"
-             data-off-canvas>
-            <NavigationDrawer
-              navContentInitState={navContentInitState()}
-              browser={this.props.browser}
-              userAuthentication={this.props.userAuthentication}
-            />
-        </div>
+        <div className="app-content">
+          <div id="off-canvas-drawer"
+               className="off-canvas position-left"
+               data-transition="overlap"
+               data-off-canvas>
+              <NavigationDrawer
+                navContentInitState={navContentInitState()}
+                browser={this.props.browser}
+                userAuthentication={this.props.userAuthentication}
+              />
+          </div>
+          <div className="off-canvas-content" data-off-canvas-content>
+            <MapContainer />
+          </div>
+      </div>
       )
     }
 
@@ -89,12 +99,9 @@ export default class App extends Component {
         <Disclaimer />
         <AboutContainer />
         <FloodHeaderContainer />
-        <div className="app-content">
+
           { sideBar }
-          <div className="off-canvas-content" data-off-canvas-content>
-            <MapContainer />
-          </div>
-        </div>
+          
         <FloodFooter browser={this.props.browser} />
         <ToasterContainer />
       </div>
