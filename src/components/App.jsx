@@ -78,7 +78,7 @@ export default class App extends Component {
       sideBar = (
         <div className="app-content">
           <div id="off-canvas-drawer"
-               className="off-canvas position-left"
+               className="off-canvas position-left is-closed"
                data-transition="overlap"
                data-off-canvas>
               <NavigationDrawer
@@ -99,9 +99,7 @@ export default class App extends Component {
         <Disclaimer />
         <AboutContainer />
         <FloodHeaderContainer />
-
-          { sideBar }
-          
+        { sideBar }
         <FloodFooter browser={this.props.browser} />
         <ToasterContainer />
       </div>
