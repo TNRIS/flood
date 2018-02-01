@@ -7,8 +7,8 @@ import PopupHeader from './PopupHeader'
 import PopupImageContainer from '../containers/PopupImageContainer'
 
 import {
-  ShareButtons,
-  generateShareIcon
+  TwitterShareButton,
+  TwitterIcon
 } from 'react-share'
 
 import { store } from '../store'
@@ -16,12 +16,6 @@ import {Provider} from 'react-redux'
 
 
 const icon = require('../images/flood_gauge_icon.png')
-
-const {
-  TwitterShareButton,
-} = ShareButtons;
-
-const TwitterIcon = generateShareIcon('twitter')
 
 export default class FloodGaugePopup extends Component {
   static propTypes = {
