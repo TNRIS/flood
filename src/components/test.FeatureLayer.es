@@ -1,20 +1,20 @@
-import expect from 'expect'
+import { expect } from 'chai'
 import React from 'react'
-import TestUtils from 'react-dom/test-utils'
+import ShallowRenderer from 'react-test-renderer/shallow'
 
 import { RingLoader } from 'react-spinners'
 import FeatureLayer from '../components/FeatureLayer'
 
 function setup(overrides) {
   let props = Object.assign({
-    onClick: expect.createSpy(),
+    onClick: () => {return false},
     text: 'testing',
     icon: 'http://example.com/testing',
     active: false,
     status: null,
   }, overrides)
 
-  let renderer = TestUtils.createRenderer()
+  let renderer = new ShallowRenderer()
   renderer.render(<FeatureLayer {...props} />)
   let output = renderer.getRenderOutput()
 
@@ -32,16 +32,19 @@ describe('component: FeatureLayer', () => {
       icon: '/tarst.png',
     })
 
-    expect(output.type).toBe('a')
-
+    expect(output.type).to.equal('li')
     let wrapperDiv = output.props.children
-    let [ icon, text, statusWrapper ] = wrapperDiv.props.children
+    expect(wrapperDiv.type).to.equal('div')
+    let linkClicker = wrapperDiv.props.children[0]
+    expect(linkClicker.type).to.equal('a')
 
-    expect(text).toBe('hullo test')
+    let innerDiv = linkClicker.props.children[0]
+    let [ icon, text, statusWrapper ] = innerDiv.props.children
+    expect(text.props.children).to.equal('hullo test')
 
     let image = icon.props.children
-    expect(image.type).toBe('img')
-    expect(image.props.src).toBe('/tarst.png')
+    expect(image.type).to.equal('img')
+    expect(image.props.src).to.equal('/tarst.png')
   })
 
   it('should render with Spinner when active and not ready', () => {
@@ -50,11 +53,11 @@ describe('component: FeatureLayer', () => {
       active: true,
     })
 
-    let wrapperDiv = output.props.children
-    let [ span, text, statusWrapper ] = wrapperDiv.props.children
+    let innerDiv = output.props.children.props.children[0].props.children[0]
+    let [ span, text, statusWrapper ] = innerDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(RingLoader)
+    expect(statusIndicator.type).to.deep.equal(RingLoader)
   })
 
   it('should render with Checkbox when active and ready', () => {
@@ -64,10 +67,12 @@ describe('component: FeatureLayer', () => {
     })
 
     let wrapperDiv = output.props.children
-    let [ span, text, statusWrapper ] = wrapperDiv.props.children
+    let linkClicker = wrapperDiv.props.children[0]
+    let innerDiv = linkClicker.props.children[0]
+    let [ icon, text, statusWrapper ] = innerDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(div)
+    expect(statusIndicator.type).to.equal('div')
   })
 
   it('should render with Checkbox when not active or ready', () => {
@@ -77,9 +82,11 @@ describe('component: FeatureLayer', () => {
     })
 
     let wrapperDiv = output.props.children
-    let [ span, text, statusWrapper ] = wrapperDiv.props.children
+    let linkClicker = wrapperDiv.props.children[0]
+    let innerDiv = linkClicker.props.children[0]
+    let [ icon, text, statusWrapper ] = innerDiv.props.children
     let statusIndicator = statusWrapper.props.children
 
-    expect(statusIndicator.type).toBe(div)
+    expect(statusIndicator.type).to.equal('div')
   })
 })
