@@ -11,8 +11,8 @@
     "build": "webpack",
     "dist": "NODE_ENV=production bash -c 'npm run clean && npm run webpack'",
     "clean": "rm -rf ./dist/*",
-    "test": "export NODE_ENV=testing|| set NODE_ENV=testing && NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.es\" --compilers js:babel-register,null:test/null-compiler",
-    "test-debug": "NODE_PATH=./src mocha debug src/test/setup.js \"src/**/test.*.es\" --compilers js:babel-register,null:test/null-compiler"
+    "test": "export NODE_ENV=testing|| set NODE_ENV=testing && NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.es\" --require babel-register --require test/null-compiler",
+    "test-debug": "NODE_PATH=./src mocha debug src/test/setup.js \"src/**/test.*.es\" --require babel-register --require test/null-compiler"
   },
   "engines": {
     "node": ">=0.12.0",

@@ -1,17 +1,18 @@
 var jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 // setup the simplest document possible
-var doc = jsdom.jsdom('<!doctype html><html><body></body></html>', {
+var doc =  new JSDOM('<!doctype html><html><body></body></html>', {
   url: 'https://app-test',
 });
 
-// get the window object out of the document
-var win = doc.defaultView;
-
 // set globals for mocha that make access to document and window feel
 // natural in the test environment
-global.document = doc;
-global.window = win;
+global.document = doc.window.document;
+global.window = doc.window;
+global.requestAnimationFrame = (callback) => {
+    setTimeout(callback, 0);
+};
 
 // from mocha-jsdom https://github.com/rstacruz/mocha-jsdom/blob/master/index.js#L80
 function propagateToGlobal(window) {
@@ -30,4 +31,4 @@ function propagateToGlobal(window) {
 
 // take all properties of the window object and also attach it to the
 // mocha global object
-propagateToGlobal(win);
+propagateToGlobal(doc.window);
