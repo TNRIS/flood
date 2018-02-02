@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   HIDE_SNACKBAR,
@@ -20,7 +20,7 @@ describe('actions: ToasterActions', () => {
     const expectedAction = {
       type: HIDE_SNACKBAR
     }
-    expect(hideSnackbar()).toEqual(expectedAction)
+    expect(hideSnackbar()).to.deep.equal(expectedAction)
   })
   it('should create an action to show the snackbar when timeout is defined', () => {
     const expectedAction = {
@@ -30,7 +30,7 @@ describe('actions: ToasterActions', () => {
         snackbarTimeout: sampleTimeout
       }
     }
-    expect(showSnackbar(sampleText, sampleTimeout)).toEqual(expectedAction)
+    expect(showSnackbar(sampleText, sampleTimeout)).to.deep.equal(expectedAction)
   })
   it('should create an action to show the snackbar when timeout is undefined', () => {
     const expectedAction = {
@@ -40,6 +40,6 @@ describe('actions: ToasterActions', () => {
         snackbarTimeout: defaultTimeout
       }
     }
-    expect(showSnackbar(sampleText)).toEqual(expectedAction)
+    expect(showSnackbar(sampleText)).to.deep.equal(expectedAction)
   })
 })

@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   CLEAR_POPUP,
@@ -20,7 +20,7 @@ describe('actions: PopupActions', () => {
     const expectedAction = {
       type: CLEAR_POPUP
     }
-    expect(clearPopup()).toEqual(expectedAction)
+    expect(clearPopup()).to.deep.equal(expectedAction)
   })
 
   it('should create an action to indicate attempt to load a popup image', () => {
@@ -30,7 +30,7 @@ describe('actions: PopupActions', () => {
         loaded: false
       }
     }
-    expect(popupImageLoadAttempt()).toEqual(expectedAction)
+    expect(popupImageLoadAttempt()).to.deep.equal(expectedAction)
   })
 
   it('should create an action to indicate a successful load of a popup image', () => {
@@ -40,7 +40,7 @@ describe('actions: PopupActions', () => {
         loaded: true
       }
     }
-    expect(popupImageLoadSuccess()).toEqual(expectedAction)
+    expect(popupImageLoadSuccess()).to.deep.equal(expectedAction)
   })
 
   it('should create an action for setting a popup when defined', () => {
@@ -62,6 +62,6 @@ describe('actions: PopupActions', () => {
       }
     }
 
-    expect(setPopup(popupData)).toEqual(expectedAction)
+    expect(setPopup(popupData)).to.deep.equal(expectedAction)
   })
 })

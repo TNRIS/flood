@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   confirmSubscription,
@@ -11,6 +11,6 @@ describe('actions: SubscribeActions', () => {
   const sampleLid = 'UDET2'
 
   it('Action to send a confirmation on successful subscription', () => {
-    expect(confirmSubscription(samplePhone, sampleLid)).toBeA('function')
+    expect(confirmSubscription(samplePhone, sampleLid)).to.be.a('function')
   })
 })

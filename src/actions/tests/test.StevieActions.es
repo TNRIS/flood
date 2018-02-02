@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   sendErrorReport
@@ -7,7 +7,7 @@ import {
 describe('actions: StevieActions', () => {
   const sampleErrorText = 'Does not compute. So awkward!'
   it('Stevie should send the error text to AWS SNS', () => {
-    expect(sendErrorReport(sampleErrorText)).toBeA('function')
+    expect(sendErrorReport(sampleErrorText)).to.be.a('function')
   })
   // TODO: Add a test that offers a more robust check
 })

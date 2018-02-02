@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import * as types from './types'
 import * as actions from './'
@@ -21,7 +21,7 @@ describe('actions', () => {
       id,
       status
     }
-    expect(actions.layerStatusChange(id, status)).toEqual(expectedAction)
+    expect(actions.layerStatusChange(id, status)).to.deep.equal(expectedAction)
   })
 
   it('should create an action for hovering over clickable part of map', () => {
@@ -31,7 +31,7 @@ describe('actions', () => {
       type: types.HOVER_OVER_MAP_CLICKABLE,
       data
     }
-    expect(actions.hoverOverMapClickable(data)).toEqual(expectedAction)
+    expect(actions.hoverOverMapClickable(data)).to.deep.equal(expectedAction)
   })
 
   it('should create an action for setting base layer', () => {
@@ -41,7 +41,7 @@ describe('actions', () => {
       type: types.SET_BASE_LAYER,
       id
     }
-    expect(actions.setBaseLayer(id)).toEqual(expectedAction)
+    expect(actions.setBaseLayer(id)).to.deep.equal(expectedAction)
   })
 
   it('should create an action for setting feature layer', () => {
@@ -51,6 +51,6 @@ describe('actions', () => {
       type: types.SET_FEATURE_LAYER,
       id
     }
-    expect(actions.setFeatureLayer(id)).toEqual(expectedAction)
+    expect(actions.setFeatureLayer(id)).to.deep.equal(expectedAction)
   })
 })
