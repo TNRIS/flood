@@ -2,7 +2,7 @@ var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
 // setup the simplest document possible
-var doc =  new JSDOM('<!doctype html><html><body></body></html>', {
+var doc =  new JSDOM('<!doctype html><html><body><div id="reactApp"></div></body></html>', {
   url: 'https://app-test',
 });
 

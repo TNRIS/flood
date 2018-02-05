@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import twdbLogoImage from '../images/TWDBlogo_blue_transparent.png'
 import tnrisLogoImage from '../images/TNRISlogo_blue_transparent.png'
@@ -12,7 +12,7 @@ const reactModalStyle = {
   }
 }
 
-class About extends React.Component {
+export default class About extends Component {
   constructor(props) {
     super(props)
   }
@@ -22,13 +22,20 @@ class About extends React.Component {
   }
 
   render() {
+    let versionNumber
+    if (typeof VERSION === 'undefined') {
+      versionNumber = ""
+    } else {
+      versionNumber = "version " + VERSION
+    }
+
     return (
         <Modal className="about-modal"
                isOpen={this.props.openDialog}
                contentLabel="About Modal"
                style={reactModalStyle}>
           <div>
-            <p className="about-version-number">version {VERSION}</p>
+            <p className="about-version-number">{versionNumber}</p>
           </div>
           <div className="card about">
             <div className="card-divider about-title">
@@ -79,5 +86,3 @@ class About extends React.Component {
     )
   }
 }
-
-export default About
