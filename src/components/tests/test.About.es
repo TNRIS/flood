@@ -5,7 +5,7 @@ import ShallowRenderer from 'react-test-renderer/shallow'
 import About from '../About'
 import Modal from 'react-modal'
 
-describe('componentz: About', () => {
+describe('component: About', () => {
   let renderer = new ShallowRenderer()
   renderer.render(<About />)
   let output = renderer.getRenderOutput()

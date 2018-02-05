@@ -1,11 +1,8 @@
-import expect from 'expect'
+import { expect } from 'chai'
 import * as R from 'ramda'
-
 
 import reducer from './baseLayers'
 import * as types from '../actions/types'
-
-
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {
@@ -26,38 +23,24 @@ describe('reducer: baseLayers', () => {
   it('should return the initial state', () => {
     expect(
       extractImportant(reducer(undefined, {}))
-    ).toEqual({
-      active: 'positron',
+    ).to.deep.equal({
+      active: 'esri-world-streetmap',
+      target: 'basemap-context-menu',
       layers: [
         {
-          'id': 'osm',
-          'text': 'OpenStreetMap',
-          'type': 'tile',
+          'id': 'esri-world-streetmap',
+          'text': 'Streets',
+          'type': 'tile'
         },
         {
-          'id': 'positron',
-          'text': 'Positron',
-          'type': 'tile',
-        },
-        {
-          'id': 'dark-matter',
-          'text': 'Dark Matter',
-          'type': 'tile',
-        },
-        {
-          'id': 'bing-road',
-          'text': 'Bing Road',
-          'type': 'bing',
-        },
-        {
-          'id': 'bing-aerial',
-          'text': 'Bing Aerial',
-          'type': 'bing',
+          'id': 'bing-hybrid',
+          'text': 'Hybrid',
+          'type': 'bing'
         },
         {
           'id': 'tx-goog',
-          'text': 'Texas Google Imagery',
-          'type': 'wmts',
+          'text': 'Satellite',
+          'type': 'wmts'
         },
       ]
     })
@@ -66,74 +49,44 @@ describe('reducer: baseLayers', () => {
   it('should handle SET_BASE_LAYER when changing base layer', () => {
     expect(
       reducer({
-        active: 'positron',
+        active: 'esri-world-streetmap',
         layers: [
           {
-            'id': 'osm',
-            'text': 'OpenStreetMap',
-            'type': 'tile',
+            'id': 'esri-world-streetmap',
+            'text': 'Streets',
+            'type': 'tile'
           },
           {
-            'id': 'positron',
-            'text': 'Positron',
-            'type': 'tile',
-          },
-          {
-            'id': 'dark-matter',
-            'text': 'Dark Matter',
-            'type': 'tile',
-          },
-          {
-            'id': 'bing-road',
-            'text': 'Bing Road',
-            'type': 'bing',
-          },
-          {
-            'id': 'bing-aerial',
-            'text': 'Bing Aerial',
-            'type': 'bing',
+            'id': 'bing-hybrid',
+            'text': 'Hybrid',
+            'type': 'bing'
           },
           {
             'id': 'tx-goog',
-            'text': 'Texas Google Imagery',
-            'type': 'wmts',
+            'text': 'Satellite',
+            'type': 'wmts'
           },
         ]
       }, {
         type: types.SET_BASE_LAYER,
-        id: 'dark-matter',
-      })).toEqual({
-        active: 'dark-matter',
+        id: 'bing-hybrid',
+      })).to.deep.equal({
+        active: 'bing-hybrid',
         layers: [
           {
-            'id': 'osm',
-            'text': 'OpenStreetMap',
-            'type': 'tile',
+            'id': 'esri-world-streetmap',
+            'text': 'Streets',
+            'type': 'tile'
           },
           {
-            'id': 'positron',
-            'text': 'Positron',
-            'type': 'tile',
-          },
-          {
-            'id': 'dark-matter',
-            'text': 'Dark Matter',
-            'type': 'tile',
-          },
-          {
-            'id': 'bing-road',
-            'text': 'Bing Road',
-            'type': 'bing',
-          },
-          {
-            'id': 'bing-aerial',
-            'text': 'Bing Aerial',
-            'type': 'bing',
+            'id': 'bing-hybrid',
+            'text': 'Hybrid',
+            'type': 'bing'
           },
           {
             'id': 'tx-goog',
-            'text': 'Texas Google Imagery',
-            'type': 'wmts',
+            'text': 'Satellite',
+            'type': 'wmts'
           },
         ]
       })
@@ -142,74 +95,44 @@ describe('reducer: baseLayers', () => {
   it('should handle SET_BASE_LAYER when base layer does not change', () => {
     expect(
       reducer({
-        active: 'positron',
+        active: 'bing-hybrid',
         layers: [
           {
-            'id': 'osm',
-            'text': 'OpenStreetMap',
-            'type': 'tile',
+            'id': 'esri-world-streetmap',
+            'text': 'Streets',
+            'type': 'tile'
           },
           {
-            'id': 'positron',
-            'text': 'Positron',
-            'type': 'tile',
-          },
-          {
-            'id': 'dark-matter',
-            'text': 'Dark Matter',
-            'type': 'tile',
-          },
-          {
-            'id': 'bing-road',
-            'text': 'Bing Road',
-            'type': 'bing',
-          },
-          {
-            'id': 'bing-aerial',
-            'text': 'Bing Aerial',
-            'type': 'bing',
+            'id': 'bing-hybrid',
+            'text': 'Hybrid',
+            'type': 'bing'
           },
           {
             'id': 'tx-goog',
-            'text': 'Texas Google Imagery',
-            'type': 'wmts',
+            'text': 'Satellite',
+            'type': 'wmts'
           },
         ]
       }, {
         type: types.SET_BASE_LAYER,
-        id: 'positron',
-      })).toEqual({
-        active: 'positron',
+        id: 'bing-hybrid',
+      })).to.deep.equal({
+        active: 'bing-hybrid',
         layers: [
           {
-            'id': 'osm',
-            'text': 'OpenStreetMap',
-            'type': 'tile',
+            'id': 'esri-world-streetmap',
+            'text': 'Streets',
+            'type': 'tile'
           },
           {
-            'id': 'positron',
-            'text': 'Positron',
-            'type': 'tile',
-          },
-          {
-            'id': 'dark-matter',
-            'text': 'Dark Matter',
-            'type': 'tile',
-          },
-          {
-            'id': 'bing-road',
-            'text': 'Bing Road',
-            'type': 'bing',
-          },
-          {
-            'id': 'bing-aerial',
-            'text': 'Bing Aerial',
-            'type': 'bing',
+            'id': 'bing-hybrid',
+            'text': 'Hybrid',
+            'type': 'bing'
           },
           {
             'id': 'tx-goog',
-            'text': 'Texas Google Imagery',
-            'type': 'wmts',
+            'text': 'Satellite',
+            'type': 'wmts'
           },
         ]
       })
