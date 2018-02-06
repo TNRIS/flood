@@ -24,16 +24,6 @@ describe('actions', () => {
     expect(actions.layerStatusChange(id, status)).to.deep.equal(expectedAction)
   })
 
-  it('should create an action for hovering over clickable part of map', () => {
-    const data = {'test': 'foo'}
-
-    const expectedAction = {
-      type: types.HOVER_OVER_MAP_CLICKABLE,
-      data
-    }
-    expect(actions.hoverOverMapClickable(data)).to.deep.equal(expectedAction)
-  })
-
   it('should create an action for setting base layer', () => {
     const id = 'testbaselayer'
 

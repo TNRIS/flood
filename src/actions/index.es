@@ -11,13 +11,6 @@ export const layerStatusChange = (id, status) => {
   }
 }
 
-export const hoverOverMapClickable = (data) => {
-  return {
-    type: types.HOVER_OVER_MAP_CLICKABLE,
-    data,
-  }
-}
-
 export const setBaseLayer = (id) => {
   return {
     type: types.SET_BASE_LAYER,
