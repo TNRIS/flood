@@ -18,6 +18,10 @@ To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 1. `npm start` to start a hot-reloading development web server. First time starting, may require you create the empty directory `dist` in the project root.
 1. Open browser to `http://localhost:3545`
 
+## Test
+
+1. `npm run test` will run the Mocha Test suite
+
 ## Production Build
 
 1. `npm run dist` will produce a production build in the `/dist/` folder
