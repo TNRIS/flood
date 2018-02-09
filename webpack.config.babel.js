@@ -53,9 +53,8 @@ export default {
   },
   devServer: {
     contentBase: './dist',
-    colors: true,
     progress: true,
-    watch: true,
+    watchContentBase: true,
     port: 3545
   },
   module: {
@@ -65,16 +64,20 @@ export default {
         test: /\.scss$/,
         exclude: /node_modules/,
         loader: isProd ? ExtractTextPlugin.extract('css!sass')
-          : 'style!css?sourceMap!sass?sourceMap'
+          : 'style-loader!css-loader?sourceMap!sass-loader?sourceMap'
       },
       {
         test: /\.css$/,
         loader: isProd ? ExtractTextPlugin.extract('css')
-          : 'style!css',
+          : 'style-loader!css-loader',
       },
       {
-        test: /\.(jpg|png|gif|ico)$/,
+        test: /\.(jpg|png|gif|ico|woff)$/,
         loader: 'url-loader?limit=65536'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
       },
       {
         test: /\.(es|jsx)$/,
@@ -87,13 +90,13 @@ export default {
       },
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       }
     ]
   },
   resolve: {
     // allows extension-less require/import statements for files with these extensions
-    extensions: ['', '.es', '.js', '.jsx'],
+    extensions: ['.es', '.js', '.jsx'],
     alias: {
       leaflet_css: __dirname + '/node_modules/leaflet/dist/leaflet.css',
       leaflet_marker: __dirname + '/node_modules/leaflet/dist/images/marker-icon.png',

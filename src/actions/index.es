@@ -1,5 +1,5 @@
 import axios from 'axios'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import * as types from './types'
 
@@ -8,13 +8,6 @@ export const layerStatusChange = (id, status) => {
     type: types.CHANGE_LAYER_STATUS,
     id,
     status
-  }
-}
-
-export const hoverOverMapClickable = (data) => {
-  return {
-    type: types.HOVER_OVER_MAP_CLICKABLE,
-    data,
   }
 }
 

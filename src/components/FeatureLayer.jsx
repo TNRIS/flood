@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { Checkbox, Spinner } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { RingLoader } from 'react-spinners'
 
 
 export default class FeatureLayer extends Component {
@@ -19,16 +20,28 @@ export default class FeatureLayer extends Component {
 
     let statusIndicator
     if (active && status !== 'ready') {
-      statusIndicator = <Spinner />
+      statusIndicator = <RingLoader size={30} color={'#92C553'} loading={true} />
     }
     else {
-      statusIndicator = <Checkbox checked={active} readOnly />
+      statusIndicator = (
+        <div className="switch tiny">
+          <input className="switch-input"
+            id="layerSwitch"
+            type="checkbox"
+            name="layerSwitch"
+            checked={active}
+            readOnly/>
+          <label className="switch-paddle" htmlFor="layerSwitch">
+            <span className="show-for-sr"></span>
+          </label>
+        </div>
+      )
     }
 
     let legendElement
     if (active && legend && text != "Weather Alerts") {
       legendElement = (
-        <div className="feature-layer__legend">
+        <div className="feature-layer-legend">
           <img src={legend} />
         </div>
       )
@@ -36,33 +49,33 @@ export default class FeatureLayer extends Component {
     let legendLink
     if (active && legend && text == "Weather Alerts") {
       legendLink = (
-        <div className="feature-layer__legendLink">
+        <div className="feature-layer-legendLink">
           <a href="./flood-alert-legend.png" target="weather-alerts-legend">NOAA Advisories</a>
         </div>
       )
     }
 
     return (
-      <div className="feature-layer__link">
-        <a onClick={(e) => {e.preventDefault(); onClick()}} className="mdl-navigation__link" href="">
-          <div className="feature-layer__wrapper">
-            <div className="feature-layer__icon-wrapper">
-              <img src={icon} alt={altText} className="feature-layer__icon" />
-            </div>
-            <div className="feature-layer__name vertically-centered__wrapper">
-              <div className="vertically-centered__element">
+      <li>
+        <div className="feature-layer-link">
+          <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
+            <div className="feature-layer-wrapper">
+              <div className="feature-layer-icon-wrapper">
+                <img src={icon} alt={altText} className="feature-layer-icon" />
+              </div>
+              <div className="feature-layer-name">
                 { text }
               </div>
+              <div className="feature-layer-switch">
+                { statusIndicator }
+              </div>
             </div>
-            <div className="feature-layer__checkbox">
-              { statusIndicator }
-            </div>
-          </div>
 
-          { legendElement }
-        </a>
-          { legendLink }
-      </div>
+            { legendElement }
+          </a>
+            { legendLink }
+        </div>
+      </li>
     )
   }
 }

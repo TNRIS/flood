@@ -1,10 +1,10 @@
 import AWS from 'aws-sdk'
 import 'amazon-cognito-js'
-
 import {
   CognitoUserPool,
   CognitoUserAttribute,
-  CognitoUser
+  CognitoUser,
+  AuthenticationDetails
 } from 'amazon-cognito-identity-js'
 
 import keys from '../keys'
@@ -42,7 +42,7 @@ class AppUser {
       ClientId: this.clientId
     }
     this.AWS.config.update({region: this.region})
-    this.userPool = new this.AWS.CognitoIdentityServiceProvider.CognitoUserPool(this.poolData)
+    this.userPool = new CognitoUserPool(this.poolData)
   }
 
   setCognitoUser = (loginInfo) => {
@@ -53,14 +53,14 @@ class AppUser {
       Username: this.username,
       Password: this.password
     }
-    this.authenticationDetails = new this.AWS.CognitoIdentityServiceProvider.AuthenticationDetails(
+    this.authenticationDetails = new AuthenticationDetails(
       this.authenticationData)
 
     this.userData = {
       Username: this.username,
       Pool: this.userPool
     }
-    this.cognitoUser = new this.AWS.CognitoIdentityServiceProvider.CognitoUser(this.userData)
+    this.cognitoUser = new CognitoUser(this.userData)
 
     return this.cognitoUser
   }
@@ -79,8 +79,8 @@ class AppUser {
       Value: this.email
     }
 
-    this.attributePhoneNumber = new this.AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(this.dataPhoneNumber)
-    this.attributeEmail = new this.AWS.CognitoIdentityServiceProvider.CognitoUserAttribute(this.dataEmail)
+    this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
+    this.attributeEmail = new CognitoUserAttribute(this.dataEmail)
     this.attributeList = [this.attributePhoneNumber, this.attributeEmail]
 
     return this.attributeList
@@ -173,7 +173,7 @@ class AppUser {
       Username: username,
       Pool: this.userPool
     }
-    this.cognitoUser = new this.AWS.CognitoIdentityServiceProvider.CognitoUser(this.userData)
+    this.cognitoUser = new CognitoUser(this.userData)
 
     this.cognitoUser.forgotPassword({
       onFailure: function(err) {

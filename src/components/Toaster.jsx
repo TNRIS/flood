@@ -1,34 +1,40 @@
 import React from 'react'
-import { Snackbar } from 'react-mdl'
+import PropTypes from 'prop-types'
+import Alert from 'react-s-alert'
 
 /**
  * App level toast notification component
  */
 class Toaster extends React.Component {
   static propTypes = {
-    hideSnackbar: React.PropTypes.func,
-    isSnackbarActive: React.PropTypes.bool,
-    snackbarText: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object
+    hideSnackbar: PropTypes.func,
+    isSnackbarActive: PropTypes.bool,
+    snackbarText: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
     ]),
-    snackbarTimeout: React.PropTypes.number
+    snackbarTimeout: PropTypes.number
   }
 
   constructor() {
     super()
   }
 
+  componentDidUpdate () {
+    if (this.props.snackbarText != '') {
+      const options = {
+        position: 'bottom',
+        effect: 'genie',
+        onClose: this.props.hideSnackbar,
+        beep: false,
+        timeout: this.props.snackbarTimeout
+      }
+      Alert.info(this.props.snackbarText, options)
+    }
+  }
   render() {
     return (
-      <div>
-        <Snackbar
-        active={this.props.isSnackbarActive}
-        timeout={this.props.snackbarTimeout}
-        onTimeout={this.props.hideSnackbar}>
-          {this.props.snackbarText}
-        </Snackbar>
-      </div>
+      <Alert stack={{limit: 3}} preserveContext />
     )
   }
 }

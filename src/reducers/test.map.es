@@ -1,91 +1,50 @@
-import expect from 'expect'
-import R from 'ramda'
-
+import { expect } from 'chai'
+import * as R from 'ramda'
 
 import reducer from './map'
-import * as types from '../actions/types'
-
-
+import * as types from '../constants/MapActionTypes'
 
 describe('reducer: map', () => {
   it('should return the initial state', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual({})
-  })
-
-  it('should handle SET_POPUP when one is not set', () => {
-    expect(
-      reducer({}, {
-        type: types.SET_POPUP,
-        payload: 'hi there'
-      })
-    ).toEqual({
-      popup: 'hi there'
+    ).to.deep.equal({
+      mapCenterLat: null,
+      mapCenterLng: null,
+      zoomLevel: null
     })
   })
 
-  it('should handle SET_POPUP when one already exists', () => {
+  it('should handle CLEAR_CENTER_AND_ZOOM when map has state', () => {
     expect(
       reducer({
-        popup: 'hi there'
+        mapCenterLat: 30.2672,
+        mapCenterLng: 97.7431,
+        zoomLevel: 16
       }, {
-        type: types.SET_POPUP,
-        payload: 'bye there'
+        type: types.CLEAR_CENTER_AND_ZOOM
+      })).to.deep.equal({
+        mapCenterLat: null,
+        mapCenterLng: null,
+        zoomLevel: null
       })
-    ).toEqual({
-      popup: 'bye there'
-    })
   })
 
-  it('should handle SET_POPUP when popup exists and payload is undefined', () => {
+  it('should handle SET_CENTER_AND_ZOOM when map changes', () => {
     expect(
       reducer({
-        popup: 'hi there'
+        mapCenterLat: 30.2672,
+        mapCenterLng: 97.7431,
+        zoomLevel: 16
       }, {
-        type: types.SET_POPUP,
-        payload: undefined
+        type: types.SET_CENTER_AND_ZOOM,
+        lat: -666,
+        lng: 666,
+        zoom: -5
+      })).to.deep.equal({
+        mapCenterLat: -666,
+        mapCenterLng: 666,
+        zoomLevel: -5
       })
-    ).toEqual({
-    })
-  })
-
-  it('should handle HOVER_OVER_MAP_CLICKABLE when one is not set', () => {
-    expect(
-      reducer({}, {
-        type: types.HOVER_OVER_MAP_CLICKABLE,
-        data: {
-          coordinates: [32, 11.2],
-          text: 'hovering!'
-        }
-      })
-    ).toEqual({
-      hoveringOver: {
-        coordinates: [32, 11.2],
-        text: 'hovering!'
-      }
-    })
-  })
-
-  it('should handle HOVER_OVER_MAP_CLICKABLE when one already exists', () => {
-    expect(
-      reducer({
-        hoveringOver: {
-          coordinates: [32, 11.2],
-          text: 'hovering!'
-        }
-      }, {
-        type: types.HOVER_OVER_MAP_CLICKABLE,
-        data: {
-          coordinates: [19, 100],
-          text: 'hovering new!'
-        }
-      })
-    ).toEqual({
-      hoveringOver: {
-        coordinates: [19, 100],
-        text: 'hovering new!'
-      }
-    })
   })
 })

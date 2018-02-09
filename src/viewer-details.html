@@ -1,98 +1,116 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-  <title>About Texas Flood Information Viewer</title>
-  <meta name="description" content="Texas Flood Information Viewer">
-  <meta name="author" content="TNRIS">
+    <title>About Texas Flood Information Viewer</title>
+    <meta name="description" content="Texas Flood Information Viewer">
+    <meta name="author" content="TNRIS">
 
-  <link rel="stylesheet" href="assets/styles.css">
-  <style>
-  .title {
-    padding-left: 30px;
-    color: #333;
-  }
+    <style>
+      body {
+        font-family: Roboto,Helvetica,Arial,sans-serif;
+        margin: 0;
+      }
 
-  .about-details-body {
-    margin: 30px;
-  }
+      .title {
+        padding-left: 30px;
+        color: #333;
+        font-weight: 400;
+        font-size: 45px;
+        line-height: 3pc;
+        margin-top: 24px;
+        margin-bottom: 24px;
+      }
 
-  h4 {
-    color: rgba(0, 0, 0, 0.54);
-  }
+      .about-details-body {
+        margin: 30px;
+      }
 
-  p {
-    color: rgba(0, 0, 0, 0.54);
-  }
+      h4 {
+        color: rgba(0, 0, 0, 0.54);
+        margin-top: 24px;
+        margin-bottom: 1pc;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 2pc;
+      }
 
-  a {
-    color: #3473A2;
-  }
-  </style>
-</head>
+      p {
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        margin-bottom: 1pc;
+      }
 
-<body>
-  <div>
-    <h2 class="title">Viewer Details</h2>
-    <div class="about-details-body">
-      <h4>Flood Gages</h4>
-      <p>
-      The data presented in this application is collected from both public and private contributors. 
-      Flood gage readings are acquired from the National Oceanic & Atmospheric Administration's National Weather Service
-      (NOAA NWS). The data within this application is pulled directly from NOAA's database and displayed within this
-      application. The viewer refreshes the flood gage data from NOAA every 5 minutes however, NOAA may take up to one
-      hour for their gages to officially update.
-      </p>
-      <h4>Weather Radar</h4>
-      <p>
-      Weather Radar data are acquired from the Aeris Maps Platform (AMP). This is a national dataset
-      displaying rain, snow, and ice precipitation in decibel relative to Z (dBZ) units. By default, the Weather Radar layer
-      displays the most recent still radar. By pressing the “PLAY” button in the bottom left corner of the map, the layer
-      will animate, cycling through 5 still radar captures spanning approximately 4 hours and 10 minutes at approximately 50
-      minute intervals. The application refreshes the weather radar data from the AMP every 6 minutes. This is the same
-      interval Aeris updates the radar data. For more information on the Weather Radar, please visit the
-      <a href="https://www.aerisweather.com/ ">Aeris Weather Website</a>
-      </p>
-      <h4>Weather Alerts</h4>
-      <p>
-      Weather Alerts are acquired from the Aeris Weather API. This is a national dataset of all active US
-      advisories issued by the National Weather Service (NWS).  The NWS issues a variety of severe weather warnings,
-      watches, advisories, and statements that may be issued for a single forecast zone or county, or for a large region.
-      The application refreshes the weather alerts data from the Aeris Weather API every 1 minute. For more information on
-      the Weather Alerts, please visit the <a href="https://www.aerisweather.com/ ">Aeris Weather Website</a>
-      </p>
-      <h4>Lake Conditions</h4>
-      <p>
-      Lake Conditions are acquired from the Texas Water Development Board's Water Data for Texas (WDFT)
-      project. This is a Texas statewide dataset displaying current lake water storage levels as part of a graphical display
-      including storage levels up to 13 months before the current date. The application refreshes the weather alerts data
-      from the WDFT database every 30 minutes. For more information on the Lake Conditions, please visit the
-      <a href="https://waterdatafortexas.org/">Water Data for Texas Website</a>
-      </p>
-      <h4>Gage Notifications (Subscriptions)</h4>
-      <p>
-      The viewer provides the ability for users to “subscribe” to flood gages to receive alerts when gage readings are
-      at potentially dangerous levels. These levels are designated as Action, Minor, Moderate, and Major flood stages.
-      Users may subscribe to any gage to receive alerts via Short Message Service (SMS) text message.
-      </p>
-      <p>
-      (Note: The Texas Water Development Board (TWDB) maintains a strict <a href="http://www.twdb.texas.gov/policies/site/index.asp">
-      privacy policy</a> and will not utilize user contact information for any purpose other than that for which the user has signed up.)
-      </p>
-      <p>
-      A single alert is sent out for each individual gage when it enters one of the levels mentioned above. As water levels
-      continue to change during a weather event, single alerts will continue to be sent out as a gage transitions through
-      the various stage levels.  A user can subscribe to multiple gages by subscribing to each gage individually.   
-      </p>
-      <p>
-      To unsubscribe from alerts, click the “MY GAGE ALERTS” button within the left panel of the application. This will
-      open the subscription management dialog where the user can review all the gages they are currently subscribed to.
-      The user can modify or remove any subscription they no longer wish to receive. Subscriptions and alert messages are
-      managed by Amazon Web Services (AWS). 
-      </p>
+      a {
+        color: #3473A2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h2 class="title">Viewer Details</h2>
+      <div class="about-details-body">
+        <h4>Flood Gages</h4>
+        <p>
+        The data presented in this application is collected from both public and private contributors. 
+        Flood gage readings are acquired from the National Oceanic & Atmospheric Administration's National Weather Service
+        (NOAA NWS). The data within this application is pulled directly from NOAA's database and displayed within this
+        application. The viewer refreshes the flood gage data from NOAA every 5 minutes however, NOAA may take up to one
+        hour for their gages to officially update.
+        </p>
+        <h4>Weather Radar</h4>
+        <p>
+        Weather Radar data are acquired from the Aeris Maps Platform (AMP). This is a national dataset
+        displaying rain, snow, and ice precipitation in decibel relative to Z (dBZ) units. By default, the Weather Radar layer
+        displays the most recent still radar. By pressing the “PLAY” button in the bottom left corner of the map, the layer
+        will animate, cycling through 5 still radar captures spanning approximately 4 hours and 10 minutes at approximately 50
+        minute intervals. The application refreshes the weather radar data from the AMP every 6 minutes. This is the same
+        interval Aeris updates the radar data. For more information on the Weather Radar, please visit the
+        <a href="https://www.aerisweather.com/ ">Aeris Weather Website</a>
+        </p>
+        <h4>Weather Alerts</h4>
+        <p>
+        Weather Alerts are acquired from the Aeris Weather API. This is a national dataset of all active US
+        advisories issued by the National Weather Service (NWS).  The NWS issues a variety of severe weather warnings,
+        watches, advisories, and statements that may be issued for a single forecast zone or county, or for a large region.
+        The application refreshes the weather alerts data from the Aeris Weather API every 1 minute. For more information on
+        the Weather Alerts, please visit the <a href="https://www.aerisweather.com/ ">Aeris Weather Website</a>
+        </p>
+        <h4>Lake Conditions</h4>
+        <p>
+        Lake Conditions are acquired from the Texas Water Development Board's Water Data for Texas (WDFT)
+        project. This is a Texas statewide dataset displaying current lake water storage levels as part of a graphical display
+        including storage levels up to 13 months before the current date. The application refreshes the weather alerts data
+        from the WDFT database every 30 minutes. For more information on the Lake Conditions, please visit the
+        <a href="https://waterdatafortexas.org/">Water Data for Texas Website</a>
+        </p>
+        <h4>Gage Notifications (Subscriptions)</h4>
+        <p>
+        The viewer provides the ability for users to “subscribe” to flood gages to receive alerts when gage readings are
+        at potentially dangerous levels. These levels are designated as Action, Minor, Moderate, and Major flood stages.
+        Users may subscribe to any gage to receive alerts via Short Message Service (SMS) text message.
+        </p>
+        <p>
+        (Note: The Texas Water Development Board (TWDB) maintains a strict <a href="http://www.twdb.texas.gov/policies/site/index.asp">
+        privacy policy</a> and will not utilize user contact information for any purpose other than that for which the user has signed up.)
+        </p>
+        <p>
+        A single alert is sent out for each individual gage when it enters one of the levels mentioned above. As water levels
+        continue to change during a weather event, single alerts will continue to be sent out as a gage transitions through
+        the various stage levels.  A user can subscribe to multiple gages by subscribing to each gage individually.   
+        </p>
+        <p>
+        To unsubscribe from alerts, click the “MY GAGE ALERTS” button within the left panel of the application. This will
+        open the subscription management dialog where the user can review all the gages they are currently subscribed to.
+        The user can modify or remove any subscription they no longer wish to receive. Subscriptions and alert messages are
+        managed by Amazon Web Services (AWS). 
+        </p>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

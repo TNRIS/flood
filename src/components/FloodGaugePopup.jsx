@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupContent from './PopupContent'
@@ -6,8 +7,8 @@ import PopupHeader from './PopupHeader'
 import PopupImageContainer from '../containers/PopupImageContainer'
 
 import {
-  ShareButtons,
-  generateShareIcon
+  TwitterShareButton,
+  TwitterIcon
 } from 'react-share'
 
 import { store } from '../store'
@@ -15,12 +16,6 @@ import {Provider} from 'react-redux'
 
 
 const icon = require('../images/flood_gauge_icon.png')
-
-const {
-  TwitterShareButton,
-} = ShareButtons;
-
-const TwitterIcon = generateShareIcon('twitter')
 
 export default class FloodGaugePopup extends Component {
   static propTypes = {
@@ -54,7 +49,7 @@ export default class FloodGaugePopup extends Component {
     const { lid, name, wfo, updatePopup } = this.props
     const hydrographImage = `https://water.weather.gov/resources/hydrographs/${lid.toLowerCase()}_hg.png`
     const gaugeLink = `https://water.weather.gov/ahps2/hydrograph.php?wfo=${wfo.toLowerCase()}&gage=${lid.toLowerCase()}`
-    
+
     const shareUrl = `https://${SITE_URL}/#/gage/${lid}`
 
     const currentStore = store.getState()
@@ -92,7 +87,7 @@ export default class FloodGaugePopup extends Component {
                                  target="flood-gage-details"/>
           </Provider>
           <div className="shareBar">
-            <TwitterShareButton 
+            <TwitterShareButton
               url={shareUrl}
               title={shareTitle}
               className="share-button"

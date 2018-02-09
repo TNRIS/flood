@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Icon } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 
 import SubscriptionConfirmationContainer from '../containers/SubscriptionConfirmationContainer'
 
@@ -36,24 +37,20 @@ class PopupTitle extends Component {
 
   render() {
     return (
-      <div className="popup__title">
-        <img src={ this.props.icon } className="popup__icon" />
-        <span className="popup__title-text">
+      <div className="popup-title">
+        <img src={ this.props.icon } className="popup-icon" />
+        <span className="popup-title-text">
           { this.props.title }
         </span>
-        <Button className="popup__close mdl-color-text--white" onClick={this.closePopup.bind(this)}>
-          <Icon
-              name="clear"
-              className="material-icons"
-          />
-        </Button>
+        <button type="button" className="button popup-close" onClick={this.closePopup.bind(this)}>
+          <i name="clear" className="fi-x"></i>
+        </button>
           {this.props.title === "Flood Gage" &&
-            <Button className="subscribe-button mdl-color-text--white"
+            <button type="button" className="button subscribe-button"
                     onClick={this.handleShowSubscriptionConfirmation}>
-              <Icon
-                className="material-icons" name="notifications_active"/>
-                Subscribe
-            </Button>
+              <i className="fi-megaphone" name="notifications_active"></i>
+              <span>Subscribe</span>
+            </button>
           }
         <SubscriptionConfirmationContainer />
       </div>

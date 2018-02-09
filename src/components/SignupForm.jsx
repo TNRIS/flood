@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Spinner, Textfield } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 
 /** Form for creating a new user account and beginning the verification process */
 class SignupForm extends Component {
@@ -14,8 +15,12 @@ class SignupForm extends Component {
       phone: '',
       email: '',
       password: '',
-      confirmPassword: ''
-
+      confirmPassword: '',
+      labelUser: '',
+      labelPhone: '',
+      labelEmail: '',
+      labelPWD: '',
+      labelCPW: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSignUp = this.handleSignUp.bind(this)
@@ -31,6 +36,37 @@ class SignupForm extends Component {
     const nextState = {}
     nextState[name] = value
     this.setState(nextState)
+
+    if (name === 'username' && value != '') {
+      this.setState({labelUser: 'Username'})
+    }
+    else if (name === 'username' && value === '') {
+      this.setState({labelPWD: ''})
+    }
+    if (name === 'phone' && value != '') {
+      this.setState({labelPhone: 'Mobile Phone Number'})
+    }
+    else if (name === 'phone' && value === '') {
+      this.setState({labelPhone: ''})
+    }
+    if (name === 'email' && value != '') {
+      this.setState({labelEmail: 'Email'})
+    }
+    else if (name === 'email' && value === '') {
+      this.setState({labelEmail: ''})
+    }
+    if (name === 'password' && value != '') {
+      this.setState({labelPWD: 'Password'})
+    }
+    else if (name === 'password' && value === '') {
+      this.setState({labelPWD: ''})
+    }
+    if (name === 'confirmPassword' && value != '') {
+      this.setState({labelCPW: 'Confirm Password'})
+    }
+    else if (name === 'confimPassword' && value === '') {
+      this.setState({labelCPW: ''})
+    }
   }
 
 
@@ -73,57 +109,69 @@ class SignupForm extends Component {
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Sign up for an account to subscribe to flood gages and begin receiving text message alerts when they
               enter elevated flood stages.</p>
-            <Textfield floatingLabel
+            <label className="form-chunk">{this.state.labelUser}
+              <input
                        pattern="[^0-9\s]\S*"
-                       error="Username must not start with a number or contain spaces"
-                       label="Username"
+                       title="Username must not start with a number or contain spaces"
                        type="username"
                        id="username"
                        name="username"
+                       placeholder="Username"
                        onChange={this.handleChange}
                        value={this.state.username}/>
-            <Textfield floatingLabel
+            </label>
+            <label className="form-chunk">{this.state.labelPhone}
+              <input
                        pattern="[0-9]*"
                        minLength={10}
                        maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Mobile Phone Number"
+                       title="10 digits only including US area code"
                        type="tel"
                        id="phone"
                        name="phone"
+                       placeholder="Mobile Phone Number"
                        onChange={this.handleChange}
                        value={this.state.phone}/>
-            <Textfield floatingLabel
-                       label="Email"
+            </label>
+            <label className="form-chunk">{this.state.labelEmail}
+              <input
                        type="email"
                        id="email"
                        name="email"
+                       placeholder="Email"
                        onChange={this.handleChange}
                        value={this.state.email}/>
-            <Textfield floatingLabel
+            </label>
+            <label className="form-chunk">{this.state.labelPWD}
+              <input
                        pattern=".{6,}"
                        minLength={6}
-                       error="Minimum 6 characters."
-                       label="Password"
+                       title="Minimum 6 characters."
                        type="password"
                        id="password"
                        name="password"
+                       placeholder="Password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
-            <Textfield floatingLabel
+            </label>
+            <label className="form-chunk">{this.state.labelCPW}
+              <input
                        minLength={6}
                        pattern={this.state.password}
-                       label="Confirm Password"
+                       title="Passwords do not match."
                        type="password"
                        id="confirmPassword"
                        name="confirmPassword"
+                       placeholder="Confirm Password"
                        onChange={this.handleChange}
                        value={this.state.confirmPassword}/>
-            <Button ripple
-              className="flood-form-button"
-              type="submit"
-              value="Submit"
-              style={{marginRight: "10px"}}>SIGN UP</Button>
+            </label>
+            <div className="login-button-wrapper">
+              <button
+                className="button flood-form-button"
+                type="submit"
+                value="Submit">SIGN UP</button>
+            </div>
         </form>
     )
   }

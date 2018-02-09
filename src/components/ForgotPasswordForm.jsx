@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Textfield } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 
 /** Form for resetting a forgotten password */
@@ -14,7 +14,9 @@ class ForgotPasswordForm extends Component {
       username: '',
       phone: '',
       usernameDisabled: false,
-      phoneDisabled: false
+      phoneDisabled: false,
+      'label': '',
+      'labelPhone': ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -50,6 +52,19 @@ class ForgotPasswordForm extends Component {
         })
       }
     })
+
+    if (name === 'username' && value != '') {
+      this.setState({label: 'Username'})
+    }
+    else if (name === 'username' && value === '') {
+      this.setState({label: ''})
+    }
+    if (name === 'phone' && value != '') {
+      this.setState({labelPhone: 'Phone Number'})
+    }
+    else if (name === 'phone' && value === '') {
+      this.setState({labelPhone: ''})
+    }
   }
 
   moveCaretAtEnd(e) {
@@ -78,67 +93,69 @@ class ForgotPasswordForm extends Component {
     let inputs
 
     if (this.state.username != '' && this.state.phone == '') {
-      inputs = (<Textfield floatingLabel
+      inputs = (<label className="form-chunk">{this.state.label}<input
                        autoFocus
                        onFocus={this.moveCaretAtEnd}
-                       label="Username"
-                       type="username"
+                       type="text"
                        id="username"
                        name="username"
+                       placeholder="Username"
                        onChange={this.handleChange}
                        value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>)
+                       disabled={this.state.usernameDisabled}/></label>)
     }
     else if (this.state.username == '' && this.state.phone != '') {
-      inputs = (<Textfield floatingLabel
+      inputs = (<label className="form-chunk">{this.state.labelPhone}<input
                        autoFocus
                        onFocus={this.moveCaretAtEnd}
                        pattern="[0-9]*"
                        minLength={10}
                        maxLength={10}
                        error="10 digits only including US area code"
-                       label="Phone Number"
                        type="tel"
                        id="phone"
                        name="phone"
+                       placeholder="Phone Number"
                        onChange={this.handleChange}
                        value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/>)
+                       disabled={this.state.phoneDisabled}/></label>)
     }
     else {
       inputs = (<div>
-            <Textfield floatingLabel
-                       label="Username"
-                       type="username"
-                       id="username"
-                       name="username"
-                       onChange={this.handleChange}
-                       value={this.state.username}
-                       disabled={this.state.usernameDisabled}/>
+            <label className="form-chunk">{this.state.label}
+              <input
+               type="text"
+               id="username"
+               name="username"
+               placeholder="Username"
+               onChange={this.handleChange}
+               value={this.state.username}
+               disabled={this.state.usernameDisabled}/>
+            </label>
             <p style={{margin: "0"}}>or</p>
-            <Textfield floatingLabel
-                       pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       error="10 digits only including US area code"
-                       label="Phone Number"
-                       type="tel"
-                       id="phone"
-                       name="phone"
-                       onChange={this.handleChange}
-                       value={this.state.phone}
-                       disabled={this.state.phoneDisabled}/></div>)
+            <label className="form-chunk">{this.state.labelPhone}
+              <input
+               pattern="[0-9]*"
+               minLength={10}
+               maxLength={10}
+               error="10 digits only including US area code"
+               type="tel"
+               id="phone"
+               name="phone"
+               placeholder="Phone Number"
+               onChange={this.handleChange}
+               value={this.state.phone}
+               disabled={this.state.phoneDisabled}/></label></div>)
     }
 
     return (
         <form onSubmit={ this.handleSubmit } style={{marginRight: "10px", marginLeft: "10px"}}>
             <p>Enter your username or phone number to change your password.</p>
             {inputs}
-            <Button ripple
-              className="flood-form-button"
+            <button
+              className="button flood-form-button"
               type="submit"
-              value="Submit"
-              style={{marginRight: "10px"}}>SUBMIT</Button>
+              value="Submit">SUBMIT</button>
         </form>
     )
   }

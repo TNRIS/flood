@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Textfield } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 
 /** Form for entering user info and updating current subscriptions */
@@ -16,10 +16,10 @@ class LoginForm extends Component {
       min: 0,
       max: 50,
       pattern: '',
-      label: 'Username or Phone Number',
+      label: '',
       error: '',
-      type: ''
-
+      type: '',
+      labelPWD: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
@@ -34,13 +34,12 @@ class LoginForm extends Component {
     const name = event.target.name
     const value = event.target.value
     let nextState = {}
-
     if (name === 'username' && value === '') {
       nextState = { ...nextState,
         min: 0,
         max: 50,
         pattern: '',
-        label: 'Username or Phone Number',
+        label: '',
         error: '',
         type: ''
       }
@@ -68,6 +67,13 @@ class LoginForm extends Component {
     }
     nextState[name] = value
     this.setState(nextState)
+
+    if (name === 'password' && value != '') {
+      this.setState({labelPWD: 'Password'})
+    }
+    else if (name === 'password' && value === '') {
+      this.setState({labelPWD: ''})
+    }
   }
 
 
@@ -91,29 +97,36 @@ class LoginForm extends Component {
     return (
         <form className="login-form" onSubmit={ this.handleSearch }>
             <p>Sign in to subscribe to flood gages and manage your current gage subscriptions.</p>
-            <Textfield floatingLabel
+            <label className="form-chunk">{this.state.label}
+              <input
                        pattern={this.state.pattern}
                        minLength={this.state.min}
                        maxLength={this.state.max}
                        error={this.state.error}
-                       label={this.state.label}
                        type="username"
                        id="username"
                        name="username"
+                       placeholder="Username or Phone Number"
                        onChange={this.handleChange}
                        value={this.state.username}/>
-            <Textfield floatingLabel
-                       label="Password"
+            </label>
+            <label className="form-chunk">{this.state.labelPWD}
+              <input
                        type="password"
                        id="password"
                        name="password"
+                       placeholder="Password"
                        onChange={this.handleChange}
                        value={this.state.password}/>
-            <Button ripple
-              className="flood-form-button"
-              type="submit"
-              value="Submit"
-              style={{marginRight: "10px"}}>sign in</Button>
+            </label>
+            <div className="login-button-wrapper">
+              <button
+                className="button flood-form-button"
+                type="submit"
+                value="Submit">
+                sign in
+              </button>
+            </div>
         </form>
     )
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Navigation } from 'react-mdl'
+
 
 import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
@@ -7,31 +7,11 @@ import TexasFloodLogoImage from '../images/texas_flood_logo_transparent_300x42.p
 import TexasFloodIconImage from '../images/icons/favicon.ico'
 
 class FloodHeader extends React.Component {
-  static propTypes = {
-  }
 
   constructor(props) {
     super(props)
     this.state = {}
-    this.changeIcon = this.changeIcon.bind(this)
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.changeIcon()
-    }, 0)
-  }
-
-  // This is a hack to replace the mdl-layout__drawer-button icon from
-  // the chevron_right icon to the hamburger menu icon for our use.
-  // This is not usually a good way to do this but as MDL has provided
-  // no other way outside of editing the CSS directly .... viola...
-  changeIcon() {
-    const _db = document.querySelector('.mdl-layout__drawer-button i')
-    if (_db) {
-      _db.textContent = 'menu'
-    }
   }
 
   handleShowGeocoder() {
@@ -41,23 +21,42 @@ class FloodHeader extends React.Component {
 
   render() {
     const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
+
+    let sidebarToggle = ""
+    if (this.props.browser.lessThan.large || this.props.browser.is.large) {
+      sidebarToggle = (
+        <button type="button" className="button" data-toggle="off-canvas-drawer">
+          <i className="fi-list"></i>
+        </button>
+      )
+    }
+
     return (
-      <Header transparent style={{color: 'white'}}>
-        <div className="header__title">
+      <div className="title-bar">
+        {sidebarToggle}
+        <div className="title-logo">
           <a href="http://texasflood.org" target="_blank">
             <img src={imgSource} alt="The Texas Flood dot org logo"/>
           </a>
         </div>
-        <Navigation className="header__navigation">
+        <button className="button basemap-button" type="button" data-toggle="basemap-dropdown">
           <a href="#"
             id="basemap-context-menu"
-            title="Basemaps"><i className="material-icons">satellite</i></a>
+            title="Basemaps"><i className="fi-photo"></i></a>
+        </button>
+        <div className="dropdown-pane"
+             data-position="bottom"
+             data-alignment="right"
+             data-dropdown
+             id="basemap-dropdown">
           <BaseLayerMenuContainer />
+        </div>
+        <button className="button" type="button" onClick={this.handleShowGeocoder}>
           <a href="#"
-            title="Search"
-             onClick={this.handleShowGeocoder}><i className="material-icons">search</i></a>
-        </Navigation>
-      </Header>
+             title="Search"><i className="fi-magnifying-glass"></i>
+          </a>
+        </button>
+      </div>
     )
   }
 }
