@@ -1,11 +1,8 @@
-import expect from 'expect'
-import R from 'ramda'
-
+import { expect } from 'chai'
+import * as R from 'ramda'
 
 import reducer from './featureLayers'
 import * as types from '../actions/types'
-
-
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {
@@ -28,7 +25,7 @@ describe('reducer: featureLayers', () => {
   it('should return the initial state', () => {
     expect(
       extractImportant(reducer(undefined, {}))
-    ).toEqual({
+    ).to.deep.equal({
       layers: [
         {
           'id': 'ahps-flood',
@@ -38,9 +35,9 @@ describe('reducer: featureLayers', () => {
           'status': null,
         },
         {
-          'id': 'animated-weather',
-          'text': 'Weather Radar',
-          'type': 'animated-weather',
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
           'active': false,
           'status': null,
         },
@@ -52,9 +49,9 @@ describe('reducer: featureLayers', () => {
           'status': null,
         },
         {
-          'id': 'reservoir-conditions',
-          'text': 'Lake Conditions',
-          'type': 'cartodb',
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
           'active': false,
           'status': null,
         }
@@ -68,9 +65,23 @@ describe('reducer: featureLayers', () => {
         layers: [
           {
             'id': 'ahps-flood',
-            'text': 'Flood Gauges',
+            'text': 'Flood Gages',
             'type': 'cartodb',
             'active': true,
+            'status': null,
+          },
+          {
+            'id': 'reservoir-conditions',
+            'text': 'Lake Conditions',
+            'type': 'cartodb',
+            'active': false,
+            'status': null,
+          },
+          {
+            'id': 'flood-alerts',
+            'text': 'Weather Alerts',
+            'type': 'aeris-alerts',
+            'active': false,
             'status': null,
           },
           {
@@ -79,13 +90,6 @@ describe('reducer: featureLayers', () => {
             'type': 'animated-weather',
             'active': false,
             'status': 'ready',
-          },
-          {
-            'id': 'reservoir-conditions',
-            'text': 'Lake Conditions',
-            'type': 'cartodb',
-            'active': false,
-            'status': null,
           }
         ]
       }, {
@@ -93,30 +97,37 @@ describe('reducer: featureLayers', () => {
         id: 'ahps-flood',
         status: 'pending',
       })
-    ).toEqual({
+    ).to.deep.equal({
       layers: [
-          {
-            'id': 'ahps-flood',
-            'text': 'Flood Gauges',
-            'type': 'cartodb',
-            'active': true,
-            'status': 'pending',
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
-            'status': 'ready',
-          },
-          {
-            'id': 'reservoir-conditions',
-            'text': 'Lake Conditions',
-            'type': 'cartodb',
-            'active': false,
-            'status': null,
-          }
-        ]
+        {
+          'id': 'ahps-flood',
+          'text': 'Flood Gages',
+          'type': 'cartodb',
+          'active': true,
+          'status': 'pending',
+        },
+        {
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
+          'active': false,
+          'status': 'ready',
+        }
+      ]
     })
   })
 
@@ -126,17 +137,10 @@ describe('reducer: featureLayers', () => {
         layers: [
           {
             'id': 'ahps-flood',
-            'text': 'Flood Gauges',
+            'text': 'Flood Gages',
             'type': 'cartodb',
             'active': true,
             'status': 'pending',
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
-            'status': 'ready',
           },
           {
             'id': 'reservoir-conditions',
@@ -144,6 +148,20 @@ describe('reducer: featureLayers', () => {
             'type': 'cartodb',
             'active': false,
             'status': null,
+          },
+          {
+            'id': 'flood-alerts',
+            'text': 'Weather Alerts',
+            'type': 'aeris-alerts',
+            'active': false,
+            'status': null,
+          },
+          {
+            'id': 'animated-weather',
+            'text': 'Weather Radar',
+            'type': 'animated-weather',
+            'active': false,
+            'status': 'ready',
           }
         ]
       }, {
@@ -151,30 +169,37 @@ describe('reducer: featureLayers', () => {
         id: 'ahps-flood',
         status: 'pending',
       })
-    ).toEqual({
+    ).to.deep.equal({
       layers: [
-          {
-            'id': 'ahps-flood',
-            'text': 'Flood Gauges',
-            'type': 'cartodb',
-            'active': true,
-            'status': 'pending',
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
-            'status': 'ready',
-          },
-          {
-            'id': 'reservoir-conditions',
-            'text': 'Lake Conditions',
-            'type': 'cartodb',
-            'active': false,
-            'status': null,
-          }
-        ]
+        {
+          'id': 'ahps-flood',
+          'text': 'Flood Gages',
+          'type': 'cartodb',
+          'active': true,
+          'status': 'pending',
+        },
+        {
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
+          'active': false,
+          'status': 'ready',
+        }
+      ]
     })
   })
 
@@ -184,16 +209,9 @@ describe('reducer: featureLayers', () => {
         layers: [
           {
             'id': 'ahps-flood',
-            'text': 'Flood Gauges',
+            'text': 'Flood Gages',
             'type': 'cartodb',
             'active': true,
-            'status': null,
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
             'status': 'ready',
           },
           {
@@ -202,55 +220,69 @@ describe('reducer: featureLayers', () => {
             'type': 'cartodb',
             'active': false,
             'status': null,
+          },
+          {
+            'id': 'flood-alerts',
+            'text': 'Weather Alerts',
+            'type': 'aeris-alerts',
+            'active': false,
+            'status': null,
+          },
+          {
+            'id': 'animated-weather',
+            'text': 'Weather Radar',
+            'type': 'animated-weather',
+            'active': false,
+            'status': 'ready',
           }
         ]
       }, {
         type: types.SET_FEATURE_LAYER,
         id: 'animated-weather',
       })
-    ).toEqual({
+    ).to.deep.equal({
       layers: [
-          {
-            'id': 'ahps-flood',
-            'text': 'Flood Gauges',
-            'type': 'cartodb',
-            'active': false,
-            'status': null,
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': true,
-            'status': 'ready',
-          },
-          {
-            'id': 'reservoir-conditions',
-            'text': 'Lake Conditions',
-            'type': 'cartodb',
-            'active': false,
-            'status': null,
-          }
-        ]
+        {
+          'id': 'ahps-flood',
+          'text': 'Flood Gages',
+          'type': 'cartodb',
+          'active': true,
+          'status': 'ready',
+        },
+        {
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
+          'active': true,
+          'status': 'ready',
+        }
+      ]
     })
   })
 
-  it('should handle SET_FEATURE_LAYER when it is already active', () => {
+  it('should handle SET_FEATURE_LAYER to deactivate already active layer', () => {
     expect(
       reducer({
         layers: [
           {
             'id': 'ahps-flood',
-            'text': 'Flood Gauges',
+            'text': 'Flood Gages',
             'type': 'cartodb',
             'active': true,
-            'status': null,
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
             'status': 'ready',
           },
           {
@@ -259,26 +291,69 @@ describe('reducer: featureLayers', () => {
             'type': 'cartodb',
             'active': false,
             'status': null,
+          },
+          {
+            'id': 'flood-alerts',
+            'text': 'Weather Alerts',
+            'type': 'aeris-alerts',
+            'active': false,
+            'status': null,
+          },
+          {
+            'id': 'animated-weather',
+            'text': 'Weather Radar',
+            'type': 'animated-weather',
+            'active': true,
+            'status': 'ready',
           }
         ]
       }, {
         type: types.SET_FEATURE_LAYER,
         id: 'ahps-flood',
       })
-    ).toEqual({
+    ).to.deep.equal({
       layers: [
+        {
+          'id': 'ahps-flood',
+          'text': 'Flood Gages',
+          'type': 'cartodb',
+          'active': false,
+          'status': 'ready',
+        },
+        {
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
+          'active': true,
+          'status': 'ready',
+        }
+      ]
+    })
+  })
+
+  it('should handle UPDATE_TIMESTAMP for animated-weather layer', () => {
+    expect(
+      reducer({
+        layers: [
           {
             'id': 'ahps-flood',
-            'text': 'Flood Gauges',
+            'text': 'Flood Gages',
             'type': 'cartodb',
             'active': true,
-            'status': null,
-          },
-          {
-            'id': 'animated-weather',
-            'text': 'Weather Radar',
-            'type': 'animated-weather',
-            'active': false,
             'status': 'ready',
           },
           {
@@ -287,8 +362,59 @@ describe('reducer: featureLayers', () => {
             'type': 'cartodb',
             'active': false,
             'status': null,
+          },
+          {
+            'id': 'flood-alerts',
+            'text': 'Weather Alerts',
+            'type': 'aeris-alerts',
+            'active': false,
+            'status': null,
+          },
+          {
+            'id': 'animated-weather',
+            'text': 'Weather Radar',
+            'type': 'animated-weather',
+            'active': true,
+            'status': 'ready',
+            'displayedTimestamp': ''
           }
         ]
+      }, {
+        type: types.UPDATE_TIMESTAMP,
+        timestamp: '20180125225'
+      })
+    ).to.deep.equal({
+      layers: [
+        {
+          'id': 'ahps-flood',
+          'text': 'Flood Gages',
+          'type': 'cartodb',
+          'active': true,
+          'status': 'ready',
+        },
+        {
+          'id': 'reservoir-conditions',
+          'text': 'Lake Conditions',
+          'type': 'cartodb',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'flood-alerts',
+          'text': 'Weather Alerts',
+          'type': 'aeris-alerts',
+          'active': false,
+          'status': null,
+        },
+        {
+          'id': 'animated-weather',
+          'text': 'Weather Radar',
+          'type': 'animated-weather',
+          'active': true,
+          'status': 'ready',
+          'displayedTimestamp': '20180125225'
+        }
+      ]
     })
   })
 })

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
   <head>
     <title>Texas Flood Information Viewer</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.blue-indigo.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
-    
+
     <!-- this is the code from the realfavicongenerator.net. replace when updating the icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" sizes="32x32">
@@ -35,7 +34,6 @@
         </noscript>
     </div>
 
-    <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
     <script src="/assets/scripts.js" type="text/javascript"></script>
   </body>
 </html>

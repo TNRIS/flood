@@ -1,19 +1,14 @@
 import L from 'leaflet'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import { hashHistory } from 'react-router'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
-import {
-    FABButton, Icon
-} from 'react-mdl'
-
-const pause = require('../images/pause.png')
 
 const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
 const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
@@ -54,7 +49,7 @@ export default class Map extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      animationIcon: "play_arrow",
+      animationIcon: "fi-play",
       geolocateControl: "basic",
       locateToolbar: null
     }
@@ -150,10 +145,16 @@ export default class Map extends Component {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
             const center = this.map.getCenter()
             const zoom =  this.map.getZoom()
-            hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+            const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+            if (this.props.history.location.pathname != urlPath) {
+              this.props.history.push(urlPath)
+            }
           }
           else {
-            hashHistory.push(`/gage/${this.props.popupData.data.lid.toLowerCase()}`)
+            const urlPath = `/gage/${this.props.popupData.data.lid.toLowerCase()}`
+            if (this.props.history.location.pathname != urlPath) {
+              this.props.history.push(urlPath)
+            }
           }
         })
         .on('popupopen', () => {
@@ -171,7 +172,10 @@ export default class Map extends Component {
 
           const center = this.map.getCenter()
           const zoom =  this.map.getZoom()
-          hashHistory.push(`/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`)
+          const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+          if (this.props.history.location.pathname != urlPath) {
+            this.props.history.push(urlPath)
+          }
         })
         .on('dblclick', (e) => {
           const zoom =  this.map.getZoom()
@@ -193,19 +197,19 @@ export default class Map extends Component {
 
     setTimeout(() => {
       const getZoom = () => {
-        if (this.props.initialCenter.zoom && this.props.initialCenter.zoom.match(/\d*\z+/)) {
-          return this.props.initialCenter.zoom.replace(/z$/, "")
+        if (this.props.match.params.zoom && this.props.match.params.zoom.match(/\d*\z+/)) {
+          return this.props.match.params.zoom.replace(/z$/, "")
         }
         return window.innerWidth < 768 ? 5 : 6
       }
 
       const initView = {
-        latitude: this.props.initialCenter.lat || 31,
-        longitude: this.props.initialCenter.lng || -100,
+        latitude: this.props.match.params.lat || 31,
+        longitude: this.props.match.params.lng || -100,
         zoom: getZoom()
       }
-      if (this.props.hasOwnProperty("gageCenter") && this.props.gageCenter.lid) {
-        const upperLid = this.props.gageCenter.lid.toUpperCase()
+      if (this.props.match.params.lid) {
+        const upperLid = this.props.match.params.lid.toUpperCase()
         const query = (
           `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas_develop WHERE lid = '${upperLid}'`
         )
@@ -213,7 +217,7 @@ export default class Map extends Component {
           .then(({data}) => {
             if (data.rows.length === 0) {
               this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
-              hashHistory.push("")
+              this.props.history.push("")
               return initMap(initView)
             }
             data.rows.map((gage) => {
@@ -228,7 +232,7 @@ export default class Map extends Component {
                 data: {
                   name: gage.name,
                   wfo: gage.wfo,
-                  lid: this.props.gageCenter.lid
+                  lid: this.props.match.params.lid
                 },
                 clickLocation: L.latLng(gage.latitude, gage.longitude)
               })
@@ -236,9 +240,6 @@ export default class Map extends Component {
           })
       }
       else {
-        if (!this.props.initialCenter) {
-          hashHistory.push("")
-        }
         initMap(initView)
       }
     }, 1000)
@@ -408,7 +409,7 @@ export default class Map extends Component {
     const trackLocationButton = L.easyButton({
       states: [{
         stateName: 'location-off',
-        icon: '<i class="material-icons track-location-icon" style="font-size: 22px;">gps_not_fixed</i>',
+        icon: '<i class="fi-compass track-location-icon" style="font-size: 22px;"></i>',
         title: 'Follow my location',
         onClick: (control) => {
           control.state('location-on')
@@ -420,7 +421,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'location-on',
-        icon: '<i class="material-icons track-location-icon location-on-button" style="font-size: 22px;">gps_fixed</i>',
+        icon: '<i class="fi-target-two track-location-icon location-on-button" style="font-size: 22px;"></i>',
         title: 'Stop following my location',
         onClick: (control) => {
           control.state('location-off')
@@ -433,7 +434,7 @@ export default class Map extends Component {
       type: 'animate',
       states: [{
         stateName: 'zoom-to-location',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">person_pin_circle</i>',
+        icon: '<i class="fi-marker geolocate-icon" style="font-size: 22px;"></i>',
         title: 'Find my location',
         onClick: (control) => {
           control.state("reset-geolocation-tools")
@@ -443,7 +444,7 @@ export default class Map extends Component {
         }
       }, {
         stateName: 'reset-geolocation-tools',
-        icon: '<i class="material-icons geolocate-icon" style="font-size: 22px;">clear</i>',
+        icon: '<i class="fi-x geolocate-icon" style="font-size: 22px;"></i>',
         title: 'Reset geolocation tools',
         onClick: (control) => {
           control.state("zoom-to-location")
@@ -464,30 +465,20 @@ export default class Map extends Component {
   toggleAnimation() {
     this.layerStore.get('animated-weather').toggleAnimation()
     if (this.layerStore.get('animated-weather').animate === true) {
-      this.setState({animationIcon: "pause"})
+      this.setState({animationIcon: "fi-pause"})
     }
     else {
-      this.setState({animationIcon: "play_arrow"})
+      this.setState({animationIcon: "fi-play"})
     }
-  }
-
-  betaNotice() {
-    if (document.URL === 'http://map.texasflood.org/') {
-      return "hide-beta"
-    }
-    return "betanotice"
   }
 
   render() {
     let radarInfo
     if (this.displayedTimestamp !== '') {
       radarInfo =  (
-        <FABButton mini onClick={() => {this.toggleAnimation()}}>
-        <Icon
-            name={this.state.animationIcon}
-            className="material-icons md-dark"
-        />
-        </FABButton>
+        <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
+          <i className={this.state.animationIcon}></i>
+        </button>
       )
     }
 

@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   CLEAR_POPUP,
@@ -13,26 +13,48 @@ describe('reducer: popupData', () => {
     data: {},
     id: 'ahps-flood'
   }
+
   it('should return the initial state of the popupData', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual({})
+    ).to.deep.equal({})
+  })
+
+  it('should return the popup data object when SET_POPUP is called on empty reducer', () => {
+    expect(
+      reducer(undefined, {
+        type: SET_POPUP,
+        payload: samplePayload
+      })
+    ).to.deep.equal(samplePayload)
   })
 
   it('should return empty object when CLEAR_POPUP action sent', () => {
     expect(
-      reducer([], {
+      reducer(samplePayload, {
         type: CLEAR_POPUP
       })
-    ).toEqual({})
+    ).to.deep.equal({})
   })
 
-  it('should return the popup data object when SET_POPUP is called with data', () => {
+  it('should return the popup data object when SET_POPUP is called on populated reducer', () => {
     expect(
-      reducer([], {
+      reducer({
+        clickLocation: {click: 'location'},
+        data: {lotsOf: 'information'},
+        id: 'flood-alerts'
+      }, {
         type: SET_POPUP,
         payload: samplePayload
       })
-    ).toEqual(samplePayload)
+    ).to.deep.equal(samplePayload)
+  })
+
+  it('should return cleared popup state when SET_POPUP payload is undefined', () => {
+    expect(
+      reducer(samplePayload, {
+        type: SET_POPUP
+      })
+    ).to.deep.equal({})
   })
 })

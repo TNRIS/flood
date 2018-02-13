@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import PopupTitleContainer from '../containers/PopupTitleContainer'
 import PopupTitle from './PopupTitle'
@@ -21,7 +22,7 @@ export default class LakeConditionsPopup extends Component {
 
   render() {
     const { full_name, lake_url_name, updatePopup } = this.props
-    const image_src = `http://waterdatafortexas.org/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
+    const image_src = `https://waterdatafortexas.org/reservoirs/api/individual/${lake_url_name}/recent-elevations-chart`
     const link_src = `https://waterdatafortexas.org/reservoirs/individual/${lake_url_name}`
 
     return (

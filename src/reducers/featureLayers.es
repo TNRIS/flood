@@ -50,7 +50,7 @@ const initialState = {
       'type': 'cartodb',
       'options': {
         'refreshTimeMs': 1800000, // 30 minutes
-        'account': 'tnris',
+        'account': 'tnris-flood',
         'sql': reservoirSQL,
         'interactivity': [
           'full_name',

@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Card, CardTitle, CardText, CardActions } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 
 import Modal from 'react-modal'
 
@@ -73,20 +74,18 @@ class AccountSettingsForm extends Component {
       let button
       if (this.props.allSubscriptions.length === 0) {
         button = (
-          <div style={{marginTop: "30px"}}>
-            <Button raised
-            style={{background: "#c0392b", color: "white", width: "100%"}}
-            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</Button>
+          <div className="delete-button-container">
+            <button type="button" className="button delete-account"
+            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
       }
       else {
         button = (
-          <div style={{marginTop: "30px"}}>
+          <div className="delete-button-container">
             <p>Please unsubscribe from all gages before deleting your account.</p>
-            <Button raised disabled
-            style={{width: "100%"}}
-            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</Button>
+            <button disabled type="button" className="button delete-account-disabled"
+            onClick={this.handleOpenConfirmDialog}>DELETE MY ACCOUNT</button>
           </div>
         )
       }
@@ -95,7 +94,7 @@ class AccountSettingsForm extends Component {
 
     return (
       <div>
-        <div className="user__settings">
+        <div className="user-settings">
           <p><b>Current User Profile</b></p>
           <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
           <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
@@ -104,18 +103,22 @@ class AccountSettingsForm extends Component {
             {deleteAccountButton()}
           </span>
         </div>
-        <Modal isOpen={this.state.openConfirmDialog} contentLabel="Confirm Changes Modal" style={reactModalStyle}>
-          <Card>
-            <CardTitle className="confirm-modal-title"><i className="material-icons">warning</i>
-            Confirm Delete
-            </CardTitle>
-            <CardText className="confirm-modal-text">Are you sure you want to delete your account?
-            Once deleted, your account cannot be recovered.</CardText>
-            <CardActions className="confirm-modal-actions">
-              <Button type="button" onClick={this.deleteAccount}>Confirm</Button>
-              <Button autoFocus="true" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</Button>
-            </CardActions>
-          </Card>
+        <Modal className="confirm-delete-account"
+               isOpen={this.state.openConfirmDialog}
+               contentLabel="Confirm Changes Modal"
+               style={reactModalStyle}>
+          <div className="card">
+            <div className="card-divider confirm-modal-title">
+              <i className="fi-alert"></i>
+              <span>Confirm Delete</span>
+            </div>
+            <div className="card-section confirm-modal-text">Are you sure you want to delete your account?
+            Once deleted, your account cannot be recovered.</div>
+            <div className="confirm-modal-actions">
+              <button type="button" className="button" onClick={this.deleteAccount}>Confirm</button>
+              <button autoFocus="true" type="button" className="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+            </div>
+          </div>
         </Modal>
       </div>
     )

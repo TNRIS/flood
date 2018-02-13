@@ -1,12 +1,11 @@
 import ReactDOM from 'react-dom'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import L from 'leaflet'
 
 import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
-
-import {  hashHistory } from 'react-router'
 
 
 export default class Popup extends Component {
@@ -30,7 +29,7 @@ export default class Popup extends Component {
     this.leafletPopup = L.popup({
       className: 'popup',
       closeButton: false,
-      maxheight: 600,
+      maxHeight: 600,
       keepInView: true
     })
   }
@@ -50,7 +49,10 @@ export default class Popup extends Component {
           const gage = gageInfo[lid]
           const popupLocation = gage ? L.latLng(gage.latitude, gage.longitude) : popupData.clickLocation
           this.leafletPopup.setLatLng(popupLocation)
-          hashHistory.push(`/gage/${lid.toLowerCase()}`)
+          const urlPath = `/gage/${lid.toLowerCase()}`
+          if (this.props.history.location.pathname != urlPath) {
+            this.props.history.push(urlPath)
+          }
           return this.showPopop()
 
         case 'flood-alerts':
@@ -96,26 +98,23 @@ export default class Popup extends Component {
   updatePopupSize() {
     const {leafletMap} = this.props
 
-    this.leafletPopup.update(
-          this.leafletPopup.options = {
-            ...this.leafletPopup.options,
-            minWidth: (() => {
-              const mapWidth = leafletMap.getSize().x
-              if (mapWidth > 800) {
-                if (this.props.popupData.id === 'reservoir-conditions') {
-                  return 800
-                }
-                return 600
-              }
-              else if (mapWidth > 600) {
-                if (this.props.popupData.id === 'reservoir-conditions') {
-                  return 0.90 * mapWidth
-                }
-                return 600
-              }
-              return 0.90 * mapWidth
-            })()
-          })
+    this.leafletPopup.options.minWidth =  (() => {
+        const mapWidth = leafletMap.getSize().x
+        if (mapWidth > 800) {
+          if (this.props.popupData.id === 'reservoir-conditions') {
+            return 800
+          }
+          return 600
+        }
+        else if (mapWidth > 600) {
+          if (this.props.popupData.id === 'reservoir-conditions') {
+            return 0.90 * mapWidth
+          }
+          return 600
+        }
+        return 0.90 * mapWidth
+      })()
+    this.leafletPopup.update()
   }
 
   showPopop() {

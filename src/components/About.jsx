@@ -1,11 +1,4 @@
-import React from 'react'
-import {
-    Button,
-    Card,
-    CardTitle,
-    CardText,
-    CardActions
-} from 'react-mdl'
+import React, { Component } from 'react'
 
 import twdbLogoImage from '../images/TWDBlogo_blue_transparent.png'
 import tnrisLogoImage from '../images/TNRISlogo_blue_transparent.png'
@@ -19,29 +12,38 @@ const reactModalStyle = {
   }
 }
 
-class About extends React.Component {
+export default class About extends Component {
   constructor(props) {
     super(props)
   }
 
+  componentWillMount() {
+    Modal.setAppElement('#reactApp')
+  }
+
   render() {
+    let versionNumber
+    if (typeof VERSION === 'undefined') {
+      versionNumber = ""
+    } else {
+      versionNumber = "version " + VERSION
+    }
+
     return (
-      <div className="about__wrapper">
         <Modal className="about-modal"
                isOpen={this.props.openDialog}
                contentLabel="About Modal"
                style={reactModalStyle}>
           <div>
-            <p className="about-version-number">version {VERSION}</p>
+            <p className="about-version-number">{versionNumber}</p>
           </div>
-          <Card className="about">
-            {/* <CardTitle expand className="about-title">TWDB Flood Viewer</CardTitle> */}
-            <CardTitle expand className="about-title">
+          <div className="card about">
+            <div className="card-divider about-title">
               <a href="http://texasflood.org" target="_blank">
                 <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
               </a>
-            </CardTitle>
-            <CardText className="about-text">
+            </div>
+            <div className="card-section about-text">
               <h5>Disclaimer</h5>
               <p className="about-disclaimer-text">
               The data and information presented in this viewer is the best available
@@ -65,25 +67,22 @@ class About extends React.Component {
                 <a href="./viewer-details.html" target="_blank">More Detailed Information</a>
               </h6>
               <p className="about-developed-by">Developed By</p>
-              <div className="about__logos">
-                <a className="about__twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
+              <div className="about-logos">
+                <a className="about-twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
                   <img src={twdbLogoImage} alt="The Texas Water Development Board logo"/>
                 </a>
-                <a className="about__tnris-logo" href="http://www.tnris.org" target="_blank">
+                <a className="about-tnris-logo" href="http://www.tnris.org" target="_blank">
                   <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
                 </a>
               </div>
-            </CardText>
-            <CardActions className="about-button-div">
-                  <Button colored className="terms-agree-button" type="button" onClick={this.props.hideAbout}>
-                  Close
-                  </Button>
-            </CardActions>
-          </Card>
+            </div>
+            <div className="about-button-div">
+              <button className="button terms-agree-button" type="button" onClick={this.props.hideAbout}>
+                Close
+              </button>
+            </div>
+          </div>
         </Modal>
-      </div>
     )
   }
 }
-
-export default About

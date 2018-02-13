@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { Button, Spinner, Textfield, Icon } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { RingLoader } from 'react-spinners'
 
 import SubscriptionListContainer from '../containers/SubscriptionListContainer'
 import LoginForm from './LoginForm'
@@ -48,10 +49,10 @@ class SubscriptionForm extends Component {
     let formSwapper
     const userTools = (
       <div className="settings-sign-out-button-wrapper">
-        <Button
-        onClick={ () => this.props.swapDisplayForm("userSettings") }>Settings</Button>
-        <Button
-        onClick={ this.props.userSignOut }>Sign Out</Button>
+        <button className="button" type="button"
+        onClick={ () => this.props.swapDisplayForm("userSettings") }>Settings</button>
+        <button className="button" type="button"
+        onClick={ this.props.userSignOut }>Sign Out</button>
       </div>
     )
 
@@ -65,17 +66,19 @@ class SubscriptionForm extends Component {
 
     const userToolsSettings = (
       <div className="subscriptions-sign-out-button-wrapper">
-        <Button
-        onClick={ () => this.props.swapDisplayForm(formByLength) }>Subscriptions</Button>
-        <Button
-        onClick={ this.props.userSignOut }>Sign Out</Button>
+        <button className="button" type="button"
+        onClick={ () => this.props.swapDisplayForm(formByLength) }>Subscriptions</button>
+        <button className="button" type="button"
+        onClick={ this.props.userSignOut }>Sign Out</button>
       </div>
     )
 
     // Checks to see if there are any subscriptions to display in the store or if the form is still fetching
     if (this.props.isFetching || this.props.isUpdating) {
       subscriptionManagerContent = (
-        <Spinner style={{display: 'block', margin: 'auto',  marginBottom: "40px", marginTop: "40px"}}/>
+        <div className="spinner-wrapper">
+          <RingLoader color={'#92C553'} loading={true}/>
+        </div>
       )
     }
     else if (this.props.displayForm === "SubscriptionList") {
@@ -88,11 +91,11 @@ class SubscriptionForm extends Component {
       )
       formSwapper = (
         <div>
-          <p className="form__swapper">
+          <p className="form-swapper">
             <span>Don&#39;t have an account? </span>
             <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
           </p>
-          <p className="form__swapper">
+          <p className="form-swapper">
             <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
           </p>
         </div>
@@ -103,7 +106,7 @@ class SubscriptionForm extends Component {
         <SignupForm userSignUp={this.props.userSignUp} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper">
           <span>Already have an account? </span>
           <a href="#" onClick={ () => this.props.swapDisplayForm("login") }>Sign In</a>
         </p>
@@ -114,7 +117,7 @@ class SubscriptionForm extends Component {
         <VerifyForm phone={FloodAppUser.phone} userVerify={this.props.userVerify}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper">
           <span>Having trouble? </span>
           <a href="#" onClick={ this.props.resendVerificationCode }>Resend Verification Code</a>
         </p>
@@ -125,11 +128,8 @@ class SubscriptionForm extends Component {
         <ForgotPasswordForm forgotPassword={this.props.forgotPassword}/>
       )
       formSwapper = (
-        <p className="form__back">
-          <Icon
-              name="arrow_back"
-              onClick={ () => this.props.swapDisplayForm("login") }
-          />
+        <p className="form-back">
+          <i className="fi-arrow-left" onClick={ () => this.props.swapDisplayForm("login") }></i>
         </p>
       )
     }
@@ -138,7 +138,7 @@ class SubscriptionForm extends Component {
         <NewPasswordForm newPassword={this.props.newPassword} showSnackbar={this.props.showSnackbar}/>
       )
       formSwapper = (
-        <p className="form__swapper">
+        <p className="form-swapper" style={{height:'15px'}}>
         </p>
       )
     }
@@ -156,8 +156,9 @@ class SubscriptionForm extends Component {
     }
 
     return (
-        <div ref="subscriptionManager"
-        style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '0', paddingRight: '0', display: 'block'}}>
+        <div className="subscriptionManager"
+             ref="subscriptionManager"
+             style={{paddingTop: '20px', paddingBottom: '20px', paddingLeft: '0', paddingRight: '0', display: 'block'}}>
           {subscriptionManagerContent}
           {formSwapper}
         </div>

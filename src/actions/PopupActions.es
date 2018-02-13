@@ -39,7 +39,7 @@ export function popupImageLoadSuccess() {
       loaded: true
     }
   }
-}
+} 
 
 /**
  * Action to set popup content in the Redux store

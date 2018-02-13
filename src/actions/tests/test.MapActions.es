@@ -1,4 +1,4 @@
-import expect from 'expect'
+import { expect } from 'chai'
 
 import {
   CLEAR_CENTER_AND_ZOOM,
@@ -20,11 +20,11 @@ describe('actions: MapActions', () => {
     const expectedAction = {
       type: CLEAR_CENTER_AND_ZOOM
     }
-    expect(clearCenterAndZoom()).toEqual(expectedAction)
+    expect(clearCenterAndZoom()).to.deep.equal(expectedAction)
   })
 
   it('register a click from the map and create the action to handle to event', () => {
-    expect(mapClickHandler()).toBeA('function')
+    expect(mapClickHandler()).to.be.a('function')
   })
 
   it('should create action to set the center and zoom of the map in the store', () => {
@@ -34,6 +34,6 @@ describe('actions: MapActions', () => {
       lng: sampleLng,
       zoom: sampleZoom
     }
-    expect(setCenterAndZoom(sampleLat, sampleLng, sampleZoom)).toEqual(expectedAction)
+    expect(setCenterAndZoom(sampleLat, sampleLng, sampleZoom)).to.deep.equal(expectedAction)
   })
 })

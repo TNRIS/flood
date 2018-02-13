@@ -1,5 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { Content, Layout } from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import $ from 'jquery'
+import 'foundation-sites'
 
 import ga from '../util/GoogleAnalytics'
 import MapContainer from '../containers/MapContainer'
@@ -26,14 +29,19 @@ export default class App extends Component {
     this.props.retrieveUser()
   }
 
-componentDidMount() {
-  if (SITE_URL != 'map.texasflood.org') {
-    this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
-    from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
-    gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
-    </p>, 5000)
+  componentDidMount() {
+      $(document).foundation()
+      if (this.props.location.pathname === '/subscriptions' && this.props.browser.width < 1025) {
+        $('#off-canvas-drawer').foundation('open')
+      }
+
+      if (SITE_URL != 'map.texasflood.org') {
+        this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
+        from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
+        gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
+        </p>, 10000)
+      }
   }
-}
 
   render() {
     const navContentInitState = () => {
@@ -49,31 +57,51 @@ componentDidMount() {
       }
     }
 
+    let sideBar
+    if (this.props.browser.greaterThan.large) {
+      sideBar = (
+        <div className="app-content">
+          <div id="off-canvas-drawer"
+               className="on-canvas">
+              <NavigationDrawer
+                navContentInitState={navContentInitState()}
+                browser={this.props.browser}
+                userAuthentication={this.props.userAuthentication}
+              />
+          </div>
+          <div className="off-canvas-content" data-off-canvas-content>
+            <MapContainer />
+          </div>
+        </div>
+      )
+    } else {
+      sideBar = (
+        <div className="app-content">
+          <div id="off-canvas-drawer"
+               className="off-canvas position-left is-closed"
+               data-transition="overlap"
+               data-off-canvas>
+              <NavigationDrawer
+                navContentInitState={navContentInitState()}
+                browser={this.props.browser}
+                userAuthentication={this.props.userAuthentication}
+              />
+          </div>
+          <div className="off-canvas-content" data-off-canvas-content>
+            <MapContainer />
+          </div>
+      </div>
+      )
+    }
+
     return (
       <div>
         <Disclaimer />
         <AboutContainer />
-        <Layout fixedDrawer fixedHeader>
-          <FloodHeaderContainer />
-            <NavigationDrawer
-              navContentInitState={navContentInitState()}
-              browser={this.props.browser}
-              userAuthentication={this.props.userAuthentication}
-            />
-            <Content>
-            <MapContainer
-              initialCenter={{
-                lat: this.props.params.lat || null,
-                lng: this.props.params.lng || null,
-                zoom: this.props.params.zoom || null
-              }}
-              gageCenter={{
-                lid: this.props.params.lid || null
-              }} />
-            </Content>
-          <FloodFooter />
-          <ToasterContainer />
-        </Layout>
+        <FloodHeaderContainer />
+        { sideBar }
+        <FloodFooter browser={this.props.browser} />
+        <ToasterContainer />
       </div>
     )
   }

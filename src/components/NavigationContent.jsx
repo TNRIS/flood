@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Icon } from 'react-mdl'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
-
 
 class NavigationToggle extends Component {
   constructor(props) {
@@ -18,17 +16,6 @@ class NavigationToggle extends Component {
     this.handleSetNavigationUnsubscribe = this.handleSetNavigationUnsubscribe.bind(this)
     this.handleSetNavigationLayers = this.handleSetNavigationLayers.bind(this)
     this.handleSetSignInButton = this.handleSetSignInButton.bind(this)
-  }
-
-  componentDidMount() {
-    if (this.state.showSubscriptionForm == true && this.props.browser.width < 1025) {
-      const drawer = document.querySelector('.mdl-layout__drawer')
-      drawer.classList.add('is-visible')
-      setTimeout(function () {
-        const obfuscator = document.querySelector('.mdl-layout__obfuscator')
-        obfuscator.classList.add('is-visible')
-      }, 100)
-    }
   }
 
   handleSetNavigationUnsubscribe() {
@@ -47,29 +34,26 @@ class NavigationToggle extends Component {
 
   render() {
     return (
-      <div>
+      <div className="navigation-content">
         <div>
-          <Button ripple
-          className="toggle-navigation-content"
+          <button
+          className="button toggle-navigation-content"
+          type="button"
           onClick={this.handleSetNavigationLayers}>
-          <Icon
-              name="layers"
-              className="layers"
-          />
-          Map Layers</Button>
+          <i className="fi-page-multiple"></i>
+          Map Layers</button>
           { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
         <div>
-          <Button ripple
-          className="toggle-navigation-content bottom-nav-button"
+          <button
+          className="button toggle-navigation-content bottom-nav-button"
+          type="button"
           onClick={this.handleSetNavigationUnsubscribe}>
-          <Icon
-              name="notifications_active"
-              className="add-alert"
-          />
-          {this.handleSetSignInButton()}</Button>
+          <i className="fi-megaphone"></i>
+          {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
+        <div style={{height:'50px', width:'100%'}}></div>
       </div>
     )
   }

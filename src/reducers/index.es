@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { responsiveStateReducer } from 'redux-responsive'
+import { createResponsiveStateReducer } from 'redux-responsive'
 
 import baseLayers from './baseLayers'
 import featureLayers from './featureLayers'
@@ -22,7 +22,13 @@ export const rootReducer = combineReducers({
   map: map,
   gageInfo,
   subscriptionConfirmation: subscriptionConfirmation,
-  browser: responsiveStateReducer,
+  browser: createResponsiveStateReducer({
+        extraSmall: 500,
+        small: 700,
+        medium: 900,
+        large: 1025,
+        extraLarge: 1400,
+    }),
   subscriptionChanges: combineReducers({
     subscriptionChangesById,
     allSubscriptionChanges,

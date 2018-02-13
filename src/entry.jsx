@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import { Router, Route, hashHistory } from 'react-router'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import AppContainer from './containers/AppContainer'
 
@@ -15,8 +15,6 @@ import 'leaflet_marker_2x'
 import 'leaflet_marker_shadow'
 
 // vendor css and js
-import './vendor/material.css'
-import './vendor/material.js'
 import './vendor/Leaflet.BingLayer.js'
 import './vendor/leaflet.TileLayer.WMTS.js'
 import './vendor/leaflet.utfgrid.js'
@@ -24,31 +22,20 @@ import './vendor/leaflet.easy-button.js'
 import './vendor/leaflet.easy-button.css'
 import './vendor/Control.Geocoder.js'
 import './vendor/Control.Geocoder.css'
-import './vendor/leaflet.label.js'
-import './vendor/leaflet.label.css'
 
 // Promise polyfill
 require('es6-promise').polyfill()
 
-let lastPath = ""
-
-hashHistory.listen((ev) => {
-  if (ev.action === "POP" && ev.pathname !== lastPath) {
-    // store.dispatch(setCenterAndZoom(32, -105, 12))
-  }
-  lastPath = ev.pathname
-})
-
 render(
   <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={AppContainer}>
-        <Route path="gage/:lid" component={AppContainer} />
-        <Route path="map/@:lat,:lng,:zoom" component={AppContainer} />
-        <Route path="subscriptions/" component={AppContainer} />
+    <HashRouter>
+      <Switch>
+        <Route path="/gage/:lid" component={AppContainer} />
+        <Route path="/map/@:lat,:lng,:zoom" component={AppContainer} />
+        <Route path="/subscriptions" component={AppContainer} />
         <Route path="/*" component={AppContainer} />
-      </Route>
-    </Router>
+      </Switch>
+    </HashRouter>
   </Provider>,
   document.getElementById('reactApp')
 )

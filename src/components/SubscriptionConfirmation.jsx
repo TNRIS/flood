@@ -1,12 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import {
-    Button,
-    Checkbox,
-    Card,
-    CardTitle,
-    CardText,
-    CardActions
-} from 'react-mdl'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import Modal from 'react-modal'
 
 const reactModalStyle = {
@@ -61,19 +55,20 @@ class SubscriptionConfirmation extends Component {
              contentLabel="Confirm Changes Modal"
              style={reactModalStyle}
              className="subscription-confirm-modal">
-        <Card>
-          <CardTitle className="subscription-confirm-modal-title"><i className="material-icons">playlist_add_check</i>
-          Confirm Subscription
-          </CardTitle>
-          <CardText className="subscription-confirm-modal-text">
+        <div className="card">
+          <div className="card-divider subscription-confirm-modal-title">
+            <i className="fi-page-edit"></i>
+            <span>Confirm Subscription</span>
+          </div>
+          <div className="card-section subscription-confirm-modal-text">
             <p>Are you sure you want to subscribe to receive alerts for the
             <b> { this.state.name } ({ this.state.lid })</b> flood gage?</p>
-          </CardText>
-          <CardActions className="subscription-confirm-modal-actions">
-            <Button type="button" onClick={this.handleConfirmation}>Confirm</Button>
-            <Button autoFocus="true" type="button" onClick={this.handleCloseModal}>Cancel</Button>
-          </CardActions>
-        </Card>
+          </div>
+          <div className="card-section subscription-confirm-modal-actions">
+            <button className="button" type="button" onClick={this.handleConfirmation}>Confirm</button>
+            <button className="button" autoFocus="true" type="button" onClick={this.handleCloseModal}>Cancel</button>
+          </div>
+        </div>
       </Modal>
     )
   }
