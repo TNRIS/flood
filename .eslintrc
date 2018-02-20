@@ -7,7 +7,7 @@
     "es": true
   },
   "parser": "babel-eslint",
-  "environment": {
+  "env": {
     "browser": true
   },
   "rules": {
