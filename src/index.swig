@@ -5,6 +5,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"> 
 
     <!-- this is the code from the realfavicongenerator.net. replace when updating the icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
