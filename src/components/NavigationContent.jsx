@@ -32,6 +32,10 @@ class NavigationToggle extends Component {
     return this.props.userAuthentication === 0 ? "My Gage Alerts" : "Sign In"
   }
 
+  handleSetSignInButtonIcon() {
+    return this.props.userAuthentication === 0 ? "fa fa-bell-o" : "fa fa-pencil"
+  }
+
   render() {
     return (
       <div className="navigation-content">
@@ -40,7 +44,7 @@ class NavigationToggle extends Component {
           className="button toggle-navigation-content"
           type="button"
           onClick={this.handleSetNavigationLayers}>
-          <i className="fi-page-multiple"></i>
+          <i className="fa fa-map-o"></i>
           Map Layers</button>
           { this.state.showFeatureLayerChooser ? <FeatureLayerChooserContainer/> : '' }
         </div>
@@ -49,11 +53,11 @@ class NavigationToggle extends Component {
           className="button toggle-navigation-content bottom-nav-button"
           type="button"
           onClick={this.handleSetNavigationUnsubscribe}>
-          <i className="fi-megaphone"></i>
+          <i className={this.handleSetSignInButtonIcon()}></i>
           {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
-        <div style={{height:'50px', width:'100%'}}></div>
+        {/* <div style={{height:'50px', width:'100%'}}></div> */}
       </div>
     )
   }

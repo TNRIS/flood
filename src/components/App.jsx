@@ -7,6 +7,7 @@ import 'foundation-sites'
 import ga from '../util/GoogleAnalytics'
 import MapContainer from '../containers/MapContainer'
 import NavigationDrawer from '../components/NavigationDrawer'
+import NavigationDrawerMobile from '../components/NavigationDrawerMobile'
 import Disclaimer from '../components/Disclaimer'
 import AboutContainer from '../containers/AboutContainer'
 import ToasterContainer from '../containers/ToasterContainer'
@@ -30,17 +31,32 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    // Opens the off-canvas menu on page load for desktop
+    if (this.props.browser.greaterThan.large) {
       $(document).foundation()
-      if (this.props.location.pathname === '/subscriptions' && this.props.browser.width < 1025) {
-        $('#off-canvas-drawer').foundation('open')
-      }
+      $('#off-canvas-drawer').foundation('open')
+      $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
+    }
 
-      if (SITE_URL != 'map.texasflood.org') {
-        this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
-        from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
-        gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
-        </p>, 10000)
-      }
+    // // Necessary to have the off-canvas menu functional on mobile, not sure why
+    if (this.props.browser.lessThan.large) {
+      $(document).foundation()
+      $('#off-canvas-drawer').foundation('close')
+    }
+
+    // Opens the off-canvas menu focused on subscriptions when they come in from a subscription url
+    if (this.props.location.pathname === '/subscriptions' && this.props.browser.lessThan.large) {
+      $(document).foundation()
+      $('#off-canvas-drawer').foundation('open')
+    }
+
+    // Beta warning
+    if (SITE_URL != 'map.texasflood.org') {
+      this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta. All user subscriptions
+      from previous versions of this application have expired. You will need to sign up for an account and resubscribe to
+      gages of interest. For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
+      </p>, 10000)
+    }
   }
 
   render() {
@@ -62,14 +78,16 @@ export default class App extends Component {
       sideBar = (
         <div className="app-content">
           <div id="off-canvas-drawer"
-               className="on-canvas">
+               className="on-canvas off-canvas position-left"
+               data-transition="overlap"
+               data-off-canvas>
               <NavigationDrawer
                 navContentInitState={navContentInitState()}
                 browser={this.props.browser}
                 userAuthentication={this.props.userAuthentication}
               />
           </div>
-          <div className="off-canvas-content" data-off-canvas-content>
+          <div className="off-canvas-content desktop-overlay" data-off-canvas-content>
             <MapContainer />
           </div>
         </div>
@@ -81,7 +99,7 @@ export default class App extends Component {
                className="off-canvas position-left is-closed"
                data-transition="overlap"
                data-off-canvas>
-              <NavigationDrawer
+              <NavigationDrawerMobile
                 navContentInitState={navContentInitState()}
                 browser={this.props.browser}
                 userAuthentication={this.props.userAuthentication}

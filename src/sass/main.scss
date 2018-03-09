@@ -142,6 +142,13 @@ body {
       width: 300px;
       height: calc(100vh - 90px);
       float: left;
+      top: 40px;
+    }
+
+    .desktop-overlay {
+      .js-off-canvas-overlay.is-visible {
+        visibility: hidden;
+      }
     }
 
     .off-canvas-content {
@@ -268,6 +275,7 @@ body {
         .subscriptionManager {
           background-color: white;
           font-size: 14px;
+          margin-bottom: 50px;
 
           .spinner-wrapper {
             div {
@@ -403,7 +411,11 @@ body {
             background-color: white;
             width: 100%;
             float: left;
-            margin: 10px 0 50px 0;
+            margin-top: 10px;
+
+            @media screen and (max-width: $layout-desktop-width-threshold) {
+              margin-bottom: 50px;
+            }
 
             button {
               width: 50%;
@@ -631,7 +643,6 @@ body {
   }
 }
 
-
 //  -----MAP! MAP! MAP!-----
 .map {
   height: calc(100vh - 95px);
@@ -645,9 +656,9 @@ body {
   background-color: #222 !important;
   z-index: 1;
 
-  @media screen and (min-width: $layout-desktop-width-threshold) {
-    width: calc(100vw - 300px);
-  }
+  // @media screen and (min-width: $layout-desktop-width-threshold) {
+  //   width: calc(100vw - 300px);
+  // }
 }
 
 .map__cursor--pointer {

@@ -48,7 +48,7 @@ class PopupTitle extends Component {
           {this.props.title === "Flood Gage" &&
             <button type="button" className="button subscribe-button"
                     onClick={this.handleShowSubscriptionConfirmation}>
-              <i className="fi-megaphone" name="notifications_active"></i>
+              <i className="fa fa-bell-o" name="notifications_active"></i>
               <span>Subscribe</span>
             </button>
           }
