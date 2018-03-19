@@ -920,7 +920,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
     border-radius: 0;
-    max-height: 578px;
+    // max-height: 550px;
     // overflow-y: auto;
     .leaflet-popup-content {
       margin: 0 0 0 0;
@@ -945,6 +945,10 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
       vertical-align: middle;
       font-size: 1.4em;
       margin-right: 18px;
+
+      @media screen and (max-width: $iphone-five-width-threshold) {
+        font-size: 1.2em;
+      }
     }
 
     .button {
@@ -959,6 +963,10 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
       span {
         padding-left: 8px;
+
+        @media screen and (max-width: $iphone-five-width-threshold) {
+          font-size: .8em;
+        }
       }
     }
 
@@ -1015,6 +1023,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
         @media screen and (max-width: 400px) {
           float: none;
+          display: inline-block;
         }
     }
   }
