@@ -64,33 +64,9 @@ class AccountSettingsForm extends Component {
 
   render() {
     let profile = FloodAppUser.userData
-    let email
-    if (profile.email) {
-      email = (
-          profile.email
-        )
-    }
-    else {
-      email = (
-          <i>No email on file</i>
-        )
-    }
-console.log(profile)
-    let alertCurrent
-    if (profile['custom:currentAlerts'] === "T") {
-      alertCurrent = true
-    }
-    else {
-      alertCurrent = false
-    }
-
-    let alertPredictive
-    if (profile['custom:predictiveAlerts'] === "T") {
-      alertPredictive = true
-    }
-    else {
-      alertPredictive = false
-    }
+    const email = profile.email ? profile.email : (<i>No email on file</i>)
+    const alertCurrent = profile['custom:currentAlerts'] === "T" ? true : false
+    const alertPredictive = profile['custom:predictiveAlerts'] === "T" ? true : false
 
     const deleteAccountButton = () => {
       let button
