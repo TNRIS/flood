@@ -499,6 +499,21 @@ body {
 
             label.form-chunk {
               color: $lighter-blue;
+            .switch-label {
+              margin-bottom: 0;
+            }
+
+            tbody {
+              border: 0;
+              text-align: center;
+
+              tr {
+                border: 0;
+              }
+            }
+
+            .delete-button-container {
+              margin-top: 30px;
 
               input {
                 width: 100%;

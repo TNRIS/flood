@@ -56,6 +56,12 @@ class AccountSettingsForm extends Component {
     this.props.deleteAccount()
   }
 
+  toggleAlertTypes(event) {
+    const att = event.target.id == "currentAlerts" ? "custom:currentAlerts" : "custom:predictiveAlerts"
+    const value = event.target.checked == true ? "T" : "F"
+    FloodAppUser.updateAlertAttribute(att, value)
+  }
+
   render() {
     let profile = FloodAppUser.userData
     let email
@@ -68,6 +74,22 @@ class AccountSettingsForm extends Component {
       email = (
           <i>No email on file</i>
         )
+    }
+console.log(profile)
+    let alertCurrent
+    if (profile['custom:currentAlerts'] === "T") {
+      alertCurrent = true
+    }
+    else {
+      alertCurrent = false
+    }
+
+    let alertPredictive
+    if (profile['custom:predictiveAlerts'] === "T") {
+      alertPredictive = true
+    }
+    else {
+      alertPredictive = false
     }
 
     const deleteAccountButton = () => {
@@ -99,9 +121,48 @@ class AccountSettingsForm extends Component {
           <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
           <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
           <p><b>Email:</b> { email }</p>
-          <span>
-            {deleteAccountButton()}
-          </span>
+          <div>
+            <p className="switch-label"><b>Flood Gage Significant Stage Alert Types:</b></p>
+            <table className="responsive-card-table unstriped">
+              <tbody>
+                <tr>
+                  <td>
+                    <div className="switch-container shrink" title="Receive significant current gage stage alerts"><small>Current</small>
+                      <div className="switch tiny">
+                        <input className="switch-input"
+                          id="currentAlerts"
+                          type="checkbox"
+                          name="currentAlerts"
+                          defaultChecked={alertCurrent}
+                          onChange={(event) => this.toggleAlertTypes(event)}/>
+                        <label className="switch-paddle" htmlFor="currentAlerts">
+                          <span className="show-for-sr"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="switch-container shrink" title="Receive significant predictive gage stage alerts"><small>Predictive</small>
+                      <div className="switch tiny">
+                        <input className="switch-input"
+                         id="predictiveAlerts"
+                         type="checkbox"
+                         name="predictiveAlerts"
+                         defaultChecked={alertPredictive}
+                         onChange={(event) => this.toggleAlertTypes(event)}/>
+                        <label className="switch-paddle" htmlFor="predictiveAlerts">
+                         <span className="show-for-sr"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <span>
+          {deleteAccountButton()}
+        </span>
         </div>
         <Modal className="confirm-delete-account"
                isOpen={this.state.openConfirmDialog}

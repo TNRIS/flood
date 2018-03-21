@@ -81,9 +81,66 @@ class AppUser {
 
     this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
     this.attributeEmail = new CognitoUserAttribute(this.dataEmail)
-    this.attributeList = [this.attributePhoneNumber, this.attributeEmail]
+
+    this.dataCurrentAlerts = {
+      Name: 'custom:currentAlerts',
+      Value: 'T'
+    }
+
+    this.dataPredictiveAlerts = {
+      Name: 'custom:predictiveAlerts',
+      Value: 'T'
+    }
+
+    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
+    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
+
+    this.attributeList = [this.attributePhoneNumber, this.attributeEmail, this.attributeCurrentAlerts, this.attributePredictiveAlerts]
 
     return this.attributeList
+  }
+
+  setAlertAttributes = () => {
+    this.dataCurrentAlerts = {
+      Name: 'custom:currentAlerts',
+      Value: 'T'
+    }
+
+    this.dataPredictiveAlerts = {
+      Name: 'custom:predictiveAlerts',
+      Value: 'T'
+    }
+
+    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
+    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
+
+    const alertAttributeList = [this.attributeCurrentAlerts, this.attributePredictiveAlerts]
+    this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
+      if (err) {
+        return console.log(err)
+      }
+      return
+    })
+  }
+
+  updateAlertAttribute = (updateAtt, newValue) => {
+    this.dataUpdate = {
+      Name: updateAtt,
+      Value: newValue
+    }
+
+    this.updateAttribute = new CognitoUserAttribute(this.dataUpdate)
+
+    const alertAttributeList = [this.updateAttribute]
+    const result = this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
+      if (err) {
+        return console.log(err)
+      }
+      console.log(result)
+      return
+    })
+    console.log(this.userData)
+    this.userData[updateAtt] = newValue
   }
 
   authenticate = (callback) => {
@@ -113,6 +170,11 @@ class AppUser {
                   user[att[i].Name] = att[i].Value
                 }
                 this.userData = {...user}
+                if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
+                  this.userData['custom:currentAlerts'] = 'T'
+                  this.userData['custom:predictiveAlerts'] = 'T'
+                  this.setAlertAttributes()
+                }
               }
             })
             return callback(0)
@@ -245,6 +307,11 @@ class AppUser {
                   user[att[i].Name] = att[i].Value
                 }
                 this.userData = {...user}
+                if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
+                  this.userData['custom:currentAlerts'] = 'T'
+                  this.userData['custom:predictiveAlerts'] = 'T'
+                  this.setAlertAttributes()
+                }
               }
             })
             return callback(0, this.cognitoUser.username)
