@@ -43,6 +43,7 @@ body {
     color: black;
     width: auto;
     padding: 8px 0px 8px 0px;
+    text-align: left;
   }
 
   button:focus {
@@ -122,7 +123,7 @@ body {
       line-height: 40px;
       padding: 0px 16px 0px 16px;
       cursor: pointer;
-      text-align: center;
+      text-align: left;
     }
 
     .vertical.menu > li > div:hover {
@@ -950,8 +951,6 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   transform: scaleY(1);
 }
 
-
-
 // -----LAYER POPUPS-----
 .popup {
 
@@ -1066,6 +1065,7 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
     }
   }
 }
+
 // -----GEOLOCATION POPUP-----
 div.leaflet-popup-content-wrapper {
   .leaflet-popup-content {
@@ -1092,6 +1092,7 @@ div.leaflet-popup-content-wrapper {
     }
   }
 }
+
 // -----MODALS-----
 body > div.ReactModalPortal > div {
     z-index: 10000000 !important;
@@ -1101,6 +1102,7 @@ body > div.ReactModalPortal > div {
   border: 0;
   margin-bottom: 0;
 }
+
 // -----SUBSCRIPTION CONFIRM MODAL-----
 .subscription-confirm-modal:focus {
   outline: none;
@@ -1160,6 +1162,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----CONFIRM/SAVE SUBSCRIPTION CHANGES MODAL-----
 .confirm-subscription-changes-modal:focus {
   outline: none;
@@ -1217,6 +1220,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----CONFIRM DELETE ACCOUNT MODAL-----
 .confirm-delete-account:focus {
   outline: none;
@@ -1274,6 +1278,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----ABOUT INFO MODAL-----
 .about-modal:focus {
   outline: none;
@@ -1454,6 +1459,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----DISCLAIMER MODAL-----
 .disclaimer-modal:focus {
   outline: none;

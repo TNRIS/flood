@@ -40,7 +40,8 @@ class FloodHeader extends React.Component {
         </button>
         <div className="dropdown-pane"
              data-position="bottom"
-             data-alignment="right"
+             data-alignment="center"
+             data-close-on-click="true"
              data-dropdown
              id="basemap-dropdown">
           <BaseLayerMenuContainer />

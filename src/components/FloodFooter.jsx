@@ -84,7 +84,8 @@ class FloodFooter extends React.Component {
             <div className="dropdown-pane footer-context-menu"
                  id="resources-dropdown-top-left"
                  data-position="top"
-                 data-alignment="left"
+                 data-alignment="center"
+                 data-close-on-click="true"
                  data-dropdown>
               <ul className="vertical menu">
                 <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></li>
