@@ -710,7 +710,11 @@ body {
 
 // -MAP: LEAFLET OVERRIDES-
 .leaflet-right {
-  width: 100%;
+  width: 40%;
+
+  @media screen and (max-width: $layout-desktop-width-threshold) {
+    width: 100%;
+  }
 }
 
 .showGeocoder {
@@ -763,7 +767,7 @@ body {
       cursor: pointer;
       height: 100%;
       width: 10%;
-      text-align: center;
+      // text-align: center;
       color: gray;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
@@ -789,9 +793,13 @@ body {
       background: #f2f2f2;
      }
 
-     li:hover {
+     li:hover, li:focus {
        background-color: #dcdcdc;
       }
+
+    .leaflet-control-geocoder-selected {
+      background-color: #dcdcdc !important;
+    }
   }
 
   .leaflet-control-geocoder-alternatives li {
