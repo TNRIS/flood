@@ -710,11 +710,7 @@ body {
 
 // -MAP: LEAFLET OVERRIDES-
 .leaflet-right {
-  width: 40%;
-
-  @media screen and (max-width: $layout-desktop-width-threshold) {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .showGeocoder {
@@ -723,11 +719,15 @@ body {
 
 .leaflet-control-geocoder {
   visibility: hidden;
-  width: 100%;
+  width: 40%;
   margin: 0 !important;
   height: 40px;
   box-shadow: none !important;
   border: none !important;
+
+  @media screen and (max-width: $layout-desktop-width-threshold) {
+    width: 100%
+  }
 
   .leaflet-control-geocoder-icon {
     display: none !important;
