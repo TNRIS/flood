@@ -141,6 +141,7 @@ class AppUser {
     })
     console.log(this.userData)
     this.userData[updateAtt] = newValue
+    // TO DO: add/remove subscriptions to topics based on the change
   }
 
   authenticate = (callback) => {

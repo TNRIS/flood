@@ -109,11 +109,13 @@ export function getUserSubscriptions() {
           counter++
           if (subscription.Value) {
             const subscriptionData = JSON.parse(subscription.Value)
-            dispatch(
-              addSubscriptionToSubscriptionList(
-                subscriptionData.lid, subscriptionData, subscriptionData.protocol, subscriptionData.endpoint
+            if (subscriptionData.lid.indexOf('--PD') === -1) {
+              dispatch(
+                addSubscriptionToSubscriptionList(
+                  subscriptionData.lid, subscriptionData, subscriptionData.protocol, subscriptionData.endpoint
+                )
               )
-            )
+            }
           }
           if (counter === records.length) {
             dispatch(getSubscriptionsSuccess())

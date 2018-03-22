@@ -53,6 +53,88 @@ export function confirmSubscription(phoneNumber, lid) {
   }
 }
 
+function subscribeCurrentAndPredictive(dispatch, lid) {
+  const sns = new FloodAppUser.AWS.SNS()
+  const p = lid + "--PD"
+
+  // Create the topic, function is impotent so will create or return the existing topic
+  // Subscribe to the current alert topic
+  return sns.createTopic({Name: lid}).promise()
+    .then((topic) => {
+      const subscriptionParams = {
+        TopicArn: topic.TopicArn,
+        Protocol: "sms",
+        Endpoint: FloodAppUser.userData.phone_number
+      }
+      return sns.subscribe(subscriptionParams).promise().then(
+        (subscription) => {
+          FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn})
+          // Subscribe to the predictive alert topic
+          return sns.createTopic({Name: p}).promise()
+            .then((pTopic) => {
+              const pSubscriptionParams = {
+                TopicArn: pTopic.TopicArn,
+                Protocol: "sms",
+                Endpoint: FloodAppUser.userData.phone_number
+              }
+              return sns.subscribe(pSubscriptionParams).promise().then(
+                (pSubscription) => {
+                  console.log(pSubscription)
+                  console.log(lid)
+                  dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
+                  dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                  FloodAppUser.subscribe({lid: p, subscriptionArn: pSubscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
+                })
+                .catch((err) => {
+                  dispatch(sendErrorReport(err))
+                })
+            })
+            .catch((err) => {
+              dispatch(sendErrorReport(err))
+            })
+        })
+        .catch((err) => {
+          dispatch(sendErrorReport(err))
+        })
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch(sendErrorReport(err))
+    })
+}
+
+function subscribeEitherOr(dispatch, lid, type) {
+  const sns = new FloodAppUser.AWS.SNS()
+  const p = lid + "--PD"
+  const topicLid = type == 'c' ? lid : p
+
+  const topicParams = {
+    Name: topicLid
+  }
+
+  // Create the topic, function is impotent so will create or return the existing topic
+  return sns.createTopic(topicParams).promise()
+    .then((topic) => {
+      const subscriptionParams = {
+        TopicArn: topic.TopicArn,
+        Protocol: "sms",
+        Endpoint: FloodAppUser.userData.phone_number
+      }
+      return sns.subscribe(subscriptionParams).promise().then(
+        (subscription) => {
+          dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
+          dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
+          FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
+        })
+        .catch((err) => {
+          dispatch(sendErrorReport(err))
+        })
+    })
+    .catch((err) => {
+      dispatch(sendErrorReport(err))
+    })
+}
+
 /**
  * Function to subscribe a gage
  * @param  {string} lid      gage lid
@@ -62,32 +144,17 @@ export function confirmSubscription(phoneNumber, lid) {
  */
 export function subscribeGage(lid) {
   return (dispatch) => {
-    const sns = new FloodAppUser.AWS.SNS()
 
-    const topicParams = {
-      Name: lid
+    const curr = FloodAppUser.userData['custom:currentAlerts']
+    const pred = FloodAppUser.userData['custom:predictiveAlerts']
+    if (curr == 'T' && pred == 'T') {
+      return subscribeCurrentAndPredictive(dispatch, lid)
     }
-
-    // Create the topic, function is impotent so will create or return the existing topic
-    return sns.createTopic(topicParams).promise()
-      .then((topic) => {
-        const subscriptionParams = {
-          TopicArn: topic.TopicArn,
-          Protocol: "sms",
-          Endpoint: FloodAppUser.userData.phone_number
-        }
-        return sns.subscribe(subscriptionParams).promise().then(
-          (subscription) => {
-            dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
-            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
-          })
-          .catch((err) => {
-            dispatch(sendErrorReport(err))
-          })
-      })
-      .catch((err) => {
-        dispatch(sendErrorReport(err))
-      })
+    else if (curr == 'T' && pred == 'F') {
+      return subscribeEitherOr(dispatch, lid, 'c')
+    }
+    else if (curr == 'F' && pred == 'T') {
+      return subscribeEitherOr(dispatch, lid, 'p')
+    }
   }
 }
