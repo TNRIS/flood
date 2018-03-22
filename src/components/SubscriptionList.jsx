@@ -29,6 +29,7 @@ class SubscriptionList extends React.Component {
     addSubscribeToChangeList: PropTypes.func,
     addUnsubscribeToChangeList: PropTypes.func,
     allGageSubscriptions: PropTypes.array,
+    displayGageSubscriptions: PropTypes.array,
     allSubscriptions: PropTypes.array,
     allSubscriptionChanges: PropTypes.array,
     clearSubscriptionList: PropTypes.func,
@@ -220,8 +221,14 @@ class SubscriptionList extends React.Component {
             <p>Click the marker symbol next to a gage to zoom to its location.</p>
             <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
           </div>
+          <span>Total Subscriptions</span>
+          <span className="badge subscriptions-count-badge">
+            {this.props.displayGageSubscriptions.length}
+          </span>
+          <p>Click the marker symbol next to a gage to zoom to its location.</p>
+          <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
           <div className="subscription-list-container">
-            {this.props.allGageSubscriptions.map(gageSubscriptionId =>
+            {this.props.displayGageSubscriptions.map(gageSubscriptionId =>
               <div key={gageSubscriptionId} className="subscription-list-item grid-x">
                 <div className="locate-gauge-container shrink cell">
                   <button

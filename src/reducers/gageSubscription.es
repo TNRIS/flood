@@ -44,3 +44,22 @@ export const allGageSubscriptions = (state = [], action) => {
       return state
   }
 }
+
+export const addDisplayGageSubscriptionId = (state, action) => {
+  const cleanedLid = action.payload.lid.replace(/--PD/g, '')
+  if (state.indexOf(cleanedLid) === -1) {
+    return state.concat(action.payload.lid).sort()
+  }
+  return state
+}
+
+export const displayGageSubscriptions = (state = [], action) => {
+  switch (action.type) {
+    case ADD_SUBSCRIPTION_TO_SUBSCRIPTION_LIST:
+      return addDisplayGageSubscriptionId(state, action)
+    case CLEAR_SUBSCRIPTION_LIST:
+      return []
+    default:
+      return state
+  }
+}

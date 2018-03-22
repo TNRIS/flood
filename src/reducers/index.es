@@ -10,7 +10,7 @@ import { subscriptionChangesById, allSubscriptionChanges, allProcessedSubscripti
 import subscriptionForm from './subscriptionForm'
 import subscriptionList from './subscriptionList'
 import { subscriptionsById, allSubscriptions } from './subscriptions'
-import { gageSubscriptionById, allGageSubscriptions }  from './gageSubscription'
+import { gageSubscriptionById, allGageSubscriptions, displayGageSubscriptions }  from './gageSubscription'
 import { toaster } from './toaster'
 import user from './user'
 import aboutDialog from './aboutDialog'
@@ -42,7 +42,8 @@ export const rootReducer = combineReducers({
   }),
   gageSubscriptions: combineReducers({
     gageSubscriptionById,
-    allGageSubscriptions
+    allGageSubscriptions,
+    displayGageSubscriptions
   }),
   user,
   aboutDialog: aboutDialog,
