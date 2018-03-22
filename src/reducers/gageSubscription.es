@@ -48,7 +48,7 @@ export const allGageSubscriptions = (state = [], action) => {
 export const addDisplayGageSubscriptionId = (state, action) => {
   const cleanedLid = action.payload.lid.replace(/--PD/g, '')
   if (state.indexOf(cleanedLid) === -1) {
-    return state.concat(action.payload.lid).sort()
+    return state.concat(cleanedLid).sort()
   }
   return state
 }

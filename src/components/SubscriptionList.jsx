@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom'
 import Modal from 'react-modal'
 import { RingLoader } from 'react-spinners'
 
+import FloodAppUser from '../util/User'
+
 const reactModalStyle = {
   overlay: {
     backgroundColor   : 'rgba(0, 0, 0, 0.50)'
@@ -136,29 +138,54 @@ class SubscriptionList extends React.Component {
     }
   }
 
+  sendToggleSubscription(event, gsId, protocol) {
+    const gs = this.props.gageSubscriptionById[gsId]
+
+    if (event.target.checked) {
+      if (gs) {
+        if (!gs.hasOwnProperty(protocol)) {
+          this.props.addSubscribeToChangeList(gs.lid, protocol)
+        }
+        else {
+          this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
+        }
+      }
+    }
+    else {
+      if (this.props.gageSubscriptionById[gsId]) {
+        if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
+          const sId = gs[protocol]
+          this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
+        }
+        else {
+          this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
+        }
+      }
+    }
+  }
+
     /**
    * Toggles the subscription and adds or removes changes to the subscription change queue
    */
   toggleSubscription(event, gsId, protocol) {
-    const gs = this.props.gageSubscriptionById[gsId]
+    const curr = FloodAppUser.userData['custom:currentAlerts']
+    const pred = FloodAppUser.userData['custom:predictiveAlerts']
+    const predGsId = gsId + "--PD"
+    console.log(curr)
+    console.log(pred)
+    console.log(predGsId)
+    console.log(protocol)
+    if (curr == 'T' && pred == 'T') {
+      this.sendToggleSubscription(event, gsId, protocol)
+      this.sendToggleSubscription(event, predGsId, protocol)
+    }
+    else if (curr == 'T' && pred == 'F') {
+      this.sendToggleSubscription(event, gsId, protocol)
+    }
+    else if (curr == 'F' && pred == 'T') {
+      this.sendToggleSubscription(event, predGsId, protocol)
+    }
 
-    if (event.target.checked) {
-      if (!gs.hasOwnProperty(protocol)) {
-        this.props.addSubscribeToChangeList(gs.lid, protocol)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
-      }
-    }
-    else {
-      if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
-        const sId = gs[protocol]
-        this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
-      }
-    }
   }
 
   render() {
@@ -235,7 +262,7 @@ class SubscriptionList extends React.Component {
                     title="Zoom to gage location"
                     className={
                       SubscriptionList.setZoomButtonColor(
-                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].sigstage
+                        this.props.gageInfo[gageSubscriptionId].sigstage
                       )}
                     onClick={(event) => {
                       this.zoomToGage(
@@ -248,8 +275,8 @@ class SubscriptionList extends React.Component {
                   </button>
                 </div>
                 <div className="gauge-name-container auto cell">
-                  <span className="gauge-acronym">{this.props.gageSubscriptionById[gageSubscriptionId].lid}</span>
-                  <span className="full-gauge-name">{this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}</span>
+                  <span className="gauge-acronym">{gageSubscriptionId}</span>
+                  <span className="full-gauge-name">{this.props.gageInfo[gageSubscriptionId].name}</span>
                 </div>
                 {smsToggle(gageSubscriptionId)}
               </div>
