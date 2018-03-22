@@ -59,16 +59,26 @@ export default class App extends Component {
   }
 
   render() {
+    // Hides and reveals the twitter widgets when the NavigationDrawer opens or closes
+    $(document).on("closed.zf.offcanvas", () => {
+      $("iframe").addClass("hidden-twitter")
+    })
+    $(document).on("opened.zf.offcanvas", () => {
+      $("iframe").removeClass("hidden-twitter")
+    })
+
     const navContentInitState = () => {
       if (this.props.location.pathname === '/subscriptions') {
         return {
           showFeatureLayerChooser: false,
-          showSubscriptionForm: true
+          showSubscriptionForm: true,
+          showTwitterFeed: false
         }
       }
       return {
         showFeatureLayerChooser: true,
-        showSubscriptionForm: false
+        showSubscriptionForm: false,
+        showTwitterFeed: false
       }
     }
 
@@ -115,7 +125,7 @@ export default class App extends Component {
       <div>
         <Disclaimer />
         <AboutContainer />
-        <FloodHeaderContainer />
+        <FloodHeaderContainer navContentInitState={navContentInitState()}/>
         { sideBar }
         <FloodFooter browser={this.props.browser} />
         <ToasterContainer />

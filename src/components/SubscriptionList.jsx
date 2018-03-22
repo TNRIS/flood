@@ -212,12 +212,14 @@ class SubscriptionList extends React.Component {
     else {
       listContentDiv = (
         <div className="subscription-list">
-          <span>Total Subscriptions</span>
-          <span className="badge subscriptions-count-badge">
-            {this.props.allGageSubscriptions.length}
-          </span>
-          <p>Click the marker symbol next to a gage to zoom to its location.</p>
-          <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
+          <div className="subscription-list-info-container">
+            <span>Total Subscriptions</span>
+            <span className="badge subscriptions-count-badge">
+              {this.props.allGageSubscriptions.length}
+            </span>
+            <p>Click the marker symbol next to a gage to zoom to its location.</p>
+            <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
+          </div>
           <div className="subscription-list-container">
             {this.props.allGageSubscriptions.map(gageSubscriptionId =>
               <div key={gageSubscriptionId} className="subscription-list-item grid-x">

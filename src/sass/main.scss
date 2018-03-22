@@ -196,6 +196,18 @@ body {
                 margin-right: 8px;
                 font-size: 18px;
               }
+
+              .fa.fa-pencil {
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
+              }
+
+              .fa.fa-twitter {
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
+              }
           }
 
           .toggle-navigation-content.bottom-nav-button {
@@ -273,280 +285,301 @@ body {
               }
             }
           }
-        }
 
-        // -----SUBSCRIPTION MANAGER-----
-        .subscriptionManager {
-          background-color: white;
-          font-size: 14px;
-          margin-bottom: 50px;
+          // -----SUBSCRIPTION MANAGER-----
+          .subscriptionManager {
+            background-color: white;
+            font-size: 14px;
+            // margin-bottom: 50px;
 
-          .spinner-wrapper {
-            div {
-              margin: 0 auto;
-            }
-          }
-
-          .login-form {
-            margin-right: 10px;
-            margin-left: 10px;
-          }
-
-          .subscription-list {
-            padding-left: 10px;
-
-            .subscriptions-count-badge {
-                margin-left: 10px;
-                background-color: $accent-dark-green;
-                font-size: 12px;
-            }
-
-            p {
-              margin: 16px 0 0 0;
-            }
-
-            .subscription-list-container {
-              margin: 12px 0 12px 0;
-
-              .subscription-list-item {
-                  border-bottom: 1px solid $accent-light-green;
-                  margin: 0;
-                  padding: 16px;
-                  height: 85px;
-
-                  .locate-gauge-container {
-                      margin: 0;
-                      padding: 10px 0 10px 0;
-
-                      button {
-                          background-color: $lighter-blue;
-                          box-shadow: none;
-                          width: 32px;
-                          height: 32px;
-                          font-size: 26px;
-                          border-radius: 20px;
-
-                          &:hover {
-                              background-color: $darker-blue;
-                              cursor: pointer;
-                          }
-                      }
-
-                      button.zoom-major {
-                        color: #cc33ff;
-                      }
-
-                      button.zoom-moderate {
-                        color: #ff0000;
-                      }
-
-                      button.zoom-flood {
-                        color: #ff9900;
-                      }
-
-                      button.zoom-action {
-                        color: #ffff00;
-                      }
-
-                      button.zoom-no-flooding {
-                        color: #00ff00;
-                      }
-
-                      button.zoom-low {
-                        color: #906320;
-                      }
-
-                      button.zoom-not-defined {
-                        color: #72afe9;
-                      }
-
-                      button.zoom-observations-not-current {
-                        color: #bdc2bb;
-                      }
-
-                      button.zoom-out-of-service {
-                        color: #666666;
-                      }
-                  }
-
-                  .gauge-name-container {
-                    padding: 7px 0 7px 6px;
-
-                    .gauge-acronym {
-                      font-size: 16px;
-                    }
-
-                    .full-gauge-name {
-                      color: rgba(0,0,0,.54);
-                      font-size: 10px;
-                      display: block;
-                    }
-                  }
-
-                  .switch-container {
-                    text-align: center;
-
-                    small {
-                      color: rgba(0,0,0,.54);
-                    }
-                  }
+            .spinner-wrapper {
+              div {
+                margin: 0 auto;
               }
             }
 
-            .subscription-list-save-wrapper{
-              height: 50px;
-              width: 100%;
+            .login-form {
+              margin-right: 10px;
+              margin-left: 10px;
+            }
 
-              .subscription-list-save-button {
-                float: right;
-                margin-bottom: 10px;
-                margin-right: 10px;
+            .subscription-list {
+
+              .subscriptions-count-badge {
+                  margin-left: 10px;
+                  background-color: $accent-dark-green;
+                  font-size: 12px;
+              }
+
+              p {
+                margin: 16px 0 0 0;
+              }
+
+              .subscription-list-info-container {
+                padding-left: 10px;
+              }
+
+              .subscription-list-container {
+                margin: 12px 0 12px 0;
+
+                .subscription-list-item {
+                    border-bottom: 1px solid $accent-light-green;
+                    margin: 0;
+                    padding: 16px;
+                    height: 85px;
+
+                    .locate-gauge-container {
+                        margin: 0;
+                        padding: 10px 0 10px 0;
+
+                        button {
+                            background-color: $lighter-blue;
+                            box-shadow: none;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 26px;
+                            border-radius: 20px;
+
+                            &:hover {
+                                background-color: $darker-blue;
+                                cursor: pointer;
+                            }
+                        }
+
+                        button.zoom-major {
+                          color: #cc33ff;
+                        }
+
+                        button.zoom-moderate {
+                          color: #ff0000;
+                        }
+
+                        button.zoom-flood {
+                          color: #ff9900;
+                        }
+
+                        button.zoom-action {
+                          color: #ffff00;
+                        }
+
+                        button.zoom-no-flooding {
+                          color: #00ff00;
+                        }
+
+                        button.zoom-low {
+                          color: #906320;
+                        }
+
+                        button.zoom-not-defined {
+                          color: #72afe9;
+                        }
+
+                        button.zoom-observations-not-current {
+                          color: #bdc2bb;
+                        }
+
+                        button.zoom-out-of-service {
+                          color: #666666;
+                        }
+                    }
+
+                    .gauge-name-container {
+                      padding: 7px 0 7px 6px;
+
+                      .gauge-acronym {
+                        font-size: 16px;
+                      }
+
+                      .full-gauge-name {
+                        color: rgba(0,0,0,.54);
+                        font-size: 10px;
+                        display: block;
+                      }
+                    }
+
+                    .switch-container {
+                      text-align: center;
+
+                      small {
+                        color: rgba(0,0,0,.54);
+                      }
+                    }
+                }
+              }
+
+              .subscription-list-save-wrapper{
+                height: 50px;
+                width: 100%;
+
+                .subscription-list-save-button {
+                  float: right;
+                  margin-bottom: 10px;
+                  margin-right: 10px;
+                  background-color: white;
+                  color: $gray20;
+                }
+
+                .subscription-list-save-button:hover {
+                  background-color: $hover-gray;
+                }
+              }
+            }
+
+            .settings-sign-out-button-wrapper {
+              background-color: white;
+              width: 100%;
+              float: left;
+              margin-top: 10px;
+
+              @media screen and (max-width: $layout-desktop-width-threshold) {
+                // margin-bottom: 50px;
+              }
+
+              button {
+                width: 50%;
+                text-transform: uppercase;
                 background-color: white;
                 color: $gray20;
               }
 
-              .subscription-list-save-button:hover {
+              button:hover {
+                background-color: $hover-gray;
+              }
+            }
+
+            .user-settings {
+              padding: 10px;
+
+              p {
+                word-wrap: break-word;
+              }
+
+              .delete-button-container {
+                margin-top: 30px;
+
+                .delete-account {
+                  background-color: #c0392b;
+                  color: white;
+                  width: 100%;
+                  margin-bottom: 0;
+                }
+
+                .delete-account-disabled {
+                  background-color: darkgray;
+                  color: black;
+                  width: 100%;
+                  margin-bottom: 0;
+                }
+              }
+            }
+
+            .subscriptions-sign-out-button-wrapper {
+              background-color: white;
+              width: 100%;
+              float: left;
+              margin: 10px 0 0px 0;
+
+              button {
+                width: 50%;
+                text-transform: uppercase;
+                background-color: white;
+                color: $gray20;
+              }
+
+              button:hover {
+                background-color: $hover-gray;
+              }
+            }
+
+            .login-button-wrapper {
+              height: 50px;
+              width: 100%;
+            }
+
+            label.form-chunk {
+              color: $lighter-blue;
+
+              input {
+                width: 100%;
+                font-size: 16px;
+                line-height: 24px;
+                padding: 6px;
+                border: solid #cacaca;
+                border-width: 0 0 1px 0;
+                margin-bottom: 1rem;
+                box-shadow: none;
+              }
+
+              input:focus {
+                border: solid $lighter-blue;
+                border-width: 0 0 1px 0;
+                box-shadow: none;
+                outline: none;
+              }
+            }
+
+            .flood-form-button {
+              float: right;
+              margin-right: 10px;
+              margin-bottom: 0px;
+              text-transform: uppercase;
+              background-color: white;
+              color: $gray20;
+            }
+
+            .flood-form-button:hover {
+              background-color: $hover-gray;
+            }
+
+            .form-swapper {
+              text-align: right;
+              margin-right: 20px;
+              margin-left: 10px;
+
+              a {
+                color: $lighter-blue;
+                text-decoration: underline;
+              }
+
+            }
+
+            .form-back {
+              padding-top: 5px;
+              margin-left: 16px;
+              font-size: 24px;
+
+              i {
+                cursor: pointer;
+                padding-left: 5px;
+                padding-right: 8px;
+              }
+
+              i:hover {
                 background-color: $hover-gray;
               }
             }
           }
 
-          .settings-sign-out-button-wrapper {
+          // -----TWITTER FEED-----
+          .twitter-content {
             background-color: white;
-            width: 100%;
-            float: left;
-            margin-top: 10px;
 
             @media screen and (max-width: $layout-desktop-width-threshold) {
               margin-bottom: 50px;
             }
 
-            button {
-              width: 50%;
-              text-transform: uppercase;
-              background-color: white;
-              color: $gray20;
+            .follow-button {
+              text-align: right;
+              padding: 15px 20px 15px 0;
             }
 
-            button:hover {
-              background-color: $hover-gray;
-            }
-          }
-
-          .user-settings {
-            padding: 10px;
-
-            p {
-              word-wrap: break-word;
-            }
-
-            .delete-button-container {
-              margin-top: 30px;
-
-              .delete-account {
-                background-color: #c0392b;
-                color: white;
-                width: 100%;
-                margin-bottom: 0;
-              }
-
-              .delete-account-disabled {
-                background-color: darkgray;
-                color: black;
-                width: 100%;
-                margin-bottom: 0;
-              }
-            }
-          }
-
-          .subscriptions-sign-out-button-wrapper {
-            background-color: white;
-            width: 100%;
-            float: left;
-            margin: 10px 0 50px 0;
-
-            button {
-              width: 50%;
-              text-transform: uppercase;
-              background-color: white;
-              color: $gray20;
-            }
-
-            button:hover {
-              background-color: $hover-gray;
-            }
-          }
-
-          .login-button-wrapper {
-            height: 50px;
-            width: 100%;
-          }
-
-          label.form-chunk {
-            color: $lighter-blue;
-
-            input {
-              width: 100%;
-              font-size: 16px;
-              line-height: 24px;
-              padding: 6px;
-              border: solid #cacaca;
-              border-width: 0 0 1px 0;
-              margin-bottom: 1rem;
-              box-shadow: none;
-            }
-
-            input:focus {
-              border: solid $lighter-blue;
-              border-width: 0 0 1px 0;
-              box-shadow: none;
-              outline: none;
-            }
-          }
-
-          .flood-form-button {
-            float: right;
-            margin-right: 10px;
-            margin-bottom: 0px;
-            text-transform: uppercase;
-            background-color: white;
-            color: $gray20;
-          }
-
-          .flood-form-button:hover {
-            background-color: $hover-gray;
-          }
-
-          .form-swapper {
-            text-align: right;
-            margin-right: 20px;
-            margin-left: 10px;
-
-            a {
-              color: $lighter-blue;
-              text-decoration: underline;
-            }
-
-          }
-
-          .form-back {
-            padding-top: 5px;
-            margin-left: 16px;
-            font-size: 24px;
-
-            i {
-              cursor: pointer;
-              padding-left: 5px;
-              padding-right: 8px;
-            }
-
-            i:hover {
-              background-color: $hover-gray;
+            .hidden-twitter {
+              visibility: hidden !important;
             }
           }
         }
 
-        // -NAVIGATION DRAWER FOOTER-
+        // -----NAVIGATION DRAWER FOOTER-----
         .nav-footer {
           min-height: 50px;
           width: 100%;
@@ -557,11 +590,12 @@ body {
           bottom: 0;
         }
       }
-      // disable scrollbars
-      .nav::-webkit-scrollbar {
-        display: none;  // Safari and Chrome
-      }
+
+    // disable scrollbars
+    .nav::-webkit-scrollbar {
+      display: none;  // Safari and Chrome
     }
+  }
 
   // -----FOOTER BAR-----
   .footer-bar {
