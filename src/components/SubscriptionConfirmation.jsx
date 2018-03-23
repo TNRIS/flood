@@ -34,7 +34,7 @@ class SubscriptionConfirmation extends Component {
 
   componentWillReceiveProps() {
     this.setState({
-      lid: this.props.popupData.data.lid,
+      lid: this.props.popupData.data.lid.toUpperCase(),
       name: this.props.popupData.data.name
     })
   }
@@ -45,7 +45,7 @@ class SubscriptionConfirmation extends Component {
 
   handleConfirmation(event) {
     event.preventDefault()
-    this.props.subscribeGage(this.props.popupData.data.lid.toUpperCase())
+    this.props.subscribeGage(this.props.popupData.data.lid.toUpperCase(), true)
     this.handleCloseModal()
   }
 

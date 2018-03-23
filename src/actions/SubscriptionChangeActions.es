@@ -157,11 +157,8 @@ export function saveSubscriptionChanges() {
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
-              if (changeData.protocol === 'email') {
-                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "email", user.email)))
-              }
-              else if (changeData.protocol === 'sms') {
-                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "sms", user.phone)))
+              if (changeData.protocol === 'sms') {
+                promiseQueue.push(dispatch(subscribeGage(changeData.lid, false)))
               }
             }
           }

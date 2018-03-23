@@ -21,7 +21,6 @@ import {
 } from '../actions/PopupActions'
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     gageSubscriptionById: state.gageSubscriptions.gageSubscriptionById,
     allGageSubscriptions: state.gageSubscriptions.allGageSubscriptions,

@@ -106,41 +106,7 @@ class AppUser {
     return this.attributeList
   }
 
-  setAlertAttributes = () => {
-    this.dataCurrentAlerts = {
-      Name: 'custom:currentAlerts',
-      Value: 'T'
-    }
-
-    this.dataPredictiveAlerts = {
-      Name: 'custom:predictiveAlerts',
-      Value: 'T'
-    }
-
-    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
-    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
-
-    const alertAttributeList = [this.attributeCurrentAlerts, this.attributePredictiveAlerts]
-    this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
-      if (err) {
-        return console.log(err)
-      }
-      return
-    })
-  }
-
-  removingSubscription(gs, protocol) {
-    console.log(gs)
-    if (gs) {
-      if (gs.hasOwnProperty(protocol)) {
-        const sId = gs[protocol]
-        store.dispatch(addUnsubscribeToChangeList(gs.lid, protocol, sId))
-      }
-    }
-    console.log(store.getState())
-  }
-
-  updateAlertAttributes = (currentAtt, predictiveAtt) => {
+  setAlertAttributes = (currentAtt, predictiveAtt) => {
     this.dataCurrentAlerts = {
       Name: 'custom:currentAlerts',
       Value: currentAtt
@@ -155,51 +121,67 @@ class AppUser {
     this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
 
     const alertAttributeList = [this.attributeCurrentAlerts, this.attributePredictiveAlerts]
-    const result = this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
+
+    this.userData['custom:currentAlerts'] = currentAtt
+    this.userData['custom:predictiveAlerts'] = predictiveAtt
+    this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
       if (err) {
         return console.log(err)
       }
       console.log(result)
       return
     })
-    console.log(this.userData)
-    this.userData['custom:currentAlerts'] = currentAtt
-    this.userData['custom:predictiveAlerts'] = predictiveAtt
+  }
+
+  removingSubscription(gs, protocol) {
+    if (gs) {
+      if (gs.hasOwnProperty(protocol)) {
+        const sId = gs[protocol]
+        store.dispatch(addUnsubscribeToChangeList(gs.lid, protocol, sId))
+      }
+    }
+    console.log(store.getState())
+  }
+
+  updateAlertAttributes = (currentAtt, predictiveAtt) => {
+    // update the alert type attributes
+    this.setAlertAttributes(currentAtt, predictiveAtt)
+
     // add/remove subscriptions to topics based on the change
     console.log(store.getState())
-    const currentState = store.getState()
-    const curr = this.userData['custom:currentAlerts']
-    const pred = this.userData['custom:predictiveAlerts']
-    const protocol = 'sms'
+    if (store.getState().subscriptions.allSubscriptions.length > 0) {
+      const currentState = store.getState()
+      const curr = this.userData['custom:currentAlerts']
+      const pred = this.userData['custom:predictiveAlerts']
+      const protocol = 'sms'
 
-    currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
-      console.log(gsId)
-      const predGsId = gsId + "--PD"
-      const gsPred = currentState.gageSubscriptions.gageSubscriptionById[predGsId]
-      const gs = currentState.gageSubscriptions.gageSubscriptionById[gsId]
+      currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
+        console.log(gsId)
+        const predGsId = gsId + "--PD"
+        const gsPred = currentState.gageSubscriptions.gageSubscriptionById[predGsId]
+        const gs = currentState.gageSubscriptions.gageSubscriptionById[gsId]
 
 
-      if (curr == 'F' && pred == 'F') {
-        console.log(curr)
-        console.log(pred)
-        this.removingSubscription(gs, protocol)
-        this.removingSubscription(gsPred, protocol)
-      }
-      else if (curr == 'T' && pred == 'F') {
-        this.removingSubscription(gsPred, protocol)
-        store.dispatch(addSubscribeToChangeList(gsId, protocol))
-      }
-      else if (curr == 'F' && pred == 'T') {
-        this.removingSubscription(gs, protocol)
-        store.dispatch(addSubscribeToChangeList(gsId, protocol))
-      }
-      else if (curr == 'T' && pred == 'T') {
-        store.dispatch(addSubscribeToChangeList(gsId, protocol))
-      }
+        if (curr == 'F' && pred == 'F') {
+          this.removingSubscription(gs, protocol)
+          this.removingSubscription(gsPred, protocol)
+        }
+        else if (curr == 'T' && pred == 'F') {
+          this.removingSubscription(gsPred, protocol)
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
+        else if (curr == 'F' && pred == 'T') {
+          this.removingSubscription(gs, protocol)
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
+        else if (curr == 'T' && pred == 'T') {
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
 
-    })
+      })
 
-    store.dispatch(saveSubscriptionChanges())
+      store.dispatch(saveSubscriptionChanges())
+    }
   }
 
   authenticate = (callback) => {
@@ -230,9 +212,7 @@ class AppUser {
                 }
                 this.userData = {...user}
                 if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
-                  this.userData['custom:currentAlerts'] = 'T'
-                  this.userData['custom:predictiveAlerts'] = 'T'
-                  this.setAlertAttributes()
+                  this.setAlertAttributes('T', 'T')
                 }
               }
             })
@@ -367,9 +347,7 @@ class AppUser {
                 }
                 this.userData = {...user}
                 if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
-                  this.userData['custom:currentAlerts'] = 'T'
-                  this.userData['custom:predictiveAlerts'] = 'T'
-                  this.setAlertAttributes()
+                  this.setAlertAttributes('T', 'T')
                 }
               }
             })
@@ -476,17 +454,13 @@ class FloodAppUser extends AppUser {
             store.dispatch(sendErrorReport(openError))
           }
           else {
-            console.log('dataset open')
             dataset.synchronize({
               onSuccess: (updatedDataset, newRecords) => {
-                console.log('sync S')
                 resolve(newRecords)
                 store.dispatch(getUserSubscriptions())
               },
               onFailure: (syncError) => reject(syncError),
               onConflict: (dataset, conflicts, callback) => {
-                console.log('sync C')
-                console.log(conflicts)
                 const resolved = []
 
                 for (let i = 0; i < conflicts.length; i++) {

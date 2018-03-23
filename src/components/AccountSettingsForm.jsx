@@ -76,9 +76,9 @@ class AccountSettingsForm extends Component {
   }
 
   saveAttributeChanges() {
-    FloodAppUser.updateAlertAttributes(this.state.currentAlerts, this.state.predictiveAlerts)
     this.initCurrent = this.state.currentAlerts
     this.initPredictive = this.state.predictiveAlerts
+    FloodAppUser.updateAlertAttributes(this.state.currentAlerts, this.state.predictiveAlerts)
     this.handleCloseConfirmDialog()
   }
 

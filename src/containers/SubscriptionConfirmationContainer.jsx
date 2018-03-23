@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
     hideSubscriptionConfirmation: () => {
       dispatch(hideSubscriptionConfirmation())
     },
-    subscribeGage: (lid) => {
-      dispatch(subscribeGage(lid))
+    subscribeGage: (lid, flag) => {
+      dispatch(subscribeGage(lid, flag))
     }
   }
 }
