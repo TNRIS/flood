@@ -485,10 +485,10 @@ export default class Map extends Component {
     return (
       <div className="map">
         <div ref="map" className="map--full">
-          <div className="weatherTimestamp">
+          <div className="weather-timestamp">
             <p>{this.displayedTimestamp}</p>
           </div>
-          <div className="animateRadar">
+          <div className="animate-radar">
             {radarInfo}
           </div>
           <PopupContainer leafletMap={this.map} />
