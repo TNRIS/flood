@@ -62,9 +62,13 @@ export default class App extends Component {
     // Hides and reveals the twitter widgets when the NavigationDrawer opens or closes
     $(document).on("closed.zf.offcanvas", () => {
       $("iframe").addClass("hidden-twitter")
+      $(".weather-timestamp").removeClass("weather-timestamp-menu-open")
+      $(".animate-radar").removeClass("animate-radar-menu-open")
     })
     $(document).on("opened.zf.offcanvas", () => {
       $("iframe").removeClass("hidden-twitter")
+      $(".weather-timestamp").addClass("weather-timestamp-menu-open")
+      $(".animate-radar").addClass("animate-radar-menu-open")
     })
 
     const navContentInitState = () => {
