@@ -1,11 +1,3 @@
-//
-// import AWS from 'aws-sdk'
-//
-// import {
-//   CognitoUserPool,
-//   CognitoUserAttribute,
-//   CognitoUser } from 'amazon-cognito-identity-js'
-
 import { getUserSubscriptions } from './SubscriptionFormActions'
 
 import keys from '../keys'

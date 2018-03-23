@@ -171,10 +171,6 @@ class SubscriptionList extends React.Component {
     const curr = FloodAppUser.userData['custom:currentAlerts']
     const pred = FloodAppUser.userData['custom:predictiveAlerts']
     const predGsId = gsId + "--PD"
-    console.log(curr)
-    console.log(pred)
-    console.log(predGsId)
-    console.log(protocol)
     if (curr == 'T' && pred == 'T') {
       this.sendToggleSubscription(event, gsId, protocol)
       this.sendToggleSubscription(event, predGsId, protocol)
@@ -216,6 +212,10 @@ class SubscriptionList extends React.Component {
       )
     }
 
+    /**
+     * Creates the save button content based on user attribute changes
+     * @return {Component} save button to open confirmation
+     */
     const saveButton = () => {
       let save
       if (this.props.allSubscriptionChanges.length > 0) {

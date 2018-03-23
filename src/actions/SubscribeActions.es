@@ -37,9 +37,8 @@ export function hideSubscriptionConfirmation() {
 
 /**
  * Function confirms to the user that they have subscribed to a gage via sms
- * @param  {string} phoneNumber [description]
- * @param  {string} lid [description]
- * @return {promise}         AWS SDK promise
+ * @param  {string} phoneNumber user phone number endpoint
+ * @param  {string} lid gage lid
  */
 export function confirmSubscription(phoneNumber, lid) {
   return dispatch => {

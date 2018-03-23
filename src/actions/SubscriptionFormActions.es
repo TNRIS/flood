@@ -85,9 +85,6 @@ export function swapDisplayForm(form) {
 /**
  * Function to get all subscriptions from Amazon and filter for subscriptions
  * that match the user's email and phone number
- * @param  {string} email     user's email
- * @param  {string} phone     user's phone number
- * @param  {string} nextToken token for the next API call if there are still more records to retrieve
  */
 export function getUserSubscriptions() {
   return (dispatch) => {

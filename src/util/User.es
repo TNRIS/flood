@@ -140,7 +140,6 @@ class AppUser {
         store.dispatch(addUnsubscribeToChangeList(gs.lid, protocol, sId))
       }
     }
-    console.log(store.getState())
   }
 
   updateAlertAttributes = (currentAtt, predictiveAtt) => {
@@ -148,7 +147,6 @@ class AppUser {
     this.setAlertAttributes(currentAtt, predictiveAtt)
 
     // add/remove subscriptions to topics based on the change
-    console.log(store.getState())
     if (store.getState().subscriptions.allSubscriptions.length > 0) {
       const currentState = store.getState()
       const curr = this.userData['custom:currentAlerts']
@@ -156,7 +154,6 @@ class AppUser {
       const protocol = 'sms'
 
       currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
-        console.log(gsId)
         const predGsId = gsId + "--PD"
         const gsPred = currentState.gageSubscriptions.gageSubscriptionById[predGsId]
         const gs = currentState.gageSubscriptions.gageSubscriptionById[gsId]
@@ -429,9 +426,7 @@ class FloodAppUser extends AppUser {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {
           if (err) store.dispatch(sendErrorReport(err))
-          console.log(subscriptionData)
           dataset.put(subscriptionData.lid, stringData, (putError) => {
-            console.log('put')
             if (putError) {
               store.dispatch(sendErrorReport(putError))
               reject(putError)
