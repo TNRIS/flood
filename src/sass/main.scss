@@ -455,6 +455,23 @@ body {
                 word-wrap: break-word;
               }
 
+              tbody {
+                border: 0;
+                text-align: center;
+
+                tr {
+                  border: 0;
+                }
+              }
+
+              .switch-label {
+                margin-bottom: 0;
+              }
+
+              .attribute-change-save-button {
+                width: 100%;
+              }
+
               .delete-button-container {
                 margin-top: 30px;
 
@@ -472,6 +489,7 @@ body {
                   margin-bottom: 0;
                 }
               }
+
             }
 
             .subscriptions-sign-out-button-wrapper {
@@ -499,25 +517,6 @@ body {
 
             label.form-chunk {
               color: $lighter-blue;
-            .switch-label {
-              margin-bottom: 0;
-            }
-
-            tbody {
-              border: 0;
-              text-align: center;
-
-              tr {
-                border: 0;
-              }
-            }
-
-            .attribute-change-save-button {
-              width: 100%;
-            }
-
-            .delete-button-container {
-              margin-top: 30px;
 
               input {
                 width: 100%;
