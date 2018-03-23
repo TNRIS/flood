@@ -24,6 +24,12 @@ import {
   siteReset
 } from '../actions/UserActions'
 
+import {
+  addSubscribeToChangeList,
+  addUnsubscribeToChangeList,
+  saveSubscriptionChanges
+} from '../actions/SubscriptionChangeActions'
+
 import { util } from 'aws-sdk/global'
 
 class AppUser {
@@ -123,15 +129,32 @@ class AppUser {
     })
   }
 
-  updateAlertAttribute = (updateAtt, newValue) => {
-    this.dataUpdate = {
-      Name: updateAtt,
-      Value: newValue
+  removingSubscription(gs, protocol) {
+    console.log(gs)
+    if (gs) {
+      if (gs.hasOwnProperty(protocol)) {
+        const sId = gs[protocol]
+        store.dispatch(addUnsubscribeToChangeList(gs.lid, protocol, sId))
+      }
+    }
+    console.log(store.getState())
+  }
+
+  updateAlertAttributes = (currentAtt, predictiveAtt) => {
+    this.dataCurrentAlerts = {
+      Name: 'custom:currentAlerts',
+      Value: currentAtt
     }
 
-    this.updateAttribute = new CognitoUserAttribute(this.dataUpdate)
+    this.dataPredictiveAlerts = {
+      Name: 'custom:predictiveAlerts',
+      Value: predictiveAtt
+    }
 
-    const alertAttributeList = [this.updateAttribute]
+    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
+    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
+
+    const alertAttributeList = [this.attributeCurrentAlerts, this.attributePredictiveAlerts]
     const result = this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
       if (err) {
         return console.log(err)
@@ -140,8 +163,43 @@ class AppUser {
       return
     })
     console.log(this.userData)
-    this.userData[updateAtt] = newValue
-    // TO DO: add/remove subscriptions to topics based on the change
+    this.userData['custom:currentAlerts'] = currentAtt
+    this.userData['custom:predictiveAlerts'] = predictiveAtt
+    // add/remove subscriptions to topics based on the change
+    console.log(store.getState())
+    const currentState = store.getState()
+    const curr = this.userData['custom:currentAlerts']
+    const pred = this.userData['custom:predictiveAlerts']
+    const protocol = 'sms'
+
+    currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
+      console.log(gsId)
+      const predGsId = gsId + "--PD"
+      const gsPred = currentState.gageSubscriptions.gageSubscriptionById[predGsId]
+      const gs = currentState.gageSubscriptions.gageSubscriptionById[gsId]
+
+
+      if (curr == 'F' && pred == 'F') {
+        console.log(curr)
+        console.log(pred)
+        this.removingSubscription(gs, protocol)
+        this.removingSubscription(gsPred, protocol)
+      }
+      else if (curr == 'T' && pred == 'F') {
+        this.removingSubscription(gsPred, protocol)
+        store.dispatch(addSubscribeToChangeList(gsId, protocol))
+      }
+      else if (curr == 'F' && pred == 'T') {
+        this.removingSubscription(gs, protocol)
+        store.dispatch(addSubscribeToChangeList(gsId, protocol))
+      }
+      else if (curr == 'T' && pred == 'T') {
+        store.dispatch(addSubscribeToChangeList(gsId, protocol))
+      }
+
+    })
+
+    store.dispatch(saveSubscriptionChanges())
   }
 
   authenticate = (callback) => {
@@ -393,7 +451,9 @@ class FloodAppUser extends AppUser {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {
           if (err) store.dispatch(sendErrorReport(err))
+          console.log(subscriptionData)
           dataset.put(subscriptionData.lid, stringData, (putError) => {
+            console.log('put')
             if (putError) {
               store.dispatch(sendErrorReport(putError))
               reject(putError)
@@ -416,13 +476,17 @@ class FloodAppUser extends AppUser {
             store.dispatch(sendErrorReport(openError))
           }
           else {
+            console.log('dataset open')
             dataset.synchronize({
               onSuccess: (updatedDataset, newRecords) => {
+                console.log('sync S')
                 resolve(newRecords)
                 store.dispatch(getUserSubscriptions())
               },
               onFailure: (syncError) => reject(syncError),
               onConflict: (dataset, conflicts, callback) => {
+                console.log('sync C')
+                console.log(conflicts)
                 const resolved = []
 
                 for (let i = 0; i < conflicts.length; i++) {

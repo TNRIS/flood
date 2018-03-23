@@ -59,7 +59,7 @@ class AccountSettingsForm extends Component {
       this.setState({
         openConfirmDialog: true,
         confirmHeader: "Confirm Settings Change",
-        confirmText: "Are you sure you want change your alert types? This will alert the SMS messages you receive.",
+        confirmText: "Are you sure you want change your alert types? This will alter the SMS messages you receive. Disabling both will cause you to lose all of your subscriptions.",
         confirmClick: this.saveAttributeChanges
       })
     }
@@ -76,13 +76,7 @@ class AccountSettingsForm extends Component {
   }
 
   saveAttributeChanges() {
-    console.log(this.state)
-    if (this.initCurrent != this.state.currentAlerts) {
-      FloodAppUser.updateAlertAttribute('custom:currentAlerts', this.state.currentAlerts)
-    }
-    if (this.initPredictive != this.state.predictiveAlerts) {
-      FloodAppUser.updateAlertAttribute('custom:predictiveAlerts', this.state.predictiveAlerts)
-    }
+    FloodAppUser.updateAlertAttributes(this.state.currentAlerts, this.state.predictiveAlerts)
     this.initCurrent = this.state.currentAlerts
     this.initPredictive = this.state.predictiveAlerts
     this.handleCloseConfirmDialog()

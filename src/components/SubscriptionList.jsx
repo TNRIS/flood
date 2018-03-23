@@ -267,8 +267,8 @@ class SubscriptionList extends React.Component {
                     onClick={(event) => {
                       this.zoomToGage(
                         event,
-                        this.props.gageSubscriptionById[gageSubscriptionId].lid,
-                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
+                        gageSubscriptionId,
+                        this.props.gageInfo[gageSubscriptionId]
                       )}
                     }>
                     <i className="fi-marker"></i>
