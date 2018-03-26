@@ -25,6 +25,7 @@ $nav-icon-wrapper-width: 50px;
 $nav-spacing-from-left-narrow-link: $nav-spacing-from-left-narrow + $nav-icon-wrapper-width + ($nav-spacing-from-left-narrow - 2);
 $popup-icons-width-threshold: 400px !default;
 $iphone-five-width-threshold: 325px !default;
+$iphone-eight-height-threshold: 670px !default;
 
 body {
   width: 100%;
@@ -1084,6 +1085,21 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
     padding-top: 47px;
     max-height: 578px;
     overflow-y: auto;
+
+    // This adjusts the popup heights for the tiny iphone4 sized devices
+    @media screen and (max-height: 480px) {
+      max-height: 325px;
+    }
+
+    // This adjusts the popup heights for the iphone5 sized devices
+    @media screen and (min-height: 481px) and (max-height: 570px) {
+      max-height: 400px;
+    }
+
+    // This adjusts the popup heights for the iphone6 sized devices and above
+    @media screen and (min-height: 571px) and (max-height: 670px) {
+      max-height: 500px;
+    }
 
     .info__image {
       a {
