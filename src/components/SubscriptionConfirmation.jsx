@@ -57,7 +57,7 @@ class SubscriptionConfirmation extends Component {
              className="subscription-confirm-modal">
         <div className="card">
           <div className="card-divider subscription-confirm-modal-title">
-            <i className="fa fa-pencil-square-o"></i>
+            <i className="fa fa-check-square-o" aria-hidden="true"></i>
             <span>Confirm Subscription</span>
           </div>
           <div className="card-section subscription-confirm-modal-text">
