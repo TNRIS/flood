@@ -285,7 +285,7 @@ class SubscriptionList extends React.Component {
                    style={reactModalStyle}>
                 <div className="card">
                   <div className="card-divider confirm-modal-title">
-                    <i className="fa fa-floppy-o"></i>
+                    <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     <span>Save Changes</span>
                   </div>
                   <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
