@@ -1382,7 +1382,7 @@ body > div.ReactModalPortal > div {
   padding: 10px;
   border: none;
   border-radius: 0;
-  max-height: 91%;
+  max-height: 85%;
   max-width: 41em;
   overflow-y: auto;
   background-color: white;
@@ -1433,7 +1433,7 @@ body > div.ReactModalPortal > div {
         text-decoration: underline;
       }
 
-      .about-disclaimer-text {
+      .about-disclaimer-text, .alert-definition-text {
         font-size: 14px;
       }
 
