@@ -894,7 +894,7 @@ a.leaflet-disabled {
   padding: 4px;
 
   @media screen and (max-width: $layout-desktop-width-threshold) {
-    bottom: 47px;
+    bottom: 20px;
   }
 
   p {
@@ -926,16 +926,17 @@ a.leaflet-disabled {
   width: 48px;
 
   @media screen and (max-width: $layout-desktop-width-threshold) {
-    bottom: 40px;
+    bottom: 13px;
   }
 
   .button {
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+    border: 1px solid rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 1px 1.5px 0 rgba(0, 0, 0, 1);
     margin: 0;
     height: 40px;
     width: 40px;
-    border-radius: 20px;
+    border-radius: 50%;
 
     i {
       color: rgba(0, 0, 0, .8);

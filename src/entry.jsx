@@ -22,6 +22,8 @@ import './vendor/leaflet.easy-button.js'
 import './vendor/leaflet.easy-button.css'
 import './vendor/Control.Geocoder.js'
 import './vendor/Control.Geocoder.css'
+import './vendor/leaflet.responsive-attribution.css'
+import './vendor/leaflet.responsive-attribution.js'
 
 // Promise polyfill
 require('es6-promise').polyfill()
