@@ -893,8 +893,16 @@ a.leaflet-disabled {
   bottom: 20px;
   padding: 4px;
 
-  @media screen and (max-width: $layout-desktop-width-threshold) {
-    bottom: 20px;
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+
+    @keyframes weather-timestamp-menu-close-animation {
+      from {left: 360px;}
+      to {left: 60px;}
+    }
+
+    left: 60px;
+    animation-name: weather-timestamp-menu-close-animation;
+    animation-duration: .8s;
   }
 
   p {
@@ -911,8 +919,16 @@ a.leaflet-disabled {
 }
 
 .weather-timestamp-menu-open {
+
+  @keyframes weather-timestamp-menu-open-animation {
+    from {left: 60px;}
+    to {left: 360px;}
+  }
+
   @media screen and (min-width: $layout-desktop-width-threshold) {
-  left: 360px;
+    left: 360px;
+    animation-name: weather-timestamp-menu-open-animation;
+    animation-duration: .4s;
   }
 }
 
@@ -925,8 +941,16 @@ a.leaflet-disabled {
   height: 48px;
   width: 48px;
 
-  @media screen and (max-width: $layout-desktop-width-threshold) {
-    bottom: 13px;
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+
+    @keyframes animate-radar-menu-close-animation {
+      from {left: 310px;}
+      to {left: 10px;}
+    }
+
+    left: 10px;
+    animation-name: animate-radar-menu-close-animation;
+    animation-duration: .8s;
   }
 
   .button {
@@ -950,8 +974,15 @@ a.leaflet-disabled {
 }
 
 .animate-radar-menu-open {
+  @keyframes animate-radar-menu-open-animation {
+    from {left: 10px;}
+    to {left: 310px;}
+  }
+
   @media screen and (min-width: $layout-desktop-width-threshold) {
-  left: 310px;
+    left: 310px;
+    animation-name: animate-radar-menu-open-animation;
+    animation-duration: .4s;
   }
 }
 

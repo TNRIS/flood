@@ -9,27 +9,35 @@
     marker-placement: point;
     marker-allow-overlap: true;
 
-    marker-fill-opacity: 0.4;
+    marker-fill-opacity: 0.6;
     marker-line-width: 0;
 
     [pred_sigstage = 'major'] {
       marker-fill: #cc33ff;
-      marker-width: 36;
+      marker-width: 42;
+      marker-line-color: #b31ae6;
+      marker-line-width: 1;
     }
 
     [pred_sigstage = 'moderate'] {
       marker-fill: #ff0000;
-      marker-width: 32;
+      marker-width: 34;
+      marker-line-color: #e60000;
+      marker-line-width: 1;
     }
 
     [pred_sigstage = 'flood'] {
       marker-fill: #ff9900;
       marker-width: 28;
+      marker-line-color: #e68000;
+      marker-line-width: 1;
     }
 
     [pred_sigstage = 'action'] {
       marker-fill: #ffff00;
       marker-width: 24;
+      marker-line-color: #e6e600;
+      marker-line-width: 1;
     }
   }
 
