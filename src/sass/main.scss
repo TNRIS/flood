@@ -267,14 +267,22 @@ body {
             .feature-layer-legend {
               margin: auto;
               width: 100%;
+              text-align: right;
 
               img {
                 max-width: 208px;
-                margin: 4px 0 0 56px;
+                margin: 5px auto 0 auto;
+              }
+            }
 
-                @media screen and (max-width: $layout-drawer-width-threshold) {
-                  margin-left: 16px;
-                }
+            .feature-layer-legend-weather-radar {
+              margin: auto;
+              width: 100%;
+              text-align: center;
+
+              img {
+                max-width: 208px;
+                margin: auto;
               }
             }
 
