@@ -278,13 +278,10 @@ body {
               }
             }
 
-            .feature-layer-legendLink {
-              padding-bottom: 6px;
-              padding-left: $nav-spacing-from-left-wide + $nav-icon-wrapper-width;
-
-              @media screen and (max-width: $layout-drawer-width-threshold) {
-                padding-left: $nav-spacing-from-left-narrow-link;
-              }
+            .feature-layer-legendLink > a {
+              width: 126px;
+              margin: 0 auto;
+              padding: 0 0 1rem 0;
             }
           }
 
