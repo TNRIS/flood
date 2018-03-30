@@ -151,10 +151,9 @@ body {
       top: 40px;
     }
 
-    .desktop-overlay {
-      .js-off-canvas-overlay.is-visible {
-        visibility: hidden;
-      }
+
+    .js-off-canvas-overlay.is-visible {
+      visibility: hidden;
     }
 
     .off-canvas-content {
