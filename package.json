@@ -1,13 +1,13 @@
 {
   "name": "flood-web-viewer",
-  "version": "2.2.9",
+  "version": "3.0.1",
   "release": "Walleye",
   "site_url": "develop.texasflood.org",
   "description": "Texas flood information web viewer",
   "private": true,
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --hot --inline --config webpack.config.babel.js",
-    "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.babel.js",
+    "webpack": "./node_modules/webpack/bin/webpack.js --config webpack.config.babel.js",
     "build": "webpack",
     "dist": "NODE_ENV=production bash -c 'npm run clean && npm run webpack'",
     "clean": "rm -rf ./dist/*",
@@ -116,6 +116,7 @@
     "chai": "^4.1.2",
     "json-loader": "^0.5.7",
     "mocha": "^5.0.0",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^16.2.0",
+    "uglifyjs-webpack-plugin": "^1.2.4"
   }
 }

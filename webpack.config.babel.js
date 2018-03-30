@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import swig from 'swig'
 
@@ -32,7 +33,7 @@ fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html
 const plugins = []
 if (isProd) {
   plugins.push(new ExtractTextPlugin('styles.css'))
-  plugins.push(new webpack.optimize.UglifyJsPlugin())
+  plugins.push(new UglifyJsPlugin())
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
   }))
@@ -63,12 +64,12 @@ export default {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: isProd ? ExtractTextPlugin.extract('css!sass')
+        loader: isProd ? ExtractTextPlugin.extract({use: ['css-loader', 'sass-loader']})
           : 'style-loader!css-loader?sourceMap!sass-loader?sourceMap'
       },
       {
         test: /\.css$/,
-        loader: isProd ? ExtractTextPlugin.extract('css')
+        loader: isProd ? ExtractTextPlugin.extract({use: ['css-loader']})
           : 'style-loader!css-loader',
       },
       {

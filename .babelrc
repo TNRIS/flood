@@ -5,8 +5,8 @@
     "development": {
       "presets": ["react-hmre"]
     },
-  "testing": {
-      "presets": ["react-native"]
-    }
+    "testing": {
+        "presets": ["react-native"]
+      }
   }
 }
