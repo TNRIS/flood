@@ -152,8 +152,10 @@ body {
     }
 
 
-    .js-off-canvas-overlay.is-visible {
-      visibility: hidden;
+    @media screen and (min-width: $layout-desktop-width-threshold) {
+      .js-off-canvas-overlay.is-visible {
+        visibility: hidden;
+      }
     }
 
     .off-canvas-content {
