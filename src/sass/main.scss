@@ -173,6 +173,8 @@ body {
         width: 100%;
         height: 100%;
         overflow: auto;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; // mobile safari
         background-color: $gray20;
 
         // -NAVIGATION CONTENT-
