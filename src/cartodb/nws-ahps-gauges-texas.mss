@@ -97,5 +97,9 @@
     [status = 'out of service'] {
       marker-fill: #666666;
     }
+
+    [sigstage = null][status = null] {
+      marker-fill: #666666;
+    }
   }
 }
