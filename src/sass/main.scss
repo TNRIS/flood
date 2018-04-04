@@ -1387,6 +1387,16 @@ body > div.ReactModalPortal > div {
     color: $gray20;
     width: 98%;
     font-size: 14px;
+
+    #i-understand-switch {
+      float: left;
+      margin-right: 10px;
+    }
+
+    #i-understand-switch-label {
+      cursor: pointer;
+      max-width: 50%;
+    }
   }
 
   .confirm-modal-actions {

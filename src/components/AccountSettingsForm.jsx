@@ -36,7 +36,8 @@ class AccountSettingsForm extends Component {
     super(props)
     this.state = {
       currentAlerts: FloodAppUser.userData['custom:currentAlerts'],
-      predictiveAlerts: FloodAppUser.userData['custom:predictiveAlerts']
+      predictiveAlerts: FloodAppUser.userData['custom:predictiveAlerts'],
+      iUnderstand: false
     }
     this.initCurrent = FloodAppUser.userData['custom:currentAlerts']
     this.initPredictive = FloodAppUser.userData['custom:predictiveAlerts']
@@ -51,7 +52,7 @@ class AccountSettingsForm extends Component {
       this.setState({
         openConfirmDialog: true,
         confirmHeader: "Confirm Delete",
-        confirmText: "Are you sure you want to delete your account? Once deleted, your account cannot be recovered.",
+        confirmText: (<p>Are you sure you want to delete your account?<br /><b>Once deleted, your account cannot be recovered.</b></p>),
         confirmClick: this.deleteAccount
       })
     }
@@ -59,7 +60,7 @@ class AccountSettingsForm extends Component {
       this.setState({
         openConfirmDialog: true,
         confirmHeader: "Confirm Settings Change",
-        confirmText: "Are you sure you want change your alert types? This will alter the SMS messages you receive. Disabling both will cause you to lose all of your subscriptions.",
+        confirmText: (<p>Are you sure you want change your alert types?<br />This will alter the SMS messages you receive.<br /><b>Disabling both will cause you to lose all of your subscriptions.</b></p>),
         confirmClick: this.saveAttributeChanges
       })
     }
@@ -67,7 +68,8 @@ class AccountSettingsForm extends Component {
 
   handleCloseConfirmDialog() {
     this.setState({
-      openConfirmDialog: false
+      openConfirmDialog: false,
+      iUnderstand: false
     })
   }
 
@@ -87,6 +89,12 @@ class AccountSettingsForm extends Component {
     const obj = {}
     obj[event.target.id] = value
     this.setState(obj)
+  }
+
+  toggleUnderstand(event) {
+    this.setState({
+      iUnderstand: event.target.checked
+    })
   }
 
   render() {
@@ -133,6 +141,18 @@ class AccountSettingsForm extends Component {
         )
       }
       return button
+    }
+
+    const confirmChangeButton = () => {
+      let confirmChangeButton
+      console.log(this.state.iUnderstand)
+      if (this.state.iUnderstand) {
+        confirmChangeButton = (<button type="button" className="button" onClick={this.state.confirmClick}>Confirm</button>)
+      }
+      else {
+        confirmChangeButton = (<button disabled type="button" className="button" onClick={this.state.confirmClick}>Confirm</button>)
+      }
+      return confirmChangeButton
     }
 
     return (
@@ -197,9 +217,24 @@ class AccountSettingsForm extends Component {
               <i className="fi-alert"></i>
               <span>{this.state.confirmHeader}</span>
             </div>
-            <div className="card-section confirm-modal-text">{this.state.confirmText}</div>
+            <div className="card-section confirm-modal-text">
+              {this.state.confirmText}
+              <div className="switch-container shrink">
+                <div id="i-understand-switch" className="switch tiny" title="I Understand">
+                  <input className="switch-input"
+                   id="iUnderstand"
+                   type="checkbox"
+                   name="iUnderstand"
+                   onChange={(event) => this.toggleUnderstand(event)}/>
+                  <label className="switch-paddle" htmlFor="iUnderstand">
+                   <span className="show-for-sr"></span>
+                  </label>
+                </div>
+                <label id="i-understand-switch-label" htmlFor="iUnderstand" title="I Understand">I Understand</label>
+              </div>
+            </div>
             <div className="confirm-modal-actions">
-              <button type="button" className="button" onClick={this.state.confirmClick}>Confirm</button>
+              {confirmChangeButton()}
               <button autoFocus="true" type="button" className="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
             </div>
           </div>
