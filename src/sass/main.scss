@@ -172,14 +172,15 @@ body {
       .nav {
         width: 100%;
         height: 100%;
-        overflow: auto;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch; // mobile safari
         background-color: $gray20;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         // -NAVIGATION CONTENT-
         .navigation-content {
-          // overflow: auto;
           .toggle-navigation-content {
               color: black;
               background-color: $accent-light-green;
@@ -592,10 +593,6 @@ body {
           .twitter-content {
             background-color: white;
 
-            @media screen and (max-width: $layout-desktop-width-threshold) {
-              margin-bottom: 50px;
-            }
-
             .follow-button {
               text-align: right;
               padding: 15px 20px 15px 0;
@@ -613,9 +610,6 @@ body {
           width: 100%;
           background-color: $gray20;
           color: white;
-
-          position: absolute;
-          bottom: 0;
         }
       }
 
