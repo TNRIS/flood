@@ -15,6 +15,7 @@ $lighter-blue: #3473A2;
 $accent-dark-green: #92C553;
 $accent-light-green: #AED480;
 $hover-gray: lightgray;
+$accent-light-red: #E98D8D;
 
 $layout-desktop-width-threshold: 1025px !default;
 $layout-drawer-width-threshold: 400px !default;
@@ -330,7 +331,7 @@ body {
               }
 
               .subscription-list-container {
-                margin: 12px 0 12px 0;
+                margin: 0 0 12px 0;
 
                 .subscription-list-item {
                     border-bottom: 1px solid $accent-light-green;
@@ -705,6 +706,25 @@ body {
       .s-alert-close {
         display: none;
       }
+    }
+  }
+  //  -----ALERT TYPE INDICATOR-----
+  .alert-type-indicator {
+    text-align: right;
+    padding-right: 16px;
+    line-height: normal;
+
+    .badge {
+      color: white;
+      margin-left: 6px;
+    }
+
+    .turned-on {
+      background-color: $accent-light-green;
+    }
+
+    .turned-off {
+      background-color: $accent-light-red;
     }
   }
 }
@@ -1260,8 +1280,12 @@ body > div.ReactModalPortal > div {
           padding-top: 13px;
         }
 
-        span {
+        .title-span {
             padding-left: 10px;
+        }
+        .alert-type-indicator {
+          padding-top: 8px;
+          padding-left: 5px;
         }
     }
 

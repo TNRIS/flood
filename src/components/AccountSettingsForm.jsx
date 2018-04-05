@@ -145,7 +145,6 @@ class AccountSettingsForm extends Component {
 
     const confirmChangeButton = () => {
       let confirmChangeButton
-      console.log(this.state.iUnderstand)
       if (this.state.iUnderstand) {
         confirmChangeButton = (<button type="button" className="button" onClick={this.state.confirmClick}>Confirm</button>)
       }

@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 
 import Modal from 'react-modal'
 import { RingLoader } from 'react-spinners'
+import AlertTypeIndicatorContainer from '../containers/AlertTypeIndicatorContainer'
 
 import FloodAppUser from '../util/User'
 
@@ -248,6 +249,7 @@ class SubscriptionList extends React.Component {
             <p>Click the marker symbol next to a gage to zoom to its location.</p>
             <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
           </div>
+          <AlertTypeIndicatorContainer/>
           <div className="subscription-list-container">
             {this.props.displayGageSubscriptions.map(gageSubscriptionId =>
               <div key={gageSubscriptionId} className="subscription-list-item grid-x">

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Modal from 'react-modal'
+import AlertTypeIndicatorContainer from '../containers/AlertTypeIndicatorContainer'
 
 const reactModalStyle = {
   overlay: {
@@ -58,7 +59,8 @@ class SubscriptionConfirmation extends Component {
         <div className="card">
           <div className="card-divider subscription-confirm-modal-title">
             <i className="fa fa-check-square-o" aria-hidden="true"></i>
-            <span>Confirm Subscription</span>
+            <span className="title-span">Confirm Subscription</span>
+            <AlertTypeIndicatorContainer/>
           </div>
           <div className="card-section subscription-confirm-modal-text">
             <p>Are you sure you want to subscribe to receive alerts for the
