@@ -41,7 +41,8 @@
     }
   }
 
-  ::glow {
+  ::glow
+    [pred_sigstage = null] {
     marker-type: ellipse;
     marker-placement: point;
     marker-allow-overlap: true;
