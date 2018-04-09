@@ -56,17 +56,6 @@ export default class About extends Component {
               any purpose. If you have any questions, please contact us at
               <a href="https://tnris.org/contact/" target="_blank"> https://tnris.org/contact/</a>
               </p>
-              <h5 className="alert-definition">Alert Definition</h5>
-              <p className="alert-definition-text">
-              The word "Alert" when used by and in relation to this application, and all associated
-              messages and notifications, means a forwarded status notification that the information
-              received by the Texas Water Development Board, TNRIS, and this software indicates a
-              condition of significance (as defined by the data source itself) is potentially
-              occuring on a flood gage. The forwarded information is a broadcasted status of the
-              mechanical gages maintained by outside parties and does not mean any flooding is
-              occurring by any standard other than that as defined by the gage owner and data
-              source. <strong>This does not mean alerts should not be taken seriously.</strong>
-              </p>
               <h5 className="data-sources">Data Sources</h5>
               <p className="data-sources-list">
               Flood Gages:<br/><a href="https://water.weather.gov/ahps/" target="_blank">National Weather Service</a><br/>
