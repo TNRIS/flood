@@ -1,7 +1,7 @@
 {
   "name": "flood-web-viewer",
   "version": "3.0.1",
-  "release": "Walleye",
+  "release": "Sheepshead",
   "site_url": "develop.texasflood.org",
   "description": "Texas flood information web viewer",
   "private": true,
