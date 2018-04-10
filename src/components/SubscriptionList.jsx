@@ -96,7 +96,6 @@ class SubscriptionList extends React.Component {
 
     // close sidebar when zoom to gage location. commented out the mobile screen
     // limit since the sidebar is temporarily not fixed open on desktop screens
-    console.log(this.props)
     if (this.props.browser.lessThan.large || this.props.browser.is.large) {
       $('#off-canvas-drawer').foundation('close')
     }
