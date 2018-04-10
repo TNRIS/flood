@@ -94,7 +94,7 @@ body {
     max-height: 40px;
     background-color: $gray20;
     padding-top: 0;
-    padding-bottom: 0;
+    padding-bottom: 0
     // this block creates the shadow
     position: relative;
     z-index: 2;
@@ -628,7 +628,7 @@ body {
     width: 100%;
     padding: 0;
     background-color: $gray20;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 
     .footer-logos {
@@ -1501,7 +1501,7 @@ body > div.ReactModalPortal > div {
         text-decoration: underline;
       }
 
-      .about-disclaimer-text {
+      .about-disclaimer-text, .alert-definition-text {
         font-size: 14px;
       }
 
