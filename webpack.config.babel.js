@@ -60,7 +60,7 @@ export default {
   },
   module: {
     // noParse: [/aws-sdk/],
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
         exclude: /node_modules/,
@@ -88,10 +88,6 @@ export default {
       {
         test: /\.(mss|sql)$/,
         loader: 'raw-loader'
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },

@@ -34,10 +34,12 @@ class SubscriptionConfirmation extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({
-      lid: this.props.popupData.data.lid.toUpperCase(),
-      name: this.props.popupData.data.name
-    })
+    if (this.props.popupData.id == "ahps-flood") {
+      this.setState({
+        lid: this.props.popupData.data.lid.toUpperCase(),
+        name: this.props.popupData.data.name
+      })
+    }
   }
 
   handleCloseModal() {

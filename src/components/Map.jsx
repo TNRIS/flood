@@ -136,7 +136,7 @@ export default class Map extends Component {
             this.map.setView(e.latlng, 16)
           }
         })
-        .on('locationerror', () => {
+        .on('locationerror', (e) => {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
