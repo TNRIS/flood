@@ -67,7 +67,6 @@ export default class Map extends Component {
       this.initializeBasemapLayers()
       this.map.zoomControl.setPosition('bottomright')
       this.initializeLayerStore(this.props, this.map)
-      this.geolocationControl()
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
@@ -79,6 +78,8 @@ export default class Map extends Component {
         iconUrl: gpsFixedIcon,
         iconAnchor: [18, 20]
       })
+
+      this.geolocationControl(defaultMarker)
 
       this.geolocateCircle = null
       this.geolocateIcon = null
@@ -402,7 +403,7 @@ export default class Map extends Component {
     }
   }
 
-  geolocationControl() {
+  geolocationControl(defaultMarker) {
     const leafletMap = this.map
     const showSnackbar = this.props.showSnackbar
 
@@ -433,6 +434,27 @@ export default class Map extends Component {
         onClick: (control) => {
           control.state('location-off')
           leafletMap.stopLocate()
+
+          if (this.geolocateIcon) {
+            leafletMap.removeLayer(this.geolocateIcon)
+          }
+
+          const latlng = this.geolocateIcon._latlng
+          const prevPopupContent = this.geolocateIcon._popup._content
+
+          this.geolocateIcon = L.marker(latlng, {
+            icon: defaultMarker
+          })
+
+          this.geolocateIcon.bindPopup(
+            prevPopupContent,
+            {
+              className: 'geolocation-popup',
+              closeButton: false
+            }
+          )
+
+          leafletMap.addLayer(this.geolocateIcon)
         }
       }]
     }).disable()
@@ -455,7 +477,9 @@ export default class Map extends Component {
         title: 'Reset geolocation tools',
         onClick: (control) => {
           control.state("zoom-to-location")
-          leafletMap.removeLayer(this.geolocateIcon)
+          if (leafletMap.hasLayer(this.geolocateIcon)) {
+            leafletMap.removeLayer(this.geolocateIcon)
+          }
           leafletMap.stopLocate()
           trackLocationButton.state('location-off')
           trackLocationButton.disable()
