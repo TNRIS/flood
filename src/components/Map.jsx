@@ -140,6 +140,10 @@ export default class Map extends Component {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
+          this.locateToolbar._buttons[1].state('location-off')
+          this.locateToolbar._buttons[1].disable()
+          this.locateToolbar._buttons[0].state('zoom-to-location')
+          this.map.stopLocate()
         })
         .on('zoomend dragend', () => {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
