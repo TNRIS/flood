@@ -144,6 +144,9 @@ export default class Map extends Component {
           this.locateToolbar._buttons[1].disable()
           this.locateToolbar._buttons[0].state('zoom-to-location')
           this.map.stopLocate()
+          if (this.map.hasLayer(this.geolocateIcon)) {
+            this.map.removeLayer(this.geolocateIcon)
+          }
         })
         .on('zoomend dragend', () => {
           if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {

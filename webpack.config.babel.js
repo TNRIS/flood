@@ -2,11 +2,12 @@ import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import swig from 'swig'
 
 
 const isProd = process.env.NODE_ENV === 'production'
+const webpackMode = process.env.NODE_ENV
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
@@ -32,7 +33,7 @@ fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html
 //setup webpack plugins
 const plugins = []
 if (isProd) {
-  plugins.push(new ExtractTextPlugin('styles.css'))
+  plugins.push(new MiniCssExtractPlugin({filename: 'styles.css'}))
   plugins.push(new UglifyJsPlugin())
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
@@ -47,6 +48,7 @@ plugins.push(new webpack.DefinePlugin({
 
 export default {
   entry: `${folders.src}entry.jsx`,
+  mode: webpackMode,
   output: {
     path: `${folders.dist}assets/`,
     publicPath: '/assets/',
@@ -64,13 +66,13 @@ export default {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: isProd ? ExtractTextPlugin.extract({use: ['css-loader', 'sass-loader']})
-          : 'style-loader!css-loader?sourceMap!sass-loader?sourceMap'
+        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+          : ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
       },
       {
         test: /\.css$/,
-        loader: isProd ? ExtractTextPlugin.extract({use: ['css-loader']})
-          : 'style-loader!css-loader',
+        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader']
+          : ['style-loader', 'css-loader'],
       },
       {
         test: /\.(jpg|png|gif|ico|woff)$/,
