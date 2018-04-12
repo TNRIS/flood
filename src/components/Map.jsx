@@ -436,7 +436,7 @@ export default class Map extends Component {
           leafletMap.stopLocate()
 
           if (this.geolocateIcon) {
-            this.map.removeLayer(this.geolocateIcon)
+            leafletMap.removeLayer(this.geolocateIcon)
           }
 
           const latlng = this.geolocateIcon._latlng
@@ -477,7 +477,9 @@ export default class Map extends Component {
         title: 'Reset geolocation tools',
         onClick: (control) => {
           control.state("zoom-to-location")
-          leafletMap.removeLayer(this.geolocateIcon)
+          if (leafletMap.hasLayer(this.geolocateIcon)) {
+            leafletMap.removeLayer(this.geolocateIcon)
+          }
           leafletMap.stopLocate()
           trackLocationButton.state('location-off')
           trackLocationButton.disable()
