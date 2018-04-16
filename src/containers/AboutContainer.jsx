@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import * as actions from '../actions'
+import { hideAboutDialog } from '../actions/AboutActions'
 import About from '../components/About'
 
 const mapStateToProps = (state) => {
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideAbout: () => {
-      dispatch(actions.hideAboutDialog())
+      dispatch(hideAboutDialog())
     }
   }
 }

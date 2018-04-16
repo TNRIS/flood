@@ -1,7 +1,7 @@
 import L from 'leaflet'
 import objectAssign from 'object-assign'
 
-import * as types from '../actions/types'
+import { SET_BASE_LAYER } from '../constants/MapActionTypes'
 import keys from '../keys'
 
 const initialState = {
@@ -50,7 +50,7 @@ const initialState = {
 
 export default function baseLayers(state = initialState, action) {
   switch (action.type) {
-    case types.SET_BASE_LAYER:
+    case SET_BASE_LAYER:
       return objectAssign({}, state, {
         active: action.id
       })

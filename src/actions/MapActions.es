@@ -1,6 +1,12 @@
 import {
   CLEAR_CENTER_AND_ZOOM,
-  SET_CENTER_AND_ZOOM
+  SET_CENTER_AND_ZOOM,
+  CHANGE_LAYER_STATUS,
+  SET_BASE_LAYER,
+  SET_FEATURE_LAYER,
+  SET_POPUP,
+  SET_GAGE_INIT,
+  UPDATE_TIMESTAMP
 } from '../constants/MapActionTypes'
 
 import {
@@ -44,5 +50,43 @@ export function setCenterAndZoom(lat, lng, zoom) {
     lat,
     lng,
     zoom
+  }
+}
+
+export const layerStatusChange = (id, status) => {
+  return {
+    type: CHANGE_LAYER_STATUS,
+    id,
+    status
+  }
+}
+
+export const setBaseLayer = (id) => {
+  return {
+    type: SET_BASE_LAYER,
+    id
+  }
+}
+
+export const setFeatureLayer = (id) => {
+  return {
+    type: SET_FEATURE_LAYER,
+    id
+  }
+}
+
+export const setGageInit = (initState) => {
+  return {
+    type: SET_GAGE_INIT,
+    initState
+  }
+}
+
+export const updateTimestamp = (timestamp) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_TIMESTAMP,
+      timestamp
+    })
   }
 }

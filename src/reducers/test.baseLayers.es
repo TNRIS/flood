@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import * as R from 'ramda'
 
 import reducer from './baseLayers'
-import * as types from '../actions/types'
+import { SET_BASE_LAYER } from '../constants/MapActionTypes'
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {
@@ -68,7 +68,7 @@ describe('reducer: baseLayers', () => {
           },
         ]
       }, {
-        type: types.SET_BASE_LAYER,
+        type: SET_BASE_LAYER,
         id: 'bing-hybrid',
       })).to.deep.equal({
         active: 'bing-hybrid',
@@ -114,7 +114,7 @@ describe('reducer: baseLayers', () => {
           },
         ]
       }, {
-        type: types.SET_BASE_LAYER,
+        type: SET_BASE_LAYER,
         id: 'bing-hybrid',
       })).to.deep.equal({
         active: 'bing-hybrid',

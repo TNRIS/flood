@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 
 import {
   clearCenterAndZoom,
+  layerStatusChange,
+  updateTimestamp
 } from '../actions/MapActions'
-
-import * as actions from '../actions'
 
 import { showSnackbar } from '../actions/ToasterActions'
 import Map from '../components/Map'
@@ -31,10 +31,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(clearPopup())
     },
     onLayerStatusChange: (id, status) => {
-      dispatch(actions.layerStatusChange(id, status))
+      dispatch(layerStatusChange(id, status))
     },
     updateTimestamp: (timestamp) => {
-      dispatch(actions.updateTimestamp(timestamp))
+      dispatch(updateTimestamp(timestamp))
     },
     clearCenterAndZoom: () => {
       dispatch(clearCenterAndZoom())

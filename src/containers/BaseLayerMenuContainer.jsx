@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setBaseLayer } from '../actions'
+import { setBaseLayer } from '../actions/MapActions'
 import BaseLayerMenu from '../components/BaseLayerMenu'
 
 const mapStateToProps = (state) => {

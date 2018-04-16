@@ -3,7 +3,7 @@ import condenseWhitespace from 'condense-whitespace'
 import L from 'leaflet'
 import objectAssign from 'object-assign'
 import { store } from '../store'
-import { retrieveGageStatus } from '../actions'
+import { retrieveGageStatus } from '../actions/InitializationActions'
 import { mapClickHandler } from '../actions/MapActions'
 import Layer from './Layer'
 

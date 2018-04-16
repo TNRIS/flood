@@ -1,36 +1,6 @@
 import axios from 'axios'
 import * as R from 'ramda'
-
-import * as types from './types'
-
-export const layerStatusChange = (id, status) => {
-  return {
-    type: types.CHANGE_LAYER_STATUS,
-    id,
-    status
-  }
-}
-
-export const setBaseLayer = (id) => {
-  return {
-    type: types.SET_BASE_LAYER,
-    id
-  }
-}
-
-export const setFeatureLayer = (id) => {
-  return {
-    type: types.SET_FEATURE_LAYER,
-    id
-  }
-}
-
-export const setGageInit = (initState) => {
-  return {
-    type: types.SET_GAGE_INIT,
-    initState
-  }
-}
+import { setGageInit } from './MapActions'
 
 //function only run once on the initial app build. populationed the subscribeDialog reducer
 //with the current stage of all flood gauges
@@ -55,30 +25,5 @@ export function retrieveGageStatus() {
         const initState = R.mergeAll(formatState)
         dispatch(setGageInit(initState))
       })
-  }
-}
-
-export const updateTimestamp = (timestamp) => {
-  return (dispatch) => {
-    dispatch({
-      type: types.UPDATE_TIMESTAMP,
-      timestamp
-    })
-  }
-}
-
-export const showAboutDialog = () => {
-  return (dispatch) => {
-    dispatch({
-      type: types.SHOW_ABOUT_DIALOG
-    })
-  }
-}
-
-export const hideAboutDialog = () => {
-  return (dispatch) => {
-    dispatch({
-      type: types.HIDE_ABOUT_DIALOG
-    })
   }
 }
