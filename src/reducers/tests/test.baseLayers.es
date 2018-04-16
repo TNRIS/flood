@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import * as R from 'ramda'
 
-import reducer from './baseLayers'
-import { SET_BASE_LAYER } from '../constants/MapActionTypes'
+import reducer from '../baseLayers'
+import { SET_BASE_LAYER } from '../../constants/MapActionTypes'
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {

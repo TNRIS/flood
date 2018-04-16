@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import * as R from 'ramda'
 
-import reducer from './map'
-import * as types from '../constants/MapActionTypes'
+import reducer from '../map'
+import * as types from '../../constants/MapActionTypes'
 
 describe('reducer: map', () => {
   it('should return the initial state', () => {

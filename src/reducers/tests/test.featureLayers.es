@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 import * as R from 'ramda'
 
-import reducer from './featureLayers'
+import reducer from '../featureLayers'
 import {
   CHANGE_LAYER_STATUS,
   SET_FEATURE_LAYER,
   UPDATE_TIMESTAMP
-} from '../constants/MapActionTypes'
+} from '../../constants/MapActionTypes'
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {
