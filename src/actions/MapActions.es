@@ -4,7 +4,6 @@ import {
   CHANGE_LAYER_STATUS,
   SET_BASE_LAYER,
   SET_FEATURE_LAYER,
-  SET_POPUP,
   SET_GAGE_INIT,
   UPDATE_TIMESTAMP
 } from '../constants/MapActionTypes'

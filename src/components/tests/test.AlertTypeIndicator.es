@@ -8,7 +8,6 @@ describe('component: AlertTypeIndicator', () => {
   let renderer = new ShallowRenderer()
   renderer.render(<AlertTypeIndicator />)
   let output = renderer.getRenderOutput()
-  console.log(output.props.children)
 
   it('should render AlertTypeIndicator with class "alert-type-indicator"', () => {
     expect(output.props.className).to.equal('alert-type-indicator')

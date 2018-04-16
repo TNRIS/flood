@@ -5,7 +5,9 @@ import {
   SET_CENTER_AND_ZOOM,
   CHANGE_LAYER_STATUS,
   SET_BASE_LAYER,
-  SET_FEATURE_LAYER
+  SET_FEATURE_LAYER,
+  SET_GAGE_INIT,
+  UPDATE_TIMESTAMP
 } from '../../constants/MapActionTypes'
 
 import {
@@ -14,8 +16,12 @@ import {
   setCenterAndZoom,
   layerStatusChange,
   setBaseLayer,
-  setFeatureLayer
+  setFeatureLayer,
+  setGageInit,
+  updateTimestamp
 } from '../MapActions'
+
+import { retrieveGageStatus } from '../InitializationActions'
 
 describe('actions: MapActions', () => {
   const sampleLat = 30.33081
@@ -73,5 +79,20 @@ describe('actions: MapActions', () => {
       id
     }
     expect(setFeatureLayer(id)).to.deep.equal(expectedAction)
+  })
+
+  it('should create an action for setting initial gage ref in store', () => {
+    const initState = retrieveGageStatus()
+
+    const expectedAction = {
+      type: SET_GAGE_INIT,
+      initState
+    }
+    expect(setGageInit(initState)).to.deep.equal(expectedAction)
+  })
+
+  it('should create an action with a dispatchable function for updating the timestamp', () => {
+    const timestamp = '4/16/2018, 9:54:00 AM'
+    expect(updateTimestamp(timestamp)).to.be.a('function')
   })
 })
