@@ -61,15 +61,6 @@ export function getSubscriptionsSuccess() {
 }
 
 /**
- * Action for no subscriptions found
- */
-export function noSubscriptionsFound() {
-  return {
-    type: NO_SUBSCRIPTIONS_FOUND
-  }
-}
-
-/**
  * Action for swapping between the sign up and login forms
  * @param  {string} form     form to display. valid values: login, signUp, verify
  * @return {object} action
@@ -81,6 +72,14 @@ export function swapDisplayForm(form) {
   }
 }
 
+/**
+ * Action for no subscriptions found
+ */
+export function noSubscriptionsFound() {
+  return {
+    type: NO_SUBSCRIPTIONS_FOUND
+  }
+}
 
 /**
  * Function to get all subscriptions from Amazon and filter for subscriptions
