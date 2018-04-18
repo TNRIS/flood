@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-import * as R from 'ramda'
 
 import reducer from '../gageInfo'
 import { SET_GAGE_INIT } from '../../constants/MapActionTypes'
