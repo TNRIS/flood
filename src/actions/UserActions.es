@@ -7,7 +7,6 @@ import {
 } from './ToasterActions'
 
 import {
-  DELETE_ACCOUNT,
   LOGIN_ATTEMPT,
   LOGIN_ERROR,
   LOGIN_SUCCESSFUL,

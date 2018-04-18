@@ -22,7 +22,7 @@ import {
 
 describe('actions: SubscriptionFormActions', () => {
 
-  it('should create and action to clear subscriptions from the store', () => {
+  it('should create an action to clear subscriptions from the store', () => {
     const expectedAction = {
       type: CLEAR_SUBSCRIPTIONS
     }
