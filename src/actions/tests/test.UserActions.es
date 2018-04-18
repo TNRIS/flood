@@ -137,12 +137,7 @@ describe('actions: UserActions', () => {
 
   it('should create & return a function to delete the user account', () => {
     // this test can be elaborated to deep dive into the function itself
-    const deleteFunction = deleteAccount()
-    const dp = function dispatch (t) {
-      return
-    }
-    expect(deleteFunction).to.be.a('function')
-    expect(deleteFunction(dp)).to.be.a('promise')
+    expect(deleteAccount()).to.be.a('function')
   })
 
   it('should create & return a function to retrieve authenticated user account information', () => {

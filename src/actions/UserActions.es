@@ -274,7 +274,7 @@ export function siteReset() {
 
 export function deleteAccount() {
   return (dispatch) => {
-    return FloodAppUser.deleteAccount().then(() => {
+    FloodAppUser.deleteAccount().then(() => {
       dispatch(userSignOut())
     })
   }
