@@ -162,7 +162,7 @@ class AccountSettingsForm extends Component {
           <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
           <p><b>Email:</b> { email }</p>
           <div>
-            <p className="switch-label"><b>Flood Gage Significant Stage Alert Types:</b></p>
+            <p className="switch-label"><b>Flood Gage Alert Types:</b></p>
             <table className="responsive-card-table unstriped">
               <tbody>
                 <tr>
