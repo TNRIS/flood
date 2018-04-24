@@ -10,8 +10,8 @@ import LayerStore from '../util/LayerStore'
 
 import PopupContainer from '../containers/PopupContainer'
 
-const defaultMarkerIcon = require('../images/ic_person_pin_circle_black_24dp_2x.png')
-const gpsFixedIcon = require("../images/ic_gps_fixed_black_18dp_2x.png")
+const defaultMarkerIcon = require('../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png')
+const gpsFixedIcon = require('../images/foundation-icon-fonts_2015-02-16_target-two_36_0_333333_none.png')
 
 import axios from 'axios'
 
