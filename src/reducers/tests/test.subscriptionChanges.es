@@ -22,12 +22,12 @@ import {
 } from '../subscriptionChanges'
 
 describe('reducer: subscriptionChanges', () => {
-  const sampleId = 666
   const sampleLid = "DVL2"
   const sampleProtocol = "sms"
   const sampleSubscriptionId = 123
   const sampleSubscriptionAction = 'subscribe'
   const sampleChangeId = 4
+  const sampleId = `${sampleLid}_${sampleProtocol}_subscribe`
 
   const samplePayload = {
     id: sampleId,
@@ -41,8 +41,8 @@ describe('reducer: subscriptionChanges', () => {
   const res = {}
   res[sampleId] = samplePayload
 
-  const loaded = {321: {
-    id: 321,
+  const loaded = {SVR1_sms_unsubscribe: {
+    id: "SVR1_sms_unsubscribe",
     lid: "SVR1",
     protocol: sampleProtocol,
     subscriptionId: 999,
@@ -103,25 +103,59 @@ describe('reducer: subscriptionChanges', () => {
   })
 
   it('subscriptionChangesById should handle SUBSCRIPTION_UPDATED', () => {
-    const diff = {...loaded[321], changeRequestId: 12}
+    const diff = {...loaded['SVR1_sms_unsubscribe'], changeRequestId: 12}
     expect(
       subscriptionChangesById(loaded, {
         type: SUBSCRIPTION_UPDATED,
         payload: {
-          id: 321,
+          id: 'SVR1_sms_unsubscribe',
           changeRequestId: 12
         }
       })
-    ).to.deep.equal({321: diff})
+    ).to.deep.equal({'SVR1_sms_unsubscribe': diff})
   })
 
-  // it('preset subscriptionChangesById should handle UNQUEUE_CHANGE_FROM_CHANGE_LIST', () => {
-  //   expect(
-  //     subscriptionChangesById(sampleList, {
-  //       type: UNQUEUE_CHANGE_FROM_CHANGE_LIST,
-  //       payload: samplePayload
-  //     })
-  //   ).to.deep.equal(loaded)
-  // })
+  it('preset subscriptionChangesById should handle UNQUEUE_CHANGE_FROM_CHANGE_LIST', () => {
+    expect(
+      subscriptionChangesById(sampleList, {
+        type: UNQUEUE_CHANGE_FROM_CHANGE_LIST,
+        payload: samplePayload
+      })
+    ).to.deep.equal(loaded)
+  })
+
+  // addSubscriptionChangeId tests
+  it('empty addSubscriptionChangeId should return array with only input Id', () => {
+    expect(
+      addSubscriptionChangeId([], {
+        payload: samplePayload
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  it('preset addSubscriptionChangeId should return array with input Id appended', () => {
+    expect(
+      addSubscriptionChangeId(["SVR1_sms_unsubscribe"], {
+        payload: samplePayload
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe", sampleId])
+  })
+
+  // removeSubscriptionChangeId tests
+  it('empty removeSubscriptionChangeId should return empty array', () => {
+    expect(
+      removeSubscriptionChangeId([], {
+        payload: samplePayload
+      })
+    ).to.deep.equal([])
+  })
+
+  it('preset removeSubscriptionChangeId should return filtered array without input Id', () => {
+    expect(
+      removeSubscriptionChangeId(["SVR1_sms_unsubscribe", sampleId], {
+        payload: samplePayload
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe"])
+  })
 
 })
