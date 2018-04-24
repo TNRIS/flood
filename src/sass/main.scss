@@ -907,6 +907,10 @@ a.leaflet-disabled {
   z-index: 401;
 }
 
+.leaflet-control-zoom {
+  margin-bottom: 4px !important;
+}
+
 // -----MAP: RADAR LAYER BUTTONS-----
 .weather-timestamp {
   z-index: 401;
