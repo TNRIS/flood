@@ -158,4 +158,129 @@ describe('reducer: subscriptionChanges', () => {
     ).to.deep.equal(["SVR1_sms_unsubscribe"])
   })
 
+  // allSubscriptionChanges tests
+  it('allSubscriptionChanges should return existing array by default', () => {
+    expect(
+      allSubscriptionChanges([sampleId], {
+        payload: samplePayload
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  it('empty allSubscriptionChanges should handle ADD_SUBSCRIBE_TO_CHANGE_LIST; return single item array', () => {
+    expect(
+      allSubscriptionChanges([], {
+        type: ADD_SUBSCRIBE_TO_CHANGE_LIST,
+        payload: samplePayload
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  it('preset allSubscriptionChanges should handle ADD_SUBSCRIBE_TO_CHANGE_LIST; return array with new change appended', () => {
+    expect(
+      allSubscriptionChanges(["SVR1_sms_unsubscribe"], {
+        type: ADD_SUBSCRIBE_TO_CHANGE_LIST,
+        payload: samplePayload
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe", sampleId])
+  })
+
+  it('empty allSubscriptionChanges should handle ADD_UNSUBSCRIBE_TO_CHANGE_LIST; return single item array', () => {
+    expect(
+      allSubscriptionChanges([], {
+        type: ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe"])
+  })
+
+  it('preset allSubscriptionChanges should handle ADD_UNSUBSCRIBE_TO_CHANGE_LIST; return array with new change appended', () => {
+    expect(
+      allSubscriptionChanges([sampleId], {
+        type: ADD_UNSUBSCRIBE_TO_CHANGE_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([sampleId, "SVR1_sms_unsubscribe"])
+  })
+
+  it('allSubscriptionChanges should handle CLEAR_SUBSCRIPTION_LIST; return empty array', () => {
+    expect(
+      allSubscriptionChanges([sampleId, "SVR1_sms_unsubscribe"], {
+        type: CLEAR_SUBSCRIPTION_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([])
+  })
+
+  it('empty allSubscriptionChanges should handle UNQUEUE_CHANGE_FROM_CHANGE_LIST; return empty array', () => {
+    expect(
+      allSubscriptionChanges([], {
+        type: UNQUEUE_CHANGE_FROM_CHANGE_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([])
+  })
+
+  it('preset allSubscriptionChanges should handle UNQUEUE_CHANGE_FROM_CHANGE_LIST; remove item from state array', () => {
+    expect(
+      allSubscriptionChanges([sampleId, "SVR1_sms_unsubscribe"], {
+        type: UNQUEUE_CHANGE_FROM_CHANGE_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  // addProcessedSubscriptionId
+  it('empty addProcessedSubscriptionId should return array with only input Id', () => {
+    expect(
+      addProcessedSubscriptionId([], {
+        payload: samplePayload
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  it('preset addProcessedSubscriptionId should return array with input Id appended', () => {
+    expect(
+      addProcessedSubscriptionId(["SVR1_sms_unsubscribe"], {
+        payload: samplePayload
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe", sampleId])
+  })
+
+  // allProcessedSubscriptions tests
+  it('allProcessedSubscriptions should return existing array by default', () => {
+    expect(
+      allProcessedSubscriptions([sampleId], {
+        payload: samplePayload
+      })
+    ).to.deep.equal([sampleId])
+  })
+
+  it('empty allProcessedSubscriptions should handle SUBSCRIPTION_UPDATED; return single item array', () => {
+    expect(
+      allProcessedSubscriptions([], {
+        type: SUBSCRIPTION_UPDATED,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal(["SVR1_sms_unsubscribe"])
+  })
+
+  it('preset allProcessedSubscriptions should handle SUBSCRIPTION_UPDATED; return array with new change appended', () => {
+    expect(
+      allProcessedSubscriptions([sampleId], {
+        type: SUBSCRIPTION_UPDATED,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([sampleId, "SVR1_sms_unsubscribe"])
+  })
+
+  it('allProcessedSubscriptions should handle CLEAR_SUBSCRIPTION_LIST; return empty array', () => {
+    expect(
+      allProcessedSubscriptions([sampleId, "SVR1_sms_unsubscribe"], {
+        type: CLEAR_SUBSCRIPTION_LIST,
+        payload: loaded["SVR1_sms_unsubscribe"]
+      })
+    ).to.deep.equal([])
+  })
+
 })
