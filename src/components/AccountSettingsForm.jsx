@@ -51,7 +51,8 @@ class AccountSettingsForm extends Component {
     if (event.target.id === 'delete') {
       this.setState({
         openConfirmDialog: true,
-        confirmHeader: "Confirm Delete",
+        confirmIcon: "fa fa-trash-o",
+        confirmHeader: "Delete My Account",
         confirmText: (<p>Are you sure you want to delete your account?<br /><b>Once deleted, your account cannot be recovered.</b></p>),
         confirmClick: this.deleteAccount
       })
@@ -59,8 +60,9 @@ class AccountSettingsForm extends Component {
     else if (event.target.id === 'save') {
       this.setState({
         openConfirmDialog: true,
-        confirmHeader: "Confirm Settings Change",
-        confirmText: (<p>Are you sure you want change your alert types?<br />This will alter the SMS messages you receive.<br /><b>Disabling both will cause you to lose all of your subscriptions.</b></p>),
+        confirmIcon: "fa fa-floppy-o",
+        confirmHeader: "Save Changes",
+        confirmText: (<p>Are you sure you want to change your alert types?<br />This will alter the SMS messages you receive.<br /><b>Disabling both will cause you to lose all of your subscriptions.</b></p>),
         confirmClick: this.saveAttributeChanges
       })
     }
@@ -213,7 +215,7 @@ class AccountSettingsForm extends Component {
                style={reactModalStyle}>
           <div className="card">
             <div className="card-divider confirm-modal-title">
-              <i className="fi-alert"></i>
+              <i className={this.state.confirmIcon}></i>
               <span>{this.state.confirmHeader}</span>
             </div>
             <div className="card-section confirm-modal-text">

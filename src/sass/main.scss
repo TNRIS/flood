@@ -259,7 +259,7 @@ body {
               flex: 1;
               margin: auto auto auto 6px;
 
-              color: black;
+              color: $gray20;
               letter-spacing: .4px;
               word-spacing: 2px;
             }
@@ -306,7 +306,14 @@ body {
           .subscriptionManager {
             background-color: white;
             font-size: 14px;
-            // margin-bottom: 50px;
+
+            p {
+              color: $gray20;
+            }
+
+            h5 {
+              color: $gray20;
+            }
 
             .spinner-wrapper {
               div {
@@ -329,6 +336,7 @@ body {
 
               p {
                 margin: 16px 0 0 0;
+                color: $gray20;
               }
 
               .subscription-list-info-container {
@@ -446,10 +454,6 @@ body {
               width: 100%;
               float: left;
               margin-top: 10px;
-
-              @media screen and (max-width: $layout-desktop-width-threshold) {
-                // margin-bottom: 50px;
-              }
 
               button {
                 width: 50%;
@@ -586,6 +590,9 @@ body {
                 cursor: pointer;
                 padding-left: 5px;
                 padding-right: 8px;
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $gray20;
               }
 
               i:hover {
@@ -1284,7 +1291,11 @@ body > div.ReactModalPortal > div {
         }
         .alert-type-indicator {
           padding-top: 8px;
-          padding-left: 5px;
+          padding-left: 44px;
+
+          @media screen and (max-width: 360px) {
+            padding-left: 5px;
+          }
         }
     }
 
@@ -1401,6 +1412,10 @@ body > div.ReactModalPortal > div {
     line-height: 42px;
     padding: 0 0 0 1pc;
 
+    i {
+      padding-top: 12px;
+    }
+
     span {
         padding-left: 10px;
     }
@@ -1419,6 +1434,7 @@ body > div.ReactModalPortal > div {
     #i-understand-switch-label {
       cursor: pointer;
       max-width: 50%;
+      color: $gray20;
     }
   }
 
