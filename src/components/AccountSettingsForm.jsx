@@ -157,7 +157,7 @@ class AccountSettingsForm extends Component {
     return (
       <div>
         <div className="user-settings">
-          <p><b>Current User Profile</b></p>
+          <h5>User Profile</h5>
           <p><b>Username:</b> { FloodAppUser.cognitoUser.username }</p>
           <p><b>Phone:</b> { profile.phone_number.substring(2).replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3") }</p>
           <p><b>Email:</b> { email }</p>
@@ -167,7 +167,7 @@ class AccountSettingsForm extends Component {
               <tbody>
                 <tr>
                   <td>
-                    <div className="switch-container shrink" title="Receive significant current gage stage alerts"><small>Current</small>
+                    <div className="switch-container shrink" title="Receive current significant stage alerts"><small>Current</small>
                       <div className="switch tiny">
                         <input className="switch-input"
                           id="currentAlerts"
@@ -182,7 +182,7 @@ class AccountSettingsForm extends Component {
                     </div>
                   </td>
                   <td>
-                    <div className="switch-container shrink" title="Receive significant predictive gage stage alerts"><small>Predictive</small>
+                    <div className="switch-container shrink" title="Receive predictive significant stage alerts"><small>Predictive</small>
                       <div className="switch tiny">
                         <input className="switch-input"
                          id="predictiveAlerts"

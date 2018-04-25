@@ -70,10 +70,10 @@ class FloodFooter extends React.Component {
       <div className="footer-bar">
         <div className={footerLogoClass}>
           <div className="footer-wrapper">
-            <a className="footer-twdb-logo" href="http://www.twdb.texas.gov">
+            <a className="footer-twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
               <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
             </a>
-            <a className="footer-tnris-logo" href="http://www.tnris.org">
+            <a className="footer-tnris-logo" href="http://www.tnris.org" target="_blank">
               <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
             </a>
           </div>
