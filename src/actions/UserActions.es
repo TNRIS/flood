@@ -89,13 +89,16 @@ export function userLogin(username, password) {
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "NotAuthorizedException: Incorrect username or password.") {
+        if (result.name == "NotAuthorizedException") {
           dispatch(showSnackbar("Incorrect username or password. Please try again."))
         }
-        else if (result == "UserNotFoundException: User does not exist.") {
+        else if (result.name == "UserNotFoundException") {
           dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
         }
-        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+        else if (result.name == "UserNotConfirmedException") {
+          dispatch(showSnackbar("User has not been confirmed. Please sign up and try again."))
+        }
+        else if (result.name == "LimitExceededException") {
           dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
         }
         else {
@@ -121,8 +124,8 @@ export function userSignUp(username, password, phone, email) {
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "UsernameExistsException: User already exists") {
-          dispatch(showSnackbar("This username is already registered. Please try a different username."))
+        if (result.name == "UsernameExistsException") {
+          dispatch(showSnackbar("Username is already registered. Please try a different username."))
         }
         else {
           dispatch(sendErrorReport(result))
@@ -148,15 +151,15 @@ export function userVerify(verificationCode) {
         }
         else {
             dispatch(getSubscriptionsError())
-            if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+            if (result.name == "CodeMismatchException") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
-            else if (result == "AliasExistsException: An account with the phone_number already exists.") {
+            else if (result.name == "AliasExistsException") {
               dispatch(swapDisplayForm('login'))
-              dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
+              dispatch(showSnackbar("An account with this phone number already exists. Try 'Forgot Password'"))
               // at this point, the attempted account is created and stuck in a pergatory where the user
               // cannot log in since the account isn't confirmed, and since the account exists the username
-              // is officially taken and cannot be used for any new account. we will need to come up with
+              // is officially taken and cannot be used for any new account. we will need to come up with a
               // method to handle these pergatory accounts. i.e. delete them
             }
             else {
@@ -175,7 +178,7 @@ export function resendVerificationCode() {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
       }
       else {
-        if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+        if (result.name == "CodeMismatchException") {
           dispatch(showSnackbar("Incorrect validation code. Please try again."))
         }
         else {
@@ -198,10 +201,10 @@ export function forgotPassword(username) {
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "UserNotFoundException: Username/client id combination not found.") {
+        if (result.name == "UserNotFoundException") {
           dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
         }
-        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+        else if (result.name == "LimitExceededException") {
           dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
         }
         else {
@@ -225,10 +228,10 @@ export function newPassword(verificationCode, password) {
         }
         else {
             dispatch(getSubscriptionsError())
-            if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
+            if (result.name == "InvalidParameterException") {
               dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
             }
-            else if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+            else if (result.name == "CodeMismatchException") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
             else {
