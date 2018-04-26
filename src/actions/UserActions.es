@@ -96,7 +96,7 @@ export function userLogin(username, password) {
           dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
         }
         else if (result.name == "UserNotConfirmedException") {
-          dispatch(showSnackbar("User has not been confirmed. Please sign up and try again."))
+          dispatch(showSnackbar("User has not been confirmed. Please sign up again and confirm your account."))
         }
         else if (result.name == "LimitExceededException") {
           dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
