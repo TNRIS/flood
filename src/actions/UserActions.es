@@ -81,7 +81,7 @@ export function userLogin(username, password) {
     FloodAppUser.setCognitoUser({Username: username, Password: password})
 
     return FloodAppUser.authenticate((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
@@ -118,7 +118,7 @@ export function userSignUp(username, password, phone, email) {
     FloodAppUser.setUserAttributes({Phone: phone, Email: email})
 
     return FloodAppUser.signUp((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(swapDisplayForm('verify'))
         dispatch(getSubscriptionsSuccess())
       }
@@ -140,9 +140,9 @@ export function userVerify(verificationCode) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmSignup(verificationCode, (result) => {
-        if (result === 0) {
+        if (result == 0) {
           FloodAppUser.authenticate((result) => {
-            if (result === 0) {
+            if (result == 0) {
               dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))
               dispatch(loginSuccessful(FloodAppUser.username, {...result, ...FloodAppUser.userData, FloodAppUser}))
               dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
@@ -174,7 +174,7 @@ export function userVerify(verificationCode) {
 export function resendVerificationCode() {
   return (dispatch) => {
     return FloodAppUser.resendVerificationCode((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
       }
       else {
@@ -194,7 +194,7 @@ export function forgotPassword(username) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.forgotPassword(username, (result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar('Code sent to: ' + username))
         dispatch(swapDisplayForm('newPassword'))
         dispatch(getSubscriptionsSuccess())
@@ -221,7 +221,7 @@ export function newPassword(verificationCode, password) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmPassword(verificationCode, password, (result) => {
-        if (result === 0) {
+        if (result == 0) {
             dispatch(swapDisplayForm('login'))
             dispatch(showSnackbar("Your password has been reset."))
             dispatch(getSubscriptionsSuccess())
@@ -248,7 +248,7 @@ export function userSignOut() {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.signOut((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(swapDisplayForm('login'))
         dispatch(clearSubscriptionList())
         dispatch(showSnackbar("You have successfully signed out."))
@@ -286,7 +286,7 @@ export function deleteAccount() {
 export function retrieveUser() {
   return (dispatch) => {
     return FloodAppUser.retrieveUser((result, username) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
