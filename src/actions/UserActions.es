@@ -81,7 +81,7 @@ export function userLogin(username, password) {
     FloodAppUser.setCognitoUser({Username: username, Password: password})
 
     return FloodAppUser.authenticate((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
@@ -89,13 +89,16 @@ export function userLogin(username, password) {
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "NotAuthorizedException: Incorrect username or password.") {
+        if (result.name == "NotAuthorizedException") {
           dispatch(showSnackbar("Incorrect username or password. Please try again."))
         }
-        else if (result == "UserNotFoundException: User does not exist.") {
+        else if (result.name == "UserNotFoundException") {
           dispatch(showSnackbar("Username or Phone Number is not registered. Please try again."))
         }
-        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+        else if (result.name == "UserNotConfirmedException") {
+          dispatch(showSnackbar("User has not been confirmed. Please sign up again and confirm your account."))
+        }
+        else if (result.name == "LimitExceededException") {
           dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
         }
         else {
@@ -115,14 +118,14 @@ export function userSignUp(username, password, phone, email) {
     FloodAppUser.setUserAttributes({Phone: phone, Email: email})
 
     return FloodAppUser.signUp((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(swapDisplayForm('verify'))
         dispatch(getSubscriptionsSuccess())
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "UsernameExistsException: User already exists") {
-          dispatch(showSnackbar("This username is already registered. Please try a different username."))
+        if (result.name == "UsernameExistsException") {
+          dispatch(showSnackbar("Username is already registered. Please try a different username."))
         }
         else {
           dispatch(sendErrorReport(result))
@@ -137,9 +140,9 @@ export function userVerify(verificationCode) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmSignup(verificationCode, (result) => {
-        if (result === 0) {
+        if (result == 0) {
           FloodAppUser.authenticate((result) => {
-            if (result === 0) {
+            if (result == 0) {
               dispatch(showSnackbar(`Hello ${FloodAppUser.username}!!`))
               dispatch(loginSuccessful(FloodAppUser.username, {...result, ...FloodAppUser.userData, FloodAppUser}))
               dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
@@ -148,15 +151,15 @@ export function userVerify(verificationCode) {
         }
         else {
             dispatch(getSubscriptionsError())
-            if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+            if (result.name == "CodeMismatchException") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
-            else if (result == "AliasExistsException: An account with the phone_number already exists.") {
+            else if (result.name == "AliasExistsException") {
               dispatch(swapDisplayForm('login'))
-              dispatch(showSnackbar("An account with for this phone number already exists. Try 'Forgot Password'"))
+              dispatch(showSnackbar("An account with this phone number already exists. Try 'Forgot Password'"))
               // at this point, the attempted account is created and stuck in a pergatory where the user
               // cannot log in since the account isn't confirmed, and since the account exists the username
-              // is officially taken and cannot be used for any new account. we will need to come up with
+              // is officially taken and cannot be used for any new account. we will need to come up with a
               // method to handle these pergatory accounts. i.e. delete them
             }
             else {
@@ -171,11 +174,11 @@ export function userVerify(verificationCode) {
 export function resendVerificationCode() {
   return (dispatch) => {
     return FloodAppUser.resendVerificationCode((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar("New verification code sent. The previous code is now invalid."))
       }
       else {
-        if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+        if (result.name == "CodeMismatchException") {
           dispatch(showSnackbar("Incorrect validation code. Please try again."))
         }
         else {
@@ -191,17 +194,17 @@ export function forgotPassword(username) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.forgotPassword(username, (result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar('Code sent to: ' + username))
         dispatch(swapDisplayForm('newPassword'))
         dispatch(getSubscriptionsSuccess())
       }
       else {
         dispatch(getSubscriptionsError())
-        if (result == "UserNotFoundException: Username/client id combination not found.") {
+        if (result.name == "UserNotFoundException") {
           dispatch(showSnackbar("Username/Phone Number not found. Please check the spelling and try again."))
         }
-        else if (result == "LimitExceededException: Attempt limit exceeded, please try after some time.") {
+        else if (result.name == "LimitExceededException") {
           dispatch(showSnackbar("Attempt limit exceeded, please try after some time."))
         }
         else {
@@ -218,17 +221,17 @@ export function newPassword(verificationCode, password) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.confirmPassword(verificationCode, password, (result) => {
-        if (result === 0) {
+        if (result == 0) {
             dispatch(swapDisplayForm('login'))
             dispatch(showSnackbar("Your password has been reset."))
             dispatch(getSubscriptionsSuccess())
         }
         else {
             dispatch(getSubscriptionsError())
-            if (result == "InvalidParameterException: Cannot reset password for the user as there is no registered/verified email or phone_number") {
+            if (result.name == "InvalidParameterException") {
               dispatch(showSnackbar("No verified phone number for this username. Please check the spelling or try using your phone number."))
             }
-            else if (result == "CodeMismatchException: Invalid verification code provided, please try again.") {
+            else if (result.name == "CodeMismatchException") {
               dispatch(showSnackbar("Incorrect validation code. Please try again."))
             }
             else {
@@ -245,7 +248,7 @@ export function userSignOut() {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     return FloodAppUser.signOut((result) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(swapDisplayForm('login'))
         dispatch(clearSubscriptionList())
         dispatch(showSnackbar("You have successfully signed out."))
@@ -283,7 +286,7 @@ export function deleteAccount() {
 export function retrieveUser() {
   return (dispatch) => {
     return FloodAppUser.retrieveUser((result, username) => {
-      if (result === 0) {
+      if (result == 0) {
         dispatch(showSnackbar(`Hello ${username}!!`))
         dispatch(loginSuccessful())
         dispatch(getUserSubscriptions(FloodAppUser.idToken, ""))
