@@ -79,7 +79,7 @@ export default class About extends Component {
     else {
       AboutContent = (
         <div className="card-section about-text">
-          <h5>Alert: Definition</h5>
+          <h5>Alert Definition</h5>
           <p className="about-disclaimer-text">
           The word "Alert", when used by and in relation to this application, and all associated
           messages and notifications, means a forwarded status notification that the information

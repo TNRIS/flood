@@ -1534,6 +1534,16 @@ body > div.ReactModalPortal > div {
 
       .about-viewer-details-link {
         margin: 10px 0 10px 0;
+
+        button {
+          margin-top: 15px;
+          background-color: #a8a8a8;
+          color: white;
+        }
+
+        button:hover {
+          background-color: #888;
+        }
       }
 
       .about-developed-by {
