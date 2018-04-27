@@ -1473,8 +1473,9 @@ body > div.ReactModalPortal > div {
   border-radius: 0;
   max-height: 85%;
   max-width: 41em;
-  overflow-y: auto;
   background-color: white;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   @media screen and (max-width: 500px) {
     max-width: 85%;
@@ -1664,8 +1665,9 @@ body > div.ReactModalPortal > div {
   border-radius: 0;
   max-height: 91%;
   max-width: 35em;
-  overflow-y: auto;
   background-color: white;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   @media screen and (max-width: 500px) {
     max-width: 85%;
