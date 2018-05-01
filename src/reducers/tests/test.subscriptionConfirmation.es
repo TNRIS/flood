@@ -1,4 +1,3 @@
-import objectAssign from 'object-assign'
 import { expect } from 'chai'
 
 import {
@@ -6,18 +5,18 @@ import {
   HIDE_SUBSCRIPTION_CONFIRMATION
 } from '../../constants/SubscribeActionTypes'
 
-import subscriptionConfirmation from '../subscriptionConfirmation'
+import reducer from '../subscriptionConfirmation'
 
 describe('reducer: subscriptionConfirmation', () => {
   it('default should return the initial showConfirmation state as false', () => {
     expect(
-      subscriptionConfirmation(undefined, {})
+      reducer(undefined, {})
     ).to.deep.equal({showConfirmation: false})
   })
 
   it('hidden subscriptionConfirmation should handle SHOW_SUBSCRIPTION_CONFIRMATION', () => {
     expect(
-      subscriptionConfirmation({showConfirmation: false}, {
+      reducer({showConfirmation: false}, {
         type: SHOW_SUBSCRIPTION_CONFIRMATION
       })
     ).to.deep.equal({showConfirmation: true})
@@ -25,7 +24,7 @@ describe('reducer: subscriptionConfirmation', () => {
 
   it('visible subscriptionConfirmation should handle SHOW_SUBSCRIPTION_CONFIRMATION', () => {
     expect(
-      subscriptionConfirmation({showConfirmation: true}, {
+      reducer({showConfirmation: true}, {
         type: SHOW_SUBSCRIPTION_CONFIRMATION
       })
     ).to.deep.equal({showConfirmation: true})
@@ -33,7 +32,7 @@ describe('reducer: subscriptionConfirmation', () => {
 
   it('hidden subscriptionConfirmation should handle HIDE_SUBSCRIPTION_CONFIRMATION', () => {
     expect(
-      subscriptionConfirmation({showConfirmation: false}, {
+      reducer({showConfirmation: false}, {
         type: HIDE_SUBSCRIPTION_CONFIRMATION
       })
     ).to.deep.equal({showConfirmation: false})
@@ -41,7 +40,7 @@ describe('reducer: subscriptionConfirmation', () => {
 
   it('visible subscriptionConfirmation should handle HIDE_SUBSCRIPTION_CONFIRMATION', () => {
     expect(
-      subscriptionConfirmation({showConfirmation: true}, {
+      reducer({showConfirmation: true}, {
         type: HIDE_SUBSCRIPTION_CONFIRMATION
       })
     ).to.deep.equal({showConfirmation: false})
