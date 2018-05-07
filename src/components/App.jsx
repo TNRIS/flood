@@ -32,14 +32,14 @@ export default class App extends Component {
 
   componentDidMount() {
     // Opens the off-canvas menu on page load for desktop
-    if (this.props.browser.greaterThan.large) {
+    if (window.innerWidth > 1024) {
       $(document).foundation()
       $('#off-canvas-drawer').foundation('open')
       $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
     }
 
-    // // Necessary to have the off-canvas menu functional on mobile, not sure why
-    if (this.props.browser.lessThan.large) {
+    // Necessary to have the off-canvas menu functional on mobile
+    if (window.innerWidth <= 1024) {
       $(document).foundation()
       $('#off-canvas-drawer').foundation('close')
     }
@@ -55,6 +55,15 @@ export default class App extends Component {
       this.props.showSnackbar(<p><strong>Notice: </strong>This application is currently in beta.
         For the official version, visit <a href="http://map.texasflood.org">http://map.texasflood.org</a>
       </p>, 10000)
+    }
+  }
+
+  componentDidUpdate() {
+    // Opens the off-canvas menu on page load for desktop
+    if (window.innerWidth > 1024) {
+      $(document).foundation()
+      $('#off-canvas-drawer').foundation('open')
+      $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
     }
   }
 
@@ -85,9 +94,9 @@ export default class App extends Component {
         showTwitterFeed: false
       }
     }
-
+    
     let sideBar
-    if (this.props.browser.greaterThan.large) {
+    if (window.innerWidth > 1024) {
       sideBar = (
         <div className="app-content">
           <div id="off-canvas-drawer"
