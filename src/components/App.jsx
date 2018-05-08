@@ -61,7 +61,6 @@ export default class App extends Component {
   componentDidUpdate() {
     // Opens the off-canvas menu on page load for desktop
     if (window.innerWidth > 1024) {
-      $(document).foundation()
       $('#off-canvas-drawer').foundation('open')
       $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
     }
@@ -94,7 +93,7 @@ export default class App extends Component {
         showTwitterFeed: false
       }
     }
-    
+
     let sideBar
     if (window.innerWidth > 1024) {
       sideBar = (
