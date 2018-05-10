@@ -1474,20 +1474,24 @@ body > div.ReactModalPortal > div {
   max-height: 85%;
   max-width: 41em;
   background-color: white;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
 
   @media screen and (max-width: 500px) {
     max-width: 85%;
   }
 
-  .about-version-number {
-    color: $gray20;
+  .about-modal-x {
     float: right;
-    font-size: x-small;
-    font-style: italic;
-    padding-right: 10px;
-    margin-bottom: 0;
+    padding-right: 16px;
+    font-size: 22px;
+    color: #777;
+  }
+
+  .about-modal-body {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card.about {
@@ -1507,6 +1511,14 @@ body > div.ReactModalPortal > div {
         font-size: 1.6em;
         font-weight: 400;
       }
+    }
+
+    .about-version-number {
+      color: $gray20;
+      font-size: x-small;
+      font-style: italic;
+      padding: 6px 0 0 16px;
+      margin-bottom: 6px;
     }
 
     .card-section.about-text {

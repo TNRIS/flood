@@ -187,30 +187,35 @@ export default class About extends Component {
                contentLabel="About Modal"
                style={reactModalStyle}>
           <div>
-            <p className="about-version-number">{versionNumber}</p>
+             <a onClick={this.props.hideAbout}><i className="fa fa-times about-modal-x"></i></a>
           </div>
-          <div className="card about">
-            <div className="card-divider about-title">
-              <a href="http://texasflood.org" target="_blank">
-                <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
-              </a>
-            </div>
-            {AboutContent}
-            <div className="card-section about-text">
-              <p className="about-developed-by">Developed By</p>
-              <div className="about-logos">
-                <a className="about-twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
-                  <img src={twdbLogoImage} alt="The Texas Water Development Board logo"/>
-                </a>
-                <a className="about-tnris-logo" href="http://www.tnris.org" target="_blank">
-                  <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
+          <div className="about-modal-body">
+            <div className="card about">
+              <div className="card-divider about-title">
+                <a href="http://texasflood.org" target="_blank">
+                  <img src={TexasFloodLogoImage} alt="The Texas Flood dot org logo"/>
                 </a>
               </div>
-            </div>
-            <div className="about-button-div">
-              <button className="button terms-agree-button" type="button" onClick={this.props.hideAbout}>
-                Close
-              </button>
+              <div>
+                <p className="about-version-number">{versionNumber}</p>
+              </div>
+              {AboutContent}
+              <div className="card-section about-text">
+                <p className="about-developed-by">Developed By</p>
+                <div className="about-logos">
+                  <a className="about-twdb-logo" href="http://www.twdb.texas.gov" target="_blank">
+                    <img src={twdbLogoImage} alt="The Texas Water Development Board logo"/>
+                  </a>
+                  <a className="about-tnris-logo" href="http://www.tnris.org" target="_blank">
+                    <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
+                  </a>
+                </div>
+              </div>
+              <div className="about-button-div">
+                <button className="button terms-agree-button" type="button" onClick={this.props.hideAbout}>
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </Modal>
