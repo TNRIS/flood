@@ -108,8 +108,8 @@ body {
         max-height: 27px;
       }
 
-      @media screen and (max-width: $layout-desktop-width-threshold) {
-        padding: 0 25px 0 20px;
+      @media screen and (max-width: 500px) {
+        padding: 0 20px 0 20px;
       }
     }
 
@@ -1482,10 +1482,16 @@ body > div.ReactModalPortal > div {
   }
 
   .about-modal-x {
-    float: right;
-    padding-right: 16px;
-    font-size: 22px;
-    color: #777;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+
+    i {
+      float: right;
+      padding-right: 12px;
+      font-size: 22px;
+      color: #777;
+    }
   }
 
   .about-modal-body {

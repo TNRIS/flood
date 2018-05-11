@@ -186,8 +186,8 @@ export default class About extends Component {
                isOpen={this.props.openDialog}
                contentLabel="About Modal"
                style={reactModalStyle}>
-          <div>
-             <a onClick={this.props.hideAbout}><i className="fa fa-times about-modal-x"></i></a>
+          <div className="about-modal-x">
+             <a onClick={this.props.hideAbout}><i className="fa fa-times"></i></a>
           </div>
           <div className="about-modal-body">
             <div className="card about">
