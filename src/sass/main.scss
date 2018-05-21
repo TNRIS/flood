@@ -15,6 +15,7 @@ $lighter-blue: #3473A2;
 $accent-dark-green: #92C553;
 $accent-light-green: #AED480;
 $hover-gray: lightgray;
+$accent-light-red: #E98D8D;
 
 $layout-desktop-width-threshold: 1025px !default;
 $layout-drawer-width-threshold: 400px !default;
@@ -25,6 +26,7 @@ $nav-icon-wrapper-width: 50px;
 $nav-spacing-from-left-narrow-link: $nav-spacing-from-left-narrow + $nav-icon-wrapper-width + ($nav-spacing-from-left-narrow - 2);
 $popup-icons-width-threshold: 400px !default;
 $iphone-five-width-threshold: 325px !default;
+$iphone-eight-height-threshold: 670px !default;
 
 body {
   width: 100%;
@@ -43,6 +45,7 @@ body {
     color: black;
     width: auto;
     padding: 8px 0px 8px 0px;
+    text-align: left;
   }
 
   button:focus {
@@ -92,7 +95,10 @@ body {
     background-color: $gray20;
     padding-top: 0;
     padding-bottom: 0;
-    box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.35) !important;
+    // this block creates the shadow
+    position: relative;
+    z-index: 2;
+    box-shadow: 0px 1px 10px rgba(10,10,10,0.7);
 
     .title-logo {
       margin: auto;
@@ -101,11 +107,16 @@ body {
       img {
         max-height: 27px;
       }
+
+      @media screen and (max-width: 500px) {
+        padding: 0 20px 0 20px;
+      }
     }
 
     .button {
       background-color: $gray20;
-      margin: 0;
+      margin-bottom: .9rem;
+      max-height: 40px;
 
       i {
         font-size: 26px;
@@ -118,7 +129,7 @@ body {
       line-height: 40px;
       padding: 0px 16px 0px 16px;
       cursor: pointer;
-      text-align: center;
+      text-align: left;
     }
 
     .vertical.menu > li > div:hover {
@@ -140,8 +151,16 @@ body {
     // -----DESKTOP SIDEBAR-----
     .on-canvas {
       width: 300px;
-      height: calc(100vh - 90px);
+      height: calc(100% - 90px);
       float: left;
+      top: 40px;
+    }
+
+
+    @media screen and (min-width: $layout-desktop-width-threshold) {
+      .js-off-canvas-overlay.is-visible {
+        visibility: hidden;
+      }
     }
 
     .off-canvas-content {
@@ -158,12 +177,15 @@ body {
       .nav {
         width: 100%;
         height: 100%;
-        overflow: auto;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; // mobile safari
         background-color: $gray20;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         // -NAVIGATION CONTENT-
         .navigation-content {
-          // overflow: auto;
           .toggle-navigation-content {
               color: black;
               background-color: $accent-light-green;
@@ -184,6 +206,18 @@ body {
               i {
                 margin-right: 8px;
                 font-size: 18px;
+              }
+
+              .fa.fa-pencil {
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
+              }
+
+              .fa.fa-twitter {
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: black;
               }
           }
 
@@ -225,7 +259,7 @@ body {
               flex: 1;
               margin: auto auto auto 6px;
 
-              color: black;
+              color: $gray20;
               letter-spacing: .4px;
               word-spacing: 2px;
             }
@@ -242,310 +276,360 @@ body {
             .feature-layer-legend {
               margin: auto;
               width: 100%;
+              text-align: right;
 
               img {
                 max-width: 208px;
-                margin: 4px 0 0 56px;
+                margin: 5px auto 0 auto;
+              }
+            }
 
-                @media screen and (max-width: $layout-drawer-width-threshold) {
-                  margin-left: 16px;
+            .feature-layer-legend-weather-radar {
+              margin: auto;
+              width: 100%;
+              text-align: center;
+
+              img {
+                max-width: 208px;
+                margin: auto;
+              }
+            }
+
+            .feature-layer-legendLink > a {
+              width: 126px;
+              margin: 0 auto;
+              padding: 0 0 1rem 0;
+            }
+          }
+
+          // -----SUBSCRIPTION MANAGER-----
+          .subscriptionManager {
+            background-color: white;
+            font-size: 14px;
+
+            p {
+              color: $gray20;
+            }
+
+            h5 {
+              color: $gray20;
+            }
+
+            .spinner-wrapper {
+              div {
+                margin: 0 auto;
+              }
+            }
+
+            .login-form {
+              margin-right: 10px;
+              margin-left: 10px;
+            }
+
+            .subscription-list {
+
+              .subscriptions-count-badge {
+                  margin-left: 10px;
+                  background-color: $accent-dark-green;
+                  font-size: 12px;
+              }
+
+              p {
+                margin: 16px 0 0 0;
+                color: $gray20;
+              }
+
+              .subscription-list-info-container {
+                padding-left: 10px;
+              }
+
+              .subscription-list-container {
+                margin: 0 0 12px 0;
+
+                .subscription-list-item {
+                    border-bottom: 1px solid $accent-light-green;
+                    margin: 0;
+                    padding: 16px;
+                    height: 85px;
+
+                    .locate-gauge-container {
+                        margin: 0;
+                        padding: 10px 0 10px 0;
+
+                        button {
+                            background-color: $lighter-blue;
+                            box-shadow: none;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 26px;
+                            border-radius: 20px;
+
+                            &:hover {
+                                background-color: $darker-blue;
+                                cursor: pointer;
+                            }
+                        }
+
+                        button.zoom-major {
+                          color: #cc33ff;
+                        }
+
+                        button.zoom-moderate {
+                          color: #ff0000;
+                        }
+
+                        button.zoom-flood {
+                          color: #ff9900;
+                        }
+
+                        button.zoom-action {
+                          color: #ffff00;
+                        }
+
+                        button.zoom-no-flooding {
+                          color: #00ff00;
+                        }
+
+                        button.zoom-low {
+                          color: #906320;
+                        }
+
+                        button.zoom-not-defined {
+                          color: #72afe9;
+                        }
+
+                        button.zoom-observations-not-current {
+                          color: #bdc2bb;
+                        }
+
+                        button.zoom-out-of-service {
+                          color: #666666;
+                        }
+                    }
+
+                    .gauge-name-container {
+                      padding: 7px 0 7px 6px;
+
+                      .gauge-acronym {
+                        font-size: 16px;
+                      }
+
+                      .full-gauge-name {
+                        color: rgba(0,0,0,.54);
+                        font-size: 10px;
+                        display: block;
+                      }
+                    }
+
+                    .switch-container {
+                      text-align: center;
+
+                      small {
+                        color: rgba(0,0,0,.54);
+                      }
+                    }
+                }
+              }
+
+              .subscription-list-save-wrapper{
+                height: 50px;
+                width: 100%;
+
+                .subscription-list-save-button {
+                  float: right;
+                  margin-bottom: 10px;
+                  margin-right: 10px;
+                  background-color: white;
+                  color: $gray20;
+                }
+
+                .subscription-list-save-button:hover {
+                  background-color: $hover-gray;
                 }
               }
             }
 
-            .feature-layer-legendLink {
-              padding-bottom: 6px;
-              padding-left: $nav-spacing-from-left-wide + $nav-icon-wrapper-width;
-
-              @media screen and (max-width: $layout-drawer-width-threshold) {
-                padding-left: $nav-spacing-from-left-narrow-link;
-              }
-            }
-          }
-        }
-
-        // -----SUBSCRIPTION MANAGER-----
-        .subscriptionManager {
-          background-color: white;
-          font-size: 14px;
-
-          .spinner-wrapper {
-            div {
-              margin: 0 auto;
-            }
-          }
-
-          .login-form {
-            margin-right: 10px;
-            margin-left: 10px;
-          }
-
-          .subscription-list {
-            padding-left: 10px;
-
-            .subscriptions-count-badge {
-                margin-left: 10px;
-                background-color: $accent-dark-green;
-                font-size: 12px;
-            }
-
-            p {
-              margin: 16px 0 0 0;
-            }
-
-            .subscription-list-container {
-              margin: 12px 0 12px 0;
-
-              .subscription-list-item {
-                  border-bottom: 1px solid $accent-light-green;
-                  margin: 0;
-                  padding: 16px;
-                  height: 85px;
-
-                  .locate-gauge-container {
-                      margin: 0;
-                      padding: 10px 0 10px 0;
-
-                      button {
-                          background-color: $lighter-blue;
-                          box-shadow: none;
-                          width: 32px;
-                          height: 32px;
-                          font-size: 26px;
-                          border-radius: 20px;
-
-                          &:hover {
-                              background-color: $darker-blue;
-                              cursor: pointer;
-                          }
-                      }
-
-                      button.zoom-major {
-                        color: #cc33ff;
-                      }
-
-                      button.zoom-moderate {
-                        color: #ff0000;
-                      }
-
-                      button.zoom-flood {
-                        color: #ff9900;
-                      }
-
-                      button.zoom-action {
-                        color: #ffff00;
-                      }
-
-                      button.zoom-no-flooding {
-                        color: #00ff00;
-                      }
-
-                      button.zoom-low {
-                        color: #906320;
-                      }
-
-                      button.zoom-not-defined {
-                        color: #72afe9;
-                      }
-
-                      button.zoom-observations-not-current {
-                        color: #bdc2bb;
-                      }
-
-                      button.zoom-out-of-service {
-                        color: #666666;
-                      }
-                  }
-
-                  .gauge-name-container {
-                    padding: 7px 0 7px 6px;
-
-                    .gauge-acronym {
-                      font-size: 16px;
-                    }
-
-                    .full-gauge-name {
-                      color: rgba(0,0,0,.54);
-                      font-size: 10px;
-                      display: block;
-                    }
-                  }
-
-                  .switch-container {
-                    text-align: center;
-
-                    small {
-                      color: rgba(0,0,0,.54);
-                    }
-                  }
-              }
-            }
-
-            .subscription-list-save-wrapper{
-              height: 50px;
+            .settings-sign-out-button-wrapper {
+              background-color: white;
               width: 100%;
+              float: left;
+              margin-top: 10px;
 
-              .subscription-list-save-button {
-                float: right;
-                margin-bottom: 10px;
-                margin-right: 10px;
+              button {
+                width: 50%;
+                text-transform: uppercase;
                 background-color: white;
                 color: $gray20;
               }
 
-              .subscription-list-save-button:hover {
+              button:hover {
+                background-color: $hover-gray;
+              }
+            }
+
+            .user-settings {
+              padding: 10px;
+
+              p {
+                word-wrap: break-word;
+              }
+
+              tbody {
+                border: 0;
+                text-align: center;
+
+                tr {
+                  border: 0;
+                }
+              }
+
+              .switch-label {
+                margin-bottom: 0;
+              }
+
+              .attribute-change-save-button {
+                width: 100%;
+              }
+
+              .delete-button-container {
+                margin-top: 30px;
+
+                .delete-account {
+                  background-color: #c0392b;
+                  color: white;
+                  width: 100%;
+                  margin-bottom: 0;
+                }
+
+                .delete-account-disabled {
+                  background-color: darkgray;
+                  color: black;
+                  width: 100%;
+                  margin-bottom: 0;
+                }
+              }
+
+            }
+
+            .subscriptions-sign-out-button-wrapper {
+              background-color: white;
+              width: 100%;
+              float: left;
+              margin: 10px 0 0px 0;
+
+              button {
+                width: 50%;
+                text-transform: uppercase;
+                background-color: white;
+                color: $gray20;
+              }
+
+              button:hover {
+                background-color: $hover-gray;
+              }
+            }
+
+            .login-button-wrapper {
+              height: 50px;
+              width: 100%;
+            }
+
+            label.form-chunk {
+              color: $lighter-blue;
+
+              input {
+                width: 100%;
+                font-size: 16px;
+                line-height: 24px;
+                padding: 6px;
+                border: solid #cacaca;
+                border-width: 0 0 1px 0;
+                margin-bottom: 1rem;
+                box-shadow: none;
+              }
+
+              input:focus {
+                border: solid $lighter-blue;
+                border-width: 0 0 1px 0;
+                box-shadow: none;
+                outline: none;
+              }
+            }
+
+            .flood-form-button {
+              float: right;
+              margin-right: 10px;
+              margin-bottom: 0px;
+              text-transform: uppercase;
+              background-color: white;
+              color: $gray20;
+            }
+
+            .flood-form-button:hover {
+              background-color: $hover-gray;
+            }
+
+            .form-swapper {
+              text-align: right;
+              margin-right: 20px;
+              margin-left: 10px;
+
+              a {
+                color: $lighter-blue;
+                text-decoration: underline;
+              }
+
+            }
+
+            .form-back {
+              padding-top: 5px;
+              margin-left: 16px;
+              font-size: 24px;
+
+              i {
+                cursor: pointer;
+                padding-left: 5px;
+                padding-right: 8px;
+                color: transparent;
+                -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: $gray20;
+              }
+
+              i:hover {
                 background-color: $hover-gray;
               }
             }
           }
 
-          .settings-sign-out-button-wrapper {
+          // -----TWITTER FEED-----
+          .twitter-content {
             background-color: white;
-            width: 100%;
-            float: left;
-            margin: 10px 0 50px 0;
 
-            button {
-              width: 50%;
-              text-transform: uppercase;
-              background-color: white;
-              color: $gray20;
+            .follow-button {
+              text-align: right;
+              padding: 15px 20px 15px 0;
             }
 
-            button:hover {
-              background-color: $hover-gray;
-            }
-          }
-
-          .user-settings {
-            padding: 10px;
-
-            p {
-              word-wrap: break-word;
-            }
-
-            .delete-button-container {
-              margin-top: 30px;
-
-              .delete-account {
-                background-color: #c0392b;
-                color: white;
-                width: 100%;
-                margin-bottom: 0;
-              }
-
-              .delete-account-disabled {
-                background-color: darkgray;
-                color: black;
-                width: 100%;
-                margin-bottom: 0;
-              }
-            }
-          }
-
-          .subscriptions-sign-out-button-wrapper {
-            background-color: white;
-            width: 100%;
-            float: left;
-            margin: 10px 0 50px 0;
-
-            button {
-              width: 50%;
-              text-transform: uppercase;
-              background-color: white;
-              color: $gray20;
-            }
-
-            button:hover {
-              background-color: $hover-gray;
-            }
-          }
-
-          .login-button-wrapper {
-            height: 50px;
-            width: 100%;
-          }
-
-          label.form-chunk {
-            color: $lighter-blue;
-
-            input {
-              width: 100%;
-              font-size: 16px;
-              line-height: 24px;
-              padding: 6px;
-              border: solid #cacaca;
-              border-width: 0 0 1px 0;
-              margin-bottom: 1rem;
-              box-shadow: none;
-            }
-
-            input:focus {
-              border: solid $lighter-blue;
-              border-width: 0 0 1px 0;
-              box-shadow: none;
-              outline: none;
-            }
-          }
-
-          .flood-form-button {
-            float: right;
-            margin-right: 10px;
-            margin-bottom: 0px;
-            text-transform: uppercase;
-            background-color: white;
-            color: $gray20;
-          }
-
-          .flood-form-button:hover {
-            background-color: $hover-gray;
-          }
-
-          .form-swapper {
-            text-align: right;
-            margin-right: 20px;
-            margin-left: 10px;
-
-            a {
-              color: $lighter-blue;
-              text-decoration: underline;
-            }
-
-          }
-
-          .form-back {
-            padding-top: 5px;
-            margin-left: 16px;
-            font-size: 24px;
-
-            i {
-              cursor: pointer;
-              padding-left: 5px;
-              padding-right: 8px;
-            }
-
-            i:hover {
-              background-color: $hover-gray;
+            .hidden-twitter {
+              visibility: hidden !important;
             }
           }
         }
 
-        // -NAVIGATION DRAWER FOOTER-
+        // -----NAVIGATION DRAWER FOOTER-----
         .nav-footer {
           min-height: 50px;
           width: 100%;
           background-color: $gray20;
           color: white;
-
-          position: absolute;
-          bottom: 0;
         }
       }
-      // disable scrollbars
-      .nav::-webkit-scrollbar {
-        display: none;  // Safari and Chrome
-      }
+
+    // disable scrollbars
+    .nav::-webkit-scrollbar {
+      display: none;  // Safari and Chrome
     }
+  }
 
   // -----FOOTER BAR-----
   .footer-bar {
@@ -629,25 +713,55 @@ body {
       }
     }
   }
+  //  -----ALERT TYPE INDICATOR-----
+  .alert-type-indicator {
+    text-align: right;
+    padding-right: 16px;
+    line-height: normal;
+
+    .badge {
+      color: white;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+
+    .turned-on {
+      background-color: #1779BA;
+    }
+
+    .turned-off {
+      background-color: #CACACA;
+    }
+  }
 }
+
+
+
+
+//
+//
+//
+//  ALL CSS BELOW MUST BE OUTSIDE OF .flood-viewer CLASS
+//
+//
+//
+
+
+
 
 
 //  -----MAP! MAP! MAP!-----
 .map {
-  height: calc(100vh - 95px);
+  height: calc(100% - 95px);
   width: 100%;
 }
 
 .map--full {
   position: absolute;
-  height: calc(100vh - 90px);
+  height: calc(100% - 90px);
   width: 100%;
   background-color: #222 !important;
   z-index: 1;
-
-  @media screen and (min-width: $layout-desktop-width-threshold) {
-    width: calc(100vw - 300px);
-  }
 }
 
 .map__cursor--pointer {
@@ -669,11 +783,15 @@ body {
 
 .leaflet-control-geocoder {
   visibility: hidden;
-  width: 100%;
+  width: 40%;
   margin: 0 !important;
   height: 40px;
   box-shadow: none !important;
   border: none !important;
+
+  @media screen and (max-width: $layout-desktop-width-threshold) {
+    width: 100%
+  }
 
   .leaflet-control-geocoder-icon {
     display: none !important;
@@ -713,7 +831,7 @@ body {
       cursor: pointer;
       height: 100%;
       width: 10%;
-      text-align: center;
+      // text-align: center;
       color: gray;
 
       @media screen and (min-width: $layout-geocode-width-threshold) {
@@ -739,9 +857,13 @@ body {
       background: #f2f2f2;
      }
 
-     li:hover {
+     li:hover, li:focus {
        background-color: #dcdcdc;
       }
+
+    .leaflet-control-geocoder-selected {
+      background-color: #dcdcdc !important;
+    }
   }
 
   .leaflet-control-geocoder-alternatives li {
@@ -793,8 +915,30 @@ a.leaflet-disabled {
   z-index: 401;
 }
 
-// -MAP: RADAR LAYER BUTTONS-
-.weatherTimestamp {
+.leaflet-control-zoom {
+  margin-bottom: 4px !important;
+}
+
+// -----MAP: RADAR LAYER BUTTONS-----
+.weather-timestamp {
+  z-index: 401;
+  position: absolute;
+  left: 60px;
+  bottom: 20px;
+  padding: 4px;
+
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+
+    @keyframes weather-timestamp-menu-close-animation {
+      from {left: 360px;}
+      to {left: 60px;}
+    }
+
+    left: 60px;
+    animation-name: weather-timestamp-menu-close-animation;
+    animation-duration: .8s;
+  }
+
   p {
     font-size: 14px;
     margin: 0;
@@ -806,29 +950,51 @@ a.leaflet-disabled {
     1px 1px 1px #000000;
     font-weight: bold;
   }
-  z-index: 401;
-  position: absolute;
-  left: 60px;
-  bottom: 25px;
-  padding: 4px;
 }
 
-.animateRadar {
+.weather-timestamp-menu-open {
+
+  @keyframes weather-timestamp-menu-open-animation {
+    from {left: 60px;}
+    to {left: 360px;}
+  }
+
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+    left: 360px;
+    animation-name: weather-timestamp-menu-open-animation;
+    animation-duration: .4s;
+  }
+}
+
+.animate-radar {
   z-index: 401;
   position: absolute;
   left: 10px;
-  bottom: 25px;
+  bottom: 13px;
   padding: 4px;
   height: 48px;
   width: 48px;
 
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+
+    @keyframes animate-radar-menu-close-animation {
+      from {left: 310px;}
+      to {left: 10px;}
+    }
+
+    left: 10px;
+    animation-name: animate-radar-menu-close-animation;
+    animation-duration: .8s;
+  }
+
   .button {
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, .5);
+    border: 1px solid rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 1px 1.5px 0 rgba(0, 0, 0, 1);
     margin: 0;
     height: 40px;
     width: 40px;
-    border-radius: 20px;
+    border-radius: 50%;
 
     i {
       color: rgba(0, 0, 0, .8);
@@ -841,6 +1007,19 @@ a.leaflet-disabled {
   }
 }
 
+.animate-radar-menu-open {
+  @keyframes animate-radar-menu-open-animation {
+    from {left: 10px;}
+    to {left: 310px;}
+  }
+
+  @media screen and (min-width: $layout-desktop-width-threshold) {
+    left: 310px;
+    animation-name: animate-radar-menu-open-animation;
+    animation-duration: .4s;
+  }
+}
+
 // -MAP: EASY-BUTTONS-
 .easy-button-button{
   transition-duration: .3s;
@@ -848,6 +1027,7 @@ a.leaflet-disabled {
   border: solid 0px transparent;
   padding: 0;
 }
+
 // -----MAP: GEOLOCATION BUTTONS-----
 button.easy-button-button.leaflet-bar-part.location-on-active {
     background-color: $accent-light-green;
@@ -901,15 +1081,13 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
   transform: scaleY(1);
 }
 
-
-
 // -----LAYER POPUPS-----
 .popup {
 
   .leaflet-popup-content-wrapper {
     padding: 0 0 1px 0;
     border-radius: 0;
-    max-height: 578px;
+    // max-height: 550px;
     // overflow-y: auto;
     .leaflet-popup-content {
       margin: 0 0 0 0;
@@ -934,6 +1112,10 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
       vertical-align: middle;
       font-size: 1.4em;
       margin-right: 18px;
+
+      @media screen and (max-width: $iphone-five-width-threshold) {
+        font-size: 1.2em;
+      }
     }
 
     .button {
@@ -948,6 +1130,10 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
 
       span {
         padding-left: 8px;
+
+        @media screen and (max-width: $iphone-five-width-threshold) {
+          font-size: .8em;
+        }
       }
     }
 
@@ -965,6 +1151,21 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
     padding-top: 47px;
     max-height: 578px;
     overflow-y: auto;
+
+    // This adjusts the popup heights for the tiny iphone4 sized devices
+    @media screen and (max-height: 480px) {
+      max-height: 325px;
+    }
+
+    // This adjusts the popup heights for the iphone5 sized devices
+    @media screen and (min-height: 481px) and (max-height: 570px) {
+      max-height: 400px;
+    }
+
+    // This adjusts the popup heights for the iphone6 sized devices and above
+    @media screen and (min-height: 571px) and (max-height: 670px) {
+      max-height: 500px;
+    }
 
     .info__image {
       a {
@@ -992,21 +1193,24 @@ button.easy-button-button.leaflet-bar-part.location-tools-on-active {
     }
 
     .shareBar {
-        background-color: #333;
-        height: 38px;
-        padding: 6px 14px 6px 14px;
+      background-color: #333;
+      height: 38px;
+      padding: 6px 14px 6px 14px;
     }
 
     .share-button {
-        float: right;
-        cursor: pointer;
+      padding-left: 5px;
+      float: right;
+      cursor: pointer;
 
         @media screen and (max-width: 400px) {
           float: none;
+          display: inline-block;
         }
     }
   }
 }
+
 // -----GEOLOCATION POPUP-----
 div.leaflet-popup-content-wrapper {
   .leaflet-popup-content {
@@ -1033,6 +1237,7 @@ div.leaflet-popup-content-wrapper {
     }
   }
 }
+
 // -----MODALS-----
 body > div.ReactModalPortal > div {
     z-index: 10000000 !important;
@@ -1042,6 +1247,7 @@ body > div.ReactModalPortal > div {
   border: 0;
   margin-bottom: 0;
 }
+
 // -----SUBSCRIPTION CONFIRM MODAL-----
 .subscription-confirm-modal:focus {
   outline: none;
@@ -1076,8 +1282,20 @@ body > div.ReactModalPortal > div {
         line-height: 42px;
         padding: 0 0 0 1pc;
 
-        span {
+        i {
+          padding-top: 13px;
+        }
+
+        .title-span {
             padding-left: 10px;
+        }
+        .alert-type-indicator {
+          padding-top: 8px;
+          padding-left: 44px;
+
+          @media screen and (max-width: 360px) {
+            padding-left: 5px;
+          }
         }
     }
 
@@ -1101,6 +1319,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----CONFIRM/SAVE SUBSCRIPTION CHANGES MODAL-----
 .confirm-subscription-changes-modal:focus {
   outline: none;
@@ -1131,6 +1350,10 @@ body > div.ReactModalPortal > div {
     line-height: 42px;
     padding: 0 0 0 1pc;
 
+    i {
+      padding-top: 12px;
+    }
+
     span {
         padding-left: 10px;
     }
@@ -1158,6 +1381,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----CONFIRM DELETE ACCOUNT MODAL-----
 .confirm-delete-account:focus {
   outline: none;
@@ -1188,6 +1412,10 @@ body > div.ReactModalPortal > div {
     line-height: 42px;
     padding: 0 0 0 1pc;
 
+    i {
+      padding-top: 12px;
+    }
+
     span {
         padding-left: 10px;
     }
@@ -1197,6 +1425,17 @@ body > div.ReactModalPortal > div {
     color: $gray20;
     width: 98%;
     font-size: 14px;
+
+    #i-understand-switch {
+      float: left;
+      margin-right: 10px;
+    }
+
+    #i-understand-switch-label {
+      cursor: pointer;
+      max-width: 50%;
+      color: $gray20;
+    }
   }
 
   .confirm-modal-actions {
@@ -1215,6 +1454,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----ABOUT INFO MODAL-----
 .about-modal:focus {
   outline: none;
@@ -1231,22 +1471,33 @@ body > div.ReactModalPortal > div {
   padding: 10px;
   border: none;
   border-radius: 0;
-  max-height: 91%;
+  max-height: 85%;
   max-width: 41em;
-  overflow-y: auto;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 
   @media screen and (max-width: 500px) {
     max-width: 85%;
   }
 
-  .about-version-number {
-    color: $gray20;
-    float: right;
-    font-size: x-small;
-    font-style: italic;
-    padding-right: 10px;
-    margin-bottom: 0;
+  .about-modal-x {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+
+    i {
+      float: right;
+      padding-right: 12px;
+      font-size: 22px;
+      color: #c4c4c4;
+    }
+  }
+
+  .about-modal-body {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card.about {
@@ -1268,6 +1519,14 @@ body > div.ReactModalPortal > div {
       }
     }
 
+    .about-version-number {
+      color: $gray20;
+      font-size: x-small;
+      font-style: italic;
+      padding: 6px 0 0 16px;
+      margin-bottom: 6px;
+    }
+
     .card-section.about-text {
       width: 100%;
       padding-top: 0;
@@ -1282,7 +1541,7 @@ body > div.ReactModalPortal > div {
         text-decoration: underline;
       }
 
-      .about-disclaimer-text {
+      .about-disclaimer-text, .alert-definition-text {
         font-size: 14px;
       }
 
@@ -1294,6 +1553,16 @@ body > div.ReactModalPortal > div {
 
       .about-viewer-details-link {
         margin: 10px 0 10px 0;
+
+        button {
+          margin-top: 15px;
+          background-color: #a8a8a8;
+          color: white;
+        }
+
+        button:hover {
+          background-color: #888;
+        }
       }
 
       .about-developed-by {
@@ -1395,6 +1664,7 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+
 // -----DISCLAIMER MODAL-----
 .disclaimer-modal:focus {
   outline: none;
@@ -1413,8 +1683,9 @@ body > div.ReactModalPortal > div {
   border-radius: 0;
   max-height: 91%;
   max-width: 35em;
-  overflow-y: auto;
   background-color: white;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   @media screen and (max-width: 500px) {
     max-width: 85%;

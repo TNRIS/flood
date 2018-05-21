@@ -22,6 +22,7 @@ describe('actions: ToasterActions', () => {
     }
     expect(hideSnackbar()).to.deep.equal(expectedAction)
   })
+
   it('should create an action to show the snackbar when timeout is defined', () => {
     const expectedAction = {
       type: SHOW_SNACKBAR,
@@ -32,6 +33,7 @@ describe('actions: ToasterActions', () => {
     }
     expect(showSnackbar(sampleText, sampleTimeout)).to.deep.equal(expectedAction)
   })
+
   it('should create an action to show the snackbar when timeout is undefined', () => {
     const expectedAction = {
       type: SHOW_SNACKBAR,
@@ -42,4 +44,5 @@ describe('actions: ToasterActions', () => {
     }
     expect(showSnackbar(sampleText)).to.deep.equal(expectedAction)
   })
+
 })

@@ -1,11 +1,13 @@
 import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import swig from 'swig'
 
 
 const isProd = process.env.NODE_ENV === 'production'
+const webpackMode = process.env.NODE_ENV
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
@@ -24,15 +26,12 @@ fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
 fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/flood-alert-legend.png", function (err) {
   if (err) return console.error(err)
 });
-fs.copy(folders.src + "viewer-details.html", folders.dist + "viewer-details.html", function (err) {
-  if (err) return console.error(err)
-});
 
 //setup webpack plugins
 const plugins = []
 if (isProd) {
-  plugins.push(new ExtractTextPlugin('styles.css'))
-  plugins.push(new webpack.optimize.UglifyJsPlugin())
+  plugins.push(new MiniCssExtractPlugin({filename: 'styles.css'}))
+  plugins.push(new UglifyJsPlugin())
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
   }))
@@ -46,6 +45,7 @@ plugins.push(new webpack.DefinePlugin({
 
 export default {
   entry: `${folders.src}entry.jsx`,
+  mode: webpackMode,
   output: {
     path: `${folders.dist}assets/`,
     publicPath: '/assets/',
@@ -59,17 +59,17 @@ export default {
   },
   module: {
     // noParse: [/aws-sdk/],
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loader: isProd ? ExtractTextPlugin.extract('css!sass')
-          : 'style-loader!css-loader?sourceMap!sass-loader?sourceMap'
+        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+          : ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
       },
       {
         test: /\.css$/,
-        loader: isProd ? ExtractTextPlugin.extract('css')
-          : 'style-loader!css-loader',
+        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader']
+          : ['style-loader', 'css-loader'],
       },
       {
         test: /\.(jpg|png|gif|ico|woff)$/,
@@ -87,10 +87,6 @@ export default {
       {
         test: /\.(mss|sql)$/,
         loader: 'raw-loader'
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
       }
     ]
   },

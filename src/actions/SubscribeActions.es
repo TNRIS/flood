@@ -37,8 +37,8 @@ export function hideSubscriptionConfirmation() {
 
 /**
  * Function confirms to the user that they have subscribed to a gage via sms
- * @param  {[type]} lid [description]
- * @return {[type]}     [description]
+ * @param  {string} phoneNumber user phone number endpoint
+ * @param  {string} lid gage lid
  */
 export function confirmSubscription(phoneNumber, lid) {
   return dispatch => {
@@ -54,40 +54,126 @@ export function confirmSubscription(phoneNumber, lid) {
 }
 
 /**
- * Function to subscribe a gage
- * @param  {string} lid      gage lid
- * @param  {string} protocol subscription protocol
- * @param  {string} endpoint subscription endpoint
+ * Function subscribes user to both current and predictive alert topics
+ * @param  {object} dispatch store dispatcher
+ * @param  {string} lid gage lid
+ * @param  {boolean} newFlag new subscription alert flag
  * @return {promise}         AWS SDK promise
  */
-export function subscribeGage(lid) {
-  return (dispatch) => {
-    const sns = new FloodAppUser.AWS.SNS()
+function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
+  const sns = new FloodAppUser.AWS.SNS()
+  const p = lid + "--PD"
 
-    const topicParams = {
-      Name: lid
-    }
+  // Create the topic, function is impotent so will create or return the existing topic
+  // Subscribe to the current alert topic
+  return sns.createTopic({Name: lid}).promise()
+    .then((topic) => {
+      const subscriptionParams = {
+        TopicArn: topic.TopicArn,
+        Protocol: "sms",
+        Endpoint: FloodAppUser.userData.phone_number
+      }
+      return sns.subscribe(subscriptionParams).promise().then(
+        (subscription) => {
+          FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn})
+          // Subscribe to the predictive alert topic
+          return sns.createTopic({Name: p}).promise()
+            .then((pTopic) => {
+              const pSubscriptionParams = {
+                TopicArn: pTopic.TopicArn,
+                Protocol: "sms",
+                Endpoint: FloodAppUser.userData.phone_number
+              }
+              return sns.subscribe(pSubscriptionParams).promise().then(
+                (pSubscription) => {
+                  if (newFlag === true) {
+                    dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
+                    dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                  }
+                  FloodAppUser.subscribe({lid: p, subscriptionArn: pSubscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
+                })
+                .catch((err) => {
+                  dispatch(sendErrorReport(err))
+                })
+            })
+            .catch((err) => {
+              dispatch(sendErrorReport(err))
+            })
+        })
+        .catch((err) => {
+          dispatch(sendErrorReport(err))
+        })
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch(sendErrorReport(err))
+    })
+}
 
-    // Create the topic, function is impotent so will create or return the existing topic
-    return sns.createTopic(topicParams).promise()
-      .then((topic) => {
-        const subscriptionParams = {
-          TopicArn: topic.TopicArn,
-          Protocol: "sms",
-          Endpoint: FloodAppUser.userData.phone_number
-        }
-        return sns.subscribe(subscriptionParams).promise().then(
-          (subscription) => {
+/**
+ * Function subscribes user to either current or predictive alert topics
+ * @param  {object} dispatch store dispatcher
+ * @param  {string} lid gage lid
+ * @param  {string} type 'c' or 'p' alert type identifier
+ * @param  {boolean} newFlag new subscription alert flag
+ * @return {promise}         AWS SDK promise
+ */
+function subscribeEitherOr(dispatch, lid, type, newFlag) {
+  const sns = new FloodAppUser.AWS.SNS()
+  const p = lid + "--PD"
+  const topicLid = type == 'c' ? lid : p
+
+  const topicParams = {
+    Name: topicLid
+  }
+
+  // Create the topic, function is impotent so will create or return the existing topic
+  return sns.createTopic(topicParams).promise()
+    .then((topic) => {
+      const subscriptionParams = {
+        TopicArn: topic.TopicArn,
+        Protocol: "sms",
+        Endpoint: FloodAppUser.userData.phone_number
+      }
+      return sns.subscribe(subscriptionParams).promise().then(
+        (subscription) => {
+          if (newFlag === true) {
             dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
             dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
-            FloodAppUser.subscribe({lid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
-          })
-          .catch((err) => {
-            dispatch(sendErrorReport(err))
-          })
-      })
-      .catch((err) => {
-        dispatch(sendErrorReport(err))
-      })
+          }
+          FloodAppUser.subscribe({lid: topicLid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
+        })
+        .catch((err) => {
+          dispatch(sendErrorReport(err))
+        })
+    })
+    .catch((err) => {
+      dispatch(sendErrorReport(err))
+    })
+}
+
+/**
+ * Function to subscribe a gage
+ * @param  {string} lid      gage lid
+ * @param  {boolean} newFlag new subscription alert flag
+ * @return {promise}         AWS SDK promise
+ */
+export function subscribeGage(lid, newFlag) {
+  return (dispatch) => {
+
+    const curr = FloodAppUser.userData['custom:currentAlerts']
+    const pred = FloodAppUser.userData['custom:predictiveAlerts']
+    if (curr == 'T' && pred == 'T') {
+      return subscribeCurrentAndPredictive(dispatch, lid, newFlag)
+    }
+    else if (curr == 'T' && pred == 'F') {
+      return subscribeEitherOr(dispatch, lid, 'c', newFlag)
+    }
+    else if (curr == 'F' && pred == 'T') {
+      return subscribeEitherOr(dispatch, lid, 'p', newFlag)
+    }
+    else if (curr == 'F' && pred == 'F') {
+      dispatch(showSnackbar(`You have no alert types enabled in your Settings. You must have at least one alert type enabled to subscribe to gages.`))
+    }
   }
 }

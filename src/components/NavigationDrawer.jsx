@@ -1,5 +1,7 @@
 import React from 'react'
 
+import $ from 'jquery'
+
 import NavigationContent from './NavigationContent'
 
 import TWDBLogoImage from '../images/logo_twdb.png'
@@ -10,6 +12,10 @@ class  NavigationDrawer extends React.Component {
     super(props)
   }
 
+  componentWillUnmount() {
+    $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
+  }
+
   render() {
     return (
       <div className="nav">
@@ -18,16 +24,6 @@ class  NavigationDrawer extends React.Component {
           browser={this.props.browser}
           userAuthentication={this.props.userAuthentication}
         />
-        <div className="nav-footer">
-          <div className="footer-wrapper">
-            <a className="footer-twdb-logo" href="http://www.twdb.texas.gov">
-              <img src={TWDBLogoImage} alt="The Texas Water Development Board logo"/>
-            </a>
-            <a className="footer-tnris-logo" href="http://www.tnris.org">
-              <img src={tnrisLogoImage} alt="Texas Natural Resources Information System logo"/>
-            </a>
-          </div>
-        </div>
       </div>
     )
   }

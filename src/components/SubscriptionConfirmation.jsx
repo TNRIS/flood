@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Modal from 'react-modal'
+import AlertTypeIndicatorContainer from '../containers/AlertTypeIndicatorContainer'
 
 const reactModalStyle = {
   overlay: {
@@ -33,10 +34,12 @@ class SubscriptionConfirmation extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({
-      lid: this.props.popupData.data.lid,
-      name: this.props.popupData.data.name
-    })
+    if (this.props.popupData.id == "ahps-flood") {
+      this.setState({
+        lid: this.props.popupData.data.lid.toUpperCase(),
+        name: this.props.popupData.data.name
+      })
+    }
   }
 
   handleCloseModal() {
@@ -45,7 +48,7 @@ class SubscriptionConfirmation extends Component {
 
   handleConfirmation(event) {
     event.preventDefault()
-    this.props.subscribeGage(this.props.popupData.data.lid.toUpperCase())
+    this.props.subscribeGage(this.props.popupData.data.lid.toUpperCase(), true)
     this.handleCloseModal()
   }
 
@@ -57,8 +60,9 @@ class SubscriptionConfirmation extends Component {
              className="subscription-confirm-modal">
         <div className="card">
           <div className="card-divider subscription-confirm-modal-title">
-            <i className="fi-page-edit"></i>
-            <span>Confirm Subscription</span>
+            <i className="fa fa-check-square-o" aria-hidden="true"></i>
+            <span className="title-span">Confirm Subscription</span>
+            <AlertTypeIndicatorContainer/>
           </div>
           <div className="card-section subscription-confirm-modal-text">
             <p>Are you sure you want to subscribe to receive alerts for the

@@ -24,6 +24,12 @@ import {
   siteReset
 } from '../actions/UserActions'
 
+import {
+  addSubscribeToChangeList,
+  addUnsubscribeToChangeList,
+  saveSubscriptionChanges
+} from '../actions/SubscriptionChangeActions'
+
 import { util } from 'aws-sdk/global'
 
 class AppUser {
@@ -81,9 +87,98 @@ class AppUser {
 
     this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
     this.attributeEmail = new CognitoUserAttribute(this.dataEmail)
-    this.attributeList = [this.attributePhoneNumber, this.attributeEmail]
+
+    this.dataCurrentAlerts = {
+      Name: 'custom:currentAlerts',
+      Value: 'T'
+    }
+
+    this.dataPredictiveAlerts = {
+      Name: 'custom:predictiveAlerts',
+      Value: 'T'
+    }
+
+    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
+    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
+
+    this.attributeList = [this.attributePhoneNumber, this.attributeEmail, this.attributeCurrentAlerts, this.attributePredictiveAlerts]
 
     return this.attributeList
+  }
+
+  setAlertAttributes = (currentAtt, predictiveAtt) => {
+    this.dataCurrentAlerts = {
+      Name: 'custom:currentAlerts',
+      Value: currentAtt
+    }
+
+    this.dataPredictiveAlerts = {
+      Name: 'custom:predictiveAlerts',
+      Value: predictiveAtt
+    }
+
+    this.attributeCurrentAlerts = new CognitoUserAttribute(this.dataCurrentAlerts)
+    this.attributePredictiveAlerts = new CognitoUserAttribute(this.dataPredictiveAlerts)
+
+    const alertAttributeList = [this.attributeCurrentAlerts, this.attributePredictiveAlerts]
+
+    this.userData['custom:currentAlerts'] = currentAtt
+    this.userData['custom:predictiveAlerts'] = predictiveAtt
+    this.cognitoUser.updateAttributes(alertAttributeList, function(err, result) {
+      if (err) {
+        return console.log(err)
+      }
+      console.log(result)
+      return
+    })
+  }
+
+  removingSubscription(gs, protocol) {
+    if (gs) {
+      if (gs.hasOwnProperty(protocol)) {
+        const sId = gs[protocol]
+        store.dispatch(addUnsubscribeToChangeList(gs.lid, protocol, sId))
+      }
+    }
+  }
+
+  updateAlertAttributes = (currentAtt, predictiveAtt) => {
+    // update the alert type attributes
+    this.setAlertAttributes(currentAtt, predictiveAtt)
+
+    // add/remove subscriptions to topics based on the change
+    if (store.getState().subscriptions.allSubscriptions.length > 0) {
+      const currentState = store.getState()
+      const curr = this.userData['custom:currentAlerts']
+      const pred = this.userData['custom:predictiveAlerts']
+      const protocol = 'sms'
+
+      currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
+        const predGsId = gsId + "--PD"
+        const gsPred = currentState.gageSubscriptions.gageSubscriptionById[predGsId]
+        const gs = currentState.gageSubscriptions.gageSubscriptionById[gsId]
+
+
+        if (curr == 'F' && pred == 'F') {
+          this.removingSubscription(gs, protocol)
+          this.removingSubscription(gsPred, protocol)
+        }
+        else if (curr == 'T' && pred == 'F') {
+          this.removingSubscription(gsPred, protocol)
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
+        else if (curr == 'F' && pred == 'T') {
+          this.removingSubscription(gs, protocol)
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
+        else if (curr == 'T' && pred == 'T') {
+          store.dispatch(addSubscribeToChangeList(gsId, protocol))
+        }
+
+      })
+
+      store.dispatch(saveSubscriptionChanges())
+    }
   }
 
   authenticate = (callback) => {
@@ -113,6 +208,9 @@ class AppUser {
                   user[att[i].Name] = att[i].Value
                 }
                 this.userData = {...user}
+                if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
+                  this.setAlertAttributes('T', 'T')
+                }
               }
             })
             return callback(0)
@@ -245,6 +343,9 @@ class AppUser {
                   user[att[i].Name] = att[i].Value
                 }
                 this.userData = {...user}
+                if (!(this.userData['custom:currentAlerts']) || !(this.userData['custom:predictiveAlerts'])) {
+                  this.setAlertAttributes('T', 'T')
+                }
               }
             })
             return callback(0, this.cognitoUser.username)

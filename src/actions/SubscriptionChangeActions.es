@@ -76,7 +76,7 @@ export function addUnsubscribeToChangeList(lid, protocol, subscriptionId) {
  * Action for a single subscription update
  * @param  {string} subscriptionChangeId id of record in the subscription changes portion of the store
  * @param  {string} changeRequestId      request id returned from Amazon
- * @return {object}                      action
+ * @return {obj}                      action
  */
 export function subscriptionUpdated(subscriptionChangeId, changeRequestId) {
   return {
@@ -101,12 +101,6 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
     payload: {
       id: `${lid}_${protocol}_${action}`
     }
-  }
-}
-
-export function removeSubscriptionFromUserDataset() {
-  return (dispatch) => {
-    console.log("Removing subscription")
   }
 }
 
@@ -157,11 +151,8 @@ export function saveSubscriptionChanges() {
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
-              if (changeData.protocol === 'email') {
-                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "email", user.email)))
-              }
-              else if (changeData.protocol === 'sms') {
-                promiseQueue.push(dispatch(subscribeGage(changeData.lid, "sms", user.phone)))
+              if (changeData.protocol === 'sms') {
+                promiseQueue.push(dispatch(subscribeGage(changeData.lid, false)))
               }
             }
           }

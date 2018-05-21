@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { setFeatureLayer } from '../actions'
+import { setFeatureLayer } from '../actions/MapActions'
 import FeatureLayerChooser from '../components/FeatureLayerChooser'
 
 

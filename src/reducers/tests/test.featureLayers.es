@@ -1,8 +1,12 @@
 import { expect } from 'chai'
 import * as R from 'ramda'
 
-import reducer from './featureLayers'
-import * as types from '../actions/types'
+import reducer from '../featureLayers'
+import {
+  CHANGE_LAYER_STATUS,
+  SET_FEATURE_LAYER,
+  UPDATE_TIMESTAMP
+} from '../../constants/MapActionTypes'
 
 // extract important (more easily testable) version of layers from state
 const extractImportant = state => {
@@ -93,7 +97,7 @@ describe('reducer: featureLayers', () => {
           }
         ]
       }, {
-        type: types.CHANGE_LAYER_STATUS,
+        type: CHANGE_LAYER_STATUS,
         id: 'ahps-flood',
         status: 'pending',
       })
@@ -165,7 +169,7 @@ describe('reducer: featureLayers', () => {
           }
         ]
       }, {
-        type: types.CHANGE_LAYER_STATUS,
+        type: CHANGE_LAYER_STATUS,
         id: 'ahps-flood',
         status: 'pending',
       })
@@ -237,7 +241,7 @@ describe('reducer: featureLayers', () => {
           }
         ]
       }, {
-        type: types.SET_FEATURE_LAYER,
+        type: SET_FEATURE_LAYER,
         id: 'animated-weather',
       })
     ).to.deep.equal({
@@ -308,7 +312,7 @@ describe('reducer: featureLayers', () => {
           }
         ]
       }, {
-        type: types.SET_FEATURE_LAYER,
+        type: SET_FEATURE_LAYER,
         id: 'ahps-flood',
       })
     ).to.deep.equal({
@@ -380,7 +384,7 @@ describe('reducer: featureLayers', () => {
           }
         ]
       }, {
-        type: types.UPDATE_TIMESTAMP,
+        type: UPDATE_TIMESTAMP,
         timestamp: '20180125225'
       })
     ).to.deep.equal({

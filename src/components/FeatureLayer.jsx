@@ -40,7 +40,11 @@ export default class FeatureLayer extends Component {
 
     let legendElement
     if (active && legend && text != "Weather Alerts") {
-      legendElement = (
+      legendElement = text == "Weather Radar" ? (
+        <div className="feature-layer-legend-weather-radar">
+          <img src={legend} />
+        </div>
+      ) : (
         <div className="feature-layer-legend">
           <img src={legend} />
         </div>

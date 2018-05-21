@@ -61,15 +61,6 @@ export function getSubscriptionsSuccess() {
 }
 
 /**
- * Action for no subscriptions found
- */
-export function noSubscriptionsFound() {
-  return {
-    type: NO_SUBSCRIPTIONS_FOUND
-  }
-}
-
-/**
  * Action for swapping between the sign up and login forms
  * @param  {string} form     form to display. valid values: login, signUp, verify
  * @return {object} action
@@ -81,13 +72,18 @@ export function swapDisplayForm(form) {
   }
 }
 
+/**
+ * Action for no subscriptions found
+ */
+export function noSubscriptionsFound() {
+  return {
+    type: NO_SUBSCRIPTIONS_FOUND
+  }
+}
 
 /**
  * Function to get all subscriptions from Amazon and filter for subscriptions
  * that match the user's email and phone number
- * @param  {string} email     user's email
- * @param  {string} phone     user's phone number
- * @param  {string} nextToken token for the next API call if there are still more records to retrieve
  */
 export function getUserSubscriptions() {
   return (dispatch) => {
@@ -109,11 +105,11 @@ export function getUserSubscriptions() {
           counter++
           if (subscription.Value) {
             const subscriptionData = JSON.parse(subscription.Value)
-            dispatch(
-              addSubscriptionToSubscriptionList(
-                subscriptionData.lid, subscriptionData, subscriptionData.protocol, subscriptionData.endpoint
+              dispatch(
+                addSubscriptionToSubscriptionList(
+                  subscriptionData.lid, subscriptionData, subscriptionData.protocol, subscriptionData.endpoint
+                )
               )
-            )
           }
           if (counter === records.length) {
             dispatch(getSubscriptionsSuccess())

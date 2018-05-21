@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent_300x42.png'
@@ -10,7 +9,9 @@ class FloodHeader extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      showTwitterFeed: this.props.navContentInitState.showTwitterFeed
+    }
     this.handleShowGeocoder = this.handleShowGeocoder.bind(this)
   }
 
@@ -22,18 +23,11 @@ class FloodHeader extends React.Component {
   render() {
     const imgSource = this.props.browser.width < 350 ? TexasFloodIconImage : TexasFloodLogoImage
 
-    let sidebarToggle = ""
-    if (this.props.browser.lessThan.large || this.props.browser.is.large) {
-      sidebarToggle = (
+    return (
+      <div className="title-bar">
         <button type="button" className="button" data-toggle="off-canvas-drawer">
           <i className="fi-list"></i>
         </button>
-      )
-    }
-
-    return (
-      <div className="title-bar">
-        {sidebarToggle}
         <div className="title-logo">
           <a href="http://texasflood.org" target="_blank">
             <img src={imgSource} alt="The Texas Flood dot org logo"/>
@@ -46,7 +40,8 @@ class FloodHeader extends React.Component {
         </button>
         <div className="dropdown-pane"
              data-position="bottom"
-             data-alignment="right"
+             data-alignment="center"
+             data-close-on-click="true"
              data-dropdown
              id="basemap-dropdown">
           <BaseLayerMenuContainer />

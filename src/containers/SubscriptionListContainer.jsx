@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
   return {
     gageSubscriptionById: state.gageSubscriptions.gageSubscriptionById,
     allGageSubscriptions: state.gageSubscriptions.allGageSubscriptions,
+    displayGageSubscriptions: state.gageSubscriptions.displayGageSubscriptions,
     allSubscriptions: state.subscriptions.allSubscriptions,
     subscriptions: state.subscriptions,
     email: state.user.email,

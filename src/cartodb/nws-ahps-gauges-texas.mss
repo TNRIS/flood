@@ -1,6 +1,48 @@
 #nws_ahps_gauges_texas{
   // for better visibility on different types of basemaps, add light white glow which will contrast the black marker line
-  ::glow {
+  ::pred-halo
+    [pred_sigstage = 'major'],
+    [pred_sigstage = 'moderate'],
+    [pred_sigstage = 'flood'],
+    [pred_sigstage = 'action'] {
+    marker-type: ellipse;
+    marker-placement: point;
+    marker-allow-overlap: true;
+
+    marker-fill-opacity: 0.6;
+    marker-line-width: 0;
+
+    [pred_sigstage = 'major'] {
+      marker-fill: #cc33ff;
+      marker-width: 42;
+      marker-line-color: #b31ae6;
+      marker-line-width: 1;
+    }
+
+    [pred_sigstage = 'moderate'] {
+      marker-fill: #ff0000;
+      marker-width: 34;
+      marker-line-color: #e60000;
+      marker-line-width: 1;
+    }
+
+    [pred_sigstage = 'flood'] {
+      marker-fill: #ff9900;
+      marker-width: 28;
+      marker-line-color: #e68000;
+      marker-line-width: 1;
+    }
+
+    [pred_sigstage = 'action'] {
+      marker-fill: #ffff00;
+      marker-width: 24;
+      marker-line-color: #e6e600;
+      marker-line-width: 1;
+    }
+  }
+
+  ::glow
+    [pred_sigstage = null] {
     marker-type: ellipse;
     marker-placement: point;
     marker-allow-overlap: true;
@@ -54,6 +96,10 @@
     }
 
     [status = 'out of service'] {
+      marker-fill: #666666;
+    }
+
+    [sigstage = null][status = null] {
       marker-fill: #666666;
     }
   }

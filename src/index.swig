@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html class="no-js">
   <head>
+    <meta charset="utf-8"/>
     <title>Texas Flood Information Viewer</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <!-- this is the code from the realfavicongenerator.net. replace when updating the icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
@@ -15,7 +17,6 @@
     <link rel="shortcut icon" href="/icons/favicon.ico">
     <meta name="msapplication-config" content="/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-
 
     {% if isProd %}
       <link rel="stylesheet" type="text/css" href="/assets/styles.css">

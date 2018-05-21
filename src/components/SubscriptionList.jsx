@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom'
 
 import Modal from 'react-modal'
 import { RingLoader } from 'react-spinners'
+import AlertTypeIndicatorContainer from '../containers/AlertTypeIndicatorContainer'
+
+import FloodAppUser from '../util/User'
 
 const reactModalStyle = {
   overlay: {
@@ -29,6 +32,7 @@ class SubscriptionList extends React.Component {
     addSubscribeToChangeList: PropTypes.func,
     addUnsubscribeToChangeList: PropTypes.func,
     allGageSubscriptions: PropTypes.array,
+    displayGageSubscriptions: PropTypes.array,
     allSubscriptions: PropTypes.array,
     allSubscriptionChanges: PropTypes.array,
     clearSubscriptionList: PropTypes.func,
@@ -92,7 +96,6 @@ class SubscriptionList extends React.Component {
 
     // close sidebar when zoom to gage location. commented out the mobile screen
     // limit since the sidebar is temporarily not fixed open on desktop screens
-    console.log(this.props)
     if (this.props.browser.lessThan.large || this.props.browser.is.large) {
       $('#off-canvas-drawer').foundation('close')
     }
@@ -135,29 +138,50 @@ class SubscriptionList extends React.Component {
     }
   }
 
+  sendToggleSubscription(event, gsId, protocol) {
+    const gs = this.props.gageSubscriptionById[gsId]
+
+    if (event.target.checked) {
+      if (gs) {
+        if (!gs.hasOwnProperty(protocol)) {
+          this.props.addSubscribeToChangeList(gs.lid, protocol)
+        }
+        else {
+          this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
+        }
+      }
+    }
+    else {
+      if (this.props.gageSubscriptionById[gsId]) {
+        if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
+          const sId = gs[protocol]
+          this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
+        }
+        else {
+          this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
+        }
+      }
+    }
+  }
+
     /**
    * Toggles the subscription and adds or removes changes to the subscription change queue
    */
   toggleSubscription(event, gsId, protocol) {
-    const gs = this.props.gageSubscriptionById[gsId]
+    const curr = FloodAppUser.userData['custom:currentAlerts']
+    const pred = FloodAppUser.userData['custom:predictiveAlerts']
+    const predGsId = gsId + "--PD"
+    if (curr == 'T' && pred == 'T') {
+      this.sendToggleSubscription(event, gsId, protocol)
+      this.sendToggleSubscription(event, predGsId, protocol)
+    }
+    else if (curr == 'T' && pred == 'F') {
+      this.sendToggleSubscription(event, gsId, protocol)
+    }
+    else if (curr == 'F' && pred == 'T') {
+      this.sendToggleSubscription(event, predGsId, protocol)
+    }
 
-    if (event.target.checked) {
-      if (!gs.hasOwnProperty(protocol)) {
-        this.props.addSubscribeToChangeList(gs.lid, protocol)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "unsubscribe")
-      }
-    }
-    else {
-      if (this.props.gageSubscriptionById[gsId].hasOwnProperty(protocol)) {
-        const sId = gs[protocol]
-        this.props.addUnsubscribeToChangeList(gs.lid, protocol, sId)
-      }
-      else {
-        this.props.unqueueChangeFromChangeList(gs.lid, protocol, "subscribe")
-      }
-    }
   }
 
   render() {
@@ -188,6 +212,10 @@ class SubscriptionList extends React.Component {
       )
     }
 
+    /**
+     * Creates the save button content based on user attribute changes
+     * @return {Component} save button to open confirmation
+     */
     const saveButton = () => {
       let save
       if (this.props.allSubscriptionChanges.length > 0) {
@@ -212,35 +240,38 @@ class SubscriptionList extends React.Component {
     else {
       listContentDiv = (
         <div className="subscription-list">
-          <span>Total Subscriptions</span>
-          <span className="badge subscriptions-count-badge">
-            {this.props.allGageSubscriptions.length}
-          </span>
-          <p>Click the marker symbol next to a gage to zoom to its location.</p>
-          <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
+          <div className="subscription-list-info-container">
+            <span>Total Subscriptions</span>
+            <span className="badge subscriptions-count-badge">
+              {this.props.displayGageSubscriptions.length}
+            </span>
+            <p>Click the marker symbol next to a gage to zoom to its location.</p>
+            <p>To unsubscribe from a gage, uncheck it in the list and save your changes.</p>
+          </div>
+          <AlertTypeIndicatorContainer/>
           <div className="subscription-list-container">
-            {this.props.allGageSubscriptions.map(gageSubscriptionId =>
+            {this.props.displayGageSubscriptions.map(gageSubscriptionId =>
               <div key={gageSubscriptionId} className="subscription-list-item grid-x">
                 <div className="locate-gauge-container shrink cell">
                   <button
                     title="Zoom to gage location"
                     className={
                       SubscriptionList.setZoomButtonColor(
-                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].sigstage
+                        this.props.gageInfo[gageSubscriptionId].sigstage
                       )}
                     onClick={(event) => {
                       this.zoomToGage(
                         event,
-                        this.props.gageSubscriptionById[gageSubscriptionId].lid,
-                        this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid]
+                        gageSubscriptionId,
+                        this.props.gageInfo[gageSubscriptionId]
                       )}
                     }>
                     <i className="fi-marker"></i>
                   </button>
                 </div>
                 <div className="gauge-name-container auto cell">
-                  <span className="gauge-acronym">{this.props.gageSubscriptionById[gageSubscriptionId].lid}</span>
-                  <span className="full-gauge-name">{this.props.gageInfo[this.props.gageSubscriptionById[gageSubscriptionId].lid].name}</span>
+                  <span className="gauge-acronym">{gageSubscriptionId}</span>
+                  <span className="full-gauge-name">{this.props.gageInfo[gageSubscriptionId].name}</span>
                 </div>
                 {smsToggle(gageSubscriptionId)}
               </div>
@@ -255,7 +286,7 @@ class SubscriptionList extends React.Component {
                    style={reactModalStyle}>
                 <div className="card">
                   <div className="card-divider confirm-modal-title">
-                    <i className="fi-save"></i>
+                    <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     <span>Save Changes</span>
                   </div>
                   <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>

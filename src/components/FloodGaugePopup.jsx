@@ -7,6 +7,10 @@ import PopupHeader from './PopupHeader'
 import PopupImageContainer from '../containers/PopupImageContainer'
 
 import {
+  EmailShareButton,
+  EmailIcon,
+  FacebookShareButton,
+  FacebookIcon,
   TwitterShareButton,
   TwitterIcon
 } from 'react-share'
@@ -91,9 +95,25 @@ export default class FloodGaugePopup extends Component {
               url={shareUrl}
               title={shareTitle}
               className="share-button"
-              hashtags={["TexasFlood"]}>
+              hashtags={["TexasFlood"]}
+            >
               <TwitterIcon size={26} round />
             </TwitterShareButton>
+            <FacebookShareButton
+              url={shareUrl}
+              quote={shareTitle}
+              className="share-button"
+              hashtags={["TexasFlood"]}
+            >
+              <FacebookIcon size={26} round />
+            </FacebookShareButton>
+            <EmailShareButton
+              url={shareUrl}
+              subject={shareTitle}
+              className="share-button"
+            >
+              <EmailIcon size={26} round />
+            </EmailShareButton>
           </div>
         </PopupContent>
       </div>

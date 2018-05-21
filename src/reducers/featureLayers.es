@@ -1,6 +1,10 @@
 import objectAssign from 'object-assign'
 
-import * as types from '../actions/types'
+import {
+  CHANGE_LAYER_STATUS,
+  SET_FEATURE_LAYER,
+  UPDATE_TIMESTAMP
+} from '../constants/MapActionTypes'
 
 const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
 const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
@@ -96,7 +100,7 @@ const initialState = {
 
 export default function featureLayers(state = initialState, action) {
   switch (action.type) {
-    case types.CHANGE_LAYER_STATUS:
+    case CHANGE_LAYER_STATUS:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
           let newLayer
@@ -111,7 +115,7 @@ export default function featureLayers(state = initialState, action) {
           return newLayer
         })
       })
-    case types.SET_FEATURE_LAYER:
+    case SET_FEATURE_LAYER:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
           let newLayer
@@ -128,7 +132,7 @@ export default function featureLayers(state = initialState, action) {
           return newLayer
         })
       })
-    case types.UPDATE_TIMESTAMP:
+    case UPDATE_TIMESTAMP:
       return objectAssign({}, state, {
         layers: state.layers.map((layer) => {
           let newLayer

@@ -1,5 +1,5 @@
 import objectAssign from 'object-assign'
-import * as types from '../actions/types'
+import { SET_GAGE_INIT } from '../constants/MapActionTypes'
 
 const initialState = {}
 //create the reducer as an empty state initially. call the initialStatus()
@@ -8,7 +8,7 @@ const initialState = {}
 //Any gauges with a stage change to a higher flood stage will send notifications
 export default function gageInfo(state = initialState, action) {
   switch (action.type) {
-    case types.SET_GAGE_INIT:
+    case SET_GAGE_INIT:
       return objectAssign({}, action.initState)
     default:
       return state

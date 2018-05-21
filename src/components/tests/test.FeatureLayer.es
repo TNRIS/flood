@@ -3,7 +3,7 @@ import React from 'react'
 import ShallowRenderer from 'react-test-renderer/shallow'
 
 import { RingLoader } from 'react-spinners'
-import FeatureLayer from '../components/FeatureLayer'
+import FeatureLayer from '../FeatureLayer'
 
 function setup(overrides) {
   let props = Object.assign({
