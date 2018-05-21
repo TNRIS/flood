@@ -219,7 +219,7 @@ export default class Map extends Component {
       if (this.props.match.params.lid) {
         const upperLid = this.props.match.params.lid.toUpperCase()
         const query = (
-          `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas_develop WHERE lid = '${upperLid}'`
+          `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas WHERE lid = '${upperLid}'`
         )
         axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
           .then(({data}) => {
