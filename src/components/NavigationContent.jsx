@@ -93,7 +93,7 @@ class NavigationToggle extends Component {
           {this.handleSetSignInButton()}</button>
           { this.state.showSubscriptionForm ? <SubscriptionFormContainer/> : '' }
         </div>
-        <div className="twitter-content">
+        {/*<div className="twitter-content">
           <button
             className="button toggle-navigation-content bottom-nav-button"
             type="button"
@@ -102,7 +102,7 @@ class NavigationToggle extends Component {
             Latest Gage Activity
           </button>
           { this.state.showTwitterFeed ? twitterFeed : '' }
-        </div>
+        </div>*/}
       </div>
     )
   }
