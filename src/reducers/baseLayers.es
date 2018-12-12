@@ -17,15 +17,15 @@ const initialState = {
         'layerId': 'esri-world-streetmap'
       }
     },
-    {
-      'id': 'bing-hybrid',
-      'text': 'Hybrid',
-      'type': 'bing',
-      'options': {
-        'type': 'AerialWithLabels',
-        'layerId': 'bing-hybrid'
-      }
-    },
+    // {
+    //   'id': 'bing-hybrid',
+    //   'text': 'Hybrid',
+    //   'type': 'bing',
+    //   'options': {
+    //     'type': 'AerialWithLabels',
+    //     'layerId': 'bing-hybrid'
+    //   }
+    // },
     {
       'id': 'tx-goog',
       'text': 'Satellite',
