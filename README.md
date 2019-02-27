@@ -5,7 +5,7 @@
 Install Node.
 Currently builds with Node v8.9.2 (npm v6.4.1)
 
-Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27)
+Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27 and ubuntu 18 - might be related to using these newer node version than the original v6 the app originated in)
 
 Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 
