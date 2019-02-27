@@ -3,7 +3,7 @@
 ## Setup
 
 Install Node.
-Currently builds with Node v8.9.2 & Npm v5.6.0
+Currently builds with Node v8.9.2 (npm v6.4.1)
 
 Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27)
 
