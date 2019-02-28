@@ -70,7 +70,7 @@ class SubscriptionConfirmation extends Component {
           </div>
           <div className="card-section subscription-confirm-modal-actions">
             <button className="button" type="button" onClick={this.handleConfirmation}>Confirm</button>
-            <button className="button" autoFocus="true" type="button" onClick={this.handleCloseModal}>Cancel</button>
+            <button className="button" autoFocus={true} type="button" onClick={this.handleCloseModal}>Cancel</button>
           </div>
         </div>
       </Modal>
