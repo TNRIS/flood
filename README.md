@@ -3,7 +3,7 @@
 ## Setup
 
 Install Node.
-Currently builds with Node v8.9.2 (npm v6.4.1)
+Currently builds with Node v8.16.1 (npm v6.4.1)
 
 Install Packages: `npm install` (had to use `-f` flag to install on Fedora 27 and ubuntu 18 - might be related to using these newer node version than the original v6 the app originated in)
 
@@ -26,10 +26,12 @@ To retrieve the secrets file, install [ansible](http://www.ansible.com/)
 
 1. `npm run dist` will produce a production build in the `/dist/` folder
 
+Prod Note: if you receive a permission error (`./node_modules/webpack/bin/webpack.js: Permission denied`) when running the production dist command, run `npm rebuild` and try again
+
 ## Favicons, Icons, & Images
 
 https://realfavicongenerator.net/
 1. Favicon.ico is converted to PNG format and then uploaded to the realfavicongenerator. Should be a minimum pixel size of 144x144. This generator will offer numerous options for specific shortcut icons and favicons for a multitude of devices.
-1. Go through the settings and tweak the various ones as necessary.
-1. Be sure to declare the 'path' in the last settings option ("Favicon Generator Options") to be `/icons`. Then click to Generate
-1. After generation is complete, download the Favicon Package and use it to replace the images within `/src/images/icons`. Then copy the HTML code and use it to replace the pre-existing image code within `/src/index.swig`
+2. Go through the settings and tweak the various ones as necessary.
+3. Be sure to declare the 'path' in the last settings option ("Favicon Generator Options") to be `/icons`. Then click to Generate
+4. After generation is complete, download the Favicon Package and use it to replace the images within `/src/images/icons`. Then copy the HTML code and use it to replace the pre-existing image code within `/src/index.swig`

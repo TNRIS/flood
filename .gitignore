@@ -37,6 +37,7 @@ jspm_packages
 /src/keys/secrets.es
 
 /dist/*
+!/dist/.gitkeep
 
 .idea/
 
