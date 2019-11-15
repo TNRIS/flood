@@ -1,22 +1,21 @@
 import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import swig from 'swig'
-
+import nunjucks from 'nunjucks'
 
 const isProd = process.env.NODE_ENV === 'production'
 const webpackMode = process.env.NODE_ENV
+console.log('running in ' + webpackMode + ' mode!')
 
 const folders = {
   dist: path.join(__dirname, 'dist/'),
   src: path.join(__dirname, 'src/')
 }
 
-//compile index.swig
-const indexTpl = swig.compileFile(`${folders.src}index.swig`)
-fs.writeFileSync(`${folders.dist}index.html`, indexTpl({isProd}))
+//compile index.njk
+const indexTpl = nunjucks.render(`${folders.src}index.njk`, {isProd: isProd})
+fs.writeFileSync(`${folders.dist}index.html`, indexTpl)
 
 // Move icons to dist directory
 fs.mkdirsSync(folders.dist + "/icons")
@@ -31,7 +30,6 @@ fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/flood-al
 const plugins = []
 if (isProd) {
   plugins.push(new MiniCssExtractPlugin({filename: 'styles.css'}))
-  plugins.push(new UglifyJsPlugin())
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
   }))

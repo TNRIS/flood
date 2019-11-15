@@ -33,13 +33,13 @@ const initialState = {
       'options': {
         'refreshTimeMs': 300000, // 5 minutes
         'account': 'tnris-flood',
-        'sql': floodSQL,
+        'sql': floodSQL.default,
         'interactivity': [
           'lid',
           'name',
           'wfo',
         ],
-        'cartocss': floodCartoCSS,
+        'cartocss': floodCartoCSS.default,
         'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
       },
       'active': true,
@@ -55,7 +55,7 @@ const initialState = {
       'options': {
         'refreshTimeMs': 1800000, // 30 minutes
         'account': 'tnris-flood',
-        'sql': reservoirSQL,
+        'sql': reservoirSQL.default,
         'interactivity': [
           'full_name',
           'lake_url_name',
@@ -63,7 +63,7 @@ const initialState = {
           'conservation_pool_elevation',
           'top_of_dam_elevation',
         ],
-        'cartocss': reservoirCartoCSS,
+        'cartocss': reservoirCartoCSS.default,
         'attribution': '<a href="http://waterdatafortexas.org/">WaterDataForTexas.org</a>',
       },
       'active': false,
