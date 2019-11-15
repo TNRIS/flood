@@ -236,7 +236,7 @@ class AccountSettingsForm extends Component {
             </div>
             <div className="confirm-modal-actions">
               {confirmChangeButton()}
-              <button autoFocus="true" type="button" className="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
+              <button autoFocus={true} type="button" className="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>
             </div>
           </div>
         </Modal>

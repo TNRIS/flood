@@ -58,14 +58,6 @@ export default class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-    // Opens the off-canvas menu on page load for desktop
-    if (window.innerWidth > 1024) {
-      $('#off-canvas-drawer').foundation('open')
-      $('.js-off-canvas-overlay').removeClass('is-visible').removeClass('is-closable')
-    }
-  }
-
   render() {
     // Hides and reveals the twitter widgets when the NavigationDrawer opens or closes
     $(document).on("closed.zf.offcanvas", () => {
