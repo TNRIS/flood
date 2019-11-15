@@ -22,7 +22,8 @@ fs.mkdirsSync(folders.dist + "/icons")
 fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
   if (err) return console.error(err)
 });
-fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/flood-alert-legend.png", function (err) {
+fs.mkdirsSync(folders.dist + "/assets")
+fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/assets/flood-alert-legend.png", function (err) {
   if (err) return console.error(err)
 });
 
