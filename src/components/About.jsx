@@ -21,7 +21,7 @@ export default class About extends Component {
     this.toggleDetails = this.toggleDetails.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     Modal.setAppElement('#reactApp')
   }
 

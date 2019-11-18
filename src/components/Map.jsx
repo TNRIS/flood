@@ -253,24 +253,24 @@ export default class Map extends Component {
     }, 1000)
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     // only trigger show() and hide() on feature layers when the set of active
     // layers has changed, or an active layer has had a status change
     const activeFeatureLayerBools = (props) => {
       return props.featureLayers.layers.map((l) => l.active === true)
     }
-    const activeFeaturesChanged = !R.equals(activeFeatureLayerBools(this.props), activeFeatureLayerBools(nextProps))
+    const activeFeaturesChanged = !R.equals(activeFeatureLayerBools(prevProps), activeFeatureLayerBools(this.props))
 
     const activeFeatureStatuses = (props) => {
       return props.featureLayers.layers.map((l) => l.active ? l.status : null)
     }
-    const activeFeatureStatusesChanged = !R.equals(activeFeatureStatuses(this.props), activeFeatureStatuses(nextProps))
+    const activeFeatureStatusesChanged = !R.equals(activeFeatureStatuses(prevProps), activeFeatureStatuses(this.props))
 
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
-      this.setActiveFeatureLayers(nextProps)
+      this.setActiveFeatureLayers(this.props)
     }
 
-    const lyrs = nextProps.featureLayers.layers
+    const lyrs = this.props.featureLayers.layers
     if (lyrs[lyrs.length - 1]['active'] === true) {
       this.displayedTimestamp = lyrs[lyrs.length - 1]['displayedTimestamp']
     }
@@ -278,13 +278,13 @@ export default class Map extends Component {
       this.displayedTimestamp = ''
     }
 
-    const basemaps = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
+    const basemaps = R.fromPairs(prevProps.baseLayers.layers.map(propBaseLayer =>
       [propBaseLayer.id, leafletLayerForPropBaseLayer(propBaseLayer)]
     ))
 
-    const activeBaseLayer = this.props.baseLayers.active
+    const activeBaseLayer = prevProps.baseLayers.active
 
-    const nextActiveBaseLayer = nextProps.baseLayers.active
+    const nextActiveBaseLayer = this.props.baseLayers.active
     if (activeBaseLayer !== nextActiveBaseLayer) {
       basemaps[nextActiveBaseLayer].addTo(this.map)
       this.map.eachLayer((layer) => {
@@ -293,9 +293,10 @@ export default class Map extends Component {
         }
       })
     }
-  }
 
-  componentDidUpdate(prevProps, prevState) {
+
+
+
     if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
       const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
       this.map.setView(latlngPoint, this.props.map.zoomLevel)

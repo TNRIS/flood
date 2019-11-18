@@ -20,21 +20,19 @@ class FloodFooter extends React.Component {
 
   toggleFullscreen() {
     const element = document.getElementsByTagName("html")[0]
-    if (document.fullscreenEnabled ||
-        document.webkitIsFullScreen ||
+    if (document.webkitIsFullScreen ||
         document.mozFullScreen ||
         document.msFullscreenEnabled) {
-      const req = document.exitFullScreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      const req = document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
       req.call(document)
     } else {
-      const req = element.requestFullScreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
+      const req = element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
       req.call(element)
     }
   }
 
   watchFullscreen () {
-    if (document.fullscreenEnabled ||
-        document.webkitIsFullScreen ||
+    if (document.webkitIsFullScreen ||
         document.mozFullScreen ||
         document.msFullscreenEnabled) {
           this.setState({fullscreenIcon: "fi-arrows-in"})
