@@ -34,12 +34,12 @@ class SubscriptionForm extends Component {
     this.state = {}
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
       this.setState({
-        error: nextProps.error,
-        isFetching: nextProps.isFetching,
-        nextToken: nextProps.nextToken
+        error: this.props.error,
+        isFetching: this.props.isFetching,
+        nextToken: this.props.nextToken
       })
     }
   }
