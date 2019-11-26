@@ -95,7 +95,6 @@
     "node-sass": "^4.13.0",
     "nodemon": "^1.19.4",
     "npm-check-updates": "^3.2.1",
-    "nunjucks": "^3.2.0",
     "object-assign": "^4.1.1",
     "object-hash": "^2.0.0",
     "prop-types": "^15.7.2",

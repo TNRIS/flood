@@ -2,7 +2,6 @@ import fs from 'fs-extra'
 import path from 'path'
 import webpack from 'webpack'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import nunjucks from 'nunjucks'
 
 const isProd = process.env.NODE_ENV === 'production'
 const webpackMode = process.env.NODE_ENV
@@ -13,10 +12,10 @@ const folders = {
   src: path.join(__dirname, 'src/')
 }
 
-//compile index.njk
-const indexTpl = nunjucks.render(`${folders.src}index.njk`, {isProd: isProd})
-fs.writeFileSync(`${folders.dist}index.html`, indexTpl)
-
+// Move index file to dist directory
+fs.copy(`${folders.src}index.html`, `${folders.dist}index.html`, function (err) {
+  if (err) return console.error(err)
+});
 // Move icons to dist directory
 fs.mkdirsSync(folders.dist + "/icons")
 fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
@@ -24,19 +23,20 @@ fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
 });
 
 //setup webpack plugins
-const plugins = []
+const plugins = [
+  new MiniCssExtractPlugin({filename: '[name].css'}),
+  new webpack.DefinePlugin({
+    VERSION: JSON.stringify(require("./package.json").version),
+    RELEASE: JSON.stringify(require("./package.json").release),
+    SITE_URL: JSON.stringify(require("./package.json").site_url)
+  })
+]
+
 if (isProd) {
-  plugins.push(new MiniCssExtractPlugin({filename: '[name].css'}))
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
   }))
 }
-
-plugins.push(new webpack.DefinePlugin({
-  VERSION: JSON.stringify(require("./package.json").version),
-  RELEASE: JSON.stringify(require("./package.json").release),
-  SITE_URL: JSON.stringify(require("./package.json").site_url)
-}))
 
 export default {
   entry: {
@@ -61,13 +61,11 @@ export default {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-          : ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
-        use: isProd ? [MiniCssExtractPlugin.loader, 'css-loader']
-          : ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.(jpg|png|gif|ico|woff)$/,
