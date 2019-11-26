@@ -19,7 +19,8 @@
     <meta name="theme-color" content="#ffffff">
 
     {% if isProd %}
-      <link rel="stylesheet" type="text/css" href="/assets/styles.css">
+      <link rel="stylesheet" type="text/css" href="/assets/main.css">
+      <link rel="stylesheet" type="text/css" href="/assets/vendor.css">
     {% endif %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@
             </p>
         </noscript>
     </div>
-
-    <script src="/assets/scripts.js" type="text/javascript"></script>
+    <script src="/assets/main.bundle.js" type="text/javascript"></script>
+    <script src="/assets/vendor.bundle.js" type="text/javascript"></script>
   </body>
 </html>

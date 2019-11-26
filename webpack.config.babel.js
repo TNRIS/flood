@@ -22,15 +22,11 @@ fs.mkdirsSync(folders.dist + "/icons")
 fs.copy(folders.src + "images/icons", folders.dist + "/icons/", function (err) {
   if (err) return console.error(err)
 });
-fs.mkdirsSync(folders.dist + "/assets")
-fs.copy(folders.src + "images/flood-alert-legend.png", folders.dist + "/assets/flood-alert-legend.png", function (err) {
-  if (err) return console.error(err)
-});
 
 //setup webpack plugins
 const plugins = []
 if (isProd) {
-  plugins.push(new MiniCssExtractPlugin({filename: 'styles.css'}))
+  plugins.push(new MiniCssExtractPlugin({filename: '[name].css'}))
   plugins.push(new webpack.DefinePlugin({
     'process.env.NODE_ENV': '"production"'
   }))
@@ -43,12 +39,15 @@ plugins.push(new webpack.DefinePlugin({
 }))
 
 export default {
-  entry: `${folders.src}entry.jsx`,
+  entry: {
+    'main': [`${folders.src}entry.jsx`],
+    'vendor': [`${folders.src}/vendor/index.js`]
+  },
   mode: webpackMode,
   output: {
     path: `${folders.dist}assets/`,
     publicPath: '/assets/',
-    filename: 'scripts.js'
+    filename: '[name].bundle.js'
   },
   devServer: {
     contentBase: './dist',
