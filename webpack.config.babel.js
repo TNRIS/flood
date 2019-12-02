@@ -69,7 +69,7 @@ export default {
       },
       {
         test: /\.(jpg|png|gif|ico|woff)$/,
-        loader: 'url-loader?limit=65536'
+        loader: 'url-loader?limit=65536&name=[name].[ext]'
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
