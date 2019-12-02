@@ -54,7 +54,7 @@ export default class FeatureLayer extends Component {
     if (active && legend && text == "Weather Alerts") {
       legendLink = (
         <div className="feature-layer-legendLink">
-          <a href="./assets/flood-alert-legend.png" target="weather-alerts-legend">NOAA Advisories</a>
+          <a href={legend} target="weather-alerts-legend">NOAA Advisories</a>
         </div>
       )
     }

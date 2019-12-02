@@ -30,11 +30,9 @@ class SubscriptionConfirmation extends Component {
     this.handleConfirmation = this.handleConfirmation.bind(this)
   }
 
-  componentDidMount() {
-  }
-
-  componentWillReceiveProps() {
-    if (this.props.popupData.id == "ahps-flood") {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.popupData.id == "ahps-flood" &&
+        prevState.lid !== this.props.popupData.data.lid.toUpperCase()) {
       this.setState({
         lid: this.props.popupData.data.lid.toUpperCase(),
         name: this.props.popupData.data.name
