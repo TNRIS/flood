@@ -11,7 +11,7 @@ import PopupText from './PopupText'
 import { store } from '../store'
 import {Provider} from 'react-redux'
 
-const icon = require('../images/flood_alert_red.png')
+import icon from '../images/flood_alert_red.png'
 
 export default class FloodAlertsPopup extends Component {
   static propTypes = {

@@ -11,15 +11,14 @@ const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
 const reservoirCartoCSS = require('../cartodb/reservoir-conditions.mss')
 const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
 
-const floodGaugeIcon = require('../images/flood_gauge_icon.png')
-const floodGaugeLegend = require('../images/nws-ahps-gauges-texas-legend.png')
-const floodAlertIcon = require('../images/flood_alert_red.png')
-const floodAlertLegend = require('../images/flood-alert-legend.jpg')
-const lakeIcon = require('../images/boat_icon.png')
-const lakeLegend = require('../images/reservoir-conditions-legend.png')
-const rainIcon = require('../images/rain_icon.png')
-const weatherIcon = require('../images/weather_icon.png')
-const weatherLegend = require('../images/animated-weather-legend_800x450.png')
+import floodGaugeIcon from '../images/flood_gauge_icon.png'
+import floodGaugeLegend from '../images/nws-ahps-gauges-texas-legend.png'
+import floodAlertIcon from '../images/flood_alert_red.png'
+import floodAlertLegend from '../images/flood-alert-legend.jpg'
+import lakeIcon from '../images/boat_icon.png'
+import lakeLegend from '../images/reservoir-conditions-legend.png'
+import weatherIcon from '../images/weather_icon.png'
+import weatherLegend from '../images/animated-weather-legend_800x450.png'
 
 const initialState = {
   layers: [

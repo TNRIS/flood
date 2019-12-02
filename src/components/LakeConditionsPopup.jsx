@@ -10,7 +10,7 @@ import PopupImageContainer from '../containers/PopupImageContainer'
 import { store } from '../store'
 import {Provider} from 'react-redux'
 
-const icon = require('../images/boat_icon_popup_title.png')
+import icon from '../images/boat_icon_popup_title.png'
 
 export default class LakeConditionsPopup extends Component {
   static propTypes = {

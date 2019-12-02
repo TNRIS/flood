@@ -19,7 +19,7 @@ import { store } from '../store'
 import {Provider} from 'react-redux'
 
 
-const icon = require('../images/flood_gauge_icon.png')
+import icon from '../images/flood_gauge_icon.png'
 
 export default class FloodGaugePopup extends Component {
   static propTypes = {
