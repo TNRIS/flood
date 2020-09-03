@@ -53,3 +53,5 @@ load_test*
 
 vault-password.txt
 .vault/
+
+tmp/
