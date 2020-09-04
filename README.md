@@ -9,14 +9,15 @@ Install Packages: `npm -f install`
 
 Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 
-To retrieve the secrets file, install [ansible](http://www.ansible.com/)
+#### setup app secrets
+* setup aws cli with proper permissions
+* pull secrets by running `. sterling.sh pullSecrets` from the command line
+* when updated, push secrets by running `. sterling.sh pushSecrets` from the command line
+* Alternatively (without aws), make a copy of `src/keys/secrets.sample.es`, fill out and save as `src/keys/secrets.es`
 
 ## Developing
 
-1. place a copy `vault-password.txt` into the root of this repo `~/flood`. You might need to change spaces to newlines. cd into the root folder and run `make pull-secrets` to quickly download, decrypt, and properly place the secrets file.
-    * Alternatively (without ansible), make a copy of `src/keys/secrets.sample.es`, fill out and save as `src/keys/secrets.es`
-2. `npm start` to start a hot-reloading development web server. First time starting, may require you create the empty directory `dist` in the project root.
-3. Open browser to `http://localhost:3545`
+1. `npm start` to start a hot-reloading development web server. First time starting, may require you create the empty directory `dist` in the project root. Open browser to `http://localhost:3545`
 
 ## Test
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Timeline, Follow } from 'react-twitter-widgets'
+// import { Timeline, Follow } from 'react-twitter-widgets'
 
 import FeatureLayerChooserContainer from '../containers/FeatureLayerChooserContainer'
 import SubscriptionFormContainer from '../containers/SubscriptionFormContainer'
@@ -46,32 +46,32 @@ class NavigationToggle extends Component {
   }
 
   render() {
-    const twitterFeed = (
-      <div>
-        <div className="twitter-feed">
-          <Timeline
-            dataSource={{
-              sourceType: 'profile',
-              screenName: 'TexasFloodOrg'
-            }}
-            options={{
-              username: 'TexasFloodOrg',
-              height: '400',
-              tweetLimit: '10',
-              chrome: ['nofooter'],
-              borderColor: '#AED480',
-              linkColor: '#1779ba'
-            }}
-          />
-        </div>
-        <div className="follow-button">
-          <Follow
-            username="TexasFloodOrg"
-            options={{count: 'none', size: 'large'}}
-          />
-        </div>
-      </div>
-    )
+    // const twitterFeed = (
+    //   <div>
+    //     <div className="twitter-feed">
+    //       <Timeline
+    //         dataSource={{
+    //           sourceType: 'profile',
+    //           screenName: 'TexasFloodOrg'
+    //         }}
+    //         options={{
+    //           username: 'TexasFloodOrg',
+    //           height: '400',
+    //           tweetLimit: '10',
+    //           chrome: ['nofooter'],
+    //           borderColor: '#AED480',
+    //           linkColor: '#1779ba'
+    //         }}
+    //       />
+    //     </div>
+    //     <div className="follow-button">
+    //       <Follow
+    //         username="TexasFloodOrg"
+    //         options={{count: 'none', size: 'large'}}
+    //       />
+    //     </div>
+    //   </div>
+    // )
     return (
       <div className="navigation-content">
         <div>
