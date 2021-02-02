@@ -6,11 +6,6 @@ import {
   UPDATE_TIMESTAMP
 } from '../constants/MapActionTypes'
 
-const floodCartoCSS = require('../cartodb/nws-ahps-gauges-texas.mss')
-const floodSQL = require('../cartodb/nws-ahps-gauges-texas.sql')
-const reservoirCartoCSS = require('../cartodb/reservoir-conditions.mss')
-const reservoirSQL = require('../cartodb/reservoir-conditions.sql')
-
 import floodGaugeIcon from '../images/flood_gauge_icon.png'
 import floodGaugeLegend from '../images/nws-ahps-gauges-texas-legend.png'
 import floodAlertIcon from '../images/flood_alert_red.png'
@@ -25,20 +20,14 @@ const initialState = {
     {
       'id': 'ahps-flood',
       'text': 'Flood Gages',
-      'type': 'cartodb',
+      'type': 'mapserver',
       'icon': floodGaugeIcon,
       'altText': 'Flood Gage Icon',
       'legend': floodGaugeLegend,
       'options': {
         'refreshTimeMs': 300000, // 5 minutes
-        'account': 'tnris-flood',
-        'sql': floodSQL.default,
-        'interactivity': [
-          'lid',
-          'name',
-          'wfo',
-        ],
-        'cartocss': floodCartoCSS.default,
+        'mapfile': 'nws_ahps_gauges_texas',
+        'interactivity': 'CurrentStage',
         'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
       },
       'active': true,
@@ -50,19 +39,11 @@ const initialState = {
       'icon': lakeIcon,
       'altText': 'Lake Icon',
       'legend': lakeLegend,
-      'type': 'cartodb',
+      'type': 'mapserver',
       'options': {
         'refreshTimeMs': 1800000, // 30 minutes
-        'account': 'tnris-flood',
-        'sql': reservoirSQL.default,
-        'interactivity': [
-          'full_name',
-          'lake_url_name',
-          'flood_height_percent',
-          'conservation_pool_elevation',
-          'top_of_dam_elevation',
-        ],
-        'cartocss': reservoirCartoCSS.default,
+        'mapfile': 'wdft_reservoir_conditions',
+        'interactivity': 'Reservoirs',
         'attribution': '<a href="http://waterdatafortexas.org/">WaterDataForTexas.org</a>',
       },
       'active': false,

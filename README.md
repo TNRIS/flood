@@ -22,10 +22,7 @@ Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 ## Deploying!!!
 ### (Must do before merging into master branch for ci/cd deployment)
 
-1. Update the cartodb sql query within `~\flood\src\cartodb\nws-ahps-gauges-texas.sql` with the correct cartodb table name 'nws_ahps_gauges_texas'in both lines 1 and 13
-2. correct the table utilized in the sql command in the file `/flood/src/actions/InitializationActions.es` (line 9)
-3. correct the table utilized in the sql command in the file `/flood/src/components/Map.jsx` (line 222)
-4. ensure you have the correct "site_url" in the `package.json` file within the project folder (line 5). beta notice automatically turns on if "site_url" is not the production url
+1. ensure you have the correct "site_url" in the `package.json` file within the project folder (line 5). beta notice automatically turns on if "site_url" is not the production url
 
 ## Test
 

@@ -90,7 +90,7 @@ export default class AnimatedWeatherLayer extends Layer {
           layer.addTo(this.map)
         }
         //  This will set the visible layer order relative to
-        //  the order set in CartoDBLayer.es and TileLayer.es
+        //  the order set in MapserverLayer.es and TileLayer.es
         layer.setZIndex(96)
         layer.setOpacity(0.8)
       }

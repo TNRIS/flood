@@ -218,19 +218,17 @@ export default class Map extends Component {
       }
       if (this.props.match.params.lid) {
         const upperLid = this.props.match.params.lid.toUpperCase()
-        const query = (
-          `SELECT latitude, longitude, name, wfo FROM nws_ahps_gauges_texas WHERE lid = '${upperLid}'`
-        )
-        axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
+        const query = `https://mapserver.tnris.org/?map=/tnris_mapfiles/nws_ahps_gauges_texas.map&SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=CurrentStage&outputformat=geojson&SRSNAME=EPSG:4326&Filter=<Filter><PropertyIsEqualTo><PropertyName>lid</PropertyName><Literal>${upperLid}</Literal></PropertyIsEqualTo></Filter>`
+        axios.get(query)
           .then(({data}) => {
-            if (data.rows.length === 0) {
+            if (data.features.length === 0) {
               this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
               this.props.history.push("")
               return initMap(initView)
             }
-            data.rows.map((gage) => {
-              initView.latitude = gage.latitude
-              initView.longitude = gage.longitude
+            data.features.map((gage) => {
+              initView.latitude = gage.properties.latitude
+              initView.longitude = gage.properties.longitude
               initView.zoom = 13
 
               initMap(initView)
@@ -238,11 +236,11 @@ export default class Map extends Component {
               this.props.setPopup({
                 id: 'ahps-flood',
                 data: {
-                  name: gage.name,
-                  wfo: gage.wfo,
+                  name: gage.properties.name,
+                  wfo: gage.properties.wfo,
                   lid: this.props.match.params.lid
                 },
-                clickLocation: L.latLng(gage.latitude, gage.longitude)
+                clickLocation: L.latLng(gage.properties.latitude, gage.properties.longitude)
               })
             })
           })
@@ -313,7 +311,6 @@ export default class Map extends Component {
 
     R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {
       const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
-
       if (isActive) {
         layer.show()
 
@@ -341,6 +338,9 @@ export default class Map extends Component {
     })
     props.featureLayers.layers.map((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
+      if (layer.active) {
+        this.setActiveFeatureLayers(this.props)
+      }
     })
   }
 

@@ -6,19 +6,19 @@ import { setGageInit } from './MapActions'
 //with the current stage of all flood gauges
 export function retrieveGageStatus() {
   return (dispatch) => {
-    const query = `SELECT lid, name, stage, sigstage, wfo, latitude, longitude, timestamp FROM nws_ahps_gauges_texas`
-    return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
+    const query = `https://mapserver.tnris.org/?map=/tnris_mapfiles/nws_ahps_gauges_texas.map&SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=CurrentStage&outputformat=geojson&SRSNAME=EPSG:4326`
+    return axios.get(query)
       .then(({data}) => {
-        const formatState = data.rows.map((gage) => {
+        const formatState = data.features.map((gage) => {
           const obj = {}
-          obj[gage.lid] = {
-            "name": gage.name,
-            "stage": gage.stage,
-            "sigstage": gage.sigstage,
-            "wfo": gage.wfo,
-            "latitude": gage.latitude,
-            "longitude": gage.longitude,
-            "timestamp": gage.timestamp
+          obj[gage.properties.lid] = {
+            "name": gage.properties.name,
+            "stage": gage.properties.stage,
+            "sigstage": gage.properties.sigstage,
+            "wfo": gage.properties.wfo,
+            "latitude": gage.properties.latitude,
+            "longitude": gage.properties.longitude,
+            "timestamp": gage.properties.timestamp
           }
           return obj
         })

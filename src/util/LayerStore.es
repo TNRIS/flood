@@ -3,7 +3,7 @@ import objectAssign from 'object-assign'
 import AerisAlertsLayer from './AerisAlertsLayer'
 import AerisTileLayer from './AerisTileLayer'
 import AnimatedWeatherLayer from './AnimatedWeatherLayer'
-import CartoDBLayer from './CartoDBLayer'
+import MapserverLayer from './MapserverLayer'
 
 
 export default class LayerStore {
@@ -30,8 +30,8 @@ export default class LayerStore {
       case 'animated-weather':
         this.store[id] = new AnimatedWeatherLayer(layerOptions)
         break
-      case 'cartodb':
-        this.store[id] = new CartoDBLayer(layerOptions)
+      case 'mapserver':
+        this.store[id] = new MapserverLayer(layerOptions)
         break
       default:
         null
