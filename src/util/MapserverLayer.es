@@ -7,11 +7,11 @@ import Layer from './Layer'
 function getLayer(options) {
   let mapfileLayer = 'all'
   const urls = {
-    tilesUrl: `https://mapserver.tnris.org/wms/?map=/tnris_mapfiles/${options.mapfile}.map&mode=tile&tilemode=gmap&tile={x}+{y}+{z}&layers=${mapfileLayer}&map.imagetype=png`
+    tilesUrl: `https://mapserver.tnris.org/?map=/tnris_mapfiles/${options.mapfile}.map&mode=tile&tilemode=gmap&tile={x}+{y}+{z}&layers=${mapfileLayer}&map.imagetype=png`
   }
   if (options.interactivity) {
     mapfileLayer = options.interactivity
-    urls.gridsUrl = `https://mapserver.tnris.org/wms/?map=/tnris_mapfiles/${options.mapfile}.map&mode=tile&tilemode=gmap&tile={x}+{y}+{z}&layers=${mapfileLayer}&map.imagetype=utfgrid`
+    urls.gridsUrl = `https://mapserver.tnris.org/?map=/tnris_mapfiles/${options.mapfile}.map&mode=tile&tilemode=gmap&tile={x}+{y}+{z}&layers=${mapfileLayer}&map.imagetype=utfgrid`
   }
   return urls
 }
