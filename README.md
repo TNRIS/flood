@@ -19,6 +19,11 @@ Note: may have to rebuild node-sass after npm installs: `npm rebuild node-sass`
 
 1. `npm start` to start a hot-reloading development web server. First time starting, may require you create the empty directory `dist` in the project root. Open browser to `http://localhost:3545`
 
+## Deploying!!!
+### (Must do before merging into master branch for ci/cd deployment)
+
+1. ensure you have the correct "site_url" in the `package.json` file within the project folder (line 5). beta notice automatically turns on if "site_url" is not the production url
+
 ## Test
 
 1. `npm run test` will run the Mocha Test suite

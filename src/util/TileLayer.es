@@ -32,7 +32,7 @@ export default class TileLayer extends Layer {
     this.layer.redraw()
 
     //  This will set the visible layer order relative to
-    //  the order set in CartoDBLayer.es and AnimatedWeatherLayer.es
+    //  the order set in MapserverLayer.es and AnimatedWeatherLayer.es
     this.layer.setZIndex(97)
   }
 
@@ -40,7 +40,7 @@ export default class TileLayer extends Layer {
     this.layer.addTo(this.map)
 
     //  This will set the visible layer order relative to
-    //  the order set in CartoDBLayer.es and AnimatedWeatherLayer.es
+    //  the order set in MapserverLayer.es and AnimatedWeatherLayer.es
     this.layer.setZIndex(97)
     if (this.refreshIntervalId !== null) {
       clearInterval(this.refreshIntervalId)
