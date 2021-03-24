@@ -27,6 +27,7 @@ const initialState = {
       'options': {
         'refreshTimeMs': 300000, // 5 minutes
         'mapfile': 'nws_ahps_gauges_texas',
+        'nobuff': 'nws_ahps_gauges_texas_nobuff',
         'interactivity': 'CurrentStage',
         'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
       },
