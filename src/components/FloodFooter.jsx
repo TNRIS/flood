@@ -86,9 +86,9 @@ class FloodFooter extends React.Component {
                  data-close-on-click="true"
                  data-dropdown>
               <ul className="vertical menu">
-                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/before.asp" target="_blank">Preparing Before a Flood</a></li>
-                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/during.asp" target="_blank">Being Safe During a Flood</a></li>
-                <li className="footer-context-menu-item"><a href="http://www.twdb.texas.gov/flood/prep/after.asp" target="_blank">Recovering After a Flood</a></li>
+                <li className="footer-context-menu-item"><a href="https://www.texasflood.org/flood-basics/index.html" target="_blank">Preparing Before a Flood</a></li>
+                <li className="footer-context-menu-item"><a href="https://www.texasflood.org/emergency-prep/index.html" target="_blank">Being Safe During a Flood</a></li>
+                <li className="footer-context-menu-item"><a href="https://www.texasflood.org/recovery/index.html" target="_blank">Recovering After a Flood</a></li>
               </ul>
             </div>
             <AboutLinkContainer />
