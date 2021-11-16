@@ -62,7 +62,7 @@
     "amazon-cognito-js": "^1.1.0",
     "assets-webpack-plugin": "^3.9.10",
     "autoprefixer-loader": "^3.2.0",
-    "aws-sdk": "^2.611.0",
+    "aws-sdk": "^2.814.0",
     "aws-sdk-mock": "^5.0.0",
     "axios": "^0.19.2",
     "babel-eslint": "^10.0.3",
