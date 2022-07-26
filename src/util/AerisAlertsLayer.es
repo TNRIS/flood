@@ -9,14 +9,12 @@ import { mapClickHandler } from '../actions/MapActions'
 
 
 function getAdvisoryInfo({latitude, longitude}) {
-  const queryURL = `https://api.aerisapi.com/advisories/closest`
+  const queryURL = `https://api.aerisapi.com/alerts/${latitude},${longitude}?limit=100&query=active:1&sort=sigp&client_id=xxx&client_secret=yyy`
   const queryParams = {
     client_id: keys.aerisApiId,
     client_secret: keys.aerisApiSecret,
-    p: `${latitude},${longitude}`,
-    radius: '20mi',
     limit: 100,
-    active: 1,
+    query: "active:1",
     sort: 'sigp',
   }
 
