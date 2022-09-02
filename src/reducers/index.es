@@ -16,6 +16,10 @@ import user from './user'
 import aboutDialog from './aboutDialog'
 import popupData from './popupData'
 
+import { createStore, compose } from 'redux';    
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const rootReducer = combineReducers({
   baseLayers: baseLayers,
   featureLayers: featureLayers,
@@ -50,3 +54,9 @@ export const rootReducer = combineReducers({
   toaster,
   popupData
 })
+
+// Allows viewing state with redux devtools.
+const store = createStore(
+  rootReducer,
+  composeEnhancers()
+);
