@@ -2,10 +2,11 @@ import L from 'leaflet'
 import Layer from './Layer'
 
 export default class GeoJsonLayer extends Layer {
-  constructor({id, map, handlers, externalUrl}) {
+  constructor({id, map, handlers, externalUrl, refreshTimeMs = 7200000}) {
     super({id, map, handlers})
     this.externalUrl = externalUrl
     this.update();
+    this.refreshIntervalId = setInterval(() => this.refresh(), refreshTimeMs)
   }
 
   update() {
@@ -25,7 +26,7 @@ export default class GeoJsonLayer extends Layer {
   }
 
   refresh() {
-    update()
+    this.update()
   }
 
   show() {

@@ -85,7 +85,7 @@ const initialState = {
       'legend': null,
       'type': 'geoJson',
       'options': {
-        'refreshTimeMs': 1800000, // 30 minutes
+        'refreshTimeMs': 7600000,
         'externalUrl': 'https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Boundaries/FeatureServer/0/query?f=geojson&where=1%3D1&returnGeometry=true',
         'type': 'geoJSON',
         'interactivity': 'StateParks',
