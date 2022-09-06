@@ -12,11 +12,11 @@ export default class GeoJsonLayer extends Layer {
   update() {
     let that = this
     this.setStatus('updating')
-    if(!that.park_map) {
+    if(!that.json_map) {
       fetch(this.externalUrl).then((response) => response.text().then(function (result) {
         try {
-          that.park_map = JSON.parse(result)
-          that.park_map = L.geoJSON(that.park_map)
+          that.json_map = JSON.parse(result)
+          that.json_map = L.geoJSON(that.json_map)
         } catch(err) {
           console.error(err.stack)
         }
@@ -34,7 +34,7 @@ export default class GeoJsonLayer extends Layer {
     switch (this.id) {
       case "state-parks":
         if (this.status === 'ready') {
-          that.park_map.addTo(that.map)
+          that.json_map.addTo(that.map)
         }
         break
       default:
@@ -42,8 +42,8 @@ export default class GeoJsonLayer extends Layer {
     }
   }
   hide() {
-    if(this.externalUrl && this.park_map && this.map.hasLayer(this.park_map)) {
-      this.map.removeLayer(this.park_map)
+    if(this.externalUrl && this.json_map && this.map.hasLayer(this.json_map)) {
+      this.map.removeLayer(this.json_map)
     }
   }
 }
