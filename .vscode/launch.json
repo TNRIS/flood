@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "url": "localhost:3545",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch via NPM",
@@ -15,5 +22,5 @@
                 "run-script", "start"
             ]
         }
-    ]
+    ]    
 }

@@ -14,6 +14,7 @@ import lakeIcon from '../images/boat_icon.png'
 import lakeLegend from '../images/reservoir-conditions-legend.png'
 import weatherIcon from '../images/weather_icon.png'
 import weatherLegend from '../images/animated-weather-legend_800x450.png'
+import treeIcon from '../images/tree.png'
 
 const initialState = {
   layers: [
@@ -75,6 +76,24 @@ const initialState = {
       'active': false,
       'status': null,
       'displayedTimestamp': '',
+    }, 
+    {
+      'id': 'state-parks',
+      'text': 'State Parks',
+      'icon': treeIcon,
+      'altText': 'Park Icon',
+      'legend': null,
+      'type': 'geoJson',
+      'options': {
+        'refreshTimeMs': 1800000, // 30 minutes
+        'externalUrl': 'https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Boundaries/FeatureServer/0/query?f=geojson&where=1%3D1&returnGeometry=true',
+        'type': 'geoJSON',
+        'interactivity': 'StateParks',
+        'attribution': '<a href="https://services1.arcgis.com/">services1.arcgis.com</a>',
+      },
+      'active': false,
+      'status': null,
+      'displayedTimestamp': ''
     }
   ],
 }
