@@ -5,6 +5,8 @@ import baseLayers from './baseLayers'
 import featureLayers from './featureLayers'
 import gageInfo from './gageInfo'
 import map from './map'
+import LeafletMap from './LeafletMap'
+import customLayer from './customLayer'
 import subscriptionConfirmation from './subscriptionConfirmation'
 import { subscriptionChangesById, allSubscriptionChanges, allProcessedSubscriptions } from './subscriptionChanges'
 import subscriptionForm from './subscriptionForm'
@@ -49,6 +51,8 @@ export const rootReducer = combineReducers({
     allGageSubscriptions,
     displayGageSubscriptions
   }),
+  LeafletMap,
+  customLayer,
   user,
   aboutDialog: aboutDialog,
   toaster,

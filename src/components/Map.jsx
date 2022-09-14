@@ -7,7 +7,7 @@ import * as R from 'ramda'
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
-
+import { store } from "../store"
 import PopupContainer from '../containers/PopupContainer'
 
 import defaultMarkerIcon from '../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png'
@@ -15,6 +15,7 @@ import gpsFixedIcon from '../images/foundation-icon-fonts_2015-02-16_target-two_
 
 import axios from 'axios'
 
+import {storeMap} from '../actions/MapActions'
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
 
@@ -63,6 +64,7 @@ export default class Map extends Component {
         minZoom: window.innerWidth < 768 ? 5 : 6
       })
 
+      store.dispatch(storeMap(this.map))
       this.initializeGeocoderControl()
       this.initializeBasemapLayers()
       this.map.zoomControl.setPosition('bottomright')
@@ -306,7 +308,7 @@ export default class Map extends Component {
     // TODO: this should be cleaned up - this way of setting the cursor is
     // really not the right way to do things
     this.map._container.classList.toggle('map__cursor--pointer', false)
-
+    
     const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
 
     R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {

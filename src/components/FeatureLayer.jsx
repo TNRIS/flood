@@ -16,7 +16,7 @@ export default class FeatureLayer extends Component {
   }
 
   render() {
-    const { onClick, text, icon, altText, legend, active, status } = this.props
+    const { onClick, text, icon, altText, legend, active, status, options, id } = this.props
 
     let statusIndicator
     if (active && status !== 'ready') {
@@ -58,10 +58,12 @@ export default class FeatureLayer extends Component {
         </div>
       )
     }
-
+    const featLinkStyle = {
+      display: options.hidden ? 'none': 'block'
+    }
     return (
       <li>
-        <div className="feature-layer-link">
+        <div className="feature-layer-link" style={featLinkStyle} id={id}>
           <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
             <div className="feature-layer-wrapper">
               <div className="feature-layer-icon-wrapper">

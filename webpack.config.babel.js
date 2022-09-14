@@ -40,7 +40,7 @@ if (isProd) {
 
 export default {
   entry: {
-    'main': [`${folders.src}entry.jsx`],
+    'main': ["regenerator-runtime/runtime.js",`${folders.src}entry.jsx`],
     'vendor': [`${folders.src}/vendor/index.js`]
   },
   mode: webpackMode,

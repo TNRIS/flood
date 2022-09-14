@@ -15,6 +15,7 @@ import lakeLegend from '../images/reservoir-conditions-legend.png'
 import weatherIcon from '../images/weather_icon.png'
 import weatherLegend from '../images/animated-weather-legend_800x450.png'
 import treeIcon from '../images/tree.png'
+import customOverlayIcon from '../images/custom_button.png'
 
 const initialState = {
   layers: [
@@ -31,6 +32,7 @@ const initialState = {
         'nobuff': 'nws_ahps_gauges_texas_nobuff',
         'interactivity': 'CurrentStage',
         'attribution': '<a href="http://water.weather.gov/ahps/">NOAA National Weather Service</a>',
+        'hidden': false
       },
       'active': true,
       'status': null,
@@ -47,6 +49,7 @@ const initialState = {
         'mapfile': 'wdft_reservoir_conditions',
         'interactivity': 'Reservoirs',
         'attribution': '<a href="http://waterdatafortexas.org/">WaterDataForTexas.org</a>',
+        'hidden': false
       },
       'active': false,
       'status': null,
@@ -61,7 +64,8 @@ const initialState = {
       'options': {
         'code': 'alerts',
         'refreshTimeMs': 60000, // 1 minute
-        'opacity': 0.7
+        'opacity': 0.7,
+        'hidden': false
       },
       'active': false,
       'status': null,
@@ -73,6 +77,9 @@ const initialState = {
       'altText': 'Weather Icon',
       'legend': weatherLegend,
       'type': 'animated-weather',
+      'options': {
+        'hidden': false
+      },
       'active': false,
       'status': null,
       'displayedTimestamp': '',
@@ -90,6 +97,28 @@ const initialState = {
         'type': 'geoJSON',
         'interactivity': 'StateParks',
         'attribution': '<a href="https://services1.arcgis.com/">services1.arcgis.com</a>',
+        'hidden': false
+      },
+      'active': false,
+      'status': null,
+      'displayedTimestamp': ''
+    },
+    {
+      'id': 'custom-overlay',
+      'text': 'Custom Overlay',
+      'icon': customOverlayIcon,
+      'altText': 'Custom Overlay Icon',
+      'legend': null,
+      'type': 'geoJson',
+      'options': {
+        'refreshTimeMs': 7600000,
+        'externalUrl': '',
+        'type': 'geoJSON',
+        'interactivity': 'CustomOverlay',
+        'attribution': '',
+        'rawJSON': true,
+        'hidden': true,
+        'custom': true
       },
       'active': false,
       'status': null,
