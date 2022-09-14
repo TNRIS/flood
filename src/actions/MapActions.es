@@ -6,7 +6,6 @@ import {
   SET_FEATURE_LAYER,
   SET_GAGE_INIT,
   UPDATE_TIMESTAMP,
-  STORE_MAP,
   STORE_GEOJSON
 } from '../constants/MapActionTypes'
 
@@ -80,13 +79,6 @@ export const setGageInit = (initState) => {
   return {
     type: SET_GAGE_INIT,
     initState
-  }
-}
-
-export const storeMap = (map) => {
-  return {
-    type: STORE_MAP, 
-    map
   }
 }
 

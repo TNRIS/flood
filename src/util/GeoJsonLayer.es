@@ -57,7 +57,7 @@ export default class GeoJsonLayer extends Layer {
             this.shown = true
             this.json_map = L.geoJSON(JSON.parse(currentStore.customLayer.customGeoJson))
           }
-          this.json_map.addTo(that.map)
+          this.json_map.addTo(this.map)
           this.setStatus('ready')
         break
       default:
