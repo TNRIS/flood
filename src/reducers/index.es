@@ -51,7 +51,6 @@ export const rootReducer = combineReducers({
     allGageSubscriptions,
     displayGageSubscriptions
   }),
-  LeafletMap,
   customLayer,
   user,
   aboutDialog: aboutDialog,

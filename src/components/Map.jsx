@@ -7,7 +7,6 @@ import * as R from 'ramda'
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
-import { store } from "../store"
 import PopupContainer from '../containers/PopupContainer'
 
 import defaultMarkerIcon from '../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png'
