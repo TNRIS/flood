@@ -10,6 +10,8 @@ import floodGaugeIcon from '../images/flood_gauge_icon.png'
 import floodGaugeLegend from '../images/nws-ahps-gauges-texas-legend.png'
 import floodAlertIcon from '../images/flood_alert_red.png'
 import floodAlertLegend from '../images/flood-alert-legend.jpg'
+import stateParkLegend from '../images/state-park-legend.png'
+import customLayerLegend from '../images/custom-layer-legend.png'
 import lakeIcon from '../images/boat_icon.png'
 import lakeLegend from '../images/reservoir-conditions-legend.png'
 import weatherIcon from '../images/weather_icon.png'
@@ -89,7 +91,7 @@ const initialState = {
       'text': 'State Parks',
       'icon': treeIcon,
       'altText': 'Park Icon',
-      'legend': null,
+      'legend': stateParkLegend,
       'type': 'geoJson',
       'options': {
         'refreshTimeMs': 7600000,
@@ -108,7 +110,7 @@ const initialState = {
       'text': 'Custom Overlay',
       'icon': customOverlayIcon,
       'altText': 'Custom Overlay Icon',
-      'legend': null,
+      'legend': customLayerLegend,
       'type': 'geoJson',
       'options': {
         'refreshTimeMs': 7600000,

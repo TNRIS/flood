@@ -1,6 +1,9 @@
 import L from 'leaflet'
 import Layer from './Layer'
 import { store } from "../store"
+import { mapClickHandler } from '../actions/MapActions'
+var util = require('util')
+
 
 export default class GeoJsonLayer extends Layer {
   constructor({id, map, handlers, externalUrl, refreshTimeMs = 7200000, rawJSON}) {
@@ -31,6 +34,17 @@ export default class GeoJsonLayer extends Layer {
             try {
               that.json_map = JSON.parse(result)
               that.json_map = L.geoJSON(that.json_map)
+
+              that.json_map.eachLayer(function (layer) {  
+                layer.setStyle({
+                  fillColor :'green',
+                  color: 'green'
+                })
+                layer.on('click', (event) => {
+                  event.data = {"parkName":event.target.feature.properties.ParkName}
+                  store.dispatch(mapClickHandler('state-parks', event, event.latlng, event))
+                })
+              });
             } catch(err) {
               console.error(err.stack)
             }
@@ -52,10 +66,22 @@ export default class GeoJsonLayer extends Layer {
         }
         break
       case "custom-overlay":
+          this.setStatus('updating')
           let currentStore = store.getState()
           if(!this.shown) {
             this.shown = true
             this.json_map = L.geoJSON(JSON.parse(currentStore.customLayer.customGeoJson))
+            this.json_map.eachLayer(function (layer) {  
+              layer.setStyle({
+                fillColor :'gray',
+                color: 'gray'
+              })
+
+              layer.on('click', (event) => {
+                event.data = {"customData":event.target.feature.properties}
+                store.dispatch(mapClickHandler('custom-overlay', event, event.latlng, event))
+              })
+            });
           }
           this.json_map.addTo(this.map)
           this.setStatus('ready')

@@ -6,6 +6,8 @@ import L from 'leaflet'
 import FloodAlertsPopup from './FloodAlertsPopup'
 import FloodGaugePopup from './FloodGaugePopup'
 import LakeConditionsPopup from './LakeConditionsPopup'
+import StateParkPopup from './StateParkPopup'
+import CustomLayerPopup from './CustomLayerPopup'
 
 
 export default class Popup extends Component {
@@ -62,6 +64,12 @@ export default class Popup extends Component {
         case 'reservoir-conditions':
           this.leafletPopup.setLatLng(popupData.clickLocation)
           return this.showPopop()
+        case 'state-parks': 
+          this.leafletPopup.setLatLng(popupData.clickLocation)
+          return this.showPopop()
+        case 'custom-overlay': 
+          this.leafletPopup.setLatLng(popupData.clickLocation)
+          return this.showPopop()
 
         default:
           return null
@@ -90,6 +98,18 @@ export default class Popup extends Component {
           updatePopup={() => {this.updatePopupSize()}}
           leafletMap={this.props.leafletMap}/>
         )
+      case 'state-parks':
+        return (
+          <StateParkPopup {...data}
+          updatePopup={() => {this.updatePopupSize()}}
+          leafletMap={this.props.leafletMap}/>
+        )
+        case 'custom-overlay':
+          return (
+            <CustomLayerPopup {...data}
+            updatePopup={() => {this.updatePopupSize()}}
+            leafletMap={this.props.leafletMap}/>
+          )
       default:
         return null
     }
