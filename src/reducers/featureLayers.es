@@ -88,14 +88,22 @@ const initialState = {
     }, 
     {
       'id': 'state-parks',
-      'text': 'State Parks',
+      'text': "State Parks and WMA",
       'icon': treeIcon,
       'altText': 'Park Icon',
       'legend': stateParkLegend,
       'type': 'geoJson',
       'options': {
         'refreshTimeMs': 7600000,
-        'externalUrl': 'https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Boundaries/FeatureServer/0/query?f=geojson&where=1%3D1&returnGeometry=true',
+        'externalUrls': [
+          {
+            url: 'https://services1.arcgis.com/1mtXwieMId59thmg/arcgis/rest/services/WMA_Boundaries_4PublicDistribution/FeatureServer/0/query?f=geojson&where=1%3D1&returnGeometry=true',
+            bgColor: "#254524"
+          },
+          {
+            url: 'https://services1.arcgis.com/1mtXwieMId59thmg/ArcGIS/rest/services/Texas_State_Parks_Boundaries/FeatureServer/0/query?f=geojson&where=1%3D1&returnGeometry=true',
+            bgColor: "green"
+          }],
         'type': 'geoJSON',
         'interactivity': 'StateParks',
         'attribution': '<a href="https://services1.arcgis.com/">services1.arcgis.com</a>',

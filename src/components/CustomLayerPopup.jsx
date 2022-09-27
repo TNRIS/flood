@@ -19,7 +19,7 @@ const cell = {
 
 const boldCell = {
   padding: "5px",
-  "font-weight": "bold"
+  "fontWeight": "bold"
 }
 
 export default class CustomLayerPopup extends Component {
