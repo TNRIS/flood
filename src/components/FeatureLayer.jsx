@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { RingLoader } from 'react-spinners'
-
+import { store } from '../store'
+import searchIcon from '../images/icons/search.png'
 
 export default class FeatureLayer extends Component {
   static propTypes = {
@@ -15,8 +16,14 @@ export default class FeatureLayer extends Component {
     text: PropTypes.string,
   }
 
+  zoomToLayer(e) {
+    let currentStore = store.getState()
+    let coordinates = localStorage.getItem('flyToCoordinates')
+    currentStore.LeafletMap.mapObject.flyTo(JSON.parse(coordinates).reverse())
+  }
+
   render() {
-    const { onClick, text, icon, altText, legend, active, status } = this.props
+    const { onClick, text, icon, altText, legend, active, status, options, id } = this.props
 
     let statusIndicator
     if (active && status !== 'ready') {
@@ -58,26 +65,29 @@ export default class FeatureLayer extends Component {
         </div>
       )
     }
-
+    const featLinkStyle = {
+      display: options.hidden ? 'none': 'block'
+    }
     return (
       <li>
-        <div className="feature-layer-link">
-          <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
+        <div className="feature-layer-link" style={featLinkStyle} id={id}>
             <div className="feature-layer-wrapper">
               <div className="feature-layer-icon-wrapper">
                 <img src={icon} alt={altText} className="feature-layer-icon" />
               </div>
               <div className="feature-layer-name">
-                { text }
-              </div>
-              <div className="feature-layer-switch">
-                { statusIndicator }
-              </div>
-            </div>
+                { text } { [text == 'Custom Overlay' ? <button class="zoomButton" onClick={(e) => {this.zoomToLayer(e)}}><img src={searchIcon} style={{width: "16px", height: "16px"}}></img></button>: '', legendLink] }
 
+              </div>
+              <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
+                <div className="feature-layer-switch">
+                  { statusIndicator }
+                </div>
+              </a>
+
+            </div>
+            
             { legendElement }
-          </a>
-            { legendLink }
         </div>
       </li>
     )
