@@ -5,7 +5,9 @@ import {
   SET_BASE_LAYER,
   SET_FEATURE_LAYER,
   SET_GAGE_INIT,
-  UPDATE_TIMESTAMP
+  UPDATE_TIMESTAMP,
+  STORE_GEOJSON,
+  STORE_MAP
 } from '../constants/MapActionTypes'
 
 import {
@@ -81,11 +83,25 @@ export const setGageInit = (initState) => {
   }
 }
 
+export const storeGeoJson = (customGeoJson) => {
+  return {
+    type: STORE_GEOJSON, 
+    customGeoJson
+  }
+}
+
 export const updateTimestamp = (timestamp) => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_TIMESTAMP,
       timestamp
     })
+  }
+}
+
+export const storeMap = (map) => {
+  return {
+    type: STORE_MAP, 
+    map
   }
 }

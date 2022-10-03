@@ -4,6 +4,7 @@ import AerisAlertsLayer from './AerisAlertsLayer'
 import AerisTileLayer from './AerisTileLayer'
 import AnimatedWeatherLayer from './AnimatedWeatherLayer'
 import MapserverLayer from './MapserverLayer'
+import GeoJsonLayer from './GeoJsonLayer'
 
 
 export default class LayerStore {
@@ -33,6 +34,9 @@ export default class LayerStore {
       case 'mapserver':
         this.store[id] = new MapserverLayer(layerOptions)
         break
+      case 'geoJson':
+        this.store[id] = new GeoJsonLayer(layerOptions)
+        break;
       default:
         null
     }

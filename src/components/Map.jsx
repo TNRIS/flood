@@ -7,13 +7,14 @@ import * as R from 'ramda'
 import keys from '../keys'
 import CustomPropTypes from '../CustomPropTypes'
 import LayerStore from '../util/LayerStore'
-
 import PopupContainer from '../containers/PopupContainer'
+import { store } from "../store"
 
 import defaultMarkerIcon from '../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png'
 import gpsFixedIcon from '../images/foundation-icon-fonts_2015-02-16_target-two_36_0_333333_none.png'
 
 import axios from 'axios'
+import { storeMap } from '../actions/MapActions'
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
@@ -62,6 +63,7 @@ export default class Map extends Component {
         zoom: options.zoom,
         minZoom: window.innerWidth < 768 ? 5 : 6
       })
+      store.dispatch(storeMap(this.map))
 
       this.initializeGeocoderControl()
       this.initializeBasemapLayers()
