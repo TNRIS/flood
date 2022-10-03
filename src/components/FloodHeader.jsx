@@ -6,6 +6,7 @@ import BaseLayerMenuContainer from '../containers/BaseLayerMenuContainer'
 import TexasFloodLogoImage from '../images/texas_flood_logo_transparent_300x42.png'
 import TexasFloodIconImage from '../images/icons/favicon.ico'
 import {storeGeoJson} from '../actions/MapActions'
+import { centerOfMass } from "@turf/turf";
 import L from 'leaflet'
 import 'regenerator-runtime/runtime'
 
@@ -40,6 +41,8 @@ class FloodHeader extends React.Component {
       try {
         // Validate the input
         L.geoJSON(JSON.parse(reader.result))
+        let center = centerOfMass(JSON.parse(reader.result));
+        localStorage.setItem('flyToCoordinates', JSON.stringify(center.geometry.coordinates)) 
       }
       catch(err) {
         alert("The input is not valid geoJSON")

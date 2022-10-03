@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { RingLoader } from 'react-spinners'
-
+import { store } from '../store'
 
 export default class FeatureLayer extends Component {
   static propTypes = {
@@ -13,6 +13,12 @@ export default class FeatureLayer extends Component {
     onClick: PropTypes.func,
     status: PropTypes.string,
     text: PropTypes.string,
+  }
+
+  zoomToLayer(e) {
+    let currentStore = store.getState()
+    let coordinates = localStorage.getItem('flyToCoordinates')
+    currentStore.LeafletMap.mapObject.flyTo(JSON.parse(coordinates).reverse())
   }
 
   render() {
@@ -76,10 +82,10 @@ export default class FeatureLayer extends Component {
                 { statusIndicator }
               </div>
             </div>
-
+            
             { legendElement }
           </a>
-            { legendLink }
+            { [text == 'Custom Overlay' ? <button class="zoomButton" onClick={(e) => {this.zoomToLayer(e)}}>Zoom To Location</button>: '', legendLink] }
         </div>
       </li>
     )

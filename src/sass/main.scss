@@ -1782,3 +1782,20 @@ body > div.ReactModalPortal > div {
     }
   }
 }
+// -----ZOOM TO LOCATION BUTTON-----
+.zoomButton {
+  background-color: #585858;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%
+}
+
+.zoomButton:hover {
+  background-color:  #7c7c7c;
+}

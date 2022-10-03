@@ -58,6 +58,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "@turf/turf": "^6.5.0",
     "acorn": "^8.8.0",
     "amazon-cognito-identity-js": "^3.2.2",
     "amazon-cognito-js": "^1.1.0",
