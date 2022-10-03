@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { RingLoader } from 'react-spinners'
 import { store } from '../store'
+import searchIcon from '../images/icons/search.png'
 
 export default class FeatureLayer extends Component {
   static propTypes = {
@@ -70,22 +71,23 @@ export default class FeatureLayer extends Component {
     return (
       <li>
         <div className="feature-layer-link" style={featLinkStyle} id={id}>
-          <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
             <div className="feature-layer-wrapper">
               <div className="feature-layer-icon-wrapper">
                 <img src={icon} alt={altText} className="feature-layer-icon" />
               </div>
               <div className="feature-layer-name">
-                { text }
+                { text } { [text == 'Custom Overlay' ? <button class="zoomButton" onClick={(e) => {this.zoomToLayer(e)}}><img src={searchIcon} style={{width: "16px", height: "16px"}}></img></button>: '', legendLink] }
+
               </div>
-              <div className="feature-layer-switch">
-                { statusIndicator }
-              </div>
+              <a onClick={(e) => {e.preventDefault(); onClick()}} className="feature-layer-link-clicker" href="">
+                <div className="feature-layer-switch">
+                  { statusIndicator }
+                </div>
+              </a>
+
             </div>
             
             { legendElement }
-          </a>
-            { [text == 'Custom Overlay' ? <button class="zoomButton" onClick={(e) => {this.zoomToLayer(e)}}>Zoom To Location</button>: '', legendLink] }
         </div>
       </li>
     )
