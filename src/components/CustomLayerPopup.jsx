@@ -32,11 +32,13 @@ export default class CustomLayerPopup extends Component {
         <PopupContent>
           <Provider store={store}>
             <table>
+              <tbody>
               {
                 Object.entries(this.props.customData).map((value, index) => {
                   return <tr style={Object.assign(colStyle)}><td style={boldCell}>{value[0]}</td><td style={cell}>{value[1]}</td></tr>
                 })
               }
+              </tbody>
             </table>           
           </Provider>
         </PopupContent>
