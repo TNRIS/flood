@@ -91,8 +91,12 @@ class SubscriptionForm extends Component {
       )
       formSwapper = (
         <div>
-          <p>
-            Registration and password recovery are temporarily disabled. We are working to restore this functionality.
+          <p className="form-swapper">
+            <span>Don&#39;t have an account? </span>
+            <a href="#" onClick={ () => this.props.swapDisplayForm("signUp") }>Sign Up</a>
+          </p>
+          <p className="form-swapper">
+            <a href="#" onClick={ () => this.props.swapDisplayForm("forgotPassword") }>Forgot or Change Password</a>
           </p>
         </div>
       )
