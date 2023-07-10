@@ -93,13 +93,11 @@ body {
   .title-bar {
     max-height: 40px;
     background-color: $gray20;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     // this block creates the shadow
     position: relative;
     z-index: 2;
     box-shadow: 0px 1px 10px rgba(10,10,10,0.7);
-    overflow: hidden;
 
     .title-logo {
       margin: auto;
