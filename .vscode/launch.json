@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Chromium",
+            "request": "launch",
+            "type": "chrome",
+            "url": "localhost:3545",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "/usr/bin/chromium-browser",
+            "runtimeArgs": [
+              "--new-window",
+              "-user-data-dir=\"/${workspaceFolder}/DevProfile\"",
+              "--remote-debugging-port=9222",
+              "--disable-background-networking"
+            ]
+        },
+        {
             "name": "Launch Chrome",
             "request": "launch",
             "type": "chrome",

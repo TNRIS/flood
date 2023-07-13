@@ -49,7 +49,7 @@ class VerifyForm extends Component {
   render() {
     return (
         <form onSubmit={ this.handleVerification } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>A verification code has been sent to {this.props.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} via text message.</p>
+            <p>A verification code has been sent to your phone or your email.</p>
             <p>Please enter the 6 digit verification code below to confirm your account.</p>
             <label className="form-chunk">{this.state.labelVC}
               <input

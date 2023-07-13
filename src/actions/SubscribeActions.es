@@ -68,10 +68,29 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
   // Subscribe to the current alert topic
   return sns.createTopic({Name: lid}).promise()
     .then((topic) => {
-      const subscriptionParams = {
-        TopicArn: topic.TopicArn,
-        Protocol: "sms",
-        Endpoint: FloodAppUser.userData.phone_number
+      let contact_method;
+      if(FloodAppUser.userData.phone_number && FloodAppUser.userData.phone_number.length) {
+        contact_method = 'phone_number'
+      } else if(FloodAppUser.userData.email && FloodAppUser.userData.email.length) {
+        contact_method = 'email'
+      }
+
+      let subscriptionParams;
+      if(contact_method == 'phone_number') {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "sms",
+          Endpoint: FloodAppUser.userData.phone_number
+        }
+      } else if(contact_method == 'email') {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "email",
+          Endpoint: FloodAppUser.userData.email
+        }
+      }
+      if(!contact_method) {
+        dispatch(sendErrorReport("No contact method found for user."));
       }
       return sns.subscribe(subscriptionParams).promise().then(
         (subscription) => {
@@ -79,10 +98,21 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
           // Subscribe to the predictive alert topic
           return sns.createTopic({Name: p}).promise()
             .then((pTopic) => {
-              const pSubscriptionParams = {
-                TopicArn: pTopic.TopicArn,
-                Protocol: "sms",
-                Endpoint: FloodAppUser.userData.phone_number
+              let pSubscriptionParams;
+
+              if(contact_method == 'phone_number') {
+                pSubscriptionParams = {
+                  TopicArn: pTopic.TopicArn,
+                  Protocol: "sms",
+                  Endpoint: FloodAppUser.userData.phone_number
+                }
+              }
+              else if(contact_method == 'email') {
+                pSubscriptionParams = {
+                  TopicArn: pTopic.TopicArn,
+                  Protocol: "email",
+                  Endpoint: FloodAppUser.userData.email
+                }
               }
               return sns.subscribe(pSubscriptionParams).promise().then(
                 (pSubscription) => {

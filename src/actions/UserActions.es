@@ -115,7 +115,14 @@ export function userSignUp(username, password, phone, email) {
   return (dispatch) => {
     dispatch(getSubscriptionsAttempt())
     FloodAppUser.setCognitoUser({Username: username, Password: password})
-    FloodAppUser.setUserAttributes({Phone: phone, Email: email})
+
+    let ua = {Email: email,
+              Phone: null}
+
+    if(phone && phone.length) {
+      ua.Phone = phone;
+    }
+    FloodAppUser.setUserAttributes(ua)
 
     return FloodAppUser.signUp((result) => {
       if (result == 0) {
