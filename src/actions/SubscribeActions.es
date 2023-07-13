@@ -118,7 +118,9 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
                 (pSubscription) => {
                   if (newFlag === true) {
                     dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-                    dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                    if(contact_method == 'phone_number') {
+                      dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                    }
                   }
                   FloodAppUser.subscribe({lid: p, subscriptionArn: pSubscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
                 })
