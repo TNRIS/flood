@@ -75,17 +75,23 @@ class AppUser {
     this.phone = attributes.Phone
     this.email = attributes.Email
 
-    this.dataPhoneNumber = {
-      Name: 'phone_number',
-      Value: `+1${this.phone}`
+    this.dataPhoneNumber = {};
+    
+      
+    if(this.phone && this.phone.length) {
+      this.dataPhoneNumber.Name = 'phone_number';
+      this.dataPhoneNumber.Value = `+1${this.phone}`;
+    } else {
+      this.dataPhoneNumber.Value = null;
     }
 
     this.dataEmail = {
       Name: 'email',
       Value: this.email
     }
-
-    this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
+    if(this.phone && this.phone.length) {
+      this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
+    }
     this.attributeEmail = new CognitoUserAttribute(this.dataEmail)
 
     this.dataCurrentAlerts = {
