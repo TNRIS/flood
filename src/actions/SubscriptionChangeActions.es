@@ -14,6 +14,7 @@ import {
 import {
   updateSubscriptionsAttempt,
   updateSubscriptionsSuccess,
+  updateSubscriptionsError,
   clearSubscriptionList
 } from './SubscriptionListActions'
 
@@ -136,17 +137,32 @@ export function saveSubscriptionChanges() {
             // Process unsubscribe requests
             if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
               const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
-              const subscriptionArn = subscription.subscriptionArn
-              const subscriptionLid = subscription.lid
-              promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
-                .then((data) => {
-                  dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
-                })
-                .catch((err) => {
-                  dispatch(updateSubscriptionsError(err))
-                })
-              )
-              promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
+              let subscriptionArn = subscription.subscriptionArn
+
+              // Emails subscriptions don't have a subscription ARN at this point in the object.
+              if(subscriptionArn == 'pending confirmation') {
+                if(subscription.lid && subscription.lid.length) {
+                  let topic = sns.createTopic({Name: subscription.lid}).promise().then((data) => {
+                    let subsbytopic = sns.listSubscriptionsByTopic({TopicArn: data.TopicArn}).promise().then((sbt) => {
+                      const subscriptionLid = subscription.lid
+                      sbt.Subscriptions.forEach(element => {
+                        if(element.Endpoint == subscription.endpoint) {
+                          subscriptionArn = element.SubscriptionArn
+                        }
+                      })
+                      promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
+                        .then((data) => {
+                          dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+                        })
+                        .catch((err) => {
+                          dispatch(updateSubscriptionsError(err))
+                        })
+                      )
+                      promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
+                    });
+                  })
+                }
+              }
             }
 
             // Process subscribe requests
