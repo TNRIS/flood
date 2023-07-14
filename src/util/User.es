@@ -423,11 +423,21 @@ class FloodAppUser extends AppUser {
 
   subscribe(subscriptionData) {
     return new Promise((resolve, reject) => {
-      const stringData = JSON.stringify({
-        ...subscriptionData,
-        protocol: 'sms',
-        endpoint: this.userData.phone_number
-      })
+      let stringData;
+      if(this.userData.phone_number) {
+        stringData = JSON.stringify({
+          ...subscriptionData,
+          protocol: 'sms',
+          endpoint: this.userData.phone_number
+        })
+      } else {
+        stringData = JSON.stringify({
+          ...subscriptionData,
+          protocol: 'email',
+          endpoint: this.userData.email
+        })
+      }
+
       this.AWS.config.credentials.get(() => {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {

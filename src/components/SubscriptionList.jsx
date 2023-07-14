@@ -170,6 +170,11 @@ class SubscriptionList extends React.Component {
   toggleSubscription(event, gsId, protocol) {
     const curr = FloodAppUser.userData['custom:currentAlerts']
     const pred = FloodAppUser.userData['custom:predictiveAlerts']
+
+    // Switch to email protocol if there is no phone number available.
+    if(!FloodAppUser.userData.phone_number) {
+      protocol = 'email'
+    }
     const predGsId = gsId + "--PD"
     if (curr == 'T' && pred == 'T') {
       this.sendToggleSubscription(event, gsId, protocol)
@@ -198,7 +203,7 @@ class SubscriptionList extends React.Component {
       return (
         <div className="switch-container shrink cell" title={this.tooltipMessage("phone")}><small>Alert</small>
           <div className="switch tiny">
-            <input className="switch-input"
+          <input className="switch-input"
               id={switchID}
               type="checkbox"
               name="textsms"
