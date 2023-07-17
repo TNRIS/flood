@@ -75,17 +75,23 @@ class AppUser {
     this.phone = attributes.Phone
     this.email = attributes.Email
 
-    this.dataPhoneNumber = {
-      Name: 'phone_number',
-      Value: `+1${this.phone}`
+    this.dataPhoneNumber = {};
+    
+      
+    if(this.phone && this.phone.length) {
+      this.dataPhoneNumber.Name = 'phone_number';
+      this.dataPhoneNumber.Value = `+1${this.phone}`;
+    } else {
+      this.dataPhoneNumber.Value = null;
     }
 
     this.dataEmail = {
       Name: 'email',
       Value: this.email
     }
-
-    this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
+    if(this.phone && this.phone.length) {
+      this.attributePhoneNumber = new CognitoUserAttribute(this.dataPhoneNumber)
+    }
     this.attributeEmail = new CognitoUserAttribute(this.dataEmail)
 
     this.dataCurrentAlerts = {
@@ -417,11 +423,21 @@ class FloodAppUser extends AppUser {
 
   subscribe(subscriptionData) {
     return new Promise((resolve, reject) => {
-      const stringData = JSON.stringify({
-        ...subscriptionData,
-        protocol: 'sms',
-        endpoint: this.userData.phone_number
-      })
+      let stringData;
+      if(this.userData.phone_number) {
+        stringData = JSON.stringify({
+          ...subscriptionData,
+          protocol: 'sms',
+          endpoint: this.userData.phone_number
+        })
+      } else {
+        stringData = JSON.stringify({
+          ...subscriptionData,
+          protocol: 'email',
+          endpoint: this.userData.email
+        })
+      }
+
       this.AWS.config.credentials.get(() => {
         const client = new this.AWS.CognitoSyncManager()
         client.openOrCreateDataset(this.dataset, (err, dataset) => {

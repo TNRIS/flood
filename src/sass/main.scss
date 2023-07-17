@@ -93,8 +93,7 @@ body {
   .title-bar {
     max-height: 40px;
     background-color: $gray20;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     // this block creates the shadow
     position: relative;
     z-index: 2;

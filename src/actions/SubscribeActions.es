@@ -40,16 +40,21 @@ export function hideSubscriptionConfirmation() {
  * @param  {string} phoneNumber user phone number endpoint
  * @param  {string} lid gage lid
  */
-export function confirmSubscription(phoneNumber, lid) {
+export function confirmSubscription(phoneNumber, lid, topicArn) {
   return dispatch => {
-    const sns = new FloodAppUser.AWS.SNS()
+    try {
+      const sns = new FloodAppUser.AWS.SNS()
 
-    const confirm = {
-      PhoneNumber: phoneNumber,
-      Message: `You have subscribed to the ${lid} flood gage.` +
-        ` Visit ` + SITE_URL + `/#/subscriptions to manage your flood gage subscriptions.`
+      const confirm = {
+        TopicArn: topicArn,
+        Message: `You have subscribed to the ${lid} flood gage.` +
+          ` Visit ` + SITE_URL + `/#/subscriptions to manage your flood gage subscriptions.`
+      }
+      sns.publish(confirm).promise().catch(err => dispatch(sendErrorReport(err)))
+    } catch(err) {
+      dispatch(sendErrorReport(`Error confirming subscription. Error:${err}`))
     }
-    sns.publish(confirm).promise().catch(err => dispatch(sendErrorReport(err)))
+
   }
 }
 
@@ -68,10 +73,29 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
   // Subscribe to the current alert topic
   return sns.createTopic({Name: lid}).promise()
     .then((topic) => {
-      const subscriptionParams = {
-        TopicArn: topic.TopicArn,
-        Protocol: "sms",
-        Endpoint: FloodAppUser.userData.phone_number
+      let contact_method;
+      if(FloodAppUser.userData.phone_number && FloodAppUser.userData.phone_number.length) {
+        contact_method = 'phone_number'
+      } else if(FloodAppUser.userData.email && FloodAppUser.userData.email.length) {
+        contact_method = 'email'
+      }
+
+      let subscriptionParams;
+      if(contact_method == 'phone_number') {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "sms",
+          Endpoint: FloodAppUser.userData.phone_number
+        }
+      } else if(contact_method == 'email') {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "email",
+          Endpoint: FloodAppUser.userData.email
+        }
+      }
+      if(!contact_method) {
+        dispatch(sendErrorReport("No contact method found for user."));
       }
       return sns.subscribe(subscriptionParams).promise().then(
         (subscription) => {
@@ -79,16 +103,27 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
           // Subscribe to the predictive alert topic
           return sns.createTopic({Name: p}).promise()
             .then((pTopic) => {
-              const pSubscriptionParams = {
-                TopicArn: pTopic.TopicArn,
-                Protocol: "sms",
-                Endpoint: FloodAppUser.userData.phone_number
+              let pSubscriptionParams;
+
+              if(contact_method == 'phone_number') {
+                pSubscriptionParams = {
+                  TopicArn: pTopic.TopicArn,
+                  Protocol: "sms",
+                  Endpoint: FloodAppUser.userData.phone_number
+                }
+              }
+              else if(contact_method == 'email') {
+                pSubscriptionParams = {
+                  TopicArn: pTopic.TopicArn,
+                  Protocol: "email",
+                  Endpoint: FloodAppUser.userData.email
+                }
               }
               return sns.subscribe(pSubscriptionParams).promise().then(
                 (pSubscription) => {
                   if (newFlag === true) {
                     dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-                    dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                    dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid, pTopic.TopicArn))
                   }
                   FloodAppUser.subscribe({lid: p, subscriptionArn: pSubscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
                 })
@@ -130,16 +165,26 @@ function subscribeEitherOr(dispatch, lid, type, newFlag) {
   // Create the topic, function is impotent so will create or return the existing topic
   return sns.createTopic(topicParams).promise()
     .then((topic) => {
-      const subscriptionParams = {
+      let subscriptionParams;
+
+      if(FloodAppUser.userData.phone_number && FloodAppUser.userData.phone_number.length)
+      subscriptionParams = {
         TopicArn: topic.TopicArn,
         Protocol: "sms",
         Endpoint: FloodAppUser.userData.phone_number
+      }
+      else if(FloodAppUser.userData.email && FloodAppUser.userData.email.length) {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "email",
+          Endpoint: FloodAppUser.userData.email
+        }
       }
       return sns.subscribe(subscriptionParams).promise().then(
         (subscription) => {
           if (newFlag === true) {
             dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
+            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid, topic.TopicArn))
           }
           FloodAppUser.subscribe({lid: topicLid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
         })

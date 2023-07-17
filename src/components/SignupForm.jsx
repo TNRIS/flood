@@ -18,12 +18,14 @@ class SignupForm extends Component {
       confirmPassword: '',
       labelUser: '',
       labelPhone: '',
+      phoneConsent: false,
       labelEmail: '',
       labelPWD: '',
       labelCPW: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSignUp = this.handleSignUp.bind(this)
+    this.togglePhone = this.togglePhone.bind(this)
   }
 
   /**
@@ -63,8 +65,8 @@ class SignupForm extends Component {
     }
     if (name === 'confirmPassword' && value != '') {
       this.setState({labelCPW: 'Confirm Password'})
-    }
-    else if (name === 'confimPassword' && value === '') {
+    } 
+    else if (name === 'confirmPassword' && value === '') {
       this.setState({labelCPW: ''})
     }
   }
@@ -80,10 +82,11 @@ class SignupForm extends Component {
       this.props.showSnackbar("Please enter a username")
       return
     }
-    if (this.state.phone == '') {
+    if (this.state.phone == '' && this.state.phoneConsent) {
       this.props.showSnackbar("Please enter your phone number")
       return
     }
+    if (this.state.email == '' && !this.state.phoneConsent)
     if (this.state.password == '') {
       this.props.showSnackbar("Please enter a password")
       return
@@ -96,19 +99,24 @@ class SignupForm extends Component {
       })
       return
     }
-    if (confirm(`Is ${this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")} your correct mobile phone number?`)) {
-      this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
+    this.props.userSignUp(this.state.username, this.state.password, this.state.phone, this.state.email)
+  }
+  togglePhone(event) {
+    var phone = document.getElementById("phone-chunk")
+    if(event.target.checked) {
+      phone.style.display = "block";
+      this.state.phoneConsent = true;
     } else {
-      return
+      phone.style.display = "none";
+      this.state.phoneConsent = false;
     }
   }
-
   render() {
 
     return (
         <form onSubmit={ this.handleSignUp } style={{marginRight: "10px", marginLeft: "10px"}}>
-            <p>Sign up for an account to subscribe to flood gages and begin receiving text message alerts when they
-              enter elevated flood stages.</p>
+            <p>Sign up for an account to subscribe to flood gages and begin receiving alerts when they
+              enter elevated flood stages. If you would like Text Message alerts then provide a phone number.</p>
             <label className="form-chunk">{this.state.labelUser}
               <input
                        pattern="[^0-9\s]\S*"
@@ -119,19 +127,6 @@ class SignupForm extends Component {
                        placeholder="Username"
                        onChange={this.handleChange}
                        value={this.state.username}/>
-            </label>
-            <label className="form-chunk">{this.state.labelPhone}
-              <input
-                       pattern="[0-9]*"
-                       minLength={10}
-                       maxLength={10}
-                       title="10 digits only including US area code"
-                       type="tel"
-                       id="phone"
-                       name="phone"
-                       placeholder="Mobile Phone Number"
-                       onChange={this.handleChange}
-                       value={this.state.phone}/>
             </label>
             <label className="form-chunk">{this.state.labelEmail}
               <input
@@ -166,6 +161,24 @@ class SignupForm extends Component {
                        onChange={this.handleChange}
                        value={this.state.confirmPassword}/>
             </label>
+            <label className="form-chunk"
+              id="phone-chunk"
+              style={{display:"none"}}
+            >{this.state.labelPhone}
+              <input
+                       pattern="[0-9]*"
+                       minLength={10}
+                       maxLength={10}
+                       title="10 digits only including US area code"
+                       type="tel"
+                       id="phone"
+                       name="phone"
+                       placeholder="Mobile Phone Number"
+                       onChange={this.handleChange}
+                       value={this.state.phone}/>
+            </label>
+            <input onChange={ this.togglePhone } type="checkbox" style={{textAlign: "left"}}></input>
+            <span> Check this box to consent to receive text alerts.</span>
             <div className="login-button-wrapper">
               <button
                 className="button flood-form-button"
