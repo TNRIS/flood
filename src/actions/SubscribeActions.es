@@ -165,10 +165,20 @@ function subscribeEitherOr(dispatch, lid, type, newFlag) {
   // Create the topic, function is impotent so will create or return the existing topic
   return sns.createTopic(topicParams).promise()
     .then((topic) => {
-      const subscriptionParams = {
+      let subscriptionParams;
+
+      if(FloodAppUser.userData.phone_number && FloodAppUser.userData.phone_number.length)
+      subscriptionParams = {
         TopicArn: topic.TopicArn,
         Protocol: "sms",
         Endpoint: FloodAppUser.userData.phone_number
+      }
+      else if(FloodAppUser.userData.email && FloodAppUser.userData.email.length) {
+        subscriptionParams = {
+          TopicArn: topic.TopicArn,
+          Protocol: "email",
+          Endpoint: FloodAppUser.userData.email
+        }
       }
       return sns.subscribe(subscriptionParams).promise().then(
         (subscription) => {
