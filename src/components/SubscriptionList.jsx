@@ -294,7 +294,14 @@ class SubscriptionList extends React.Component {
                     <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     <span>Save Changes</span>
                   </div>
-                  <div className="card-section confirm-modal-text">Are you sure you want to save your changes?</div>
+                  <div className="card-section confirm-modal-text">Are you sure you want to save your changes?
+                  {!FloodAppUser.userData.phone_number &&
+                    <p>
+                    Warning: For email subscriptions.<br />
+                    Do not confirm the email subscription in your email after deleting through the flood information web application. This can result in you still receiving email notifications. 
+                    </p>
+                  }
+                  </div>
                   <div className="card-section confirm-modal-actions">
                     <button className="button" type="button" onClick={this.saveChanges}>Confirm</button>
                     <button autoFocus={true} className="button" type="button" onClick={this.handleCloseConfirmDialog}>Cancel</button>

@@ -163,7 +163,7 @@ export function userVerify(verificationCode) {
             }
             else if (result.name == "AliasExistsException") {
               dispatch(swapDisplayForm('login'))
-              dispatch(showSnackbar("An account with this phone number already exists. Try 'Forgot Password'"))
+              dispatch(showSnackbar("An account with this Email or phone number already exists. Try 'Forgot Password'"))
               // at this point, the attempted account is created and stuck in a pergatory where the user
               // cannot log in since the account isn't confirmed, and since the account exists the username
               // is officially taken and cannot be used for any new account. we will need to come up with a

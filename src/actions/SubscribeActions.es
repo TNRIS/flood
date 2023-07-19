@@ -40,17 +40,18 @@ export function hideSubscriptionConfirmation() {
  * @param  {string} phoneNumber user phone number endpoint
  * @param  {string} lid gage lid
  */
-export function confirmSubscription(phoneNumber, lid, topicArn) {
+export function confirmSubscription(phoneNumber, lid) {
   return dispatch => {
     try {
       const sns = new FloodAppUser.AWS.SNS()
 
       const confirm = {
-        TopicArn: topicArn,
+        PhoneNumber: phoneNumber,
         Message: `You have subscribed to the ${lid} flood gage.` +
           ` Visit ` + SITE_URL + `/#/subscriptions to manage your flood gage subscriptions.`
       }
       sns.publish(confirm).promise().catch(err => dispatch(sendErrorReport(err)))
+
     } catch(err) {
       dispatch(sendErrorReport(`Error confirming subscription. Error:${err}`))
     }
@@ -123,7 +124,9 @@ function subscribeCurrentAndPredictive(dispatch, lid, newFlag) {
                 (pSubscription) => {
                   if (newFlag === true) {
                     dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-                    dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid, pTopic.TopicArn))
+                    if(contact_method == 'phone_number') {
+                      dispatch(confirmSubscription(pSubscriptionParams.Endpoint, lid))
+                    }
                   }
                   FloodAppUser.subscribe({lid: p, subscriptionArn: pSubscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
                 })
@@ -184,7 +187,9 @@ function subscribeEitherOr(dispatch, lid, type, newFlag) {
         (subscription) => {
           if (newFlag === true) {
             dispatch(showSnackbar(`You have subscribed to the ${lid} flood gage.`))
-            dispatch(confirmSubscription(subscriptionParams.Endpoint, lid, topic.TopicArn))
+            if(FloodAppUser.userData.phone_number && FloodAppUser.userData.phone_number.length) {
+              dispatch(confirmSubscription(subscriptionParams.Endpoint, lid))
+            }
           }
           FloodAppUser.subscribe({lid: topicLid, subscriptionArn: subscription.SubscriptionArn}).then(FloodAppUser.syncDataset())
         })

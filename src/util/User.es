@@ -157,7 +157,13 @@ class AppUser {
       const currentState = store.getState()
       const curr = this.userData['custom:currentAlerts']
       const pred = this.userData['custom:predictiveAlerts']
-      const protocol = 'sms'
+      let protocol;
+      // If User does not have a phone number use email.
+      if(this.userData.phone_number && this.userData.phone_number.length) {
+        protocol = 'sms';
+      } else {
+        protocol = 'email';
+      }
 
       currentState.gageSubscriptions.displayGageSubscriptions.forEach((gsId) => {
         const predGsId = gsId + "--PD"
