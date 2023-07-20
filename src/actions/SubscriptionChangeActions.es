@@ -113,6 +113,8 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
 export function saveSubscriptionChanges() {
   return (dispatch, getState) => {
     setTimeout(() => {
+      //Begin
+      
       let tries = 0;
       function worker () {
         const allSubscriptionChangesCount = getState().subscriptionChanges.allSubscriptionChanges.length
