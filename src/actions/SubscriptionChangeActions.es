@@ -113,92 +113,106 @@ export function unqueueChangeFromChangeList(lid, protocol, action) {
 export function saveSubscriptionChanges() {
   return (dispatch, getState) => {
     setTimeout(() => {
-      const allSubscriptionChangesCount = getState().subscriptionChanges.allSubscriptionChanges.length
+      //Begin
+      
+      let tries = 0;
+      function worker () {
+        const allSubscriptionChangesCount = getState().subscriptionChanges.allSubscriptionChanges.length
 
-      if (allSubscriptionChangesCount > 0) {
-        // Dispatch action to tell the component that work is being done
-        dispatch(updateSubscriptionsAttempt())
-
-        // Set initial variables for iteration
-        const currentState = getState()
-        const user = currentState.user
-        const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
-
-        const sns = new FloodAppUser.AWS.SNS()
-
-        const promiseQueue = []
-
-        // Start iteration on change queue
-        // for (const change of changes) {
-        Object.keys(changes).forEach((change) => {
-          if (changes.hasOwnProperty(change)) {
-            const changeData = changes[change]
-
-            // Process unsubscribe requests
-            if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
-              const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
-              let subscriptionArn = subscription.subscriptionArn
-              let subscriptionLid = subscription.lid
-
-              // Emails subscriptions don't have a subscription ARN at this point in the object.
-              if(subscriptionArn == 'pending confirmation') {
-                if(subscription.lid && subscription.lid.length) {
-                  let topic = sns.createTopic({Name: subscription.lid}).promise().then((data) => {
-                    let subsbytopic = sns.listSubscriptionsByTopic({TopicArn: data.TopicArn}).promise().then((sbt) => {
-                      sbt.Subscriptions.forEach(element => {
-                        if(element.Endpoint == subscription.endpoint) {
-                          subscriptionArn = element.SubscriptionArn
-                        }
-                      })
-                      promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
-                        .then((data) => {
-                          dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+        if (allSubscriptionChangesCount > 0) {
+          // Dispatch action to tell the component that work is being done
+          dispatch(updateSubscriptionsAttempt())
+  
+          // Set initial variables for iteration
+          const currentState = getState()
+          const user = currentState.user
+          const changes = {...currentState.subscriptionChanges.subscriptionChangesById}
+  
+          const sns = new FloodAppUser.AWS.SNS()
+  
+          const promiseQueue = []
+  
+          // Start iteration on change queue
+          // for (const change of changes) {
+          Object.keys(changes).forEach((change) => {
+            if (changes.hasOwnProperty(change)) {
+              const changeData = changes[change]
+  
+              // Process unsubscribe requests
+              if (changeData.subscriptionAction === 'UNSUBSCRIBE') {
+                const subscription = currentState.subscriptions.subscriptionsById[changeData.subscriptionId].subscription
+                let subscriptionArn = subscription.subscriptionArn
+                let subscriptionLid = subscription.lid
+  
+                // Emails subscriptions don't have a subscription ARN at this point in the object.
+                if(subscriptionArn == 'pending confirmation') {
+                  if(subscription.lid && subscription.lid.length) {
+                    let topic = sns.createTopic({Name: subscription.lid}).promise().then((data) => {
+                      let subsbytopic = sns.listSubscriptionsByTopic({TopicArn: data.TopicArn}).promise().then((sbt) => {
+                        sbt.Subscriptions.forEach(element => {
+                          if(element.Endpoint == subscription.endpoint) {
+                            subscriptionArn = element.SubscriptionArn
+                          }
                         })
-                        .catch((err) => {
-                          dispatch(updateSubscriptionsError(err))
-                        })
-                      )
-                      promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
-                    });
-                  })
+                        promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
+                          .then((data) => {
+                            dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+                          })
+                          .catch((err) => {
+                            dispatch(updateSubscriptionsError(err))
+                          })
+                        )
+                        promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
+                      });
+                    })
+                  }
+                } else {
+                  promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
+                    .then((data) => {
+                      dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
+                    })
+                    .catch((err) => {
+                      dispatch(updateSubscriptionsError(err))
+                    })
+                  )
+                  promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
                 }
-              } else {
-                promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
-                  .then((data) => {
-                    dispatch(subscriptionUpdated(changeData.id, data.ResponseMetadata.RequestId))
-                  })
-                  .catch((err) => {
-                    dispatch(updateSubscriptionsError(err))
-                  })
-                )
-                promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
+              }
+  
+              // Process subscribe requests
+              else if (changeData.subscriptionAction === 'SUBSCRIBE') {
+                if (changeData.protocol === 'sms') {
+                  promiseQueue.push(dispatch(subscribeGage(changeData.lid, false)))
+                }
               }
             }
-
-            // Process subscribe requests
-            else if (changeData.subscriptionAction === 'SUBSCRIBE') {
-              if (changeData.protocol === 'sms') {
-                promiseQueue.push(dispatch(subscribeGage(changeData.lid, false)))
-              }
-            }
+          })
+  
+          // Add the sync operation to the promise queue
+          promiseQueue.push(FloodAppUser.syncDataset())
+  
+          // Execute promise queue containing the subscription update operations.
+          Promise.all(promiseQueue).then(() => {
+            dispatch(updateSubscriptionsSuccess())
+            dispatch(clearSubscriptionList())
+            dispatch(getUserSubscriptions())
+          }).catch(err => dispatch(sendErrorReport(err)))
+        }
+  
+        // Finished processing the queue. Send an action to update the Subscription List component that we're done
+        else {
+          // TEMPORARY Workaround for production. Give this up to 1 second to finish gathering state.
+          // Could not find out what is causing this race condition so I will come back to this later. -L Created an issue in github.
+          if(tries < 10) {
+            setTimeout(() => {
+              worker();
+            }, 100)
+          } else {
+            dispatch(showSnackbar("No subscription changes found."));
           }
-        })
-
-        // Add the sync operation to the promise queue
-        promiseQueue.push(FloodAppUser.syncDataset())
-
-        // Execute promise queue containing the subscription update operations.
-        Promise.all(promiseQueue).then(() => {
-          dispatch(updateSubscriptionsSuccess())
-          dispatch(clearSubscriptionList())
-          dispatch(getUserSubscriptions())
-        }).catch(err => dispatch(sendErrorReport(err)))
+        }
       }
-
-      // Finished processing the queue. Send an action to update the Subscription List component that we're done
-      else {
-        dispatch(showSnackbar("No subscription changes found."))
-      }
+      worker();
     })
   }
 }
