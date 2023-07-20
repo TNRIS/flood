@@ -178,7 +178,7 @@ export function saveSubscriptionChanges() {
 
             // Process subscribe requests
             else if (changeData.subscriptionAction === 'SUBSCRIBE') {
-              if (changeData.protocol === 'sms') {
+              if (changeData.protocol === 'sms' || changeData.protocol === 'email') {
                 promiseQueue.push(dispatch(subscribeGage(changeData.lid, false)))
               }
             }
