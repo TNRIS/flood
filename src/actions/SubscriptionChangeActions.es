@@ -201,7 +201,8 @@ export function saveSubscriptionChanges() {
   
         // Finished processing the queue. Send an action to update the Subscription List component that we're done
         else {
-          // Workaround for production. Give this up to 1 second to finish gathering state.
+          // TEMPORARY Workaround for production. Give this up to 1 second to finish gathering state.
+          // Could not find out what is causing this race condition so I will come back to this later. -L Created an issue in github.
           if(tries < 10) {
             setTimeout(() => {
               worker();
