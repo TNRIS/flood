@@ -161,6 +161,7 @@ export function saveSubscriptionChanges() {
                     });
                   })
                 }
+                // Run this immediately
                 promiseQueue.push(FloodAppUser.unsubscribe(subscriptionLid))
               } else {
                 promiseQueue.push(sns.unsubscribe({SubscriptionArn: subscriptionArn}).promise()
