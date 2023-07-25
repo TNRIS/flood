@@ -1,50 +1,49 @@
-import L from 'leaflet'
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
-import * as R from 'ramda'
+import L from "leaflet"
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import ReactDOM from "react-dom"
+import * as R from "ramda"
 
-import keys from '../keys'
-import CustomPropTypes from '../CustomPropTypes'
-import LayerStore from '../util/LayerStore'
-import PopupContainer from '../containers/PopupContainer'
+import keys from "../keys"
+import CustomPropTypes from "../CustomPropTypes"
+import LayerStore from "../util/LayerStore"
+import PopupContainer from "../containers/PopupContainer"
 import { store } from "../store"
 
-import defaultMarkerIcon from '../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png'
-import gpsFixedIcon from '../images/foundation-icon-fonts_2015-02-16_target-two_36_0_333333_none.png'
+import defaultMarkerIcon from "../images/foundation-icon-fonts_2015-02-16_marker_42_0_333333_none.png"
+import gpsFixedIcon from "../images/foundation-icon-fonts_2015-02-16_target-two_36_0_333333_none.png"
 
-import axios from 'axios'
-import { storeMap } from '../actions/MapActions'
+import axios from "axios"
+import { storeMap } from "../actions/MapActions"
 
 function leafletLayerForPropBaseLayer(propBaseLayer) {
   let baseLayer
 
   switch (propBaseLayer.type) {
-    case 'tile':
+    case "tile":
       baseLayer = L.tileLayer(propBaseLayer.url, propBaseLayer.options)
       break
-    case 'bing':
+    case "bing":
       baseLayer = L.bingLayer(keys.bingApiKey, propBaseLayer.options)
       break
-    case 'wmts':
+    case "wmts":
       baseLayer = L.tileLayer.wmts(propBaseLayer.url, propBaseLayer.options)
       break
     default:
-      throw new Error('unrecognized base layer type')
+      throw new Error("unrecognized base layer type")
   }
 
   return baseLayer
 }
 
-
 export default class Map extends Component {
   static propTypes = {
     baseLayers: PropTypes.shape({
       layers: PropTypes.arrayOf(CustomPropTypes.baseLayer),
-      active: PropTypes.string
+      active: PropTypes.string,
     }),
     onLayerStatusChange: PropTypes.func.isRequired,
-    showSnackbar: PropTypes.func
+    showSnackbar: PropTypes.func,
   }
 
   constructor(props) {
@@ -52,7 +51,7 @@ export default class Map extends Component {
     this.state = {
       animationIcon: "fi-play",
       geolocateControl: "basic",
-      locateToolbar: null
+      locateToolbar: null,
     }
   }
 
@@ -61,24 +60,24 @@ export default class Map extends Component {
       this.map = L.map(this.refs.map, {
         center: [options.latitude, options.longitude],
         zoom: options.zoom,
-        minZoom: window.innerWidth < 768 ? 5 : 6
+        minZoom: window.innerWidth < 768 ? 5 : 6,
       })
       store.dispatch(storeMap(this.map))
 
       this.initializeGeocoderControl()
       this.initializeBasemapLayers()
-      this.map.zoomControl.setPosition('bottomright')
+      this.map.zoomControl.setPosition("bottomright")
       this.initializeLayerStore(this.props, this.map)
 
       const defaultMarker = L.icon({
         iconUrl: defaultMarkerIcon,
         iconAnchor: [24, 44],
-        popupAnchor: [0, -44]
+        popupAnchor: [0, -44],
       })
 
       const watchLocationMarker = L.icon({
         iconUrl: gpsFixedIcon,
-        iconAnchor: [18, 20]
+        iconAnchor: [18, 20],
       })
 
       this.geolocationControl(defaultMarker)
@@ -88,7 +87,7 @@ export default class Map extends Component {
       this.popupContentNode = null
 
       this.map
-        .on('locationfound', (e) => {
+        .on("locationfound", (e) => {
           if (this.geolocateCircle) {
             this.map.removeLayer(this.geolocateCircle)
           }
@@ -98,30 +97,31 @@ export default class Map extends Component {
 
           if (this.map._locateOptions && !this.map._locateOptions.watch) {
             this.geolocateIcon = L.marker(e.latlng, {
-              icon: defaultMarker
+              icon: defaultMarker,
             })
-          }
-          else {
+          } else {
             this.geolocateIcon = L.marker(e.latlng, {
-              icon: watchLocationMarker
+              icon: watchLocationMarker,
             })
           }
 
           this.geolocateIcon.bindPopup(
             `<h6>Approximate Location</h3>` +
-            `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
-            `<p>Longitude: ${e.longitude.toPrecision(7)}</p>` +
-            `<p>Accuracy: ${e.accuracy.toLocaleString({useGrouping: true})} meters</p>`,
+              `<p>Latitude: ${e.latitude.toPrecision(7)}</p>` +
+              `<p>Longitude: ${e.longitude.toPrecision(7)}</p>` +
+              `<p>Accuracy: ${e.accuracy.toLocaleString({
+                useGrouping: true,
+              })} meters</p>`,
             {
-              className: 'geolocation-popup',
-              closeButton: false
+              className: "geolocation-popup",
+              closeButton: false,
             }
           )
 
-          this.geolocateIcon.on('contextmenu', () => {
-            this.locateToolbar._buttons[1].state('location-off')
+          this.geolocateIcon.on("contextmenu", () => {
+            this.locateToolbar._buttons[1].state("location-off")
             this.locateToolbar._buttons[1].disable()
-            this.locateToolbar._buttons[0].state('zoom-to-location')
+            this.locateToolbar._buttons[0].state("zoom-to-location")
             this.map.stopLocate()
             this.map.removeLayer(this.geolocateIcon)
           })
@@ -130,7 +130,7 @@ export default class Map extends Component {
             color: "#265577",
             fillColor: "#3473A2",
             fillOpacity: 0.1,
-            stroke: false
+            stroke: false,
           })
 
           this.map.addLayer(this.geolocateIcon)
@@ -139,75 +139,85 @@ export default class Map extends Component {
             this.map.setView(e.latlng, 16)
           }
         })
-        .on('locationerror', (e) => {
+        .on("locationerror", (e) => {
           this.props.showSnackbar(
             "Error retrieving location. Please verify permission has been granted to your device or browser."
           )
-          this.locateToolbar._buttons[1].state('location-off')
+          this.locateToolbar._buttons[1].state("location-off")
           this.locateToolbar._buttons[1].disable()
-          this.locateToolbar._buttons[0].state('zoom-to-location')
+          this.locateToolbar._buttons[0].state("zoom-to-location")
           this.map.stopLocate()
           if (this.map.hasLayer(this.geolocateIcon)) {
             this.map.removeLayer(this.geolocateIcon)
           }
         })
-        .on('zoomend dragend', () => {
-          if (!this.props.popupData || this.props.popupData.id !== "ahps-flood") {
+        .on("zoomend dragend", () => {
+          if (
+            !this.props.popupData ||
+            this.props.popupData.id !== "ahps-flood"
+          ) {
             const center = this.map.getCenter()
-            const zoom =  this.map.getZoom()
-            const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+            const zoom = this.map.getZoom()
+            const urlPath = `/map/@${center.lat.toPrecision(
+              7
+            )},${center.lng.toPrecision(7)},${zoom}z`
             if (this.props.history.location.pathname != urlPath) {
               this.props.history.push(urlPath)
             }
-          }
-          else {
+          } else {
             const urlPath = `/gage/${this.props.popupData.data.lid.toLowerCase()}`
             if (this.props.history.location.pathname != urlPath) {
               this.props.history.push(urlPath)
             }
           }
         })
-        .on('popupopen', () => {
-          const popupContent = document.getElementsByClassName('leaflet-popup-content')
+        .on("popupopen", () => {
+          const popupContent = document.getElementsByClassName(
+            "leaflet-popup-content"
+          )
 
-          this.popupContentNode = popupContent.length > 0 ? popupContent[0] : null
+          this.popupContentNode =
+            popupContent.length > 0 ? popupContent[0] : null
         })
-        .on('preclick', () => {
+        .on("preclick", () => {
           this.props.clearPopup()
         })
-        .on('popupclose', () => {
+        .on("popupclose", () => {
           if (this.popupContentNode) {
             ReactDOM.unmountComponentAtNode(this.popupContentNode)
           }
 
           const center = this.map.getCenter()
-          const zoom =  this.map.getZoom()
-          const urlPath = `/map/@${center.lat.toPrecision(7)},${center.lng.toPrecision(7)},${zoom}z`
+          const zoom = this.map.getZoom()
+          const urlPath = `/map/@${center.lat.toPrecision(
+            7
+          )},${center.lng.toPrecision(7)},${zoom}z`
           if (this.props.history.location.pathname != urlPath) {
             this.props.history.push(urlPath)
           }
         })
-        .on('dblclick', (e) => {
-          const zoom =  this.map.getZoom()
+        .on("dblclick", (e) => {
+          const zoom = this.map.getZoom()
           const southwest = L.latLng(30.263042706097306, -97.75079011917114)
           const northeast = L.latLng(30.26316780672294, -97.75057554244995)
           const bounds = L.latLngBounds(southwest, northeast)
           const contains = bounds.contains(e.latlng)
           if (contains == true && zoom == 18) {
-            window.open('https://youtu.be/KC5H9P4F5Uk', '_stevieVaughan')
+            window.open("https://youtu.be/KC5H9P4F5Uk", "_stevieVaughan")
           }
         })
-        .on('click', (e) => {
+        .on("click", (e) => {
           L.DomEvent.preventDefault(e)
           L.DomEvent.stopPropagation(e)
         })
-
-
     }
 
     setTimeout(() => {
       const getZoom = () => {
-        if (this.props.match.params.zoom && this.props.match.params.zoom.match(/\d*\z+/)) {
+        if (
+          this.props.match.params.zoom &&
+          this.props.match.params.zoom.match(/\d*\z+/)
+        ) {
           return this.props.match.params.zoom.replace(/z$/, "")
         }
         return window.innerWidth < 768 ? 5 : 6
@@ -216,38 +226,39 @@ export default class Map extends Component {
       const initView = {
         latitude: this.props.match.params.lat || 31,
         longitude: this.props.match.params.lng || -100,
-        zoom: getZoom()
+        zoom: getZoom(),
       }
       if (this.props.match.params.lid) {
         const upperLid = this.props.match.params.lid.toUpperCase()
         const query = `https://mapserver.tnris.org/?map=/tnris_mapfiles/nws_ahps_gauges_texas.map&SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=CurrentStage&outputformat=geojson&SRSNAME=EPSG:4326&Filter=<Filter><PropertyIsEqualTo><PropertyName>lid</PropertyName><Literal>${upperLid}</Literal></PropertyIsEqualTo></Filter>`
-        axios.get(query)
-          .then(({data}) => {
-            if (data.features.length === 0) {
-              this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
-              this.props.history.push("")
-              return initMap(initView)
-            }
-            data.features.map((gage) => {
-              initView.latitude = gage.properties.latitude
-              initView.longitude = gage.properties.longitude
-              initView.zoom = 13
+        axios.get(query).then(({ data }) => {
+          if (data.features.length === 0) {
+            this.props.showSnackbar(`Gage ${upperLid} could not be located.`)
+            this.props.history.push("")
+            return initMap(initView)
+          }
+          data.features.map((gage) => {
+            initView.latitude = gage.properties.latitude
+            initView.longitude = gage.properties.longitude
+            initView.zoom = 13
 
-              initMap(initView)
+            initMap(initView)
 
-              this.props.setPopup({
-                id: 'ahps-flood',
-                data: {
-                  name: gage.properties.name,
-                  wfo: gage.properties.wfo,
-                  lid: this.props.match.params.lid
-                },
-                clickLocation: L.latLng(gage.properties.latitude, gage.properties.longitude)
-              })
+            this.props.setPopup({
+              id: "ahps-flood",
+              data: {
+                name: gage.properties.name,
+                wfo: gage.properties.wfo,
+                lid: this.props.match.params.lid,
+              },
+              clickLocation: L.latLng(
+                gage.properties.latitude,
+                gage.properties.longitude
+              ),
             })
           })
-      }
-      else {
+        })
+      } else {
         initMap(initView)
       }
     }, 1000)
@@ -259,28 +270,38 @@ export default class Map extends Component {
     const activeFeatureLayerBools = (props) => {
       return props.featureLayers.layers.map((l) => l.active === true)
     }
-    const activeFeaturesChanged = !R.equals(activeFeatureLayerBools(prevProps), activeFeatureLayerBools(this.props))
+    const activeFeaturesChanged = !R.equals(
+      activeFeatureLayerBools(prevProps),
+      activeFeatureLayerBools(this.props)
+    )
 
     const activeFeatureStatuses = (props) => {
-      return props.featureLayers.layers.map((l) => l.active ? l.status : null)
+      return props.featureLayers.layers.map((l) => (l.active ? l.status : null))
     }
-    const activeFeatureStatusesChanged = !R.equals(activeFeatureStatuses(prevProps), activeFeatureStatuses(this.props))
+    const activeFeatureStatusesChanged = !R.equals(
+      activeFeatureStatuses(prevProps),
+      activeFeatureStatuses(this.props)
+    )
 
     if (activeFeaturesChanged || activeFeatureStatusesChanged) {
       this.setActiveFeatureLayers(this.props)
     }
 
-    const lyrs = this.props.featureLayers.layers
-    if (lyrs[lyrs.length - 1]['active'] === true) {
-      this.displayedTimestamp = lyrs[lyrs.length - 1]['displayedTimestamp']
-    }
-    else {
-      this.displayedTimestamp = ''
+    const animatedWeatherLayer = this.props.featureLayers.layers.find(
+      (layer) => layer.id === "animated-weather"
+    )
+    if (animatedWeatherLayer["active"] === true) {
+      this.displayedTimestamp = animatedWeatherLayer["displayedTimestamp"]
+    } else {
+      this.displayedTimestamp = ""
     }
 
-    const basemaps = R.fromPairs(prevProps.baseLayers.layers.map(propBaseLayer =>
-      [propBaseLayer.id, leafletLayerForPropBaseLayer(propBaseLayer)]
-    ))
+    const basemaps = R.fromPairs(
+      prevProps.baseLayers.layers.map((propBaseLayer) => [
+        propBaseLayer.id,
+        leafletLayerForPropBaseLayer(propBaseLayer),
+      ])
+    )
 
     const activeBaseLayer = prevProps.baseLayers.active
 
@@ -294,11 +315,15 @@ export default class Map extends Component {
       })
     }
 
-
-
-
-    if (this.props.map.mapCenterLat && this.props.map.mapCenterLng && this.props.map.zoomLevel) {
-      const latlngPoint = new L.LatLng(this.props.map.mapCenterLat, this.props.map.mapCenterLng)
+    if (
+      this.props.map.mapCenterLat &&
+      this.props.map.mapCenterLng &&
+      this.props.map.zoomLevel
+    ) {
+      const latlngPoint = new L.LatLng(
+        this.props.map.mapCenterLat,
+        this.props.map.mapCenterLng
+      )
       this.map.setView(latlngPoint, this.props.map.zoomLevel)
       this.props.clearCenterAndZoom()
     }
@@ -307,20 +332,24 @@ export default class Map extends Component {
   setActiveFeatureLayers(props) {
     // TODO: this should be cleaned up - this way of setting the cursor is
     // really not the right way to do things
-    this.map._container.classList.toggle('map__cursor--pointer', false)
+    this.map._container.classList.toggle("map__cursor--pointer", false)
 
-    const activeLayers = props.featureLayers.layers.filter((layer) => layer.active)
+    const activeLayers = props.featureLayers.layers.filter(
+      (layer) => layer.active
+    )
 
     R.toPairs(this.layerStore.all()).forEach(([cacheId, layer]) => {
-      const isActive = R.find((activeLayer) => activeLayer.id === cacheId, activeLayers)
+      const isActive = R.find(
+        (activeLayer) => activeLayer.id === cacheId,
+        activeLayers
+      )
       if (isActive) {
         layer.show()
 
-        if (layer.id === 'flood-alerts') {
-          this.map._container.classList.toggle('map__cursor--pointer', true)
+        if (layer.id === "flood-alerts") {
+          this.map._container.classList.toggle("map__cursor--pointer", true)
         }
-      }
-      else if (!isActive) {
+      } else if (!isActive) {
         layer.hide()
       }
     })
@@ -336,7 +365,7 @@ export default class Map extends Component {
         onMouseoutUTFGrid: this.props.onMouseoutUTFGrid,
         onMouseoverUTFGrid: this.props.onMouseoverUTFGrid,
         updateTimestamp: this.props.updateTimestamp,
-      }
+      },
     })
     props.featureLayers.layers.map((layer) => {
       this.layerStore.add(layer.id, layer.type, layer.options)
@@ -347,25 +376,31 @@ export default class Map extends Component {
   }
 
   initializeBasemapLayers() {
-    const layers = R.fromPairs(this.props.baseLayers.layers.map(propBaseLayer =>
-      [propBaseLayer.text, leafletLayerForPropBaseLayer(propBaseLayer)]
-    ))
-    layers['Streets'].addTo(this.map)
+    const layers = R.fromPairs(
+      this.props.baseLayers.layers.map((propBaseLayer) => [
+        propBaseLayer.text,
+        leafletLayerForPropBaseLayer(propBaseLayer),
+      ])
+    )
+    layers["Streets"].addTo(this.map)
   }
 
   initializeGeocoderControl() {
     const control = L.Control.geocoder({
       geocoder: L.Control.Geocoder.nominatim({
         geocodingQueryParams: {
-          countrycodes: 'us',
+          countrycodes: "us",
           state: "Texas",
-          viewbox: [-115.02685546875, 39.740986355883564, -84.70458984375, 23.563987128451217],
-          bounded: 1
-        }
+          viewbox: [
+            -115.02685546875, 39.740986355883564, -84.70458984375,
+            23.563987128451217,
+          ],
+          bounded: 1,
+        },
       }),
       placeholder: "Search by City or Street Address",
       collapsed: false,
-      position: "topright"
+      position: "topright",
     })
 
     //override the default markGeocode method
@@ -384,9 +419,12 @@ export default class Map extends Component {
   initializeMapBounds() {
     // these are the more limiting maxbounds for texas
     // const maxBounds = [[25.7, -107], [36.8, -93.2]]
-    const maxBounds = [[23.5, -112.6], [41, -83]]
+    const maxBounds = [
+      [23.5, -112.6],
+      [41, -83],
+    ]
     const center = this.map.getCenter()
-    const newCenter = {lat: center.lat, lng: center.lng}
+    const newCenter = { lat: center.lat, lng: center.lng }
     if (center.lat < maxBounds[0][0]) {
       newCenter.lat = maxBounds[0][0]
     }
@@ -401,7 +439,7 @@ export default class Map extends Component {
     }
     if (newCenter.lat !== center.lat || newCenter.lng !== center.lng) {
       this.map.panTo(newCenter, {
-        animate: true
+        animate: true,
       })
     }
   }
@@ -414,103 +452,112 @@ export default class Map extends Component {
       watch: false,
       setView: false,
       maximumAge: 10000,
-      enableHighAccuracy: true
+      enableHighAccuracy: true,
     }
 
     const trackLocationButton = L.easyButton({
-      states: [{
-        stateName: 'location-off',
-        icon: '<i class="fi-compass track-location-icon" style="font-size: 22px;"></i>',
-        title: 'Follow my location',
-        onClick: (control) => {
-          control.state('location-on')
-          leafletMap.closePopup()
-          leafletMap.locate({...geolocationOptions, watch: true})
-          showSnackbar(
-            "Using the follow location feature on a mobile device will consume additional battery and data.", 3000
-          )
-        }
-      }, {
-        stateName: 'location-on',
-        icon: '<i class="fi-target-two track-location-icon location-on-button" style="font-size: 22px;"></i>',
-        title: 'Stop following my location',
-        onClick: (control) => {
-          control.state('location-off')
-          leafletMap.stopLocate()
+      states: [
+        {
+          stateName: "location-off",
+          icon: '<i class="fi-compass track-location-icon" style="font-size: 22px;"></i>',
+          title: "Follow my location",
+          onClick: (control) => {
+            control.state("location-on")
+            leafletMap.closePopup()
+            leafletMap.locate({ ...geolocationOptions, watch: true })
+            showSnackbar(
+              "Using the follow location feature on a mobile device will consume additional battery and data.",
+              3000
+            )
+          },
+        },
+        {
+          stateName: "location-on",
+          icon: '<i class="fi-target-two track-location-icon location-on-button" style="font-size: 22px;"></i>',
+          title: "Stop following my location",
+          onClick: (control) => {
+            control.state("location-off")
+            leafletMap.stopLocate()
 
-          if (this.geolocateIcon) {
-            leafletMap.removeLayer(this.geolocateIcon)
-          }
-
-          const latlng = this.geolocateIcon._latlng
-          const prevPopupContent = this.geolocateIcon._popup._content
-
-          this.geolocateIcon = L.marker(latlng, {
-            icon: defaultMarker
-          })
-
-          this.geolocateIcon.bindPopup(
-            prevPopupContent,
-            {
-              className: 'geolocation-popup',
-              closeButton: false
+            if (this.geolocateIcon) {
+              leafletMap.removeLayer(this.geolocateIcon)
             }
-          )
 
-          leafletMap.addLayer(this.geolocateIcon)
-        }
-      }]
+            const latlng = this.geolocateIcon._latlng
+            const prevPopupContent = this.geolocateIcon._popup._content
+
+            this.geolocateIcon = L.marker(latlng, {
+              icon: defaultMarker,
+            })
+
+            this.geolocateIcon.bindPopup(prevPopupContent, {
+              className: "geolocation-popup",
+              closeButton: false,
+            })
+
+            leafletMap.addLayer(this.geolocateIcon)
+          },
+        },
+      ],
     }).disable()
 
     const geolocateButton = L.easyButton({
-      type: 'animate',
-      states: [{
-        stateName: 'zoom-to-location',
-        icon: '<i class="fi-marker geolocate-icon" style="font-size: 22px;"></i>',
-        title: 'Find my location',
-        onClick: (control) => {
-          control.state("reset-geolocation-tools")
-          leafletMap.closePopup()
-          trackLocationButton.enable()
-          leafletMap.locate(geolocationOptions)
-        }
-      }, {
-        stateName: 'reset-geolocation-tools',
-        icon: '<i class="fi-x geolocate-icon" style="font-size: 22px;"></i>',
-        title: 'Reset geolocation tools',
-        onClick: (control) => {
-          control.state("zoom-to-location")
-          if (leafletMap.hasLayer(this.geolocateIcon)) {
-            leafletMap.removeLayer(this.geolocateIcon)
-          }
-          leafletMap.stopLocate()
-          trackLocationButton.state('location-off')
-          trackLocationButton.disable()
-        }
-      }]
+      type: "animate",
+      states: [
+        {
+          stateName: "zoom-to-location",
+          icon: '<i class="fi-marker geolocate-icon" style="font-size: 22px;"></i>',
+          title: "Find my location",
+          onClick: (control) => {
+            control.state("reset-geolocation-tools")
+            leafletMap.closePopup()
+            trackLocationButton.enable()
+            leafletMap.locate(geolocationOptions)
+          },
+        },
+        {
+          stateName: "reset-geolocation-tools",
+          icon: '<i class="fi-x geolocate-icon" style="font-size: 22px;"></i>',
+          title: "Reset geolocation tools",
+          onClick: (control) => {
+            control.state("zoom-to-location")
+            if (leafletMap.hasLayer(this.geolocateIcon)) {
+              leafletMap.removeLayer(this.geolocateIcon)
+            }
+            leafletMap.stopLocate()
+            trackLocationButton.state("location-off")
+            trackLocationButton.disable()
+          },
+        },
+      ],
     })
 
     this.locateToolbar = L.easyBar([geolocateButton, trackLocationButton], {
-      position: 'bottomright'
+      position: "bottomright",
     })
     this.locateToolbar.addTo(leafletMap)
   }
 
   toggleAnimation() {
-    this.layerStore.get('animated-weather').toggleAnimation()
-    if (this.layerStore.get('animated-weather').animate === true) {
-      this.setState({animationIcon: "fi-pause"})
-    }
-    else {
-      this.setState({animationIcon: "fi-play"})
+    this.layerStore.get("animated-weather").toggleAnimation()
+    if (this.layerStore.get("animated-weather").animate === true) {
+      this.setState({ animationIcon: "fi-pause" })
+    } else {
+      this.setState({ animationIcon: "fi-play" })
     }
   }
 
   render() {
     let radarInfo
-    if (this.displayedTimestamp !== '') {
-      radarInfo =  (
-        <button className="button" type="button" onClick={() => {this.toggleAnimation()}}>
+    if (this.displayedTimestamp !== "") {
+      radarInfo = (
+        <button
+          className="button"
+          type="button"
+          onClick={() => {
+            this.toggleAnimation()
+          }}
+        >
           <i className={this.state.animationIcon}></i>
         </button>
       )
@@ -522,13 +569,10 @@ export default class Map extends Component {
           <div className="weather-timestamp">
             <p>{this.displayedTimestamp}</p>
           </div>
-          <div className="animate-radar">
-            {radarInfo}
-          </div>
+          <div className="animate-radar">{radarInfo}</div>
           <PopupContainer leafletMap={this.map} />
         </div>
       </div>
-
     )
   }
 }
