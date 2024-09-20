@@ -1,5 +1,7 @@
 # texas flood information viewer
 
+## Archived as read only - Sep 20 2024. 
+
 ## Setup
 
 Install Node.
