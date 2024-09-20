@@ -1,6 +1,6 @@
 # texas flood information viewer
 
-## Archived as read only - Sep 20 2024. This repository is no longer used.
+## Archived as read only - Sep 20 2024. This repository is no longer used by TxGIO or maintained.
 
 ## Setup
 
